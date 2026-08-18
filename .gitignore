@@ -1,5 +1,4 @@
 *.project
 *.md
 *.py
-*.json
 __pycache__
