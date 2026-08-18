@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件11_类的概念与方法上 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件11_类的概念与方法上</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 本节学习目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 为什么需要类？ </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 类 = 蓝图，对象 = 实例 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 定义第一个类并创建对象 </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. 方法的参数与返回值 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 课堂练习1 — 学生成绩计算 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 构造方法与 this 关键字 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 综合练习 — 银行账户 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="12"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 12</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>类的概念与方法（上）</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner">
+<h1>本节学习目标</h1>
+<div class="goal-grid"><div class="goal-card"><span class="goal-icon">🎯</span><span class="goal-text">理解为什么需要类——把数据和功能打包在一起</span></div><div class="goal-card"><span class="goal-icon">🔍</span><span class="goal-text">理解类和对象的关系（蓝图 vs 实例）</span></div><div class="goal-card"><span class="goal-icon">📝</span><span class="goal-text">掌握类的定义：字段和方法</span></div><div class="goal-card"><span class="goal-icon">💻</span><span class="goal-text">掌握对象的创建（<code>new</code>）与使用（<code>.</code> 访问成员）</span></div><div class="goal-card"><span class="goal-icon">✅</span><span class="goal-text">掌握方法的定义、参数和返回值（<code>public</code>/<code>void</code>/<code>return</code>）</span></div><div class="goal-card"><span class="goal-icon">🧠</span><span class="goal-text">掌握构造方法的定义和 <code>this</code> 关键字</span></div><div class="goal-card"><span class="goal-icon">⚡</span><span class="goal-text">了解对象初始化器的简化写法</span></div></div>
+
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>为什么需要类？</h1>
+<div class="ok-box">前面学了变量、数组、集合——数据越存越多，但它们散落在 <code>Main</code> 里互不关联。一个学生有姓名、年龄、成绩，这三块数据本该属于同一个整体——这节课学类，把数据和功能打包到一起。</div><div class="card"><p>到目前为止写的代码，变量和逻辑全塞在 <code>Main</code> 里——系统小还能撑，一旦系统变大，<code>Main</code> 就变成了几百行的&quot;垃圾堆&quot;：想改个东西得翻半天，想复制一段逻辑到处粘贴，多人合作更是灾难。</p></div><div class="card"><p>更致命的是，现实中的&quot;东西&quot;（比如学生）天然带着数据和功能——不说类的话，就得：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380178112',this)">复制</button></div>
+<pre id="c_4380178112"><code class="language-csharp">string name1 = &quot;张三&quot;; int age1 = 18; double score1 = 85;
+string name2 = &quot;李四&quot;; int age2 = 19; double score2 = 90;
+// 如果100个学生……直接崩溃</code></pre>
+</div><div class="card"><p><strong>类的解决方案</strong>：把相关数据和功能<strong>打包</strong>在一起，一个&quot;学生类&quot;就管学生的事，清晰、可复用、不互相打架。</p></div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>类 = 蓝图，对象 = 实例</h1>
+<div class="card"><p>还记得课件3的变量盒子吗？类就是它的升级版——<strong>一个大盒子，里面打包了多个变量盒子 + 配套的操作</strong>：</p></div><pre class="plain-box"><code>┌─────────── 类：Person（蓝图/模板）──────────┐
+│                                             │
+│  📦 字段（数据 — 人的属性）                    │
+│  ┌──────┐ ┌──────┐ ┌──────────┐             │
+│  │name  │ │ age  │ │ height   │             │
+│  │string│ │ int  │ │ double   │             │
+│  └──────┘ └──────┘ └──────────┘             │
+│                                             │
+│  ⚙️ 方法（行为 — 人能做什么）                   │
+│  ┌──────────────────────┐                   │
+│  │ SayHello()  打招呼    │                   │
+│  │ Grow()      长大一岁  │                   │
+│  └──────────────────────┘                   │
+│                                             │
+└─────────────────────────────────────────────┘
+         │                    │
+         ▼                    ▼
+┌──────────────┐     ┌──────────────┐
+│ Person s1    │     │ Person s2    │
+│ name：&quot;张三&quot;  │     │ name：&quot;李四&quot;  │
+│ age：18      │     │ age：19      │
+│ height：1.75 │     │ height：1.68 │
+│              │     │              │
+│ s1.SayHello()│     │ s2.SayHello()│
+│ s1.Grow()    │     │ s2.Grow()    │
+└──────────────┘     └──────────────┘
+   ▲ 同一个模板，不同的数据                   ▲</code></pre><div class="card"><ul><li>类就像一个<strong>大盒子框架</strong>，里面分成两格：一格装数据（字段），一格装功能（方法）</li><li>用 <code>new</code> 创建对象时，就从这个框架&quot;复印&quot;出一份——每个对象字段值自己填，方法共用同一套</li></ul></div><div class="card"><h3>生活中的类比：</h3></div><div class="card"><table><tr><th>比喻</th><th>类（Class）</th><th>对象（Object）</th></tr><tr><td>手机</td><td>设计图纸</td><td>生产出来的真手机（无数部）</td></tr><tr><td>饼干</td><td>模具</td><td>压出来的饼干（形状相同，馅料不同）</td></tr><tr><td>学生表</td><td>空白登记表模板</td><td>填好的张三的表、李四的表</td></tr><tr><td>盖房</td><td>户型图纸</td><td>盖好的房子</td></tr></table></div><div class="card"><ul><li><strong>类</strong> = 定义了&quot;有什么数据&quot;和&quot;能做什么事&quot;的<strong>模板</strong></li><li><strong>对象</strong> = 按模板创建的<strong>具体实例</strong>，每个对象的字段值可以不同</li></ul></div><div class="card"><p>用已学过的类型理解：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380176128',this)">复制</button></div>
+<pre id="c_4380176128"><code class="language-csharp">int a = 10;          // int 是&quot;类型&quot;，a 是&quot;具体的值&quot;
+string s = &quot;hello&quot;;  // string 是&quot;类型&quot;，s 是&quot;具体的字符串&quot;
+
+Student s1 = new Student();  // Student 是你定义的&quot;类型&quot;
+                             // s1 是&quot;具体的对象&quot;
+// s1.name = &quot;张三&quot;          // 每个对象的数据不同</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>定义第一个类并创建对象</h1>
+<div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175616',this)">复制</button></div>
+<pre id="c_4380175616"><code class="language-csharp">class Person           // class 关键字 + 类名（Pascal命名规范）
+{
+    // 字段 = 人的特征（数据）
+    public string name;     // 姓名
+    public int age;         // 年龄
+    public double height;   // 身高
+
+    // 方法 = 人的行为（能做什么事）
+    public void SayHello()  // 打招呼
+    {
+        Console.WriteLine($&quot;你好，我叫{name}，今年{age}岁&quot;);
+    }
+
+    public void Grow()      // 长大一岁
+    {
+        age++;
+        Console.WriteLine($&quot;{name}长大了一岁，现在{age}岁&quot;);
+    }
+}</code></pre>
+</div><div class="card"><p>类的定义写好了，怎么用？标准写法跟声明变量很像：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175488',this)">复制</button></div>
+<pre id="c_4380175488"><code class="language-csharp">// 变量的标准写法             创建对象的标准写法
+int age = 18;                Person p1 = new Person();
+//   ↑类型  ↑变量名  ↑值       ↑类型  ↑对象名  ↑new 创建实例</code></pre>
+</div><div class="card"><h3><code>new</code> 关键字——把蓝图变成现实</h3></div><div class="card"><p><code>new</code> 你其实已经用过了——<code>new int[5]</code> 是在内存里分配一个数组。现在 <code>new Person()</code> 是分配一个 Person 对象的&quot;家&quot;：</p></div><div class="card"><ul><li><code>new</code> = 在内存中开辟一块空间，按类的模板把字段和方法装进去</li><li>没有 <code>new</code>，类只是图纸；有了 <code>new</code>，才拿到一个可以操作的真实对象</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175040',this)">复制</button></div>
+<pre id="c_4380175040"><code class="language-csharp">// 用 new 关键字创建对象（按图纸生产一部新手机）
+Person p1 = new Person();
+p1.name = &quot;张三&quot;;
+p1.age = 18;
+p1.height = 1.75;
+p1.SayHello();  // 你好，我叫张三，今年18岁
+p1.Grow();      // 张三长大了一岁，现在19岁
+
+// 同一类可以创建多个对象，数据互不影响
+Person p2 = new Person();
+p2.name = &quot;李四&quot;;
+p2.age = 20;
+p2.height = 1.80;
+p2.SayHello();  // 你好，我叫李四，今年20岁
+p1.SayHello();  // 你好，我叫张三，今年19岁 ← p1没变</code></pre>
+</div><div class="card"><ul><li><code>.</code> = 访问对象的成员（字段/方法）</li><li>每个<strong>对象</strong>拥有一套独立的字段值，<strong>互不干扰</strong></li><li style="margin-left:24px;list-style-type:circle">💬 就像同一份空白表格复印了 100 份，每个人填自己的信息——张三在自己的表上把年龄改成 19 岁，李四表上的年龄纹丝不动。100 个对象 = 100 份独立数据。</li><li>💡 对象初始化器：创建对象的同时在 <code>{ }</code> 里直接赋值，更简洁</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380174528',this)">复制</button></div>
+<pre id="c_4380174528"><code class="language-csharp">  Person p = new Person { name = &quot;张三&quot;, age = 18, height = 1.75 };</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>方法的参数与返回值</h1>
+<div class="card"><p>上页我们调用了 <code>SayHello()</code>、<code>Grow()</code> 等方法。这些方法到底是怎么定义出来的？看一个「两数相加」的完整例子：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175744',this)">复制</button></div>
+<pre id="c_4380175744"><code class="language-csharp">class Calculator
+{
+    public int Add(int a, int b)             // 有参数，有返回值
+    { return a + b; }
+
+    public void PrintSum(int a, int b)        // 有参数，无返回值
+    { Console.WriteLine($&quot;{a} + {b} = {a + b}&quot;); }
+
+    public double GetPi()                     // 无参数，有返回值
+    { return 3.14159; }
+}</code></pre>
+</div><div class="card"><p>拿 <code>Add</code> 方法拆开看，由五部分组成：</p></div><pre class="plain-box"><code>public   int    Add    (int a, int b)   { return a + b; }
+  ↑       ↑      ↑          ↑                  ↑
+访问修饰符 返回类型 方法名   参数列表（输入）    方法体（做什么）</code></pre><div class="card"><ul><li><code>public</code> = <strong>公开的</strong>——谁都能调。<code>private</code>/<code>protected</code> 后面课件细讲，目前统一用 <code>public</code></li><li><code>int</code> = <strong>返回类型</strong>——方法执行完把什么类型的数据还给调用者。<code>int</code> 还数字，<code>double</code> 还小数，<code>void</code> 表示「不还东西」</li><li><code>(int a, int b)</code> = <strong>参数列表</strong>——调用时要传的数据，<code>a</code> 和 <code>b</code> 在这方法里当局部变量用</li><li><code>{ return a + b; }</code> = <strong>方法体</strong>——真正干活的代码</li></ul></div><div class="ok-box">方法的公式：<code>public 返回类型 方法名(参数列表) { 方法体 }</code></div><div class="card"><p>调用它的时候：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380173888',this)">复制</button></div>
+<pre id="c_4380173888"><code class="language-csharp">int result = calc.Add(3, 5);   // 3和5传进去，Add 方法执行，return 8 传出来</code></pre>
+</div><div class="card"><p><code>void</code> vs 有返回值的区别：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380173760',this)">复制</button></div>
+<pre id="c_4380173760"><code class="language-csharp">// Add 有 int 返回值 → 可接住，可继续参与运算
+int sum = calc.Add(3, 5);
+Console.WriteLine(sum + 10);        // 15
+
+// PrintSum 是 void → 没有返回值，没法&quot;接&quot;
+calc.PrintSum(3, 5);                // 只能让它直接执行
+// int x = calc.PrintSum(3, 5);    // ❌ 编译错误！void 方法不能赋值</code></pre>
+</div><div class="card"><h3>四种常见组合：</h3></div><div class="card"><table><tr><th>组合</th><th>语法</th><th>示例</th></tr><tr><td>有参有返</td><td><code>类型 方法(参数) { return 值; }</code></td><td><code>int Add(int a, int b)</code></td></tr><tr><td>有参无返</td><td><code>void 方法(参数) { }</code></td><td><code>void PrintSum(int a, int b)</code></td></tr><tr><td>无参有返</td><td><code>类型 方法() { return 值; }</code></td><td><code>double GetPi()</code></td></tr><tr><td>无参无返</td><td><code>void 方法() { }</code></td><td><code>void SayHello()</code></td></tr></table></div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>课堂练习1 — 学生成绩计算</h1>
+<div class="ok-box">定义 Student 类，包含语数英字段和计算总分/平均分的方法，创建对象并输出。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380172032',this)">复制</button></div>
+<pre id="c_4380172032"><code class="language-csharp">class Student
+{
+    public string name;
+    public double chinese;
+    public double math;
+    public double english;
+
+    // 计算总分
+    public double GetTotal()
+    {
+        return chinese + math + english;
+    }
+
+    // 计算平均分（方法内部调用另一个方法）
+    public double GetAverage()
+    {
+        return GetTotal() / 3;
+    }
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171904',this)">复制</button></div>
+<pre id="c_4380171904"><code class="language-csharp">Student s = new Student();
+s.name = &quot;张三&quot;;
+s.chinese = 85; s.math = 90; s.english = 78;
+Console.WriteLine($&quot;{s.name} 总分：{s.GetTotal()}，平均：{s.GetAverage():F1}&quot;);
+// 张三 总分：253，平均：84.3</code></pre>
+</div><div class="card"><ul><li>动手：把张三的成绩改成你自己的各科分数，看输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>字段 <code>chinese</code>、<code>math</code>、<code>english</code> 是学生的&quot;数据&quot;，方法 <code>GetTotal()</code>、<code>GetAverage()</code> 是学生的&quot;功能&quot;</li><li><code>GetAverage()</code> 内部调用 <code>GetTotal()</code>——方法之间可以互相配合，不用把所有逻辑堆在一个方法里</li><li>平均分里 <code>/ 3</code> 是硬编码的，更好的写法是用字段个数动态计算</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义一个 Car 类：要求含 <code>brand</code>（品牌）和 <code>speed</code>（速度）字段，以及一个 <code>Drive()</code> 方法输出行驶信息，最后创建对象并调用。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171968',this)">复制</button></div>
+<pre id="c_4380171968"><code class="language-csharp"><span class="code-blank">___</span> Car
+{
+    public string brand;     // 品牌
+    public int speed;        // 速度
+
+    public void <span class="code-blank">___</span>()
+    {
+        <span class="code-blank">___</span>.WriteLine($&quot;{brand}正在以{speed}km/h行驶&quot;);
+    }
+}
+
+// 创建对象并调用
+Car <span class="code-blank">___</span> = <span class="code-blank">___</span> Car();
+myCar.brand = &quot;宝马&quot;;
+myCar.speed = 120;
+myCar.<span class="code-blank">___</span>();</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171456',this)">复制</button></div>
+<pre id="c_4380171456"><code class="language-csharp">class Car
+{
+    public string brand;
+    public int speed;
+
+    public void Drive()
+    {
+        Console.WriteLine($&quot;{brand}正在以{speed}km/h行驶&quot;);
+    }
+}
+
+Car myCar = new Car();
+myCar.brand = &quot;宝马&quot;;
+myCar.speed = 120;
+myCar.Drive();</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>构造方法与 this 关键字</h1>
+<div class="card"><p>前面写 <code>new Person()</code> 时，对象创建完还得一行行 <code>p.name =</code>、<code>p.age =</code> 赋值。能不能创建时就一步到位？<strong>构造方法</strong>就是干这个的。</p></div><div class="card"><p>一个构造方法长这样：</p></div><pre class="plain-box"><code>public   Person   (string n, int a)   { name = n;  age = a; }
+  ↑        ↑             ↑                    ↑
+访问修饰符  类名         参数列表             方法体（初始化字段）</code></pre><div class="card"><p>构造方法就是<strong>特殊的方法</strong>，有三个特殊之处：</p></div><div class="card"><ul><li><strong>名字 = 类名</strong>：必须和类同名，不是随便起的方法名</li><li><strong>没有返回值类型</strong>：连 <code>void</code> 都不写（和普通方法的区别）</li><li><strong>自动调用</strong>：用 <code>new</code> 创建对象时自动执行，不用手动调</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171072',this)">复制</button></div>
+<pre id="c_4380171072"><code class="language-csharp">class Person
+{
+    public string name;
+    public int age;
+
+    public Person(string n, int a)       // 名字和类名相同，没有返回值类型
+    {
+        name = n;
+        age = a;
+    }
+
+    public Person() { }                  // 无参构造（如果没写，系统会默认生成一个空的）
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380170944',this)">复制</button></div>
+<pre id="c_4380170944"><code class="language-csharp">// 创建对象时就能直接赋值，不用分行写 name =、age =
+Person p1 = new Person(&quot;张三&quot;, 18);   // 用有参构造，一步到位
+Person p2 = new Person();             // 用无参构造，之后手动赋值
+p2.name = &quot;李四&quot;; p2.age = 19;
+
+// 对比：没有构造方法时
+Person p3 = new Person();
+p3.name = &quot;王五&quot;; p3.age = 20;         // 需要3行</code></pre>
+</div><div class="card"><ul><li>构造方法 = 出厂设置，创建对象时自动执行，<strong>只执行一次</strong></li></ul></div><div class="card"><p>上面示例用了 <code>string n, int a</code> 当参数名，虽然能跑，但 <code>n</code>、<code>a</code> 看不出含义。更好的写法是把参数名写得和字段名一样——清楚。但问题来了：<strong>名字一样，谁来区分？</strong></p></div><div class="card"><p>这时候就要用 <code>this</code>：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171008',this)">复制</button></div>
+<pre id="c_4380171008"><code class="language-csharp">class Person
+{
+    public string name;
+    public int age;
+
+    public Person(string name, int age)  // 参数名和字段同名了！
+    {
+        this.name = name;    // this.name = 字段，= 右边的 name = 参数
+        this.age = age;
+    }
+
+    public bool IsOlderThan(int age)     // 参数和字段又重名了
+    {
+        return this.age &gt; age;           // this.age是字段，age是参数
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>this</code> = &quot;<strong>当前这个对象自己</strong>&quot;</li><li>当参数名和字段名相同时，<code>this.字段</code> 指向对象的字段，不带 <code>this</code> 的就是参数</li><li>💬 就像说自己「我的手机」——&quot;我&quot;就是 <code>this</code>，用来区分是你的还是别人的</li></ul></div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>为什么需要类？</strong>：把「数据」和「操作数据的方法」打包，避免散落</li><li><strong>类 = 蓝图，对象 = 实例</strong>：类定义长什么样，new 出来才是真东西</li><li><strong>定义第一个类并创建对象</strong>：<code>class 类名{...}</code> + <code>new 类名()</code></li><li><strong>方法的参数与返回值</strong>：参数接收输入，<code>return</code> 返回结果</li><li><strong>构造方法与 this 关键字</strong>：构造方法 <code>类名()</code> 在 new 时自动调用，<code>this</code> 指当前对象</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>综合练习 — 银行账户</h1>
+<div class="ok-box">定义 BankAccount 类，实现存钱/取钱功能，取钱时检查余额是否足够。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>存入500元，余额：1500
+取出200元，余额：1300
+余额不足！</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>构造方法：<code>BankAccount(string owner, double balance)</code> 一步到位</li><li><code>this.owner = owner</code> —— 参数和字段同名时用 <code>this.</code> 区分</li><li>取钱时 <code>if (amount &gt; balance)</code> 检查余额，返回 <code>bool</code> 告诉调用者是否成功</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168576',this)">复制</button></div>
+<pre id="c_4380168576"><code class="language-csharp">class BankAccount
+{
+    public string owner;
+    <span class="code-blank">___</span> double balance;          // private：外部不能直接访问
+
+    public <span class="code-blank">___</span>(string owner, double balance)  // 构造方法
+    {
+        this.<span class="code-blank">___</span> = owner;
+        this.<span class="code-blank">___</span> = balance;
+    }
+
+    public void Deposit(double amount)
+    {
+        balance <span class="code-blank">___</span> amount;
+        Console.WriteLine($&quot;存入{amount}元，余额：{balance}&quot;);
+    }
+
+    public <span class="code-blank">___</span> Withdraw(double amount)    // 返回 bool 表示是否成功
+    {
+        if (amount &gt; <span class="code-blank">___</span>)
+        {
+            Console.WriteLine(&quot;余额不足！&quot;);
+            return <span class="code-blank">___</span>;
+        }
+        balance -= amount;
+        Console.WriteLine($&quot;取出{amount}元，余额：{balance}&quot;);
+        return <span class="code-blank">___</span>;
+    }
+}
+
+// 使用
+BankAccount acc = <span class="code-blank">___</span> BankAccount(&quot;张三&quot;, 1000);
+acc.<span class="code-blank">___</span>(500);
+acc.<span class="code-blank">___</span>(200);
+acc.Withdraw(2000);</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168832',this)">复制</button></div>
+<pre id="c_4380168832"><code class="language-csharp">class BankAccount
+{
+    public string owner;
+    private double balance;
+
+    public BankAccount(string owner, double balance)
+    {
+        this.owner = owner;
+        this.balance = balance;
+    }
+
+    public void Deposit(double amount)
+    {
+        balance += amount;
+        Console.WriteLine($&quot;存入{amount}元，余额：{balance}&quot;);
+    }
+
+    public bool Withdraw(double amount)
+    {
+        if (amount &gt; balance)
+        {
+            Console.WriteLine(&quot;余额不足！&quot;);
+            return false;
+        }
+        balance -= amount;
+        Console.WriteLine($&quot;取出{amount}元，余额：{balance}&quot;);
+        return true;
+    }
+}
+
+BankAccount acc = new BankAccount(&quot;张三&quot;, 1000);
+acc.Deposit(500);
+acc.Withdraw(200);
+acc.Withdraw(2000);</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己定义一个 <code>Rectangle</code>（长方形）类，含<strong>长、宽</strong>两个字段，以及计算<strong>面积</strong>和<strong>周长</strong>的方法；在 <code>Main</code> 里读入长、宽并调用方法输出。<br>要求：完整定义类 + <code>Main</code> 调用，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168320',this)">复制</button></div>
+<pre id="c_4380168320"><code class="language-csharp">class Rectangle
+{
+    public double Width;
+    public double Height;
+    public double Area() =&gt; Width * Height;
+    public double Perimeter() =&gt; 2 * (Width + Height);
+}
+class Program
+{
+    static void Main()
+    {
+        Rectangle r = new Rectangle();
+        r.Width = double.Parse(Console.ReadLine());
+        r.Height = double.Parse(Console.ReadLine());
+        Console.WriteLine($&quot;面积={r.Area()}，周长={r.Perimeter()}&quot;);
+    }
+}</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Book</code> 类，字段：<code>title</code>（书名）、<code>author</code>（作者）、<code>price</code>（价格），方法 <code>ShowInfo()</code> 输出所有信息。</p><ul><li>在 Main 中创建两本不同的书并调用 <code>ShowInfo()</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》作者张三 价格：45元</code></li></ul></div><div class="card"><h3>题2（2分）</h3><p>给 <code>Book</code> 类添加构造方法，创建对象时直接初始化所有字段。</p><ul><li>提示：<code>public Book(string title, string author, double price)</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>数据同题1</code></li></ul><ul><li>输出：<code>用构造方法一步到位，不再分行赋值</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>定义 <code>Rectangle</code> 类，字段：<code>width</code>、<code>height</code>，方法：<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）。</p><ul><li>创建两个矩形对象，分别输出面积和周长</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入宽：→ 5</code></li></ul><ul><li>输入：<code>请输入高：→ 3</code></li></ul><ul><li>输出：<code>面积：15</code></li></ul><ul><li>输出：<code>周长：16</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Student</code> 类，字段：<code>name</code>、3门课成绩（<code>chinese</code>、<code>math</code>、<code>english</code>），方法：<code>GetTotal()</code>、<code>GetAverage()</code>。</p><ul><li>构造方法初始化姓名和成绩，创建对象后输出总分和平均分</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>总分：253</code></li></ul><ul><li>输出：<code>平均分：84.3</code></li></ul><ul><li>输出：<code>最高分学生：张三</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380167552',this)">复制</button></div>
+<pre id="c_4380167552"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        // ==================== 第1题 ====================
+
+
+        // ==================== 第2题 ====================
+
+
+        // ==================== 第3题 ====================
+
+
+        // ==================== 第4题 ====================
+
+    }
+}
+
+        // ===== 各类定义写在这里 =====</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="12"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件12_类的概念与方法下.html" class="end-next-link">📖 下一节：课件12 · 类的概念与方法下 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=12,contentTotal=10;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

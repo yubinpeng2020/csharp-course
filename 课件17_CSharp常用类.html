@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件17_CSharp常用类 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件17_CSharp常用类</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 本节学习目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. Math — 数学计算 </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. DateTime — 日期时间 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. Random — 随机数 </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. Convert — 类型转换 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. Path — 文件路径处理 </a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 课堂练习1 — 速算挑战 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 综合练习 — 学生成绩统计分析系统 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="12"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 12</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>C# 常用类</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner">
+<h1>本节学习目标</h1>
+<div class="goal-grid"><div class="goal-card"><span class="goal-icon">🎯</span><span class="goal-text">掌握 <code>Math</code> 类的常用数学运算（最值、幂、四舍五入、取整、PI）</span></div><div class="goal-card"><span class="goal-icon">🔍</span><span class="goal-text">掌握 <code>DateTime</code> 的日期创建、加减运算和格式化输出</span></div><div class="goal-card"><span class="goal-icon">📝</span><span class="goal-text">掌握 <code>Random</code> 生成各种范围的随机整数和小数</span></div><div class="goal-card"><span class="goal-icon">💻</span><span class="goal-text">掌握 <code>Convert</code> 类型转换，理解与 <code>Parse</code> 的区别</span></div><div class="goal-card"><span class="goal-icon">✅</span><span class="goal-text">掌握 <code>Path</code> 类的文件路径拆分与拼接</span></div><div class="goal-card"><span class="goal-icon">🧠</span><span class="goal-text">能够综合运用多个常用类解决实际问题</span></div></div>
+<div class="ok-box">命名空间：<code>Math</code>、<code>DateTime</code>、<code>Random</code>、<code>Convert</code> 在 <code>System</code> 里，直接用。<code>Path</code> 在 <code>System.IO</code> 里，需 <code>using System.IO;</code>。</div>
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>Math — 数学计算</h1>
+<div class="ok-box">当你要算圆的面积时——<code>Math.PI * Math.Pow(半径, 2)</code>，一行搞定。C# 把数学公式全封装在 <code>Math</code> 类里，拿来就用。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>Math.Abs(x)</code></td><td>绝对值</td><td><code>Abs(-5)</code> → 5</td></tr><tr><td><code>Math.Max(a,b)</code> / <code>Min(a,b)</code></td><td>最大值/最小值</td><td><code>Max(10,20)</code> → 20</td></tr><tr><td><code>Math.Pow(x,y)</code></td><td>x 的 y 次方</td><td><code>Pow(2,3)</code> → 8</td></tr><tr><td><code>Math.Sqrt(x)</code></td><td>平方根</td><td><code>Sqrt(16)</code> → 4</td></tr><tr><td><code>Math.Round(x,n)</code></td><td>四舍五入到 n 位</td><td><code>Round(3.14159,2)</code> → 3.14</td></tr><tr><td><code>Math.Floor(x)</code> / <code>Ceiling(x)</code></td><td>向下/向上取整</td><td><code>Floor(3.9)</code> → 3</td></tr><tr><td><code>Math.PI</code></td><td>圆周率常量</td><td>3.14159...</td></tr></table></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336826176',this)">复制</button></div>
+<pre id="c_4336826176"><code class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        // 绝对值、最大值、最小值
+        Console.WriteLine(Math.Abs(-5));            // 5
+        Console.WriteLine(Math.Max(10, 20));        // 20
+        Console.WriteLine(Math.Min(10, 20));        // 10
+
+        // 幂和开方
+        Console.WriteLine(Math.Pow(2, 3));          // 8（2的3次方）
+        Console.WriteLine(Math.Sqrt(16));           // 4（平方根）
+
+        // 四舍五入
+        Console.WriteLine(Math.Round(3.5));         // 4
+        Console.WriteLine(Math.Round(3.14159, 2));  // 3.14（保留2位）
+
+        // 取整
+        Console.WriteLine(Math.Floor(3.9));         // 3（向下取整）
+        Console.WriteLine(Math.Ceiling(3.1));       // 4（向上取整）
+
+        // 常量
+        Console.WriteLine(Math.PI);                 // 3.14159265358979...
+    }
+}</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>DateTime — 日期时间</h1>
+<div class="ok-box">当你要算自己活了多少天时——<code>DateTime.Today - 生日</code>，直接拿到天数。日期加减、格式化输出都在 <code>DateTime</code> 里。</div><div class="card"><table><tr><th>方法/属性</th><th>作用</th><th>示例</th></tr><tr><td><code>DateTime.Now</code></td><td>当前日期时间</td><td><code>2026-07-01 14:30:00</code></td></tr><tr><td><code>DateTime.Today</code></td><td>今天（时间归零）</td><td><code>2026-07-01 00:00:00</code></td></tr><tr><td><code>new DateTime(y,m,d)</code></td><td>指定日期</td><td><code>new DateTime(2000,1,1)</code></td></tr><tr><td><code>dt.AddDays(n)</code> / <code>AddMonths(n)</code></td><td>加减天/月</td><td><code>today.AddDays(7)</code> → 下周</td></tr><tr><td><code>dt2 - dt1</code></td><td>日期差 → TimeSpan</td><td><code>now - birthday</code> → 活了 X 天</td></tr><tr><td><code>dt.ToString(&quot;格式&quot;)</code></td><td>格式化输出</td><td><code>&quot;yyyy-MM-dd&quot;</code></td></tr></table></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336823744',this)">复制</button></div>
+<pre id="c_4336823744"><code class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        DateTime now = DateTime.Now;          // 当前日期时间
+        DateTime today = DateTime.Today;      // 今天（时间部分为 00:00）
+
+        // 创建指定日期
+        DateTime birthday = new DateTime(2000, 1, 1);
+
+        // 日期计算
+        DateTime tomorrow = today.AddDays(1);       // 明天
+        DateTime nextWeek = today.AddDays(7);       // 下星期
+        DateTime nextMonth = today.AddMonths(1);    // 下个月
+
+        // 求日期差
+        TimeSpan age = now - birthday;
+        Console.WriteLine($&quot;出生 {age.Days} 天&quot;);
+
+        // 格式化输出
+        Console.WriteLine(now.ToString(&quot;yyyy-MM-dd&quot;));       // 2026-07-01
+        Console.WriteLine(now.ToString(&quot;yyyy年MM月dd日&quot;));    // 2026年07月01日
+    }
+}</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>Random — 随机数</h1>
+<div class="ok-box">当你要写个抽奖程序时——<code>new Random().Next(0, 名单长度)</code>，随机选一个人。骰子、硬币、验证码，全靠 <code>Random</code>。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>new Random()</code></td><td>创建随机数生成器</td><td><code>Random rand = new Random();</code></td></tr><tr><td><code>rand.Next()</code></td><td>任意非负整数</td><td><code>Next()</code> → 0~21亿</td></tr><tr><td><code>rand.Next(max)</code></td><td>0 ~ max-1</td><td><code>Next(100)</code> → 0~99</td></tr><tr><td><code>rand.Next(min,max)</code></td><td>min ~ max-1</td><td><code>Next(1,7)</code> → 1~6</td></tr><tr><td><code>rand.NextDouble()</code></td><td>0.0 ~ 1.0 小数</td><td><code>NextDouble()</code> → 0.73...</td></tr></table></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336822848',this)">复制</button></div>
+<pre id="c_4336822848"><code class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        Random rand = new Random();
+
+        int n1 = rand.Next();          // 任意非负随机整数
+        int n2 = rand.Next(100);       // 0 ~ 99
+        int n3 = rand.Next(1, 7);      // 1 ~ 6（骰子）
+
+        double d = rand.NextDouble();  // 0.0 ~ 1.0 之间的小数
+
+        Console.WriteLine($&quot;Next(): {n1}, Next(100): {n2}, 骰子: {n3}, NextDouble: {d:F4}&quot;);
+
+        // 生成 1~100 的随机数
+        int answer = rand.Next(1, 101);
+        Console.WriteLine($&quot;1~100 随机数：{answer}&quot;);
+
+        // 随机从数组中选一个
+        string[] names = { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
+        string lucky = names[rand.Next(names.Length)];
+        Console.WriteLine($&quot;幸运儿：{lucky}&quot;);
+
+        // 随机布尔值
+        bool coin = rand.Next(2) == 1;    // true/false 各 50%
+        Console.WriteLine($&quot;硬币：{(coin ? &quot;正面&quot; : &quot;反面&quot;)}&quot;);
+    }
+}</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>Convert — 类型转换</h1>
+<div class="ok-box">用户输入永远是 <code>string</code>——<code>&quot;25&quot;</code> 想拿来算，得先变成 <code>int</code>。<code>Convert</code> 就是专门做这个的，而且比 <code>Parse</code> 更宽容。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>入参为 null</th></tr><tr><td><code>Convert.ToInt32(s)</code></td><td>string → int</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToDouble(s)</code></td><td>string → double</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToBoolean(s)</code></td><td>string → bool</td><td>返回 false ✅</td></tr><tr><td><code>Convert.ToString(x)</code></td><td>任意类型 → string</td><td><code>&quot;&quot;</code></td></tr><tr><td><code>int.Parse(s)</code></td><td>对比：同功能</td><td>💥 抛异常</td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336821952',this)">复制</button></div>
+<pre id="c_4336821952"><code class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        // string → 数值
+        int age = Convert.ToInt32(&quot;25&quot;);
+        double pi = Convert.ToDouble(&quot;3.14&quot;);
+        bool flag = Convert.ToBoolean(&quot;true&quot;);
+
+        Console.WriteLine($&quot;age={age}, pi={pi}, flag={flag}&quot;);
+
+        // 数值 → string
+        string s = Convert.ToString(12345);
+        Console.WriteLine(s);
+
+        // vs int.Parse() 的区别
+        Console.WriteLine(Convert.ToInt32(null));   // ✅ 返回 0（更宽容）
+        // int.Parse(null);                         // 💥 抛异常
+    }
+}</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>Path — 文件路径处理</h1>
+<div class="ok-box"><code>C:\照片\2026\me.jpg</code> 这个路径，怎么取出文件名、后缀名、目录？<code>Path</code> 类专门干这个，再也不用自己拆字符串了。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例（path = <code>C:\照片\me.jpg</code>）</th></tr><tr><td><code>Path.GetFileName(p)</code></td><td>取文件名</td><td><code>&quot;me.jpg&quot;</code></td></tr><tr><td><code>Path.GetFileNameWithoutExtension(p)</code></td><td>无后缀文件名</td><td><code>&quot;me&quot;</code></td></tr><tr><td><code>Path.GetExtension(p)</code></td><td>取后缀</td><td><code>&quot;.jpg&quot;</code></td></tr><tr><td><code>Path.GetDirectoryName(p)</code></td><td>取目录</td><td><code>&quot;C:\照片&quot;</code></td></tr><tr><td><code>Path.Combine(a,b,c)</code></td><td>安全拼接路径</td><td><code>&quot;C:\照片\2026&quot;</code></td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336820992',this)">复制</button></div>
+<pre id="c_4336820992"><code class="language-csharp">using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string path = @&quot;C:\Users\张三\Documents\report.docx&quot;;
+
+        Console.WriteLine(Path.GetFileName(path));           // &quot;report.docx&quot;
+        Console.WriteLine(Path.GetFileNameWithoutExtension(path));  // &quot;report&quot;
+        Console.WriteLine(Path.GetExtension(path));          // &quot;.docx&quot;
+        Console.WriteLine(Path.GetDirectoryName(path));      // &quot;C:\Users\张三\Documents&quot;
+        Console.WriteLine(Path.Combine(&quot;C:&quot;, &quot;Users&quot;, &quot;张三&quot;));  // &quot;C:\Users\张三&quot;
+
+        // 检查路径相关
+        Console.WriteLine(File.Exists(path));                // 文件是否存在
+        Console.WriteLine(Directory.Exists(@&quot;C:\Users&quot;));    // 目录是否存在
+    }
+}</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>课堂练习1 — 速算挑战</h1>
+<div class="ok-box">程序随机出5道两位数加法题，用户输入答案，计时评分——一次练 Random、Convert、Math 和 DateTime。</div><div class="card"><h3>期望运行效果：</h3></div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><pre class="plain-box"><code>第1题：34 + 57 = 91
+✅ 正确！
+第2题：12 + 88 = 100
+✅ 正确！
+...
+做对 4/5 题，用时 23.5 秒</code></pre><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819776',this)">复制</button></div>
+<pre id="c_4336819776"><code class="language-csharp">using System;
+
+class Program
+{
+    static void Main()
+    {
+        Random rand = new Random();
+        DateTime start = DateTime.Now;  // 计时开始
+        int score = 0;
+
+        for (int i = 1; i &lt;= 5; i++)
+        {
+            int a = rand.Next(10, 100);  // Random：10~99 的随机数
+            int b = rand.Next(10, 100);
+            Console.Write($&quot;第{i}题：{a} + {b} = &quot;);
+            int answer = Convert.ToInt32(Console.ReadLine());  // Convert：用户输入转 int
+
+            if (Math.Abs(answer - (a + b)) == 0)  // Math.Abs：判断差值是否为0
+            {
+                Console.WriteLine(&quot;✅ 正确！&quot;);
+                score++;
+            }
+            else
+            {
+                Console.WriteLine($&quot;❌ 错了，答案是 {a + b}&quot;);
+            }
+        }
+
+        double seconds = (DateTime.Now - start).TotalSeconds;  // DateTime：计算用时
+        Console.WriteLine($&quot;做对 {score}/5 题，用时 {Math.Round(seconds, 1)} 秒&quot;);
+    }
+}</code></pre>
+</div><div class="card"><ul><li>动手：把5题改成10题；把加法改成乘法（<code>*</code>），体验四类知识联动</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>rand.Next(10, 100)</code> — Random 生成题目数字（页面5）</li><li><code>Convert.ToInt32(Console.ReadLine())</code> — Convert 把用户输入转 int（页面6）</li><li><code>Math.Abs(answer - (a + b)) == 0</code> — Math 判断答对没有（页面3）</li><li><code>(DateTime.Now - start).TotalSeconds</code> — DateTime 计时（页面4）</li><li>四行代码，四个类联动——这就是&quot;常用类&quot;的真实用法</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——随机出1道乘法题：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819648',this)">复制</button></div>
+<pre id="c_4336819648"><code class="language-csharp"><span class="code-blank">___</span> rand = new <span class="code-blank">___</span>();
+int a = rand.Next(<span class="code-blank">___</span>, 20);   // 1~19
+int b = rand.Next(1, <span class="code-blank">___</span>);    // 1~9
+Console.Write($&quot;{a} × {b} = &quot;);
+int answer = <span class="code-blank">___</span>.ToInt32(Console.ReadLine());
+if (answer <span class="code-blank">___</span> a * b)         // 判断是否答对
+    Console.WriteLine(&quot;✅&quot;);
+else
+    Console.WriteLine($&quot;错了，答案是 {a * b}&quot;);</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819200',this)">复制</button></div>
+<pre id="c_4336819200"><code class="language-csharp">Random rand = new Random();
+int a = rand.Next(1, 20);
+int b = rand.Next(1, 10);
+Console.Write($&quot;{a} × {b} = &quot;);
+int answer = Convert.ToInt32(Console.ReadLine());
+if (answer == a * b)
+    Console.WriteLine(&quot;✅&quot;);
+else
+    Console.WriteLine($&quot;错了，答案是 {a * b}&quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>Math — 数学计算</strong>：<code>Math.Max/Math.Sqrt/Math.Abs</code> 等常用数学函数</li><li><strong>DateTime — 日期时间</strong>：<code>DateTime.Now</code> 取当前时间，<code>AddDays</code> 算偏移</li><li><strong>Random — 随机数</strong>：<code>new Random().Next(起,止)</code> 取区间随机整数</li><li><strong>Convert — 类型转换</strong>：<code>Convert.ToInt32()</code> 等跨类型稳妥转换</li><li><strong>Path — 文件路径处理</strong>：<code>Path.Combine</code> 拼路径、<code>Path.GetFileName</code> 取文件名</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>综合练习 — 学生成绩统计分析系统</h1>
+<div class="ok-box">从 <code>scores.txt</code> 读入学生成绩，统计每个人的总分和平均分，输出全班平均分和最高分学生。</div><div class="card"><h3>文件格式（<code>scores.txt</code>，放到 .cs 同级目录）：</h3></div><pre class="plain-box"><code>张三 85 90 78
+李四 92 88 95
+王五 70 65 72
+赵六 88 91 84
+陈七 76 82 90
+周八 95 89 93</code></pre><div class="card"><p><strong>期望输入：</strong> 直接运行，无需输入</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>====================
+成绩分析报告  2026-07-15
+====================
+张三: 总分253 平均84.3
+李四: 总分275 平均91.7
+王五: 总分207 平均69.0
+赵六: 总分263 平均87.7
+陈七: 总分248 平均82.7
+周八: 总分277 平均92.3
+--------------------
+全班平均分：84.6
+最高分学生：周八（277分）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>File.ReadAllLines</code> — 读文件全部行（页面7 文件操作）</li><li><code>Convert.ToInt32</code> — string 转数字（页面6 类型转换）</li><li><code>Math.Round(x, 1)</code> — 四舍五入保留1位小数（页面3 常用类）</li><li><code>DateTime.Now</code> — 取当前日期时间（页面4 常用类）</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336817728',this)">复制</button></div>
+<pre id="c_4336817728"><code class="language-csharp">using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string[] lines = File.<span class="code-blank">___</span>(&quot;scores.txt&quot;);   // 读文件全部行
+
+        int totalScore = 0, studentCount = 0;
+        string topStudent = &quot;&quot;;
+        int topScore = 0;
+
+        Console.WriteLine(&quot;====================&quot;);
+        Console.WriteLine($&quot;成绩分析报告  {<span class="code-blank">___</span>:yyyy-MM-dd}&quot;);  // 当前日期
+        Console.WriteLine(&quot;====================&quot;);
+
+        foreach (string line in lines)
+        {
+            string[] parts = line.<span class="code-blank">___</span>(' ');        // 按空格分割
+            string name = parts[0];
+            int s1 = Convert.<span class="code-blank">___</span>(parts[1]);        // string 转整数
+            int s2 = Convert.ToInt32(parts[2]);
+            int s3 = Convert.ToInt32(parts[3]);
+
+            int sum = s1 + s2 + s3;
+            double avg = <span class="code-blank">___</span>((double)sum / 3, 1);  // 四舍五入保留1位
+
+            Console.WriteLine($&quot;{name}: 总分{sum} 平均{avg}&quot;);
+            totalScore += sum;
+            studentCount++;
+
+            if (sum &gt; <span class="code-blank">___</span>)                         // 比当前最高分大
+            {
+                topScore = sum;
+                topStudent = name;
+            }
+        }
+
+        double classAvg = Math.Round((double)totalScore / <span class="code-blank">___</span>, 1);  // 学生人数
+        Console.WriteLine(&quot;--------------------&quot;);
+        Console.WriteLine($&quot;全班平均分：{classAvg}&quot;);
+        Console.WriteLine($&quot;最高分学生：{topStudent}（{topScore}分）&quot;);
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336817344',this)">复制</button></div>
+<pre id="c_4336817344"><code class="language-csharp">using System;
+using System.IO;
+
+class Program
+{
+    static void Main()
+    {
+        string[] lines = File.ReadAllLines(&quot;scores.txt&quot;);
+
+        int totalScore = 0, studentCount = 0;
+        string topStudent = &quot;&quot;;
+        int topScore = 0;
+
+        Console.WriteLine(&quot;====================&quot;);
+        Console.WriteLine($&quot;成绩分析报告  {DateTime.Now:yyyy-MM-dd}&quot;);
+        Console.WriteLine(&quot;====================&quot;);
+
+        foreach (string line in lines)
+        {
+            string[] parts = line.Split(' ');
+            string name = parts[0];
+            int s1 = Convert.ToInt32(parts[1]);
+            int s2 = Convert.ToInt32(parts[2]);
+            int s3 = Convert.ToInt32(parts[3]);
+
+            int sum = s1 + s2 + s3;
+            double avg = Math.Round((double)sum / 3, 1);
+
+            Console.WriteLine($&quot;{name}: 总分{sum} 平均{avg}&quot;);
+            totalScore += sum;
+            studentCount++;
+
+            if (sum &gt; topScore)
+            {
+                topScore = sum;
+                topStudent = name;
+            }
+        }
+
+        double classAvg = Math.Round((double)totalScore / studentCount, 1);
+        Console.WriteLine(&quot;--------------------&quot;);
+        Console.WriteLine($&quot;全班平均分：{classAvg}&quot;);
+        Console.WriteLine($&quot;最高分学生：{topStudent}（{topScore}分）&quot;);
+    }
+}</code></pre>
+</div></div></div><div class="card"><ul><li>动手：把 <code>scores.txt</code> 改成你自己的班级数据，看结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>File.ReadAllLines</code> — 逐行读取文件（Path 相关，页面7）</li><li><code>Convert.ToInt32</code> — 文件读出来都是 string，必须转数字（页面6）</li><li><code>Math.Round(..., 1)</code> — 保留一位小数（页面3）</li><li><code>DateTime.Now</code> — 生成报告日期（页面4）</li><li>每行代码都精准用到页面3-7的内容——&quot;综合&quot;二字落到实处</li></ul></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个目标日期（如 <code>2026-12-31</code>），程序算出<strong>距离今天还有多少天</strong>。<br>要求：用 <code>DateTime</code> 和 <code>TimeSpan</code> 自己算差值，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336816896',this)">复制</button></div>
+<pre id="c_4336816896"><code class="language-csharp">DateTime target = DateTime.Parse(Console.ReadLine());
+TimeSpan diff = target - DateTime.Now;
+Console.WriteLine($&quot;距离目标还有 {diff.Days} 天&quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>输入三角形两边长 a、b 和夹角角度（度），用公式 <code>面积 = 0.5 × a × b × sin(角度转弧度)</code> 计算面积，保留两位小数。提示：弧度 = 角度 × <code>Math.PI / 180</code>。</p><ul><li>知识：<code>Math.Sin</code>、<code>Math.PI</code>、<code>Math.Round</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入边a：→ 3</code></li></ul><ul><li>输入：<code>请输入边b：→ 4</code></li></ul><ul><li>输入：<code>请输入夹角（度）：→ 90</code></li></ul><ul><li>输出：<code>面积 = 6.00</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>输入两个日期（格式 yyyy-MM-dd），计算它们之间相差多少天，以及&quot;约等于多少个月&quot;（按每月30天计，保留1位小数）。</p><ul><li>知识：<code>DateTime.Parse</code>、日期相减得 <code>TimeSpan</code>、<code>Math.Round</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入开始日期：→ 2026-01-01</code></li></ul><ul><li>输入：<code>请输入结束日期：→ 2026-07-01</code></li></ul><ul><li>输出：<code>相差 181 天</code></li></ul><ul><li>输出：<code>约 6.0 个月</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>用 <code>Random</code> 随机生成5道<strong>两位数加减法</strong>题（50%概率加法、50%概率减法），用户作答后统计得分和正确率。减法题不能出现负数结果（检测到就重出）。</p><ul><li>知识：<code>Random</code>（<strong>必须用 <code>new Random(42)</code> 固定种子</strong>，否则验收输出不一致）、<code>Math.Abs</code>（判断正误）、正确率 = 做对数 / 5 × 100</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入答案（第1题 34 + 57）：→ 91</code></li></ul><ul><li>输入：<code>请输入答案（第2题 82 - 15）：→ 67</code></li></ul><ul><li>输入：<code>请输入答案（第3题 45 + 28）：→ 73</code></li></ul><ul><li>输入：<code>请输入答案（第4题 91 - 46）：→ 40</code></li></ul><ul><li>输入：<code>请输入答案（第5题 16 + 78）：→ 94</code></li></ul><ul><li>输出：<code>第1题：34 + 57 = 91 ✅</code></li></ul><ul><li>输出：<code>第2题：82 - 15 = 67 ✅</code></li></ul><ul><li>输出：<code>第3题：45 + 28 = 73 ✅</code></li></ul><ul><li>输出：<code>第4题：91 - 46 = 40 ❌ 答案是 45</code></li></ul><ul><li>输出：<code>第5题：16 + 78 = 94 ✅</code></li></ul><ul><li>输出：<code>做对 4/5 题，正确率 80%</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>从 <code>names.txt</code>（一行一个名字）读取学生名单，用户输入每组人数 N，用 <code>Random</code> 打乱后分成若干组，输出分组结果。如果最后一组不足 N 人也单独成组。输出分组时间。</p><ul><li>知识：<code>File.ReadAllLines</code>、<code>Random</code>（<strong>必须用 <code>new Random(42)</code> 固定种子</strong>）、<code>DateTime</code>、<code>Math.Ceiling</code>（算需要几组）</li><li>提示：把名单放到 <code>List&lt;string&gt;</code> 里，<code>rand.Next(i, names.Count)</code> 随机交换位置实现洗牌</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入每组人数：→ 5</code></li></ul><ul><li>输出：<code>分组时间：2026-07-15 14:30:22</code></li></ul><ul><li>输出：<code>共12人，每组5人，分3组</code></li></ul><ul><li>输出：<code>第1组：王五 钱十三 陈七 吴九 孙十二</code></li></ul><ul><li>输出：<code>第2组：杨十四 张三 冯十一 周八 赵六</code></li></ul><ul><li>输出：<code>第3组：李四 郑十</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每道题用注释分隔<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336816000',this)">复制</button></div>
+<pre id="c_4336816000"><code class="language-csharp">using System;
+using System.IO;
+using System.Collections.Generic;
+
+class Program
+{
+    static void Main()
+    {
+        // ==================== 第1题 ====================
+
+
+        // ==================== 第2题 ====================
+
+
+        // ==================== 第3题 ====================
+
+
+        // ==================== 第4题 ====================
+
+    }
+}</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="12"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件18_项目实战_图书管理系统.html" class="end-next-link">📖 下一节：课件18 · 项目实战 - 图书管理系统 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=12,contentTotal=10;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

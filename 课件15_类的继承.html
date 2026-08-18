@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件15_类的继承 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件15_类的继承</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 本节学习目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 继承的&quot;是一种&quot;关系 </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 这种关系能解决什么问题？ </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. protected — 给子类开的&quot;后门&quot; </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. base — 调用父类构造方法 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 多态 — virtual 与 override </a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 抽象类 — 不能 new 的父类 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. is 和 as — 类型的判断与转换 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 课堂练习1 — 动物继承 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="12"><span class="nav-status"></span>11. 综合练习 — 银行账户体系 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="13"><span class="nav-status"></span>12. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="14"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 14</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>类的继承</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner">
+<h1>本节学习目标</h1>
+<div class="goal-grid"><div class="goal-card"><span class="goal-icon">🎯</span><span class="goal-text">理解继承的概念——子类&quot;是一种&quot;父类，实现代码复用</span></div><div class="goal-card"><span class="goal-icon">🔍</span><span class="goal-text">掌握继承语法（<code>: 父类名</code>）及 <code>protected</code>、<code>base</code> 关键字</span></div><div class="goal-card"><span class="goal-icon">📝</span><span class="goal-text">理解多态——<code>virtual</code> + <code>override</code> 让同一调用自动找对版本</span></div><div class="goal-card"><span class="goal-icon">💻</span><span class="goal-text">理解抽象类（<code>abstract</code>）——不能 new 的模板，强制子类实现</span></div><div class="goal-card"><span class="goal-icon">✅</span><span class="goal-text">掌握 <code>is</code> / <code>as</code> ——多态数组中的类型判断与安全转换</span></div><div class="goal-card"><span class="goal-icon">🧠</span><span class="goal-text">能综合运用继承+多态+is/as 解决实际问题（账户体系、多态数组）</span></div></div>
+
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>继承的&quot;是一种&quot;关系</h1>
+<div class="card"><p>生活中到处是继承关系。先搞清两个概念：</p></div><div class="card"><ul><li><strong>父类（基类）</strong>——被继承的那个，定义共有的东西。比如&quot;动物&quot;：所有动物都有名字、都会叫</li><li><strong>子类（派生类）</strong>——继承别人的那个，在共有的基础上加自己特有的。比如&quot;狗&quot;：是动物 + 会汪汪叫</li></ul></div><div class="card"><p>来看一张图：</p></div><pre class="plain-box"><code>动物（父类）：名字、年龄、叫声
+ ├── 狗（子类） — 继承以上全部，再加：汪汪叫
+ ├── 猫（子类） — 继承以上全部，再加：喵喵叫
+ └── 鸟（子类） — 继承以上全部，再加：会飞
+
+学生（父类）：姓名、年龄、自我介绍
+ ├── 大学生（子类）— 继承以上全部，再加：专业
+ └── 中学生（子类）— 继承以上全部，再加：年级</code></pre><div class="card"><ul><li>子类<strong>自动拥有</strong>父类的特征（&quot;是什么&quot;），再加自己<strong>特有的东西</strong></li><li>箭头方向就是&quot;是一种&quot;：狗→动物，大学生→学生</li><li>用 C# 的话说：<code>class Dog : Animal</code> —— 冒号后面就是父类</li></ul></div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>这种关系能解决什么问题？</h1>
+<div class="card"><p>核心就四个字：<strong>代码复用</strong>。把共有的东西放在父类，子类只写自己独有的，不用抄一遍。</p></div><div class="card"><p>来看反面教材——不用继承有多痛苦：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383208064',this)">复制</button></div>
+<pre id="c_4383208064"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+    public void Introduce() { ... }
+}
+
+// 大学生类——和 Student 几乎一样，只多了专业
+class CollegeStudent
+{
+    public string Name { get; set; }      // ——和 Student 重复！
+    public int Age { get; set; }          // ——和 Student 重复！
+    public string Major { get; set; }     // 唯一的新东西
+    public void Introduce() { ... }       // ——和 Student 重复！
+}</code></pre>
+</div><div class="card"><p>既然大学生是一种学生，那直接复用学生的代码不就好了？来看继承的语法：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383207936',this)">复制</button></div>
+<pre id="c_4383207936"><code class="language-csharp">// 父类（基类）——提供通用代码
+class Student
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public void Introduce()
+    {
+        Console.WriteLine($&quot;我叫{Name}，{Age}岁&quot;);
+    }
+}
+
+// 子类（派生类）——继承父类 + 自己的扩展
+class CollegeStudent : Student     // : 后面跟父类名
+{
+    public string Major { get; set; }   // 子类独有字段
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383207744',this)">复制</button></div>
+<pre id="c_4383207744"><code class="language-csharp">CollegeStudent cs = new CollegeStudent();
+cs.Name = &quot;张三&quot;;      // ✅ 继承来的
+cs.Age = 20;           // ✅ 继承来的
+cs.Major = &quot;计算机&quot;;    // ✅ 自己的
+cs.Introduce();        // ✅ 继承来的——我叫张三，20岁</code></pre>
+</div><div class="card"><ul><li>子类继承父类的成员，但能访问哪些取决于<strong>修饰符</strong>（详见下页）</li></ul></div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>protected — 给子类开的&quot;后门&quot;</h1>
+<div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383208448',this)">复制</button></div>
+<pre id="c_4383208448"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }       // 谁都能访问
+    private int score;                      // 只有自己能用
+    protected int age;                      // 自己和子类能用
+}
+
+class CollegeStudent : Student
+{
+    public void ShowAge()
+    {
+        Console.WriteLine(age);   // ✅ protected，子类可以访问
+        // Console.WriteLine(score);  // ❌ private，子类也碰不了
+    }
+}</code></pre>
+</div><div class="card"><table><tr><th>修饰符</th><th>子类能访问？</th><th>说明</th></tr><tr><td><code>public</code></td><td>✅ 能</td><td>外部和子类都能用</td></tr><tr><td><code>private</code></td><td>❌ 不能</td><td>只有父类自己能用，子类也碰不到</td></tr><tr><td><code>protected</code></td><td>✅ 能</td><td>只有<strong>自己</strong>和<strong>子类</strong>能用，外部不行</td></tr></table></div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>base — 调用父类构造方法</h1>
+<div class="card"><p>课件12学过 <code>this</code>——它指代&quot;当前这个对象&quot;。在继承体系里，<code>base</code> 指代&quot;父类那一部分&quot;。逻辑很自然：<strong><code>this</code> 是自己，<code>base</code> 是爹</strong>。</p></div><div class="card"><p>来看代码——子类的构造方法怎么把 Name、Age 交给父类去初始化：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383206656',this)">复制</button></div>
+<pre id="c_4383206656"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }
+    public int Age { get; set; }
+
+    public Student(string name, int age)
+    {
+        Name = name; Age = age;
+    }
+}
+
+class CollegeStudent : Student
+{
+    public string Major { get; set; }
+
+    // base(name, age) → 把参数传给父类构造方法
+    public CollegeStudent(string name, int age, string major)
+        : base(name, age)           // 先调用父类构造
+    {
+        Major = major;              // 再初始化自己的字段
+    }
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383206592',this)">复制</button></div>
+<pre id="c_4383206592"><code class="language-csharp">CollegeStudent cs = new CollegeStudent(&quot;张三&quot;, 20, &quot;计算机&quot;);
+// 父类的 Name、Age 由 base(name, age) 自动设置</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>多态 — virtual 与 override</h1>
+<div class="card"><p>先搞懂概念：<strong>多态</strong>就是&quot;父类引用指向子类对象，同一个方法调用，结果取决于实际是什么子类&quot;。生活中的多态——遥控器上的&quot;播放&quot;键：按下去，电视播画面、音响播音乐、DVD播光盘。同一个按钮，不同设备，行为不同。</p></div><div class="card"><p>在 C# 里实现多态需要两个关键字：父类用 <code>virtual</code>，子类用 <code>override</code>。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383206272',this)">复制</button></div>
+<pre id="c_4383206272"><code class="language-csharp">class Student
+{
+    public string Name { get; set; }
+
+    public virtual void Introduce()        // virtual = &quot;子类可以重写我&quot;
+    {
+        Console.WriteLine($&quot;我叫{Name}&quot;);
+    }
+}
+
+class CollegeStudent : Student
+{
+    public string Major { get; set; }
+
+    public override void Introduce()       // override = &quot;我改了父类的版本&quot;
+    {
+        Console.WriteLine($&quot;我叫{Name}，专业{Major}&quot;);
+    }
+}</code></pre>
+</div><div class="card"><p>现在来看多态的实际效果——<strong>声明的是 Student 类型，但执行的是 CollegeStudent 的方法</strong>：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383206080',this)">复制</button></div>
+<pre id="c_4383206080"><code class="language-csharp">Student s1 = new Student { Name = &quot;张三&quot; };
+Student s2 = new CollegeStudent { Name = &quot;李四&quot;, Major = &quot;计算机&quot; };
+//     ↑ 声明为 Student                  ↑ 实际是 CollegeStudent
+
+s1.Introduce();   // 我叫张三        —— 普���学生，走 Student.Introduce()
+s2.Introduce();   // 我叫李四，专业计算机 —— 大学生，走 CollegeStudent.Introduce()
+//                ↑ 同一个 Introduce() 调用，结果完全不同——这就是多态！</code></pre>
+</div><div class="card"><p>⚠️ 关键规则：</p></div><div class="card"><table><tr><th>情况</th><th>结果</th></tr><tr><td>父类没 <code>virtual</code>，子类写 <code>override</code></td><td>❌ 编译报错</td></tr><tr><td>父类有 <code>virtual</code>，子类不写 <code>override</code></td><td>正常继承，用父类方法</td></tr><tr><td>父类有 <code>virtual</code>，子类写 <code>override</code></td><td>✅ 调用子类自己的版本</td></tr></table></div><div class="ok-box">下页会讲 <code>abstract</code>：<code>abstract</code> 强制子类必须重写，<code>virtual</code> 让子类可选。两者都搭配 <code>override</code> 使用，区别在于父类提不提供默认实现。</div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>抽象类 — 不能 new 的父类</h1>
+<div class="card"><p>先搞清楚&quot;抽象&quot;二字在编程里是什么意思——它不是你画的抽象画，而是<strong>不完整、不具体</strong>。</p></div><div class="card"><ul><li>你可以指着笼子里的一只狗说&quot;这是动物&quot;，但不能凭空指着空气说&quot;这是动物&quot;——「动物」本身太模糊，没法具体到一只活物</li><li>代码同理：<code>new Animal()</code> 到底叫声是什么？没法回答。所以把它标成 <code>abstract</code>，告诉编译器：<strong>别让人 new 我，我只当模板</strong></li></ul></div><div class="card"><p>三个实际作用：</p></div><div class="card"><ol><li><strong>防止创建无意义的对象</strong>：世上没有一只叫&quot;动物&quot;的动物，<code>new Animal()</code> 没意义</li><li><strong>强迫子类统一行为</strong>：所有动物都要会叫，但狗叫和猫叫不一样——父类规定&quot;必须会叫&quot;，子类各自实现</li><li><strong>表明设计意图</strong>：告诉其他开发者&quot;这个类是模板，别直接用，去继承它&quot;</li></ol></div><div class="card"><p>用 <code>abstract</code> 标记后，这个类只能被继承，不能 <code>new</code>。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383204992',this)">复制</button></div>
+<pre id="c_4383204992"><code class="language-csharp">abstract class Animal           // abstract = 抽象类，不能 new
+{
+    public string Name { get; set; }
+    public Animal(string name) { Name = name; }
+
+    // 抽象方法：只有声明，没有 { } 实现体，强迫子类必须重写！
+    public abstract void Speak();
+}
+
+// Animal a = new Animal(&quot;?&quot;);  // ❌ 抽象类不能 new！</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383204928',this)">复制</button></div>
+<pre id="c_4383204928"><code class="language-csharp">class Dog : Animal
+{
+    public Dog(string name) : base(name) { }
+
+    // ⚠️ 如果父类是 abstract，子类必须 override 所有抽象方法，否则编译报错
+    public override void Speak()
+    {
+        Console.WriteLine($&quot;{Name}：汪汪！&quot;);
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>abstract</code> 类 = 模板，不能 new，只能被继承</li><li><code>abstract</code> 方法 = 只有声明没有实现，子类必须 override</li><li>上面的页面8已讲另一种方案 <code>virtual</code>——父类给默认实现，子类可选要不要改</li></ul></div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>is 和 as — 类型的判断与转换</h1>
+<div class="card"><p>学完继承和多态，你已经能写 <code>Animal[]</code> 统一管理猫狗鸟。但有个实际问题——遍历数组时，怎么知道当前这只到底是狗还是猫？&quot;我只想让狗叫，猫跳过&quot;、&quot;我想把狗转回 Dog 类型调用它独有的方法&quot;——这就需要 <code>is</code> 和 <code>as</code>。</p></div><div class="card"><h3><code>is</code> — 判断&quot;它是不是&quot;某个类型</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383204032',this)">复制</button></div>
+<pre id="c_4383204032"><code class="language-csharp">Animal pet = new Dog(&quot;旺财&quot;);
+
+if (pet is Dog)
+    Console.WriteLine(&quot;这是一只狗&quot;);      // ✅ 输出
+if (pet is Cat)
+    Console.WriteLine(&quot;这不是猫&quot;);        // ❌ 不输出
+if (pet is Animal)
+    Console.WriteLine(&quot;肯定是动物&quot;);      // ✅ 子类 is 父类 → true</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383203968',this)">复制</button></div>
+<pre id="c_4383203968"><code class="language-csharp">// 实战：遍历动物数组，只让狗叫
+Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
+foreach (Animal a in pets)
+{
+    if (a is Dog)
+        a.Speak();   // 只有狗会叫，猫被跳过
+}</code></pre>
+</div><div class="card"><h3><code>as</code> — 安全类型转换（不像强制转换那么容易崩）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383203456',this)">复制</button></div>
+<pre id="c_4383203456"><code class="language-csharp">Animal pet = new Dog(&quot;旺财&quot;);
+
+Dog d = pet as Dog;     // ✅ 狗转狗，成功
+if (d != null) d.Speak();
+
+Cat c = pet as Cat;     // ❌ 狗不是猫，c = null（不报错！）
+if (c == null) Console.WriteLine(&quot;这不是猫！&quot;);</code></pre>
+</div><div class="card"><table><tr><th></th><th><code>(Dog)pet</code> 强制转换</th><th><code>pet as Dog</code></th></tr><tr><td>转换失败</td><td>💥 抛异常，不处理程序崩溃</td><td>返回 <code>null</code>，不崩溃</td></tr><tr><td>适用场景</td><td>100% 确定是同类型</td><td>不确定，先试试看</td></tr></table></div><div class="ok-box">💡 一句话：<code>is</code> 问&quot;你是不是&quot;，<code>as</code> 说&quot;试试转成你&quot;。不确定类型时用 <code>as</code> + null 判断比强制转换安全得多。</div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>课堂练习1 — 动物继承</h1>
+<div class="ok-box">定义 Animal 父类（virtual Speak），派生 Dog 和 Cat 子类各自重写叫声。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383202624',this)">复制</button></div>
+<pre id="c_4383202624"><code class="language-csharp">class Animal
+{
+    public string Name { get; set; }
+    public Animal(string name) { Name = name; }
+
+    // virtual = 允许子类用自己的叫声替换
+    public virtual void Speak()
+    {
+        Console.WriteLine($&quot;{Name} 发出声音&quot;);
+    }
+}
+
+class Dog : Animal
+{
+    public Dog(string name) : base(name) { }
+    public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：汪汪！&quot;);
+}
+
+class Cat : Animal
+{
+    public Cat(string name) : base(name) { }
+    public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：喵喵！&quot;);
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383202560',this)">复制</button></div>
+<pre id="c_4383202560"><code class="language-csharp">Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
+foreach (Animal a in pets)
+    a.Speak();
+// 旺财：汪汪！ 咪咪：喵喵！ 大黄：汪汪！</code></pre>
+</div><div class="card"><ul><li>动手：把 <code>Speak()</code> 的 <code>virtual</code> / <code>override</code> 去掉，观察输出有什么变化</li><li>进阶：在 foreach 里加 <code>if (a is Dog)</code> 和 <code>if (a is Cat)</code>，分别统计狗和猫的数量</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>virtual</code> 是父类的承诺：这个方法的实现子类可以替换</li><li><code>override</code> 是子类说：我来提供自己的版本</li><li>去掉它们后 <code>foreach</code> 里全输出&quot;发出声音&quot;——失去了多态</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vehicle</code> 父类和子类：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383202048',this)">复制</button></div>
+<pre id="c_4383202048"><code class="language-csharp">class Vehicle
+{
+    public string Brand { get; set; }
+    public <span class="code-blank">___</span>(string brand) { Brand = brand; }
+
+    public <span class="code-blank">___</span> void Run()
+    {
+        Console.WriteLine(&quot;交通工具在行驶&quot;);
+    }
+}
+
+class Car : <span class="code-blank">___</span>
+{
+    public <span class="code-blank">___</span> : <span class="code-blank">___</span>(brand) { }
+    public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
+}
+
+class Boat : Vehicle
+{
+    public Boat(string brand) : <span class="code-blank">___</span>(brand) { }
+    public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
+}
+
+// 测试
+Vehicle[] vehicles = { new <span class="code-blank">___</span>(&quot;奔驰&quot;), new <span class="code-blank">___</span>(&quot;远洋号&quot;) };
+foreach (Vehicle v in <span class="code-blank">___</span>)
+    v.Run();
+// 奔驰汽车在公路上跑  远洋号船在水上漂</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383201984',this)">复制</button></div>
+<pre id="c_4383201984"><code class="language-csharp">class Vehicle
+{
+    public string Brand { get; set; }
+    public Vehicle(string brand) { Brand = brand; }
+
+    public virtual void Run()
+    {
+        Console.WriteLine(&quot;交通工具在行驶&quot;);
+    }
+}
+
+class Car : Vehicle
+{
+    public Car(string brand) : base(brand) { }
+    public override void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
+}
+
+class Boat : Vehicle
+{
+    public Boat(string brand) : base(brand) { }
+    public override void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
+}
+
+Vehicle[] vehicles = { new Car(&quot;奔驰&quot;), new Boat(&quot;远洋号&quot;) };
+foreach (Vehicle v in vehicles)
+    v.Run();</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>继承的&quot;是一种&quot;关系</strong>：子类&quot;是一种&quot;父类，复用父类成员</li><li><strong>这种关系能解决什么问题？</strong>：避免重复写公共代码，扩展更方便</li><li><strong>protected — 给子类开的&quot;后门&quot;</strong>：子类能用，类外不能用</li><li><strong>base — 调用父类构造方法</strong>：子类构造用 <code>: base(...)</code> 把参数传给父类</li><li><strong>多态 — virtual 与 override</strong>：父类用 virtual 留空，子类 override 填自己的实现</li><li><strong>抽象类 — 不能 new 的父类</strong>：<code>abstract</code> 只当模板，逼子类去实现</li><li><strong>is 和 as — 类型的判断与转换</strong>：<code>is</code> 判类型、<code>as</code> 安全转类型</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+</div></div>
+<div class="slide" data-page="12"><div class="slide-inner markable">
+<h1>综合练习 — 银行账户体系</h1>
+<div class="ok-box">综合运用继承：父类定义通用行为，子类扩展独特功能。</div><div class="card"><h3>期望输入：</h3></div><div class="card"><ul><li>张三 创建基础账户，余额1000 → 尝试取1200（应失败）</li><li>李四 创建活期账户，余额5000，年利率3% → 计息一次</li><li>王五 创建信用卡账户，余额3000，透支额度2000 → 取4000（透支成功）</li></ul></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三 余额：1000（取1200失败）
+李四 余额：5150（年利率3%）
+王五 余额：-1000（透支额度2000）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>父类 <code>BankAccount</code>：存钱/取钱/Info，<code>virtual</code> 标记可重写的方法</li><li>子类 <code>SavingsAccount</code>：新增利息 + 重写 Info（显示利率）</li><li>子类 <code>CreditAccount</code>：重写取钱（加上透支额度）+ 重写 Info</li><li><code>Balance</code> 用 <code>protected set</code>，子类才能改</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383200640',this)">复制</button></div>
+<pre id="c_4383200640"><code class="language-csharp">// ===== 父类：基础银行账户 =====
+class BankAccount
+{
+    public string Owner { get; set; }
+    public double Balance { get; <span class="code-blank">___</span> set; }
+
+    public BankAccount(string owner, double balance)
+    { Owner = owner; <span class="code-blank">___</span> = balance; }
+
+    // 存钱：金额必须大于0
+    public <span class="code-blank">___</span> void Deposit(double amount)
+    {
+        if (amount &gt; 0) Balance += amount;
+    }
+
+    // 取钱：不能超过余额，返回是否成功
+    public <span class="code-blank">___</span> bool Withdraw(double amount)
+    {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
+        { Balance -= amount; return true; }
+        return <span class="code-blank">___</span>;
+    }
+
+    // 显示账户信息（子类会重写）
+    public virtual string Info =&gt; $&quot;{Owner} 余额：{<span class="code-blank">___</span>}&quot;;
+}
+
+// ===== 子类1：活期账户 =====
+class SavingsAccount : <span class="code-blank">___</span>
+{
+    public double Rate { get; set; }
+    public SavingsAccount(string owner, double balance, double rate)
+        : <span class="code-blank">___</span>(owner, balance) { Rate = rate; }
+
+    // 新增：计算利息并存入（父类没有这个方法）
+    public void AddInterest()
+    { Balance += Balance * <span class="code-blank">___</span>; }
+
+    // 重写：信息里加上利率
+    public override string Info =&gt;
+        $&quot;{Owner} 余额：{Balance}（年利率{<span class="code-blank">___</span>:P0}）&quot;;
+}
+
+// ===== 子类2：信用卡账户 =====
+class CreditAccount : BankAccount
+{
+    public double CreditLimit { get; set; }
+    public CreditAccount(string owner, double balance, double limit)
+        : <span class="code-blank">___</span>(owner, balance) { CreditLimit = limit; }
+
+    // 重写取钱：可用透支额度
+    public override <span class="code-blank">___</span> Withdraw(double amount)
+    {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + <span class="code-blank">___</span>)
+        { Balance -= amount; return true; }
+        return false;
+    }
+
+    // 重写：信息里加上透支额度
+    public <span class="code-blank">___</span> string Info =&gt;
+        $&quot;{Owner} 余额：{<span class="code-blank">___</span>}（透支额度{CreditLimit}）&quot;;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383201024',this)">复制</button></div>
+<pre id="c_4383201024"><code class="language-csharp">class BankAccount
+{
+    public string Owner { get; set; }
+    public double Balance { get; protected set; }
+
+    public BankAccount(string owner, double balance)
+    { Owner = owner; Balance = balance; }
+
+    // 存钱：金额必须大于0
+    public virtual void Deposit(double amount)
+    {
+        if (amount &gt; 0) Balance += amount;
+    }
+
+    // 取钱：不能超过余额，返回是否成功
+    public virtual bool Withdraw(double amount)
+    {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
+        { Balance -= amount; return true; }
+        return false;
+    }
+
+    // 显示账户信息（子类会重写）
+    public virtual string Info =&gt; $&quot;{Owner} 余额：{Balance}&quot;;
+}
+
+class SavingsAccount : BankAccount
+{
+    public double Rate { get; set; }
+    public SavingsAccount(string owner, double balance, double rate)
+        : base(owner, balance) { Rate = rate; }
+
+    // 新增：计算利息并存入
+    public void AddInterest()
+    { Balance += Balance * Rate; }
+
+    // 重写：信息里加上利率
+    public override string Info =&gt;
+        $&quot;{Owner} 余额：{Balance}（年利率{Rate:P0}）&quot;;
+}
+
+class CreditAccount : BankAccount
+{
+    public double CreditLimit { get; set; }
+    public CreditAccount(string owner, double balance, double limit)
+        : base(owner, balance) { CreditLimit = limit; }
+
+    // 重写取钱：可用透支额度
+    public override bool Withdraw(double amount)
+    {
+        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + CreditLimit)
+        { Balance -= amount; return true; }
+        return false;
+    }
+
+    // 重写：信息里加上透支额度
+    public override string Info =&gt;
+        $&quot;{Owner} 余额：{Balance}（透支额度{CreditLimit}）&quot;;
+}</code></pre>
+</div></div></div><div class="ok-box">💡 多态进阶：把三种账户放 <code>BankAccount[]</code> 数组里，foreach 统一打 Info。然后加一行——用 <code>is SavingsAccount</code> 判断，只对活期账户调 <code>AddInterest()</code>。</div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：在银行账户体系里<strong>新增一个子类</strong> <code>LoanAccount</code>（贷款账户），继承 <code>BankAccount</code>，重写 <code>Info</code> 显示&quot;欠款金额&quot;（用负数余额表示）。<br>要求：自己写完整子类 + 一行 <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383200320',this)">复制</button></div>
+<pre id="c_4383200320"><code class="language-csharp">class LoanAccount : BankAccount
+{
+    public LoanAccount(string owner, double debt)
+        : base(owner, -debt) { }
+    public override string Info =&gt;
+        $&quot;{Owner} 欠款：{-Balance}&quot;;
+}
+// Main 中：
+LoanAccount loan = new LoanAccount(&quot;赵六&quot;, 5000);
+Console.WriteLine(loan.Info);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="13"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Shape</code> 抽象类（<code>abstract double GetArea()</code>），派生 <code>Rectangle</code>（宽×高）和 <code>Circle</code>（π×r²）各自实现面积计算。</p><ul><li>提示：<code>abstract</code> 方法没有 <code>{ }</code> 体，子类必须 <code>override</code>；<code>Math.PI</code></li></ul></div><div class="ok-box">期望输入：<code>矩形(5, 3)</code> / <code>圆(r=2)</code><br>验收示范：<ul><li>输出：<code>矩形面积：15</code></li></ul><ul><li>输出：<code>圆面积：12.57</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Employee</code> 父类（Name、virtual <code>CalcSalary()</code> 返回基本工资3000），派生 <code>FullTime</code>（工资不变）和 <code>SalesPerson</code>（重写：3000 + 销售额×10%）。把 3 个不同类型的员工放进 <code>Employee[]</code>，foreach 统一调 <code>CalcSalary()</code> 算总工资。<strong>额外要求</strong>：在循环里用 <code>is</code> 判断类型，分别统计全职和销售的人数。</p><ul><li>提示：<code>if (emp is FullTime)</code> 和 <code>if (emp is SalesPerson)</code></li></ul></div><div class="ok-box">期望输入：<code>张三(全职) + 李四(销售/50000) + 王五(全职)</code> 放数组统一算<br>验收示范：<ul><li>输出：<code>张三工资：3000</code></li></ul><ul><li>输出：<code>李四工资：8000</code></li></ul><ul><li>输出：<code>王五工资：3000</code></li></ul><ul><li>输出：<code>全职2人 销售1人 总工资：14000</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>先定义 <code>Account</code> 父类：Username 公开、password 用 <code>protected</code>（子类可见外部不可见）、virtual <code>Login(string pwd)</code> 比对密码返回 bool。再定义 <code>AdminAccount : Account</code>：新增 adminKey，提供自己的 <code>Login(string pwd, string key)</code> —— 在里面先调 <code>base.Login(pwd)</code> 验密码，密码对了再验 adminKey，全是 true 才算管理员登录成功。</p><ul><li>提示：<code>protected</code> 字段在子类的 <code>Login</code> 方法里可以直接访问 <code>password</code>；<code>base.Login(pwd)</code> 拿到父类验证结果</li></ul></div><div class="ok-box">期望输入：<code>admin/admin123</code> + adminKey=<code>secret</code> → 登录成功；<code>admin/wrong</code> + adminKey=<code>secret</code> → 密码错误<br>验收示范：<ul><li>输出：<code>admin + 正确密码 → 管理员登录成功</code></li></ul><ul><li>输出：<code>admin + 错误密码 → 密码错误</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>用综合练习的银行账户体系：给父类 <code>BankAccount</code> 加 <code>TransferTo(BankAccount other, double amount)</code> —— 从自己账户取钱 <code>Withdraw(amount)</code>，成功则调 <code>other.Deposit(amount)</code> 给对方加钱。然后定义 <code>CreditAccount : BankAccount</code>，重写 <code>TransferTo</code> 支持透支转账。<strong>额外要求</strong>：转账前用 <code>as</code> 安全地判断对方是否为 <code>CreditAccount</code>，如果是就打印&quot;对方是信用卡账户&quot;。</p><ul><li>提示：<code>other as CreditAccount</code>，为 null 就不是信用卡</li></ul></div><div class="ok-box">期望输入：<code>张三(1000) → 转账500给 → 李四(500)</code><br>验收示范：<ul><li>输出：<code>张三 余额：500</code></li></ul><ul><li>输出：<code>李四 余额：1000</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383198784',this)">复制</button></div>
+<pre id="c_4383198784"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        // ==================== 第1题 ====================
+
+
+        // ==================== 第2题 ====================
+
+
+        // ==================== 第3题 ====================
+
+
+        // ==================== 第4题 ====================
+
+    }
+}
+
+        // ===== 各类定义写在这里 =====</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="14"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件16_文件操作.html" class="end-next-link">📖 下一节：课件16 · 文件操作 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=14,contentTotal=12;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

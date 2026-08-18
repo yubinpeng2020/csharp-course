@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件18_项目实战_图书管理系统 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件18_项目实战_图书管理系统</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 项目目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 需求说明 </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. AI 协作开发 — 用 AI 搭脚手架 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 类的设计 </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. BookManager — 数据统筹类 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 主程序框架 </a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 查看与添加图书 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 查找与借还书 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="11"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 11</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>项目实战 — 图书管理系统</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner markable">
+<h1>项目目标</h1>
+<div class="ok-box">🚀 <strong>你的第一个完整项目——从零到一，写一个真正能用的系统。</strong></div><div class="card"><p>这不是练习题，这是一个<strong>有菜单、能存盘、关掉重开数据还在</strong>的真实程序。</p></div><pre class="plain-box"><code>╔══════════════════════════════════════════════╗
+║            📚 图书管理系统 v1.0               ║
+╠══════════════════════════════════════════════╣
+║  1.添加  2.查看  3.查找  4.借书  5.还书       ║
+║  6.删除  7.退出                              ║
+║  ─────────────────────────────────────       ║
+║  选择：2                                     ║
+║                                              ║
+║  === 图书列表（共3本）===                      ║
+║  [1] C#入门  | 张老师 | ¥45 | 库存5           ║
+║  [2] 算法导论 | 李教授 | ¥89 | 库存3           ║
+║  [3] 设计模式 | 王博士 | ¥68 | 库存2           ║
+║                                              ║
+║  关闭程序 → 重开 → 数据还在 ✅                 ║
+╠══════════════════════════════════════════════╣
+║  📦 类与对象  📋 集合 List   💾 文件读写      ║
+║  🛡️ 异常处理  🔀 switch   🔁 while 循环      ║
+║        200 行代码，练完即战力                   ║
+╚══════════════════════════════════════════════╝</code></pre><div class="ok-box">👀 <strong>先控制台，后 GUI</strong>——今天用黑窗口跑通全部逻辑。后面学完 Avalonia 跨平台窗体，就能把它变成带按钮、输入框、列表的图形界面。<strong>先搞懂内核，再穿漂亮衣服。</strong></div>
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>需求说明</h1>
+<div class="card"><p>实现图书管理系统，支持以下功能：</p></div><div class="card"><ol><li><strong>添加图书</strong>（书名、作者、价格、库存）</li><li><strong>查看所有图书</strong>（列表展示）</li><li><strong>查找图书</strong>（按书名模糊搜索）</li><li><strong>借书</strong>（库存减1）</li><li><strong>还书</strong>（库存加1）</li><li><strong>删除图书</strong></li><li><strong>数据持久化</strong>（程序关闭后数据不丢）</li></ol></div><div class="card"><h3>🎮 启动后长这样——空空的书架等你来填：</h3></div><pre class="plain-box"><code>=== 图书管理系统 ===
+1.添加  2.查看  3.查找  4.借书  5.还书  6.删除  7.退出
+选择：_
+
+暂无图书</code></pre><div class="card"><h3>🔀 它背后怎么运转——把蓝图看清楚：</h3></div><pre class="plain-box"><code>                  ┌────────────────────────┐
+  用户输数字  ──→ │   Program.Main 主入口    │
+  (选1~7)         │   显示菜单，分发任务       │
+                  └──────────┬─────────────┘
+                             │ switch 分支（菜单序号 → 方法）
+     ┌──────┼──────┬──────┬──────┬──────┬──────┐
+     ▼      ▼      ▼      ▼      ▼      ▼      │
+┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐┌────────┐│
+│①AddBook││②Show   ││③Search ││④Borrow ││⑤Return ││⑥Delete ││
+│ 添加图书││ 查看列表││ 模糊查找││ 借书-1 ││ 还书+1 ││ 删除图书││
+└───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘└───┬────┘│
+    │         │        │        │        │        │        │
+    └─────────┴────────┴────────┴────────┴────────┘        │
+                          │                                  │
+                          ▼                      (⑦退出时 SaveBooks)
+   ┌─────────────────────────────────────────────────┐
+   │           BookManager 数据大管家                  │
+   │         （static 静态类，全局共享）                 │
+   │                                                  │
+   │   ┌──────────────────────────────┐              │
+   │   │  List&lt;Book&gt; books 内存图书清单  │              │
+   │   │  书名/作者/价格/库存             │              │
+   │   │  ⚠️ 程序关了就没了              │              │
+   │   └──────────┬───────────────────┘              │
+   │              │                                    │
+   │   程序启动   │   程序退出                          │
+   │   LoadBooks │   SaveBooks                        │
+   │   读入 ↑    │    ↓ 写回                           │
+   │        ┌───┴───┐                                  │
+   │        │       ▼                                  │
+   │        │  📂 books.txt                            │
+   │        └─（硬盘文件，永久保存）                      │
+   └─────────────────────────────────────────────────┘</code></pre><div class="card"><h3>🎭 系统里的四个角色——开工前先认全：</h3></div><div class="card"><table><tr><th>角色</th><th>类型</th><th>职责</th></tr><tr><td><code>Book</code></td><td>类</td><td>一本书的模板：书名、作者、价格、库存</td></tr><tr><td><code>BookManager</code></td><td>静态类</td><td>数据大管家：增删改查、读文件、写文件</td></tr><tr><td><code>Program</code></td><td>类</td><td>程序入口：显示菜单，根据用户选择分发任务</td></tr><tr><td><code>books.txt</code></td><td>文件</td><td>硬盘仓库：程序关了数据还在，启动时自动加载</td></tr></table></div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>AI 协作开发 — 用 AI 搭脚手架</h1>
+<div class="ok-box">200 多行代码，一条条敲太慢。<strong>把 AI 当搭档，不是替身——它给框架，你填灵魂。</strong></div><div class="card"><h3>⚠️ 三条铁律——开始前记牢</h3><ol><li><strong>只让 AI 写框架</strong>：类定义、方法签名、属性声明——这些重复劳动交给它</li><li><strong>业务逻辑必须自己写</strong>：判断条件、用户交互、数据校验——你自己想出来才算会</li><li><strong>写完一个方法就关 AI 测一次</strong>：不要一口气全问完再写，那样等于照抄</li></ol></div><div class="card"><h3>🔧 实操四步——跟着做就能跑通</h3></div><div class="card"><h3>第1步：生成 Book 类</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 C# <code>Book</code> 类，属性：<code>Title</code>、<code>Author</code>、<code>Price</code>、<code>Stock</code>。带构造函数和 <code>ToString()</code>&quot;</em></td><td>完整的 Book 类代码（属性、构造、ToString）</td><td>对照 <strong>4. 类的设计</strong>，理解每行含义后复制</td></tr></table></div><div class="card"><h3>第2步：生成 BookManager 空壳</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 <code>static class BookManager</code>，成员 <code>FilePath</code>、<code>List&lt;Book&gt;</code> books。给这些方法只写签名不写实现：<code>LoadBooks()</code>、<code>SaveBooks()</code>、<code>AddBook()</code>、<code>ShowBooks()</code>、<code>SearchBooks()</code>、<code>BorrowBook()</code>、<code>ReturnBook()</code>&quot;</em></td><td>每个方法只有 <code>{ }</code> 空壳，里面写 <code>// TODO</code></td><td><strong>一个方法一个方法填逻辑</strong>——先填 LoadBooks，写完就跳到第3步</td></tr></table></div><div class="card"><h3>第3步：写一个方法 → 贴给 AI 审查</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;这个 <code>AddBook()</code> 方法有没有 bug？边界情况处理好了吗？输入负数价格会怎样？&quot;</em></td><td>指出问题+建议修复</td><td><strong>理解为什么有问题</strong>再改，不要盲抄</td></tr></table></div><div class="ok-box">💡 关键原则：<strong>一次只问一个方法</strong>。五个方法一起贴，AI 的回答会糊，你也记不住。</div><div class="card"><h3>第4步：关掉 AI，跑起来验证</h3></div><div class="ok-box">写完一个功能模块（如添加+查看）——<strong>马上关掉 AI</strong>，运行程序，用 <strong>2. 需求说明</strong> 页面的菜单实测。跑通了再开 AI 写下一组。如果结果不对：先自己用课件7的调试技巧排查 → 实在找不到 → 把异常信息贴给 AI 定位。</div><div class="ok-box">💡 回到课件1那句话：<strong>AI 写脚手架，人写业务。</strong>今天这 200 行代码练完，你就真正懂了这句话。</div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>类的设计</h1>
+<div class="ok-box">🤖 AI 第1步生成完整类 → 🧑 你对照理解每行含义</div><div class="card"><p><code>Book</code> 类 = 一本书的<strong>模板</strong>——定义了每本书有哪些属性和怎么展示自己。</p></div><pre class="plain-box"><code>┌─────────────────────────────────┐
+│          Book 对象               │
+│  ┌─────────────────────────────┐│
+│  │ Title   = &quot;C#入门&quot;          ││
+│  │ Author  = &quot;张老师&quot;          ││
+│  │ Price   = 45.00             ││
+│  │ Stock   = 5                 ││
+│  └─────────────────────────────┘│
+│  ToString() →                   │
+│  &quot;C#入门 | 张老师 | ¥45 | 库存5&quot; │
+└─────────────────────────────────┘</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337117952',this)">复制</button></div>
+<pre id="c_4337117952"><code class="language-csharp">class Book
+{
+    public string Title { get; set; }       // 书名
+    public string Author { get; set; }      // 作者
+    public double Price { get; set; }       // 价格
+    public int Stock { get; set; }          // 库存
+
+    public Book(string title, string author, double price, int stock)
+    {
+        Title = title; Author = author;
+        Price = price; Stock = stock;
+    }
+
+    public override string ToString()
+    {
+        return $&quot;{Title} | {Author} | ¥{Price} | 库存{Stock}&quot;;
+    }
+}</code></pre>
+</div><div class="card"><ul><li>构造方法 <code>Book(...)</code> — 创建对象时一次性填入书名、作者、价格、库存</li><li><code>public override string ToString()</code> — ⚠️ <strong>它不是自定义方法，是 <code>override</code>（重写）！</strong></li><li style="margin-left:24px;list-style-type:circle">C# 里所有类都继承自 <code>object</code>，<code>object</code> 自带 <code>ToString()</code>。不 override 的话，<code>Console.WriteLine(book)</code> 只输出类名 <code>&quot;Book&quot;</code>，没用。</li><li style="margin-left:24px;list-style-type:circle"><code>override</code> 把它<strong>替换</strong>成我们自己的格式化输出：「C#入门 | 张老师 | ¥45 | 库存5」</li><li style="margin-left:24px;list-style-type:circle">之后所有 <code>Console.WriteLine(book对象)</code> 和 <code>$&quot;{book对象}&quot;</code> 都会<strong>自动调用</strong>这个版本——写一次，到处用</li><li style="margin-left:24px;list-style-type:circle">回忆 课件15：<code>override</code> 就是子类用自己的方法覆盖父类的方法</li></ul></div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>BookManager — 数据统筹类</h1>
+<div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116864',this)">复制</button></div>
+<pre id="c_4337116864"><code class="language-csharp">static class BookManager
+{
+    public static string FilePath = &quot;books.txt&quot;;
+    public static List&lt;Book&gt; books = new List&lt;Book&gt;();
+
+    public static void LoadBooks() { /* TODO */ }
+    public static void SaveBooks() { /* TODO */ }
+    public static void AddBook() { /* TODO */ }
+    public static void ShowBooks() { /* TODO */ }
+    public static void SearchBooks() { /* TODO */ }
+    public static void BorrowBook() { /* TODO */ }
+    public static void ReturnBook() { /* TODO */ }
+}</code></pre>
+</div><div class="card"><h3>LoadBooks() — 启动时从文件加载到内存</h3></div><pre class="plain-box"><code>  📂 books.txt                📋 List&lt;Book&gt; books
+  ┌──────────────────┐       ┌──────────────────────┐
+  │ C#入门|张老师|45|5│  →   │ Book(&quot;C#入门&quot;,&quot;张老师&quot;, │
+  │ 算法导论|李教授|89|3│ →   │       45,5)            │
+  │ 设计模式|王博士|68|2│ →   │ Book(&quot;算法导论&quot;,&quot;李教授&quot;,│
+  └──────────────────┘       │       89,3)            │
+                             │ Book(&quot;设计模式&quot;,&quot;王博士&quot;,│
+                             │       68,2)            │
+                             └──────────────────────┘
+  ① ReadAllLines 读每行      ③ new Book(...) 创建对象
+  ② Split('|') 拆成4段       ④ books.Add(book) 加入列表</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116608',this)">复制</button></div>
+<pre id="c_4337116608"><code class="language-csharp">public static void LoadBooks()
+{
+    books.Clear();
+    if (!File.Exists(FilePath))
+    {
+        return;
+    }
+    foreach (string line in File.ReadAllLines(FilePath))
+    {
+        string[] parts = line.Split('|');
+        books.Add(new Book(parts[0], parts[1],
+            double.Parse(parts[2]), int.Parse(parts[3])));
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>File.Exists</code> — 文件不存在就别读了，程序不会崩</li><li><code>ReadAllLines</code> — 把文件所有行读成 <code>string[]</code></li><li><code>Split('|')</code> — 按竖线拆开，每本书存成一行 <code>Title|Author|Price|Stock</code></li><li><code>double.Parse</code> / <code>int.Parse</code> — 文件里读出来都是 string，价格转 double，库存转 int</li></ul></div><div class="ok-box">📁 范例数据文件 <code>books.txt</code> 已准备好（4 列格式 <code>Title|Author|Price|Stock</code>），内容和上面 ASCII 图一样，复制到程序目录就能跑。题2 的 5 列新格式范例见同目录的 <code>books_isbn.txt</code>。</div><div class="card"><h3>SaveBooks() — 退出时从内存写回文件</h3></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books        📂 books.txt
+  ┌──────────────────────┐   ┌──────────────────┐
+  │ Book(&quot;C#入门&quot;,&quot;张老师&quot;,│ → │ C#入门|张老师|45|5│
+  │       45,5)           │   │ 算法导论|李教授|89|3│
+  │ Book(&quot;算法导论&quot;,&quot;李教授&quot;,│ → │ 设计模式|王博士|68|2│
+  │       89,3)           │   └──────────────────┘
+  │ Book(&quot;设计模式&quot;,&quot;王博士&quot;,│ →
+  │       68,2)           │   ① foreach 遍历列表
+  └──────────────────────┘   ② 拼接成 &quot;Title|Author|Price|Stock&quot;
+                             ③ WriteAllLines 一次写完</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116096',this)">复制</button></div>
+<pre id="c_4337116096"><code class="language-csharp">public static void SaveBooks()
+{
+    List&lt;string&gt; lines = new List&lt;string&gt;();
+    foreach (Book b in books)
+    {
+        lines.Add($&quot;{b.Title}|{b.Author}|{b.Price}|{b.Stock}&quot;);
+    }
+    File.WriteAllLines(FilePath, lines);
+}</code></pre>
+</div><div class="card"><ul><li><code>foreach</code> 遍历列表，每本书拼成一行 <code>Title|Author|Price|Stock</code></li><li><code>WriteAllLines</code> — 把 <code>List&lt;string&gt;</code> 一次性写入文件</li><li>LoadBooks 用 <code>Split</code> 拆 → SaveBooks 用 <code>$&quot;{}&quot;</code> 拼——对称操作</li></ul></div><div class="ok-box">💡 LoadBooks 和 SaveBooks 是镜像操作：一个读、一个写。数据格式统一用 <code>|</code> 分隔，两边保持一致就行。</div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>主程序框架</h1>
+<div class="card"><h3>🎮 运行效果——菜单就是程序的&quot;前台&quot;：</h3></div><pre class="plain-box"><code>╔══════════════════════╗
+║    图书管理系统 v1.0  ║
+╠══════════════════════╣
+║ 1. 添加图书          ║
+║ 2. 查看所有图书       ║
+║ 3. 查找图书          ║
+║ 4. 借书              ║
+║ 5. 还书              ║
+║ 6. 退出（自动保存）    ║
+╠══════════════════════╣
+║ 选择：_              ║
+╚══════════════════════╝</code></pre><div class="card"><p><code>Main</code> 只做三件事：<strong>启动时加载 → 循环显示菜单 → 退出时保存</strong>。所有业务逻辑全在 BookManager，<code>Main</code> 只管分发任务。</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337115008',this)">复制</button></div>
+<pre id="c_4337115008"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        BookManager.LoadBooks();            // ① 启动时加载数据
+        Console.WriteLine(&quot;=== 图书管理系统 ===&quot;);
+
+        while (true)                        // ② 无限循环，直到用户选退出
+        {
+            Console.WriteLine(&quot;1.添加  2.查看  3.查找  4.借书  5.还书  6.退出&quot;);
+            Console.Write(&quot;选择：&quot;);
+            string choice = Console.ReadLine();
+
+            switch (choice)                 // ③ 根据输入分发到对应方法
+            {
+                case &quot;1&quot;: BookManager.AddBook(); break;
+                case &quot;2&quot;: BookManager.ShowBooks(); break;
+                case &quot;3&quot;: BookManager.SearchBooks(); break;
+                case &quot;4&quot;: BookManager.BorrowBook(); break;
+                case &quot;5&quot;: BookManager.ReturnBook(); break;
+                case &quot;6&quot;: BookManager.SaveBooks(); return;
+                default: Console.WriteLine(&quot;无效选择&quot;); break;
+            }
+        }
+    }
+}</code></pre>
+</div><div class="card"><h3>逐行解读：</h3></div><div class="card"><ul><li><code>BookManager.LoadBooks()</code> — 启动即加载。程序一打开，把 <code>books.txt</code> 里的数据读到内存。<strong>只调一次</strong>，放在 <code>while</code> 前面。</li><li><code>while (true)</code> — 无限循环。每次操作完回到菜单，直到用户选 6 才退出。</li><li><code>switch (choice)</code> — 用户输入 1~6，跳到对应方法。每个 <code>case</code> 一行代码——这就是把业务拆到 BookManager 的好处。</li><li><code>case &quot;6&quot;</code> — 先 <code>SaveBooks()</code> 把数据写回文件，再 <code>return</code> 退出程序。<strong>保存动作只在退出时执行一次</strong>。</li></ul></div><div class="ok-box">💡 记住这个模式：<strong>启动时 Load → 循环操作 → 退出时 Save</strong>。以后做任何带数据持久化的程序，都是这个结构。</div><div class="ok-box">🏃 <strong>现在就 Run！</strong> 把「BookManager — 数据统筹类」页面提到的 <code>books.txt</code> 范例数据复制到程序目录（和 .cs 同文件夹），然后运行——程序能编译，菜单能显示。但除了退出保存，其他功能还是空壳。下一页写完 <code>ShowBooks()</code> 和 <code>AddBook()</code> 后再 Run，就能看到三本书了。</div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>查看与添加图书</h1>
+<div class="ok-box">先写简单的 <code>ShowBooks()</code> 查看图书，再一步步打磨 <code>AddBook()</code> 添加图书——从跑通到完善，你会发现写代码就是「发现问题 → 改代码」的循环。</div><div class="card"><h3>ShowBooks() — 先把查看功能写出来</h3><p>跑起来就能看到结果，给自己一点正反馈：</p></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books                控制台输出
+  ┌──────────────────────┐     ┌─────────────────────────┐
+  │ [0] Book(&quot;C#入门&quot;,…)  │ →   │ [1] C#入门 | 张老师 | ¥45│
+  │ [1] Book(&quot;算法导论&quot;,…) │ →   │ [2] 算法导论 | 李教授 | ¥89│
+  │ [2] Book(&quot;设计模式&quot;,…) │ →   │ [3] 设计模式 | 王博士 | ¥68│
+  └──────────────────────┘     └─────────────────────────┘
+  books.Count = 3               for (int i=0; i&lt;Count; i++)
+                                $&quot;[{i+1}] {books[i]}&quot;</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337113408',this)">复制</button></div>
+<pre id="c_4337113408"><code class="language-csharp">public static void ShowBooks()
+{
+    if (books.Count == 0)
+    {
+        Console.WriteLine(&quot;暂无图书&quot;);
+        return;
+    }
+    Console.WriteLine($&quot;\n=== 图书列表（共{books.Count}本）===&quot;);
+    for (int i = 0; i &lt; books.Count; i++)
+        Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+}</code></pre>
+</div><div class="card"><ul><li><strong>🤨 卫语句（Guard Clause）</strong> —— 第 1 行的 <code>if (books.Count == 0) { ... return; }</code> 就是卫语句：</li><li style="margin-left:24px;list-style-type:circle">把<strong>特殊情况先处理掉、提前 <code>return</code></strong>，后面的主逻辑不用包在 <code>else</code> 里，代码更平、更好读</li><li style="margin-left:24px;list-style-type:circle">对比：不用卫语句就得写 <code>if (books.Count == 0) { ... } else { 遍历输出 }</code>，多一层缩进</li><li style="margin-left:24px;list-style-type:circle">之后你会经常看到这种写法：<code>if (输入为空) return;</code>、<code>if (未登录) return;</code>……碰到就认得出</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li><li>写完这个就可以 <code>AddBook()</code> 加一本 → <code>ShowBooks()</code> 看一本，边写边测</li></ul></div><div class="card"><h3>AddBook() — 先跑通，别怕写错</h3><p>一开始不用想太多，能把书加进去就行：</p></div><pre class="plain-box"><code>┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
+│ 书名：    │ →  │ 作者：   │ →  │ 价格：   │ →  │ 库存：   │
+│ &quot;C#入门&quot;  │    │ &quot;张老师&quot; │    │ 45       │    │ 5        │
+└──────────┘    └──────────┘    └──────────┘    └──────────┘
+                                                    ↓
+                                          ┌─────────────────┐
+                                          │ books.Add(       │
+                                          │   new Book(...)) │
+                                          └─────────────────┘
+                                                    ↓
+                                              ✅ 添加成功</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337113280',this)">复制</button></div>
+<pre id="c_4337113280"><code class="language-csharp">public static void AddBook()
+{
+    Console.Write(&quot;书名：&quot;);
+    string title = Console.ReadLine();
+    Console.Write(&quot;作者：&quot;);
+    string author = Console.ReadLine();
+    Console.Write(&quot;价格：&quot;);
+    if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
+    {
+        Console.WriteLine(&quot;价格不合法&quot;);
+        return;
+    }
+    Console.Write(&quot;库存：&quot;);
+    if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
+    {
+        Console.WriteLine(&quot;库存不合法&quot;);
+        return;
+    }
+
+    books.Add(new Book(title, author, price, stock));
+    Console.WriteLine(&quot;✅ 添加成功&quot;);
+}</code></pre>
+</div><div class="ok-box"><strong>🧐 新东西：<code>TryParse</code> 和 <code>out</code> 参数</strong> —— 之前一直用 <code>int.Parse()</code>，但 <code>Parse</code> 有个致命缺点：用户输入 <code>&quot;abc&quot;</code>，程序直接崩（<code>FormatException</code>）。<code>TryParse</code> 是安全版：<strong>不崩，而是返回 <code>true</code>/<code>false</code> 告诉你成没成功</strong>。成功的话，结果通过 <code>out</code> 参数带出来：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337112384',this)">复制</button></div>
+<pre id="c_4337112384"><code class="language-csharp">// Parse：转失败就炸
+int x = int.Parse(&quot;abc&quot;);   // 💥 异常
+
+// TryParse：返回 bool，结果放 out 变量里
+if (int.TryParse(&quot;abc&quot;, out int x))
+    Console.WriteLine(x);   // 不执行——TryParse 返回 false
+else
+    Console.WriteLine(&quot;不是数字&quot;);  // 走这里</code></pre>
+</div><div class="ok-box"><code>out int price</code> —— &quot;这个方法会帮我把值放到 <code>price</code> 里&quot;，不用先声明变量。<br><code>!double.TryParse(...)</code> —— <code>!</code> 取反，失败就进 if。<br><code>|| price &lt; 0</code> —— 即使转成功了，负数也不合法。<br>这也是卫语句：<strong>输入不合法 → 提示 → return</strong>，主逻辑继续往下走。</div><div class="ok-box">🐛 <strong>试一下</strong>：加一本&quot;C#入门&quot;，再加一本&quot;C#入门&quot;——列表里出现了两条一模一样的书。这肯定不对。</div><div class="ok-box">🤔 <strong>自己先想 5 分钟</strong>：怎么防止同一本书被加两次？想不出来？打开 AI 工具，把上面的代码发过去，问：<br><em>&quot;帮我给 AddBook 加一个查重功能——如果 books 列表里已经有同名的书，就提示'已存在'并拒绝添加。&quot;</em></div><div class="card"><h3>第一次改进：加查重</h3><p>AI 给你的思路就是：输入书名后，先 <code>foreach</code> 遍历一遍，同名就 <code>return</code> 拦截：</p></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
+                │ foreach 遍历 books │
+                │ 检查 Title 是否相同  │
+                └──────┬───────────┘
+                 存在？ │        │ 不存在？
+                  ❌    │        │    ✅
+            提示&quot;已存在&quot; │        │ 输入作者/价格/库存
+              return    │        │     ↓
+                        │        │ books.Add(new Book(...))
+                        │        │     ↓
+                        │        │ ✅ 添加成功</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337112000',this)">复制</button></div>
+<pre id="c_4337112000"><code class="language-csharp">public static void AddBook()
+{
+    Console.Write(&quot;书名：&quot;);
+    string title = Console.ReadLine();
+
+    // ⬇️ 加的：查重——同名书直接拦掉
+    foreach (Book b in books)
+    {
+        if (b.Title == title)
+        {
+            Console.WriteLine($&quot;《{title}》已存在，无法重复添加&quot;);
+            return;
+        }
+    }
+
+    Console.Write(&quot;作者：&quot;);
+    string author = Console.ReadLine();
+    // ... 后面同版本 1
+}</code></pre>
+</div><div class="ok-box">🐛 <strong>再试一个场景</strong>：图书管理员想补货——&quot;C#入门&quot;卖得好，库存从 5 本加到 10 本。结果上面这段代码直接弹「已存在，无法重复添加」……补货也被拦住了。</div><div class="ok-box">🤔 <strong>这次的问题不一样了</strong>：不是&quot;同名→拒绝&quot;，而是&quot;同名→追加库存&quot;。把改好的代码发给 AI，问：<br><em>&quot;现在用查重拦住了重复添加，但我还想支持补货：如果书名已存在，询问'追加数量'，加到原来的 Stock 上。&quot;</em></div><div class="card"><h3>第二次改进：重名就追加库存</h3></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
+                │ foreach 遍历 books │
+                │ 检查 Title 是否相同  │
+                └──────┬───────────┘
+                 存在？ │        │ 不存在？
+                    ↓   │        │    ↓
+          ┌──────────┐  │        │ 输入作者/价格/库存
+          │ 输入追加  │  │        │    ↓
+          │ 数量: 5   │  │        │ books.Add(new Book(...))
+          └────┬─────┘  │        │    ↓
+               ↓        │        │ ✅ 添加成功
+          b.Stock += 5   │        │
+               ↓        │        │
+          ✅ 库存已更新   │        │</code></pre><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337111680',this)">复制</button></div>
+<pre id="c_4337111680"><code class="language-csharp">public static void AddBook()
+{
+    Console.Write(&quot;书名：&quot;);
+    string title = Console.ReadLine();
+
+    // 查重：找到了就加库存，没找到就新建
+    foreach (Book b in books)
+    {
+        if (b.Title == title)
+        {
+            Console.Write($&quot;《{title}》已存在（库存{b.Stock}），追加数量：&quot;);
+            if (int.TryParse(Console.ReadLine(), out int add) &amp;&amp; add &gt; 0)
+            {
+                b.Stock += add;
+                Console.WriteLine($&quot;✅ 库存已更新：{b.Stock}&quot;);
+            }
+            return;
+        }
+    }
+
+    Console.Write(&quot;作者：&quot;);
+    string author = Console.ReadLine();
+    Console.Write(&quot;价格：&quot;);
+    if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
+    {
+        Console.WriteLine(&quot;价格不合法&quot;);
+        return;
+    }
+    Console.Write(&quot;库存：&quot;);
+    if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
+    {
+        Console.WriteLine(&quot;库存不合法&quot;);
+        return;
+    }
+
+    books.Add(new Book(title, author, price, stock));
+    Console.WriteLine(&quot;✅ 添加成功&quot;);
+}</code></pre>
+</div><div class="ok-box">💡 <strong>回头看看我们一起做了什么</strong>：一个 <code>AddBook()</code>，从跑通 → 发现重复问题 → 改进 → 发现补货问题 → 再改进，总共磨了三版。每一版都是<strong>先发现问题、再分析原因、最后动手改代码</strong>。老师只是带着你走，AI 只是你卡住时的帮手——<strong>真正想清楚「要加什么功能」的人，是你自己</strong>。</div><div class="card"><ul><li><code>b.Stock += add</code> 直接修改现存对象的属性——List 存的是引用</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li></ul></div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>查找与借还书</h1>
+<div class="ok-box">先写 <code>SearchBooks()</code> 查找图书——最简单，写完就能搜。再写借书还书——这两个套路一样，写完一个另一个秒懂。</div><div class="card"><h3>SearchBooks() 查找图书 — 输入关键词，模糊匹配</h3></div><pre class="plain-box"><code>  输入&quot;关键词&quot; ──→ ┌──────────────────┐
+                   │ foreach 遍历 books │
+                   │ Title 包含关键词？   │
+                   └──────┬───────────┘
+                    是？   │        │ 不是？
+                     ↓    │        │   ↓
+               输出 [i+1]  │        │ 跳过，继续
+               books[i]    │        │</code></pre><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110784',this)">复制</button></div>
+<pre id="c_4337110784"><code class="language-csharp">public static void SearchBooks()
+{
+    Console.Write(&quot;输入书名关键词：&quot;);
+    string keyword = Console.ReadLine().ToLower();
+    for (int i = 0; i &lt; books.Count; i++)
+        if (books[i].Title.ToLower().Contains(keyword))
+            Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+}</code></pre>
+</div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box">🐛 <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box">🤔 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110912',this)">复制</button></div>
+<pre id="c_4337110912"><code class="language-csharp">public static void SearchBooks()
+{
+    Console.Write(&quot;输入书名关键词：&quot;);
+    string keyword = Console.ReadLine().ToLower();
+    bool found = false;
+    for (int i = 0; i &lt; books.Count; i++)
+    {
+        if (books[i].Title.ToLower().Contains(keyword))
+        {
+            Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+            found = true;
+        }
+    }
+    if (!found)
+    {
+        Console.WriteLine(&quot;未找到匹配的图书&quot;);
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>bool found = false</code> — 先假设没找到，循环里匹配到了就改成 <code>true</code></li><li><code>if (!found)</code> — 循环跑完了还是 <code>false</code>，说明一本都没匹配到，输出提示</li></ul></div><div class="card"><h3>BorrowBook() 借书 — 先跑通，再防崩</h3><p>借书的逻辑：先列出所有书 → 选编号 → 库存 -1。先写个能跑的：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110016',this)">复制</button></div>
+<pre id="c_4337110016"><code class="language-csharp">public static void BorrowBook()
+{
+    ShowBooks();
+    Console.Write(&quot;选择要借的图书编号：&quot;);
+    int index = int.Parse(Console.ReadLine()) - 1;
+    if (books[index].Stock == 0)
+    {
+        Console.WriteLine(&quot;❌ 库存不足&quot;);
+        return;
+    }
+    books[index].Stock--;
+    Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
+}</code></pre>
+</div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box">🐛 <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box">🤔 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337109504',this)">复制</button></div>
+<pre id="c_4337109504"><code class="language-csharp">public static void BorrowBook()
+{
+    if (books.Count == 0)
+    {
+        Console.WriteLine(&quot;暂无图书，无法借阅&quot;);
+        return;
+    }
+    ShowBooks();
+    Console.Write(&quot;选择要借的图书编号：&quot;);
+    if (!int.TryParse(Console.ReadLine(), out int index))
+    {
+        Console.WriteLine(&quot;请输入数字&quot;);
+        return;
+    }
+    index = index - 1;
+    if (index &lt; 0 || index &gt;= books.Count)
+    {
+        Console.WriteLine(&quot;编号不存在&quot;);
+        return;
+    }
+    if (books[index].Stock == 0)
+    {
+        Console.WriteLine(&quot;❌ 库存不足&quot;);
+        return;
+    }
+    books[index].Stock--;
+    Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
+}</code></pre>
+</div><div class="ok-box">💡 <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有「不对劲的情况」都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是「列表里一条记录都没有」，<code>Stock == 0</code> 是「这本书的库存被借光了但记录还在」。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337109184',this)">复制</button></div>
+<pre id="c_4337109184"><code class="language-csharp">public static void ReturnBook()
+{
+    if (books.Count == 0)
+    {
+        Console.WriteLine(&quot;暂无图书，无法还书&quot;);
+        return;
+    }
+    ShowBooks();
+    Console.Write(&quot;选择要还的图书编号：&quot;);
+    if (!int.TryParse(Console.ReadLine(), out int index))
+    {
+        Console.WriteLine(&quot;请输入数字&quot;);
+        return;
+    }
+    index = index - 1;
+    if (index &lt; 0 || index &gt;= books.Count)
+    {
+        Console.WriteLine(&quot;编号不存在&quot;);
+        return;
+    }
+    books[index].Stock++;
+    Console.WriteLine($&quot;✅ 已归还《{books[index].Title}》&quot;);
+}</code></pre>
+</div><div class="ok-box">💡 借书和还书放到一起看——你会发现写代码经常是<strong>「抄自己」</strong>：差不多的结构，改一两行就行。不是抄别人，是自己积累的套路。</div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件18.cs」</strong>（如 2630509101_某某_课件18.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：本课件为综合项目，所有题目均为 ⚠️ 手动验收——运行程序演示效果，或提交运行截图 / 录屏。演示时严格按 <code>验收示范</code> 描述的功能点操作。</div><div class="card"><h3>题1（3分）⚠️ 手动验收</h3><p>照着侧边栏 <strong>4~8</strong> 页（类的设计 → BookManager → 主程序框架 → 查看与添加图书 → 查找与借还书）的完整代码，自己敲一遍搭出可运行的完整系统；运行并验证<code>添加</code> / <code>查看</code> / <code>查找</code> / <code>借书</code> / <code>还书</code>全部正常，关闭重开数据仍在。</p></div><div class="ok-box">验收示范：<ul><li>启动程序，加载books.txt数据，显示菜单</li><li>选 2 查看，列出 books.txt 中的 所有书</li><li>选 1 添加《测试书》→ 再选 2 查看，列表数量加一</li><li>选 4 借书 1 本 → 选 6 退出 → 重新运行，数据仍在</li></ul></div><div class="card"><h3>题2（8分）⚠️ 手动验收</h3><p>给 <code>Book</code> 类加一个「标准书号」字段 <code>BookNo</code>（<code>string</code> 类型）——添加图书时由用户输入，用来唯一标识一本书；它不参与排序、也不参与任何计算，只是个标签。</p><p><strong>书号标准规范</strong>：必须以 <code>ISBN-</code> 开头，后面是 5 段纯数字、用 <code>-</code> 分隔（去掉 <code>-</code> 共 13 位），例如 <code>ISBN-978-7-02-013948-5</code>。</p></div><div class="ok-box">📁 示例已提供<strong>新的</strong>数据文件 <code>books_isbn.txt</code>（5 列新格式，首列为书号：<code>BookNo|Title|Author|Price|Stock</code>，里面 3 本书都带了示例书号）。做 题2 时，把 <code>BookManager.FilePath</code> 指向这个文件（或把你的 <code>books.txt</code> 升级成同样的新格式）。</div><div class="card"><ul><li>提示：</li><li style="margin-left:24px;list-style-type:circle"><code>Book</code> 类加 <code>public string BookNo { get; set; }</code>；构造函数和 <code>ToString()</code> 也要带上书号</li><li style="margin-left:24px;list-style-type:circle"><code>LoadBooks()</code> / <code>SaveBooks()</code> <strong>都必须改</strong>：按新格式 <code>BookNo|Title|Author|Price|Stock</code> 读取 / 写出书号列（<code>Split('|')</code> 后书号是第 0 段）</li><li style="margin-left:24px;list-style-type:circle"><code>AddBook()</code> 用 <code>Console.ReadLine()</code> 读取书号——<strong>不要</strong>用 <code>int.Parse</code>/<code>long.Parse</code>，书号含字母、连字符或前导零</li><li style="margin-left:24px;list-style-type:circle"><strong>格式校验</strong>：判断是否符合上面的规范（例如用正则 <code>Regex.IsMatch(bookNo, @&quot;^ISBN-(?:\d+-){4}\d$&quot;)</code>，需 <code>using System.Text.RegularExpressions;</code>，也可以自己写循环逐个字符判断）；不合规就提示「书号格式错误」并<strong>循环重新输入</strong>，直到正确</li><li style="margin-left:24px;list-style-type:circle"><strong>查重</strong>：格式合规后，遍历 <code>books</code> 看是否已有相同 <code>BookNo</code>；若重复也提示「书号重复」并重新输入</li><li style="margin-left:24px;list-style-type:circle"><code>ShowBooks()</code> / <code>ToString()</code> 中把书号展示出来</li></ul></div><div class="ok-box">验收示范：<ul><li>启动加载 <code>books_isbn.txt</code> → 选 2 查看，3 本书都带书号</li><li>添加《测试书》时输入 <code>abc</code>（不合规）→ 提示「书号格式错误」并重新输入 → 再输 <code>ISBN-978-7-02-013948-5</code> 成功</li><li>再添加一本，输入已有的 <code>ISBN-978-7-02-013948-5</code> → 提示「书号重复」并重新输入</li><li>退出重开 → 数据仍在，书号正确保留</li></ul></div><div class="card"><h3>题3（3分）⚠️ 手动验收</h3><p>新增&quot;删除图书&quot;功能：在 <code>BookManager</code> 中添加 <code>DeleteBook()</code> 方法——先 <code>ShowBooks()</code> 展示编号，用户选择后 <code>books.RemoveAt(index)</code>。同时在 <code>Main</code> 的 switch 中加入对应菜单项（6.删除，7.退出）。</p><ul><li>提示：删除前确认 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code></li></ul></div><div class="ok-box">验收示范：<ul><li>选 6 删除 → 输入 <code>2</code> → 输出 <code>✅ 已删除《算法导论》</code></li><li>再选 2 查看，列表少了一本</li></ul></div><div class="card"><h3>题4（4分）⚠️ 手动验收</h3><p>增加借阅记录——新建 <code>BorrowRecord</code> 类（书名、借阅人、借阅时间），用 <code>List&lt;BorrowRecord&gt;</code> 存储，显示所有借阅历史。</p><ul><li>提示：<code>DateTime.Now</code> 记录借阅时间，<code>BorrowBook()</code> 中追加记录</li></ul></div><div class="ok-box">验收示范：<ul><li>借书时输入借阅人姓名「张三」→ 选「查看借阅记录」→ 显示 <code>张三 借了《C#入门》 2026-07-15 14:30</code></li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件19_Avalonia跨平台窗体入门.html" class="end-next-link">📖 下一节：课件19 · Avalonia跨平台窗体入门 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=11,contentTotal=9;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

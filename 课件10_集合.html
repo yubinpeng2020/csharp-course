@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件10_集合 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件10_集合</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 本节学习目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 数组的局限性 </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. List&lt;T&gt; — 动态数组 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. List 常用操作 </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. List 创建与遍历 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 课堂练习1 — List 学生管理 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. Dictionary — 键值对 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. Dictionary 常用操作 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 综合练习 — 购物车 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="12"><span class="nav-status"></span>11. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="13"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 13</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>集合</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner">
+<h1>本节学习目标</h1>
+<div class="goal-grid"><div class="goal-card"><span class="goal-icon">🎯</span><span class="goal-text">理解数组的局限性，认识集合的优势</span></div><div class="goal-card"><span class="goal-icon">🔍</span><span class="goal-text">掌握 <code>List&lt;T&gt;</code> 的定义、创建（3种方式）与遍历</span></div><div class="goal-card"><span class="goal-icon">📝</span><span class="goal-text">掌握 <code>List&lt;T&gt;</code> 的常用操作：<code>Add</code>、<code>Insert</code>、<code>Remove</code>、<code>RemoveAt</code>、<code>Contains</code>、<code>Count</code></span></div><div class="goal-card"><span class="goal-icon">💻</span><span class="goal-text">理解 <code>Dictionary&lt;K,V&gt;</code> 的键值对概念及两个类型参数</span></div><div class="goal-card"><span class="goal-icon">✅</span><span class="goal-text">掌握 <code>Dictionary</code> 的常用操作：增/改、<code>Remove</code>、<code>ContainsKey</code>、遍历</span></div><div class="goal-card"><span class="goal-icon">🧠</span><span class="goal-text">能够根据需求选择合适的集合类型（数组 vs List vs Dictionary）</span></div></div>
+
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>数组的局限性</h1>
+<div class="card"><p>数组很好用，但有三个死穴：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346849152',this)">复制</button></div>
+<pre id="c_4346849152"><code class="language-csharp">int[] scores = { 85, 90, 78 };   // 3个元素
+scores[3] = 92;    // ❌ 越界！不能往里面加第4个</code></pre>
+</div><div class="card"><table><tr><th>局限</th><th>说明</th></tr><tr><td>大小固定</td><td>创建后不能增删元素</td></tr><tr><td>没有查找方法</td><td><code>Contains(&quot;张三&quot;)</code> 不支持</td></tr><tr><td>没有删除方法</td><td>想删&quot;第2个学生&quot;？只能手动移位</td></tr></table></div><div class="card"><ul><li>解决方案：C# 提供了<strong>集合</strong>——动态可增长的数据容器</li></ul></div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>List&lt;T&gt; — 动态数组</h1>
+<div class="card"><p>List 就像一个<strong>会自动变长的数组</strong>。数组创建后大小就固定了，不能加人也不能删人；List 可以随时增删元素，长度自动跟着变。</p></div><div class="card"><table><tr><th></th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>大小</td><td>创建时固定</td><td>随时增删，自动扩容</td></tr><tr><td>增删</td><td>❌ 不支持</td><td>✅ Add / Remove</td></tr><tr><td>查找</td><td>❌ 手写循环</td><td>✅ Contains 直接查</td></tr><tr><td>遍历</td><td>for / foreach</td><td>for / foreach（完全一样）</td></tr></table></div><div class="ok-box">List 不是 C# 自带的，存放在<strong>集合库</strong>里，需要先引入：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523840',this)">复制</button></div>
+<pre id="c_4346523840"><code class="language-csharp">using System.Collections.Generic;  // 引入集合库</code></pre>
+</div><div class="card"><p><code>System.Collections.Generic</code> 是集合库的&quot;地址&quot;，<code>using</code> 就是告诉程序&quot;我要用这里的工具&quot;（课件2讲过 <code>using System</code> 同理）。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523584',this)">复制</button></div>
+<pre id="c_4346523584"><code class="language-csharp">// 数组的写法：类型[] 变量名
+int[] arr = new int[5];
+
+// List 的写法：List&lt;类型&gt; 变量名
+List&lt;int&gt; scores = new List&lt;int&gt;();
+//      ↑ 尖括号里的 int 和数组的 int[] 一样，都是指定&quot;装什么类型&quot;</code></pre>
+</div><div class="card"><ul><li><code>List&lt;T&gt;</code> 的 <code>T</code> 就是个占位符，用的时候换成具体类型：<code>List&lt;int&gt;</code>、<code>List&lt;string&gt;</code></li><li>不需要指定大小，会自动扩容</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523648',this)">复制</button></div>
+<pre id="c_4346523648"><code class="language-csharp">scores.Add(85);   // 往末尾追加
+scores.Add(90);
+scores.Add(78);
+scores[1] = 95;   // 改元素，和数组一样用 []</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>List 常用操作</h1>
+<div class="card"><table><tr><th>操作</th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>获取数量</td><td><code>arr.Length</code></td><td><code>list.Count</code></td></tr><tr><td>访问元素</td><td><code>arr[0]</code></td><td><code>list[0]</code></td></tr><tr><td>增</td><td>❌</td><td><code>Add()</code> <code>Insert()</code></td></tr><tr><td>删</td><td>❌</td><td><code>Remove()</code> <code>RemoveAt()</code></td></tr><tr><td>查找</td><td>❌</td><td><code>Contains()</code></td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523072',this)">复制</button></div>
+<pre id="c_4346523072"><code class="language-csharp">List&lt;string&gt; names = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
+
+// Add：追加
+names.Add(&quot;赵六&quot;);
+
+// Insert：指定位置插入
+names.Insert(0, &quot;赵六&quot;);
+
+// Remove：按值删除
+names.Remove(&quot;李四&quot;);
+
+// RemoveAt：按索引删除
+names.RemoveAt(0);
+
+// Contains：检查是否包含
+if (names.Contains(&quot;张三&quot;)) { ... }
+
+// Count：元素个数（注意是 Count，不是 Length）
+Console.WriteLine($&quot;共 {names.Count} 人&quot;);</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>List 创建与遍历</h1>
+<div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346522368',this)">复制</button></div>
+<pre id="c_4346522368"><code class="language-csharp">// 方式1：new + 初始化（最常用）
+List&lt;int&gt; scores = new List&lt;int&gt; { 85, 90, 78, 88, 92 };
+
+// 方式2：空列表，逐个添加
+List&lt;string&gt; names = new List&lt;string&gt;();
+names.Add(&quot;张三&quot;); names.Add(&quot;李四&quot;);
+
+// 方式3：数组转 List
+int[] arr = { 85, 90, 78 };
+List&lt;int&gt; scores2 = new List&lt;int&gt;(arr);</code></pre>
+</div><div class="card"><p>遍历——for 和 foreach 都可以：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346522176',this)">复制</button></div>
+<pre id="c_4346522176"><code class="language-csharp">for (int i = 0; i &lt; scores.Count; i++)
+    Console.WriteLine(scores[i]);
+
+foreach (int s in scores)
+    Console.WriteLine(s);</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>课堂练习1 — List 学生管理</h1>
+<div class="ok-box">用 List&lt;string&gt; 管理学生名单：新增、删除、查找，体会和数组的区别。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521856',this)">复制</button></div>
+<pre id="c_4346521856"><code class="language-csharp">List&lt;string&gt; students = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
+
+students.Add(&quot;赵六&quot;);
+Console.WriteLine($&quot;新增后共 {students.Count} 人&quot;);
+
+students.RemoveAt(1);    // 删除第2个
+Console.WriteLine(&quot;删除后：&quot;);
+foreach (string name in students)
+    Console.WriteLine($&quot;  {name}&quot;);
+
+Console.Write(&quot;查找谁？&quot;);
+if (students.Contains(Console.ReadLine()))
+    Console.WriteLine(&quot;在列表中！&quot;);
+else
+    Console.WriteLine(&quot;不在列表中&quot;);</code></pre>
+</div><div class="card"><ul><li>动手：加上&quot;修改姓名&quot;和&quot;在第1位插入&quot;功能</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>List&lt;T&gt;</code> 不用指定大小，<code>Add()</code> 往末尾加，<code>Count</code> 自动更新</li><li><code>RemoveAt(索引)</code> 按位置删，<code>Contains()</code> 检查是否存在——数组没有这两个</li><li>增删改查都比数组方便，这就是 List 的价值</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用 List 管理待办事项：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521408',this)">复制</button></div>
+<pre id="c_4346521408"><code class="language-csharp">List&lt;string&gt; todos = new <span class="code-blank">___</span> { &quot;写作业&quot;, &quot;复习&quot; };
+
+todos.<span class="code-blank">___</span>(&quot;做练习&quot;);                     // 添加到末尾
+todos.<span class="code-blank">___</span>(0, &quot;先吃早餐&quot;);                // 在第1位插入
+
+Console.WriteLine($&quot;共 {todos.<span class="code-blank">___</span>} 件事：&quot;);
+<span class="code-blank">___</span> (string t in todos)
+    Console.WriteLine($&quot;  ☐ {t}&quot;);
+
+// 完成&quot;写作业&quot;，删掉它
+if (todos.<span class="code-blank">___</span>(&quot;写作业&quot;))
+    todos.<span class="code-blank">___</span>(&quot;写作业&quot;);</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521600',this)">复制</button></div>
+<pre id="c_4346521600"><code class="language-csharp">List&lt;string&gt; todos = new List&lt;string&gt; { &quot;写作业&quot;, &quot;复习&quot; };
+
+todos.Add(&quot;做练习&quot;);
+todos.Insert(0, &quot;先吃早餐&quot;);
+
+Console.WriteLine($&quot;共 {todos.Count} 件事：&quot;);
+foreach (string t in todos)
+    Console.WriteLine($&quot;  ☐ {t}&quot;);
+
+if (todos.Contains(&quot;写作业&quot;))
+    todos.Remove(&quot;写作业&quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>Dictionary — 键值对</h1>
+<div class="card"><p><code>Dictionary&lt;K,V&gt;</code> 是另一种集合，它不用编号找人，而是<strong>用名字找人</strong>。就像查字典——查&quot;Apple&quot;得到&quot;苹果&quot;，查&quot;张三&quot;得到 85 分。</p></div><div class="card"><ul><li>左边的叫<strong>键（Key）</strong>，右边的叫<strong>值（Value）</strong>，合起来叫<strong>键值对</strong></li><li>键是唯一的，不能重复；值可以重复</li></ul></div><pre class="plain-box"><code>List（按编号找）：          Dictionary（按名字找）：
+[0] → &quot;张三&quot;                &quot;张三&quot; → 85 分
+[1] → &quot;李四&quot;                &quot;李四&quot; → 90 分
+[2] → &quot;王五&quot;                &quot;王五&quot; → 78 分</code></pre><div class="card"><h3><code>&lt;K,V&gt;</code> 里为什么有两个类型？</h3></div><div class="card"><p><code>List&lt;T&gt;</code> 只有一个占位符（装什么类型），<code>Dictionary&lt;K,V&gt;</code> 有两个——K 管键的类型，V 管值的类型：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346520768',this)">复制</button></div>
+<pre id="c_4346520768"><code class="language-csharp">List&lt;string&gt; names;              // 一个 T：装什么
+Dictionary&lt;string, int&gt; scores;  // K=键的类型, V=值的类型
+//              ↑键      ↑值
+//          &quot;张三&quot;  →  85
+//          &quot;李四&quot;  →  90</code></pre>
+</div><div class="ok-box">K 和 V 不限于 <code>string</code> → <code>int</code>，可以是任意类型的组合——<code>Dictionary&lt;int, string&gt;</code>（学号→姓名）、<code>Dictionary&lt;string, bool&gt;</code>（姓名→是否及格）都行。</div><div class="card"><h3>代码创建：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346520832',this)">复制</button></div>
+<pre id="c_4346520832"><code class="language-csharp">using System.Collections.Generic;
+
+Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;();
+
+scores[&quot;张三&quot;] = 85;     // 添加键值对
+scores[&quot;李四&quot;] = 90;
+scores[&quot;王五&quot;] = 78;
+
+Console.WriteLine(scores[&quot;张三&quot;]);   // 85 — 按键取值</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>Dictionary 常用操作</h1>
+<div class="card"><table><tr><th>操作</th><th>代码</th><th>说明</th></tr><tr><td>增/改</td><td><code>dict[&quot;键&quot;] = 值</code></td><td>键不存在→新增，键已存在→覆盖（同一个语法）</td></tr><tr><td>删</td><td><code>dict.Remove(&quot;键&quot;)</code></td><td>按键删除，键不存在也不会报错</td></tr><tr><td>查</td><td>先 <code>dict.ContainsKey(&quot;键&quot;)</code> 再 <code>dict[&quot;键&quot;]</code></td><td>先判断再取值，避免键不存在时报错</td></tr><tr><td>遍历</td><td><code>foreach (var kv in dict)</code></td><td><code>kv.Key</code> 取键，<code>kv.Value</code> 取值</td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346519616',this)">复制</button></div>
+<pre id="c_4346519616"><code class="language-csharp">Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;
+{
+    { &quot;张三&quot;, 85 }, { &quot;李四&quot;, 90 }, { &quot;王五&quot;, 78 }
+};
+
+// 改值（和数组一样 = 赋值）
+scores[&quot;王五&quot;] = 80;
+
+// 删：Remove
+scores.Remove(&quot;李四&quot;);
+
+// 查：先用 ContainsKey 检查键是否存在，避免报错
+if (scores.ContainsKey(&quot;张三&quot;))
+    Console.WriteLine(scores[&quot;张三&quot;]);
+else
+    Console.WriteLine(&quot;查无此人&quot;);
+
+// 遍历所有键值对
+foreach (var kv in scores)
+    Console.WriteLine($&quot;{kv.Key}: {kv.Value}分&quot;);
+    // kv.Key = 键（如&quot;张三&quot;），kv.Value = 值（如85）</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>数组的局限性</strong>：长度固定、增删麻烦</li><li><strong>List&lt;T&gt; — 动态数组</strong>：<code>List&lt;int&gt;</code> 长度可随用随长</li><li><strong>List 常用操作</strong>：<code>Add</code> 加、<code>Remove</code> 删、<code>Count</code> 数个数、<code>Contains</code> 查存在</li><li><strong>List 创建与遍历</strong>：<code>new List&lt;T&gt;()</code> 或 <code>new(){...}</code>，for/foreach 遍历</li><li><strong>Dictionary — 键值对</strong>：<code>Dictionary&lt;K,V&gt;</code> 用「键」查「值」，像字典</li><li><strong>Dictionary 常用操作</strong>：<code>Add</code> 加、<code>[键]</code> 取、<code>ContainsKey</code> 判断键是否存在</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner markable">
+<h1>综合练习 — 购物车</h1>
+<div class="ok-box">用 Dictionary 实现购物车：商品名→数量，支持添加、查看、删除。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>1.添加  2.查看  3.删除  4.退出
+1
+商品名：苹果
+数量：3
+已添加：苹果 ×3
+2
+苹果 ×3</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>cart[商品名] = 数量</code> — 增/改都用这个语法</li><li><code>cart.Remove(商品名)</code> 删除，<code>foreach (var kv in cart)</code> 查看</li><li>while 循环 + switch/if 实现菜单交互</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346518272',this)">复制</button></div>
+<pre id="c_4346518272"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = <span class="code-blank">___</span> Dictionary&lt;string, int&gt;();
+
+while (true)
+{
+    Console.WriteLine(&quot;\n1.添加  2.查看  3.删除  4.退出&quot;);
+    string choice = Console.<span class="code-blank">___</span>();
+
+    if (choice == &quot;1&quot;)
+    {
+        Console.Write(&quot;商品名：&quot;);
+        string item = Console.ReadLine();
+        Console.Write(&quot;数量：&quot;);
+        int qty = int.<span class="code-blank">___</span>(Console.ReadLine());
+        cart[<span class="code-blank">___</span>] = qty;
+    }
+    else if (choice == &quot;2&quot;)
+        foreach (<span class="code-blank">___</span> kv in cart)
+            Console.WriteLine($&quot;{kv.<span class="code-blank">___</span>} ×{kv.<span class="code-blank">___</span>}&quot;);
+    else if (choice == &quot;3&quot;)
+    {
+        Console.Write(&quot;删除商品：&quot;);
+        cart.<span class="code-blank">___</span>(Console.ReadLine());
+    }
+    else <span class="code-blank">___</span>;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346518016',this)">复制</button></div>
+<pre id="c_4346518016"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = new Dictionary&lt;string, int&gt;();
+
+while (true)
+{
+    Console.WriteLine(&quot;\n1.添加  2.查看  3.删除  4.退出&quot;);
+    string choice = Console.ReadLine();
+
+    if (choice == &quot;1&quot;)
+    {
+        Console.Write(&quot;商品名：&quot;);
+        string item = Console.ReadLine();
+        Console.Write(&quot;数量：&quot;);
+        int qty = int.Parse(Console.ReadLine());
+        cart[item] = qty;
+    }
+    else if (choice == &quot;2&quot;)
+        foreach (var kv in cart)
+            Console.WriteLine($&quot;{kv.Key} ×{kv.Value}&quot;);
+    else if (choice == &quot;3&quot;)
+    {
+        Console.Write(&quot;删除商品：&quot;);
+        cart.Remove(Console.ReadLine());
+    }
+    else break;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入若干个整数（逗号分隔），用 <code>List</code> 存储并<strong>去掉重复</strong>，输出去重后的列表。<br>要求：自己写——拆分、转换、遍历判断是否已存在再添加，不能用 <code>Distinct()</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346517504',this)">复制</button></div>
+<pre id="c_4346517504"><code class="language-csharp">string input = Console.ReadLine();
+List&lt;int&gt; list = new List&lt;int&gt;();
+foreach (string p in input.Split(','))
+{
+    int v = int.Parse(p.Trim());
+    if (!list.Contains(v)) list.Add(v);
+}
+foreach (int v in list) Console.Write(v + &quot; &quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="12"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>创建 <code>List&lt;int&gt;</code> 存储10个随机数，计算总和与平均值，找出最大值。</p><ul><li>提示：<code>Random rand = new Random(42);</code> 固定种子保证验收输出一致，<code>rand.Next(1, 101)</code> 生成 1~100 的随机数</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>总和：512</code></li></ul><ul><li>输出：<code>平均值：51.2</code></li></ul><ul><li>输出：<code>最大值：98</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用 <code>Dictionary&lt;string, string&gt;</code> 做简易通讯录：姓名→手机号，支持增、删、查。</p><ul><li>数据：<code>张三:13800138000, 李四:13900139000, 王五:13700137000</code></li><li>提示：增/改用 <code>dict[&quot;姓名&quot;] = &quot;手机号&quot;</code>，删用 <code>Remove</code>，查用 <code>ContainsKey</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入姓名（exit退出）：→ 张三</code></li></ul><ul><li>输出：<code>张三：13800138000</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>用 <code>List&lt;int&gt;</code> 实现动态成绩录入：不断输入成绩直到输入 -1 结束，计算平均分和及格率。</p><ul><li>提示：<code>while (true)</code> + <code>Add()</code> + <code>break</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩（-1结束）：→ 85</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 90</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 78</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 60</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ -1</code></li></ul><ul><li>输出：<code>平均分：78.3，及格率：100%</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>统计一句话中每个单词出现的次数（用 <code>Dictionary&lt;string, int&gt;</code>）。</p><ul><li>数据：<code>string sentence = &quot;apple banana apple orange banana apple&quot;;</code></li><li>提示：用 <code>Split(' ')</code> 拆词，遍历每个词，<code>dict[词]</code> 累加</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346515904',this)">复制</button></div>
+<pre id="c_4346515904"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        // ==================== 第1题 ====================
+
+
+        // ==================== 第2题 ====================
+
+
+        // ==================== 第3题 ====================
+
+
+        // ==================== 第4题 ====================
+
+    }
+}</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="13"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件11_类的概念与方法上.html" class="end-next-link">📖 下一节：课件11 · 类的概念与方法上 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=13,contentTotal=11;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

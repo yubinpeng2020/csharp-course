@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>课件4_运算符与表达式 — C#先知课堂</title>
+<link rel="stylesheet" href="vendor/atom-one-dark.min.css">
+<script src="vendor/highlight.min.js"></script>
+<style>
+/* ===== 色彩变量 ===== */
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--red:#EF4444;--red-bg:rgba(239,68,68,0.08);--red-border:rgba(239,68,68,0.3);
+--yellow:#F59E0B;--purple:#C084FC;--teal:#86EFAC;--teal-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+.light{
+--bg-primary:#ffffff;--bg-secondary:#f6f8fa;--bg-card:#f6f8fa;--bg-input:#ffffff;
+--border:#d0d7de;--text:#24292f;--text-muted:#656d76;
+--accent:#0969da;--accent2:#0550ae;--accent-dim:rgba(9,105,218,0.08);
+--orange:#cf222e;--blue:#0550ae;
+--green:#1a7f37;--green-bg:#eefdf2;--green-border:#86d9a0;
+--red:#cf222e;--red-bg:#ffebe9;--red-border:#fdaeb7;
+--yellow:#9a6700;--purple:#8250df;--teal:#0550ae;--teal-border:#4ac26b;
+}
+body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-size:16px}body.font-lg{--font-size:19px}body.font-xl{--font-size:22px}
+
+/* ===== 全局 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+.container{display:flex;height:100vh}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+/* ===== 侧边栏 ===== */
+.sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
+.sidebar-title{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;font-weight:700;padding:0 14px 10px;border-bottom:1px solid rgba(0,212,170,0.15);margin-bottom:6px}
+.nav-link{display:flex;align-items:center;color:var(--text-muted);text-decoration:none;padding:8px 14px;font-size:12px;border-left:3px solid transparent;transition:all .2s}
+.nav-link:hover{color:var(--accent);background:var(--accent-dim);border-left-color:rgba(0,212,170,0.4)}
+.nav-link.active{color:#fff!important;background:linear-gradient(90deg,rgba(0,212,170,0.18),transparent);border-left:3px solid var(--accent);font-weight:600}
+.nav-status{width:7px;height:7px;border-radius:50%;margin-right:7px;flex-shrink:0;background:rgba(255,255,255,0.1);transition:all .3s}
+.nav-status.seen{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5)}
+
+/* ===== Header ===== */
+.main-area{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.header-bar{display:flex;align-items:center;gap:16px;padding:10px 24px;background:rgba(10,14,39,0.95);border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;position:relative;z-index:5}
+.progress-wrap{flex:1;min-width:200px;display:flex;align-items:center;gap:12px}
+.progress-bar{flex:1;height:8px;background:rgba(255,255,255,0.05);border-radius:4px;overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,0.3)}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:4px;transition:width .5s ease;width:0;box-shadow:0 0 8px rgba(0,212,170,0.4)}
+.progress-text{font-size:11px;color:var(--text-muted);white-space:nowrap}
+.header-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text-muted);padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:inherit;transition:all .25s;white-space:nowrap}
+.header-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 2px 8px rgba(0,212,170,0.1);transform:translateY(-1px)}
+.header-dropdown{position:relative;display:inline-block}
+.dropdown-menu{display:none;position:absolute;top:100%;right:0;margin-top:6px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:10px;min-width:180px;z-index:100;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.dropdown-menu.show{display:block}
+.dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
+.dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ===== 幻灯片 ===== */
+.slides-container{flex:1;position:relative;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
+.slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
+.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+
+/* 标题 */
+.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
+.slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
+.slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
+.slide-inner p{color:var(--text);margin-bottom:10px;line-height:1.85}
+.slide-inner ul,.slide-inner ol{margin-left:22px;margin-bottom:14px}
+.slide-inner li{color:#CBD5E1;margin-bottom:6px;line-height:1.75}
+
+/* 内联代码 */
+.slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
+.slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
+
+/* 表格 */
+.slide-inner table{width:100%;border-collapse:collapse;font-size:calc(var(--font-size) * 0.94);margin:12px 0;border:1px solid var(--border);border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.slide-inner table td,.slide-inner table th{padding:8px 14px;border:1px solid var(--border);text-align:left}
+.slide-inner table th{background:linear-gradient(135deg,rgba(17,24,39,0.9),rgba(15,23,41,0.9));color:var(--accent);font-weight:600;font-size:calc(var(--font-size) * 1.0);text-transform:uppercase;letter-spacing:.5px}
+.slide-inner table tr:nth-child(odd){background:rgba(255,255,255,0.015)}
+.slide-inner table tr:hover{background:var(--accent-dim)}
+
+/* 链接 */
+.slide-inner a{color:var(--accent2);text-decoration:underline;text-decoration-color:rgba(79,195,247,0.3);text-underline-offset:3px;transition:all .2s}
+.slide-inner a:hover{color:var(--accent);text-decoration-color:var(--accent)}
+
+/* ===== 卡片 ===== */
+.card,.homework-card,.ok-box,.prompt-box{margin:10px 0;border-radius:12px;transition:all .3s}
+.card{background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);padding:14px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.2);overflow:hidden}
+.card .card-img{float:right;max-width:200px;max-height:250px;margin:0 0 8px 16px;border-radius:6px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
+.card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
+.card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 竞赛照片三图并排 */
+.contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
+.card h3{margin-top:0}
+
+/* 代码块 */
+.prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
+.code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
+.code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
+.copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
+.prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
+.prompt-box.tall pre{max-height:420px;overflow-y:auto}
+.prompt-box pre code{background:transparent;padding:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;font-family:'JetBrains Mono','Menlo','Monaco',monospace;color:#E2E8F0;border:none}
+
+/* ok-box / homework-card */
+.homework-card{background:linear-gradient(135deg,rgba(0,212,170,0.06),var(--bg-card));border:1px solid var(--teal-border);padding:14px 18px}
+.homework-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(0,212,170,0.08)}
+.homework-card h3{color:var(--teal)}
+.ok-box{background:linear-gradient(135deg,rgba(34,197,94,0.06),var(--bg-card));border:1px solid var(--green-border);padding:14px 18px}
+.ok-box:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,0.08)}
+.ok-box ul,.ok-box ol{margin:6px 0;padding-left:1.5em}
+.ok-box li{margin:3px 0;line-height:1.7}
+
+/* 高亮标记 */
+.markable li,.markable p{cursor:pointer;transition:all .15s;border-radius:3px;padding:1px 3px}
+.markable li.marked,.markable p.marked{background:rgba(192,132,252,.12);border-left:3px solid var(--purple);padding-left:8px}
+
+/* ===== 折叠面板 ===== */
+.fold-toggle{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);padding:8px 16px;border-radius:8px;cursor:pointer;font-size:calc(var(--font-size) * 1.06);font-family:inherit;transition:all .2s;margin:8px 0;user-select:none}
+.fold-toggle:hover{background:rgba(0,212,170,0.15);box-shadow:0 2px 8px rgba(0,212,170,0.15)}
+.fold-toggle .arrow{display:inline-block;transition:transform .3s;font-size:10px}
+.fold-toggle.open .arrow{transform:rotate(90deg)}
+.fold-content{max-height:0;overflow:hidden;transition:max-height .4s ease;opacity:0}
+.fold-content.show{max-height:3000px;opacity:1}
+/* 提示折叠 绿色 */
+.fold-toggle.hint{color:var(--green);border-color:var(--green-border);background:var(--green-bg)}
+.fold-toggle.hint:hover{background:rgba(34,197,94,0.12)}
+/* 答案折叠 紫色 */
+.fold-toggle.solution{color:var(--purple);border-color:rgba(192,132,252,0.4);background:rgba(192,132,252,0.08)}
+.fold-toggle.solution:hover{background:rgba(192,132,252,0.15)}
+/* 问答折叠 橙色 */
+.fold-toggle.qa{color:var(--orange);border-color:rgba(245,158,11,0.4);background:rgba(245,158,11,0.08)}
+.fold-toggle.qa:hover{background:rgba(245,158,11,0.15)}
+/* 填空代码 */
+.code-blank{color:var(--orange);background:rgba(245,158,11,0.1);padding:2px 6px;border-radius:4px;font-weight:600}
+
+/* ===== 导航按钮 ===== */
+.nav-buttons{position:fixed;bottom:24px;right:32px;display:flex;gap:8px;z-index:100}
+.nav-btn{background:var(--bg-card);border:1px solid var(--border);color:var(--text);padding:10px 22px;border-radius:10px;cursor:pointer;font-size:12px;font-weight:500;transition:all .25s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.nav-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 4px 16px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.nav-btn:disabled{opacity:.3;cursor:not-allowed;transform:none;box-shadow:none}
+.progress-dots{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:100}
+.progress-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:all .3s;cursor:pointer}
+.progress-dot:hover{background:var(--accent2)}
+.progress-dot.active{background:var(--accent);transform:scale(1.4);box-shadow:0 0 8px rgba(0,212,170,0.5)}
+
+/* ===== 搜索 ===== */
+.search-panel{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:300;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.search-panel.open{right:0}
+.search-panel-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);flex-shrink:0}
+.search-panel-header span{font-size:15px;font-weight:600;color:var(--text)}
+.search-panel-close{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.search-panel-close:hover{color:var(--text);background:var(--accent-dim)}
+
+/* ===== 课件目录 ===== */
+.catalog-panel{position:fixed;top:0;right:-320px;width:320px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:298;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.catalog-panel.open{right:0}
+.catalog-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.catalog-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.catalog-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.catalog-list{flex:1;overflow-y:auto;padding:8px 0}
+.catalog-item{display:flex;align-items:center;gap:10px;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.catalog-item:hover{background:var(--accent-dim);border-left-color:var(--accent)}
+.catalog-item.current{color:var(--accent)!important;background:var(--accent-dim);border-left-color:var(--accent);font-weight:600}
+.catalog-num{color:var(--accent);font-size:11px;font-weight:700;min-width:40px;white-space:nowrap}
+.search-input{width:100%;padding:14px 18px;background:var(--bg-input);border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:15px;outline:none;flex-shrink:0}
+.search-input::placeholder{color:var(--text-muted)}
+.search-results{flex:1;overflow-y:auto;padding:8px 0}
+.search-item{display:block;padding:10px 18px;color:var(--text);text-decoration:none;font-size:13px;border-left:3px solid transparent;transition:all .2s}
+.search-item:hover,.search-item.focus{background:var(--accent-dim);border-left-color:var(--accent)}
+.help-overlay{position:fixed;top:0;right:-400px;width:380px;height:100vh;background:var(--bg-secondary);border-left:1px solid var(--border);z-index:299;display:flex;flex-direction:column;transition:right .3s ease;box-shadow:-4px 0 24px rgba(0,0,0,0.3)}
+.help-overlay.open{right:0}
+.help-header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--border);font-size:15px;font-weight:600;color:var(--text);flex-shrink:0}
+.help-close-btn{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:4px 8px;border-radius:6px;transition:all .2s}
+.help-close-btn:hover{color:var(--text);background:var(--accent-dim)}
+.help-body{flex:1;overflow-y:auto;padding:16px 22px 24px}
+.help-body h3{color:var(--accent);font-size:14px;margin:16px 0 8px;padding-left:0;border-left:none}
+.help-body p{font-size:13px;color:var(--text-muted);margin-bottom:8px}
+.help-body table{font-size:13px}
+.help-body table td{padding:4px 12px 4px 0}
+.help-body table td:first-child{white-space:nowrap;padding-right:16px}
+.search-item mark{background:rgba(0,212,170,0.2);color:var(--accent);border-radius:2px;padding:0 3px}
+
+/* ===== Toast ===== */
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:400;background:var(--green-bg);border:1px solid var(--green-border);color:var(--green);padding:16px 28px;border-radius:12px;font-size:14px;opacity:0;transition:opacity .3s;pointer-events:none;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.toast.show{opacity:1}
+
+/* ===== 浅色覆盖 ===== */
+.light body,.light html{background:var(--bg-primary)!important}
+.light .sidebar{background:var(--bg-secondary)!important;border-right-color:var(--border)!important}
+.light .sidebar-title{-webkit-text-fill-color:var(--text);font-weight:600}
+.light .goal-card,.light .card{background:var(--bg-card)!important;box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+.light .homework-card{background:var(--accent-dim)!important}
+.light .ok-box{background:var(--green-bg)!important;border-color:var(--green-border)!important;box-shadow:0 1px 4px rgba(0,0,0,0.04)}
+.light .header-bar{background:var(--bg-secondary)!important;backdrop-filter:none!important}
+.light .slide-inner table th{background:var(--bg-input)!important;color:var(--text)!important}
+.light .slide-inner h1{color:var(--text)!important}
+.light .slide-inner h2{color:var(--accent)!important}
+.light .slide-inner h3{color:var(--accent2)!important}
+.light .slide-inner li,.light .slide-inner p{color:var(--text)!important}
+.light .nav-link.active{color:var(--accent)!important;background:var(--accent-dim)!important}
+.light .progress-fill{box-shadow:none!important}
+.light .cover{background:radial-gradient(ellipse at 30% 20%,rgba(9,105,218,0.08),transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(5,80,174,0.06),transparent 55%),var(--bg-primary)!important}
+.light .cover-tag{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-label{background:var(--accent-dim);color:var(--accent);border-color:rgba(9,105,218,0.3)}
+.light .cover-meta-text{color:var(--text)!important}
+.light .cover-sub{color:var(--text-muted)!important}
+.light .end-thanks{background:var(--bg-card);border-color:rgba(9,105,218,0.15)}
+.light .end-title{color:var(--accent)!important}
+.light .prompt-box pre code{color:var(--text)!important}
+.light .code-toolbar{background:rgba(0,0,0,0.05)}
+/* 深色主题下注释颜色调亮（原atom-one-dark太暗） */
+.hljs-comment,.hljs-meta{color:#8b949e!important}
+
+/* ===== 封面 ===== */
+.cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
+.cover.active{display:flex!important}
+.cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
+.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-meta-row{display:flex;align-items:center;gap:8px}
+.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:16px;color:#CBD5E1}
+
+/* ===== 结束页 ===== */
+.end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
+.end-page h2{text-align:center;border-bottom:none;margin-bottom:32px}
+.end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
+.end-left{flex:1;min-width:200px;text-align:center}
+.end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-icon{font-size:48px;margin-bottom:16px}
+.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:18px;color:var(--text-muted)}
+.end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
+.end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
+.end-right img:hover{transform:scale(1.05)}
+.end-right p{font-size:12px;color:var(--text-muted);margin-bottom:10px;line-height:1.5}
+.end-link{display:inline-block;color:var(--accent);text-decoration:none;font-size:13px;border:1px solid rgba(0,212,170,0.3);padding:8px 16px;border-radius:8px;transition:all .25s;white-space:nowrap}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+.end-next-link{display:inline-block;margin-top:20px;color:var(--accent2);text-decoration:none;font-size:15px;font-weight:600;padding:10px 24px;border:2px solid var(--accent2);border-radius:10px;transition:all .25s}
+.end-next-link:hover{background:rgba(79,195,247,0.1);box-shadow:0 4px 20px rgba(79,195,247,0.2);transform:translateY(-2px)}
+/* 二维码放大 */
+.qr-zoom-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:400;display:none;align-items:center;justify-content:center;cursor:pointer}
+.qr-zoom-overlay.show{display:flex}
+.qr-zoom-overlay img{max-width:80vw;max-height:80vh;border-radius:12px;box-shadow:0 8px 32px rgba(0,212,170,0.2)}
+.end-link:hover{background:rgba(0,212,170,0.1);border-color:var(--accent);box-shadow:0 2px 12px rgba(0,212,170,0.15)}
+
+/* ===== 学习目标 ===== */
+.goal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.goal-card{background:linear-gradient(135deg,var(--bg-card),var(--bg-secondary));border:1px solid var(--border);border-radius:12px;padding:18px 20px;display:flex;align-items:center;gap:14px;transition:all .3s;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
+.goal-card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.15);transform:translateY(-2px)}
+.goal-icon{font-size:28px;flex-shrink:0;transition:transform .3s}
+.goal-card:hover .goal-icon{transform:scale(1.15)}
+.goal-text{font-size:calc(var(--font-size) * 1.05);color:var(--text);line-height:1.6}
+
+/* 侧边栏 - 特殊链接（无序号） */
+.nav-special{font-style:italic;color:var(--accent2)!important}
+/* 导航标签 */
+.nav-badge{display:inline-block;font-size:10px;padding:1px 6px;border-radius:4px;margin-left:6px;font-weight:600;vertical-align:1px}
+.nav-badge.practice{color:var(--accent2);background:rgba(79,195,247,0.12);border:1px solid rgba(79,195,247,0.25)}
+.nav-badge.comprehensive{color:var(--purple);background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.25)}
+.nav-badge.homework{color:var(--orange);background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.25)}
+
+/* ===== 移动端 header 精简按钮 ===== */
+.mobile-info{display:none;font-size:13px;color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0}
+.mobile-info .mi-lesson{color:var(--accent);font-weight:600}
+.mobile-info .mi-sep{margin:0 4px;color:var(--text-muted);opacity:0.5}
+.mobile-info .mi-page{color:var(--text)}
+.mobile-more{display:none;position:relative}
+.mobile-more-menu{display:none;position:absolute;top:100%;right:0;margin-top:4px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:4px 0;box-shadow:0 8px 24px rgba(0,0,0,0.3);z-index:50;min-width:160px}
+.mobile-more-menu.open{display:block}
+.mobile-more-menu .mm-item{display:flex;align-items:center;gap:8px;padding:10px 16px;color:var(--text);font-size:13px;cursor:pointer;white-space:nowrap;transition:all .2s}
+.mobile-more-menu .mm-item:hover{background:var(--accent-dim);color:var(--accent)}
+
+/* ===== 响应式 ===== */
+@media(max-width:768px){
+.sidebar{display:none}
+.slide-inner{padding:18px 18px 80px}
+.cover{padding-left:40px;padding-right:40px}
+.cover h1{font-size:32px}
+.nav-buttons{right:12px;bottom:12px}
+.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.progress-wrap{display:none}
+.header-dropdown{display:none}
+.header-btn[onclick^="changeFont"]{display:none}
+.header-btn[onclick="openSearch()"]{display:none}
+.header-btn[onclick="toggleHelp()"]{display:none}
+.mobile-info{display:flex;align-items:center;gap:2px}
+.mobile-more{display:inline-block}
+}
+</style>
+</head>
+<body>
+<div class="container">
+<nav class="sidebar">
+    <div class="sidebar-title">📘 课件4_运算符与表达式</div>
+    <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
+<a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 本节学习目标 </a>
+<a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 算术运算符 </a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 自增自减 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 课堂练习1 — 算术运算 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. 赋值运算符 </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 关系运算符 </a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 逻辑运算符 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 位运算符 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 课堂练习2 — 条件判断 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 三元运算符（?:） </a>
+<a href="#" class="nav-link" data-page="12"><span class="nav-status"></span>11. 运算符优先级 </a>
+<a href="#" class="nav-link" data-page="13"><span class="nav-status"></span>12. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="14"><span class="nav-status"></span>13. 综合练习 — 简易计算器 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="15"><span class="nav-status"></span>14. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="16"><span class="nav-status"></span>结束页</a>
+
+</nav>
+<div class="main-area" id="mainArea">
+    <div class="header-bar">
+        <div class="progress-wrap">
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+            <span class="progress-text" id="progressText">0 / 16</span>
+        </div>
+        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
+        <div class="header-dropdown">
+          <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
+          <div class="dropdown-menu" id="ideMenu">
+            <a href="#" class="dropdown-item" data-url="https://www.runoob.com/try/runcode.php?filename=helloworld&type=csharp">菜鸟教程</a>
+            <a href="#" class="dropdown-item" data-url="https://www.tutorialspoint.com/compilers/online-csharp-compiler.htm">Tutorialspoint（支持输入）</a>
+            <a href="#" class="dropdown-item" data-url="https://dotnetfiddle.net/">DotNetFiddle</a>
+          </div>
+        </div>
+        <button class="header-btn" onclick="changeFont(-1)">A-</button>
+        <button class="header-btn" onclick="changeFont(1)">A+</button>
+        <button class="header-btn" onclick="openSearch()">🔍</button>
+        <button class="header-btn" onclick="toggleHelp()" title="使用帮助">❓</button>
+        <button class="header-btn" onclick="toggleCatalog()" title="课件目录">📚</button>
+        <div class="mobile-more">
+          <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
+          <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
+            <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
+            <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
+            <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
+          </div>
+        </div>
+    </div>
+    <div class="slides-container"><div class="cover" data-page="1">
+    <div class="cover-tag">程序设计基础（C#）</div>
+    <h1>运算符与表达式</h1>
+    <div class="cover-sub">本课程是数字媒体技术专业的基础编程课程，培养学生掌握C#语言核心语法和面向对象编程思维，通过理论与实践结合的方式，为后续专业课程奠定坚实的编程基础。</div>
+    <div class="cover-meta">
+        <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
+        <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
+    </div>
+</div>
+<div class="slide" data-page="2"><div class="slide-inner">
+<h1>本节学习目标</h1>
+<div class="goal-grid"><div class="goal-card"><span class="goal-icon">🎯</span><span class="goal-text">掌握算术、自增自减、赋值运算符</span></div><div class="goal-card"><span class="goal-icon">🔍</span><span class="goal-text">掌握关系运算符和逻辑运算符</span></div><div class="goal-card"><span class="goal-icon">📝</span><span class="goal-text">了解位运算符和三元运算符</span></div><div class="goal-card"><span class="goal-icon">💻</span><span class="goal-text">理解运算符优先级，能编写简单计算程序</span></div></div>
+
+</div></div>
+<div class="slide" data-page="3"><div class="slide-inner markable">
+<h1>算术运算符</h1>
+<div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th><th>结果</th></tr><tr><td><code>+</code></td><td>加</td><td><code>5 + 2</code></td><td>7</td></tr><tr><td><code>-</code></td><td>减</td><td><code>5 - 2</code></td><td>3</td></tr><tr><td><code>*</code></td><td>乘</td><td><code>5 * 2</code></td><td>10</td></tr><tr><td><code>/</code></td><td>除</td><td><code>5 / 2</code></td><td>2</td></tr><tr><td><code>%</code></td><td>取余（模）</td><td><code>5 % 2</code></td><td>1</td></tr></table></div><div class="card"><ul><li>取余运算：求除法后的余数，如 <code>10 % 3 = 1</code></li></ul></div><div class="card"><h3>整数除法的陷阱</h3><ul><li>⚠️ 整数 ÷ 整数 = 整数（截断小数部分）</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368200256',this)">复制</button></div>
+<pre id="c_4368200256"><code class="language-csharp">  int a = 5 / 2;     // a = 2，不是2.5！
+  int b = 10 / 3;    // b = 3</code></pre>
+</div><div class="card"><ul><li>想要小数结果 → 至少有一个操作数是小数：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368200000',this)">复制</button></div>
+<pre id="c_4368200000"><code class="language-csharp">  double c = 5.0 / 2;    // c = 2.5 ✅
+  double d = 5 / 2.0;    // d = 2.5 ✅
+  double e = (double)5 / 2;  // e = 2.5 ✅ 先把5强制转为5.0，再除以2</code></pre>
+</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 5 / 2 = 2，小数部分被截断了？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">因为 <code>int</code> 类型只能存储整数。两个 <code>int</code> 做除法时，C# 按照整数除法规则，结果也是 <code>int</code>，小数部分直接被丢弃（不是四舍五入）。这和数学里的除法不一样，是编程语言的设计规则。</div></div>
+</div></div>
+<div class="slide" data-page="4"><div class="slide-inner markable">
+<h1>自增自减</h1>
+<div class="card"><table><tr><th>运算符</th><th>名称</th><th>等价于</th></tr><tr><td><code>x++</code></td><td>后置自增</td><td>先用x，再加1</td></tr><tr><td><code>++x</code></td><td>前置自增</td><td>先加1，再用x</td></tr><tr><td><code>x--</code></td><td>后置自减</td><td>先用x，再减1</td></tr><tr><td><code>--x</code></td><td>前置自减</td><td>先减1，再用x</td></tr></table></div><div class="card"><ul><li>前置 vs 后置的区别：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368199232',this)">复制</button></div>
+<pre id="c_4368199232"><code class="language-csharp">  int a = 5;
+  int b = a++;   // b = 5, a = 6  (先把a的值5赋给b，a再加1)
+  int c = ++a;   // c = 7, a = 7  (a先加1变成7，再把7赋给c)
+
+  int d = 5;
+  int e = d--;   // e = 5, d = 4  (先把d的值5赋给e，d再减1)
+  int f = --d;   // f = 3, d = 3  (d先减1变成3，再把3赋给f)</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="5"><div class="slide-inner markable">
+<h1>课堂练习1 — 算术运算</h1>
+<div class="ok-box">动手算几道算术题，同时观察整数除法和自增自减的效果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368198528',this)">复制</button></div>
+<pre id="c_4368198528"><code class="language-csharp">int a = 10, b = 3;
+
+Console.WriteLine($&quot;a + b = {a + b}&quot;);   // 13
+Console.WriteLine($&quot;a - b = {a - b}&quot;);   // 7
+Console.WriteLine($&quot;a * b = {a * b}&quot;);   // 30
+Console.WriteLine($&quot;a / b = {a / b}&quot;);   // 3（整数除！）
+Console.WriteLine($&quot;a % b = {a % b}&quot;);   // 1
+
+int x = 5;
+Console.WriteLine($&quot;x++ = {x++}&quot;);       // 输出5，x变成6
+Console.WriteLine($&quot;++x = {++x}&quot;);       // x从6变成7，输出7</code></pre>
+</div><div class="card"><ul><li>动手：修改a和b的值，观察输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>整数除法 <code>10 / 3 = 3</code>，小数部分被截断，不会四舍五入</li><li><code>x++</code> 先用后加，<code>++x</code> 先加后用</li><li>取余 <code>%</code> 是求余数，不是百分比</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：将摄氏度转为华氏度（公式：F = C × 9 / 5 + 32）</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368198016',this)">复制</button></div>
+<pre id="c_4368198016"><code class="language-csharp">double c = 25;
+double f = <span class="code-blank">___</span>;
+Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77</code></pre>
+</div><div class="card"><p><strong>小题2</strong>：用复合赋值运算符让分数变化，填写运算符</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197952',this)">复制</button></div>
+<pre id="c_4368197952"><code class="language-csharp">int score = 80;
+score <span class="code-blank">___</span> 10;        // 加10，score变成90
+score <span class="code-blank">___</span> 3;         // 除以3，score变成30
+Console.WriteLine($&quot;最终分数={score}&quot;);</code></pre>
+</div><div class="card"><p><strong>小题3</strong>：观察 <code>n++</code> 的&quot;先用后加&quot;</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197824',this)">复制</button></div>
+<pre id="c_4368197824"><code class="language-csharp">int n = 5;
+Console.WriteLine(n++);   // 输出<span class="code-blank">___</span>，之后 n 变成<span class="code-blank">___</span></code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197696',this)">复制</button></div>
+<pre id="c_4368197696"><code class="language-csharp">double c = 25;
+double f = c * 9 / 5 + 32;
+Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77
+
+int score = 80;
+score += 10;        // 加10，score变成90
+score /= 3;         // 除以3，score变成30
+Console.WriteLine($&quot;最终分数={score}&quot;);
+
+int n = 5;
+Console.WriteLine(n++);   // 输出5，之后 n 变成6</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="6"><div class="slide-inner markable">
+<h1>赋值运算符</h1>
+<div class="card"><table><tr><th>运算符</th><th>示例</th><th>等价于</th></tr><tr><td><code>=</code></td><td><code>x = 5;</code></td><td>—</td></tr><tr><td><code>+=</code></td><td><code>x += 3;</code></td><td><code>x = x + 3;</code></td></tr><tr><td><code>-=</code></td><td><code>x -= 3;</code></td><td><code>x = x - 3;</code></td></tr><tr><td><code>*=</code></td><td><code>x *= 3;</code></td><td><code>x = x * 3;</code></td></tr><tr><td><code>/=</code></td><td><code>x /= 3;</code></td><td><code>x = x / 3;</code></td></tr><tr><td><code>%=</code></td><td><code>x %= 3;</code></td><td><code>x = x % 3;</code></td></tr></table></div><div class="card"><ul><li>复合赋值运算符 = 先运算再赋值，写法更简洁</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368196864',this)">复制</button></div>
+<pre id="c_4368196864"><code class="language-csharp">  int score = 80;
+  score += 10;   // score = 90
+  score /= 3;    // score = 30</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="7"><div class="slide-inner markable">
+<h1>关系运算符</h1>
+<div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例（结果）</th></tr><tr><td><code>==</code></td><td>等于</td><td><code>5 == 5</code> → true</td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>5 != 3</code> → true</td></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>5 &gt; 3</code> → true</td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>5 &lt; 3</code> → false</td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>5 &gt;= 5</code> → true</td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>5 &lt;= 3</code> → false</td></tr></table></div><div class="card"><ul><li>比较结果一定是 <code>bool</code> 类型（true/false）</li><li>⚠️ 等于用 <code>==</code>（两个等号），一个 <code>=</code> 是赋值</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368195712',this)">复制</button></div>
+<pre id="c_4368195712"><code class="language-csharp">  int age = 18;
+  bool isAdult = (age &gt;= 18);   // true
+  bool isTen = (age == 10);     // false</code></pre>
+</div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>逻辑运算符</h1>
+<div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（两个条件都满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个即可）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="card"><ul><li>真值表：</li></ul></div><div class="card"><table><tr><th>A</th><th>B</th><th>A <code>&amp;&amp;</code> B</th><th>A <code>||</code> B</th><th><code>!</code>A</th></tr><tr><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr><tr><td>true</td><td>false</td><td>false</td><td>true</td><td>false</td></tr><tr><td>false</td><td>true</td><td>false</td><td>true</td><td>true</td></tr><tr><td>false</td><td>false</td><td>false</td><td>false</td><td>true</td></tr></table></div><div class="card"><h3>短路特性</h3><ul><li><code>&amp;&amp;</code>：如果左边为 false，右边不再计算（因为结果一定是 false）</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368194176',this)">复制</button></div>
+<pre id="c_4368194176"><code class="language-csharp">  int a = 0;
+  bool r = (a &gt; 10) &amp;&amp; (a++ &gt; 0);  // a++ 不会执行！a仍为0</code></pre>
+</div><div class="card"><ul><li><code>||</code>：如果左边为 true，右边不再计算（因为结果一定是 true）</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368193984',this)">复制</button></div>
+<pre id="c_4368193984"><code class="language-csharp">  int b = 5;
+  bool r = (b &gt; 0) || (b++ &gt; 10);  // b++ 不会执行！b仍为5</code></pre>
+</div><div class="card"><ul><li>⚠️ 短路特性可能导致后面的表达式不执行，要注意</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 短路是什么意思？有什么用？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">&quot;短路&quot;像智能开关——<code>&amp;&amp;</code> 左边为 false 时，右边就不看了（反正结果一定是 false）；<code>||</code> 左边为 true 时，右边也不看了。好处是提升效率，但也可能让后面的 <code>a++</code>、<code>b++</code> 被跳过，写代码时要小心。</div></div>
+</div></div>
+<div class="slide" data-page="9"><div class="slide-inner markable">
+<h1>位运算符</h1>
+<div class="card"><ul><li>位运算直接操作二进制位，用于底层优化</li></ul></div><div class="card"><table><tr><th>运算符</th><th>名称</th><th>规则</th><th>示例</th></tr><tr><td><code>&amp;</code></td><td>位与</td><td>两1才1</td><td><code>6 &amp; 11</code> → <code>00000110 &amp; 00001011</code> = 2</td></tr><tr><td><code>|</code></td><td>位或</td><td>有1则1</td><td><code>6 | 11</code> → <code>00000110 | 00001011</code> = 15</td></tr><tr><td><code>^</code></td><td>位异或</td><td>不同为1</td><td><code>6 ^ 11</code> → <code>00000110 ^ 00001011</code> = 13</td></tr><tr><td><code>~</code></td><td>位非</td><td>取反</td><td><code>~6</code> → <code>~00000110</code> = -7</td></tr><tr><td><code>&lt;&lt;</code></td><td>左移</td><td>左移n位</td><td><code>3 &lt;&lt; 2</code> = 12（3×4）</td></tr><tr><td><code>&gt;&gt;</code></td><td>右移</td><td>右移n位</td><td><code>12 &gt;&gt; 2</code> = 3（12÷4）</td></tr></table></div><div class="card"><ul><li>左移1位 = 乘以2，右移1位 = 除以2（比 * / 更快）</li><li>日常编程很少用到位运算，了解即可</li></ul></div>
+</div></div>
+<div class="slide" data-page="10"><div class="slide-inner markable">
+<h1>课堂练习2 — 条件判断</h1>
+<div class="ok-box">用关系运算符判断分数是否及格，再用逻辑运算符组合多个条件判断天气。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191936',this)">复制</button></div>
+<pre id="c_4368191936"><code class="language-csharp">int score = 85;
+
+bool isPass = (score &gt;= 60);
+Console.WriteLine($&quot;及格：{isPass}&quot;);
+
+bool isExcellent = (score &gt;= 90);
+Console.WriteLine($&quot;优秀：{isExcellent}&quot;);
+
+// 组合条件：判断是否在有效范围
+bool isValid = (score &gt;= 0) &amp;&amp; (score &lt;= 100);
+Console.WriteLine($&quot;分数有效：{isValid}&quot;);
+
+// 判断是否不及格或超高分
+bool needCheck = (score &lt; 60) || (score &gt; 100);
+Console.WriteLine($&quot;需要关注：{needCheck}&quot;);</code></pre>
+</div><div class="card"><ul><li>动手：把 score 改成 95、55、-10，观察每个 bool 值的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>&amp;&amp;</code> 两边都 true 才为 true，<code>||</code> 一边 true 就为 true</li><li><code>!</code> 取反：<code>!true</code> → false</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全下面代码，判断一个数是否在 1~100 之间：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191360',this)">复制</button></div>
+<pre id="c_4368191360"><code class="language-csharp">int n = 50;
+bool inRange = (n <span class="code-blank">___</span> 1) <span class="code-blank">___</span> (n <span class="code-blank">___</span> 100);
+Console.WriteLine($&quot;n在有效范围：{<span class="code-blank">___</span>}&quot;);</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191552',this)">复制</button></div>
+<pre id="c_4368191552"><code class="language-csharp">int n = 50;
+bool inRange = (n &gt;= 1) &amp;&amp; (n &lt;= 100);
+Console.WriteLine($&quot;n在有效范围：{inRange}&quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="11"><div class="slide-inner markable">
+<h1>三元运算符（?:）</h1>
+<div class="card"><ul><li>格式：<code>条件 ? 结果1 : 结果2</code></li><li>如果条件为 <code>true</code> → 返回<code>结果1</code>；否则 → 返回<code>结果2</code></li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368190912',this)">复制</button></div>
+<pre id="c_4368190912"><code class="language-csharp">  int score = 75;
+  string result = (score &gt;= 60) ? &quot;及格&quot; : &quot;不及格&quot;;
+  // result = &quot;及格&quot;
+
+  int a = 10, b = 20;
+  int max = (a &gt; b) ? a : b;
+  // max = 20</code></pre>
+</div><div class="card"><ul><li>三元运算符是 if-else 的简写版（if-else 下个课件讲）</li></ul></div>
+</div></div>
+<div class="slide" data-page="12"><div class="slide-inner markable">
+<h1>运算符优先级</h1>
+<div class="card"><ul><li>当多个运算符同时出现，计算顺序按优先级：</li></ul></div><div class="card"><table><tr><th>优先级</th><th>运算符</th></tr><tr><td>高</td><td><code>()</code> 括号</td></tr><tr><td>↑</td><td><code>++</code> <code>--</code> <code>!</code>（一元）</td></tr><tr><td></td><td><code>*</code> <code>/</code> <code>%</code></td></tr><tr><td></td><td><code>+</code> <code>-</code></td></tr><tr><td></td><td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td></tr><tr><td></td><td><code>==</code> <code>!=</code></td></tr><tr><td></td><td><code>&amp;&amp;</code></td></tr><tr><td>↓</td><td><code>||</code></td></tr><tr><td>低</td><td><code>=</code> <code>+=</code> <code>-=</code> 等（赋值）</td></tr></table></div><div class="card"><ul><li>记不住就用<strong>括号</strong>，括号里优先计算：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368188608',this)">复制</button></div>
+<pre id="c_4368188608"><code class="language-csharp">  int r1 = 2 + 3 * 4;      // 14（先乘后加）
+  int r2 = (2 + 3) * 4;    // 20（括号优先）</code></pre>
+</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 记不住优先级怎么办？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))"><strong>用括号！</strong>括号内的永远先算，加了括号代码也更清晰。<code>2 + 3 × 4</code> 不如 <code>2 + (3 × 4)</code> 一眼看得懂。考试可能让你背，写代码时用括号就行。</div></div>
+</div></div>
+<div class="slide" data-page="13"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>算术运算符</strong>：<code>+ - * / %</code>，<code>%</code> 取余数</li><li><strong>自增自减</strong>：<code>i++</code> / <code>i--</code>，用前用后取值不同</li><li><strong>赋值运算符</strong>：<code>=</code> 及其复合写法 <code>+= -= *= /=</code></li><li><strong>关系运算符</strong>：<code>&gt; &lt; &gt;= &lt;= == !=</code>，结果都是 bool</li><li><strong>逻辑运算符</strong>：<code>&amp;&amp;</code> 与、<code>||</code> 或、<code>!</code> 非，用来组合条件</li><li><strong>位运算符</strong>：<code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code>，直接对二进制位操作</li><li><strong>三元运算符（?:）</strong>：<code>条件 ? 真值 : 假值</code>，一行代替简单 if-else</li><li><strong>运算符优先级</strong>：先乘除后加减，有括号先算括号</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+</div></div>
+<div class="slide" data-page="14"><div class="slide-inner markable">
+<h1>综合练习 — 简易计算器</h1>
+<div class="ok-box">实现一个简易计算器：输入两个数和运算符，输出计算结果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入第一个数字：10
+请输入运算符（+、-、*、/）：*
+请输入第二个数字：3
+10 * 3 = 30</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>用 <code>if (op == &quot;+&quot;)</code> / <code>else if (op == &quot;-&quot;)</code> 等判断运算符</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368186304',this)">复制</button></div>
+<pre id="c_4368186304"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
+double num1 = <span class="code-blank">___</span>;
+
+Console.Write(&quot;请输入运算符（+、-、*、/）：&quot;);
+string op = Console.ReadLine();
+
+Console.Write(&quot;请输入第二个数字：&quot;);
+double num2 = <span class="code-blank">___</span>;
+
+double result = 0;
+bool valid = true;
+
+if (op <span class="code-blank">___</span> &quot;+&quot;) result = num1 + num2;
+else if (op == &quot;-&quot;) result = <span class="code-blank">___</span>;
+else if (op == &quot;*&quot;) result = num1 * num2;
+else if (op == &quot;/&quot;) result = <span class="code-blank">___</span>;
+else valid = false;
+
+if (<span class="code-blank">___</span>)
+    Console.WriteLine($&quot;{num1} {op} {num2} = {<span class="code-blank">___</span>}&quot;);
+else
+    Console.WriteLine(&quot;运算符无效！&quot;);</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368186560',this)">复制</button></div>
+<pre id="c_4368186560"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
+double num1 = double.Parse(Console.ReadLine());
+
+Console.Write(&quot;请输入运算符（+、-、*、/）：&quot;);
+string op = Console.ReadLine();
+
+Console.Write(&quot;请输入第二个数字：&quot;);
+double num2 = double.Parse(Console.ReadLine());
+
+double result = 0;
+bool valid = true;
+
+if (op == &quot;+&quot;) result = num1 + num2;
+else if (op == &quot;-&quot;) result = num1 - num2;
+else if (op == &quot;*&quot;) result = num1 * num2;
+else if (op == &quot;/&quot;) result = num1 / num2;
+else valid = false;
+
+if (valid)
+    Console.WriteLine($&quot;{num1} {op} {num2} = {result}&quot;);
+else
+    Console.WriteLine(&quot;运算符无效！&quot;);</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个<strong>年份</strong>，判断是否为<strong>闰年</strong>并输出结果。<br>闰年规则：能被 4 整除且不能被 100 整除，<strong>或者</strong>能被 400 整除。<br>要求：用逻辑运算符 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 和取余 <code>%</code> 自己写判断，不能用现成模板。<br>提示：<code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code></div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368185984',this)">复制</button></div>
+<pre id="c_4368185984"><code class="language-csharp">int year = int.Parse(Console.ReadLine());
+bool isLeap = (year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0;
+Console.WriteLine(isLeap ? $&quot;{year} 是闰年&quot; : $&quot;{year} 不是闰年&quot;);</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="15"><div class="slide-inner markable">
+<h1>课堂作业</h1>
+<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368184448',this)">复制</button></div>
+<pre id="c_4368184448"><code class="language-csharp">class Program
+{
+    static void Main()
+    {
+        // ==================== 第1题 ====================
+
+
+        // ==================== 第2题 ====================
+
+
+        // ==================== 第3题 ====================
+
+
+        // ==================== 第4题 ====================
+
+    }
+}</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div></div>
+<div class="slide" data-page="16"><div class="slide-inner end-page">
+
+<div class="end-thanks">
+    <div class="end-left">
+        <div class="end-icon">💪</div>
+        <div class="end-title">感谢各位同学的参与!</div>
+        <div class="end-sub">祝大家学习进步</div>
+        <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
+    </div>
+    <div class="end-right">
+        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+        <p>扫码查看作业完成情况</p>
+        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+    </div>
+</div>
+<a href="课件5_类型转换.html" class="end-next-link">📖 下一节：课件5 · 类型转换 →</a>
+</div></div>
+</div>
+</div>
+</div>
+
+<div class="search-panel" id="searchPanel">
+    <div class="search-panel-header">
+        <span>🔍 全局搜索</span>
+        <button class="search-panel-close" onclick="closeSearch()">✕</button>
+    </div>
+    <input class="search-input" id="searchInput" placeholder="输入关键词搜索..." oninput="doSearch()" autocomplete="off">
+    <div class="search-results" id="searchResults"></div>
+</div>
+
+<div class="help-overlay" id="helpOverlay">
+    <div class="help-header"><span>📖 使用帮助</span><button class="help-close-btn" onclick="closeHelp()">✕</button></div>
+    <div class="help-body">
+            <h3>⌨️ 快捷键</h3>
+            <table><tr><td><code>Ctrl+K</code></td><td>打开搜索</td></tr><tr><td><code>← →</code></td><td>上一页 / 下一页</td></tr><tr><td><code>Esc</code></td><td>关闭弹窗</td></tr></table>
+            <h3>🎯 导航</h3>
+            <p>左侧边栏点击切换页面；底部圆点快速跳转；进度条显示学习完成度。</p>
+            <h3>💻 在线编辑器</h3>
+            <p>顶部「在线编辑器」下拉提供菜鸟教程、Tutorialspoint、DotNetFiddle 三个在线 C# 编译器。</p>
+            <h3>🌙 主题与字号</h3>
+            <p>深色/浅色切换；A- / A+ 调整字号；刷新后保留设置。</p>
+            <h3>🔍 搜索</h3>
+            <p>支持中英文关键词，匹配结果高亮显示，点击跳转到对应页面。</p>
+        </div>
+</div>
+
+<div class="catalog-panel" id="catalogPanel">
+    <div class="catalog-header">
+        <span>📚 课件目录</span>
+        <button class="catalog-close-btn" onclick="closeCatalog()">✕</button>
+    </div>
+    <div class="catalog-list" id="catalogList"></div>
+</div>
+
+<div class="qr-zoom-overlay" id="qrZoom" onclick="closeZoom()">
+    <img id="qrZoomImg" src="" alt="二维码放大">
+</div>
+
+<div class="nav-buttons">
+    <button class="nav-btn" id="prevBtn" onclick="goSlide(-1)">◀ 上一页</button>
+    <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
+</div>
+<div class="progress-dots" id="progressDots"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+// 当前课件标签（从 catalog 中查找当前文件名）
+let LESSON_LABEL='';(function(){
+  let cur=window.location.pathname.split('/').pop();
+  let items=window.__CATALOG__||[];
+  for(let i=0;i<items.length;i++){if(items[i].file===cur){LESSON_LABEL=items[i].label;break}}
+  if(!LESSON_LABEL)LESSON_LABEL=document.title.split(' — ')[0]||'';
+})();
+// ========== 移动端 "更多" 菜单 ==========
+function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
+function mobileAction(act){
+  document.getElementById('mobileMoreMenu').classList.remove('open');
+  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  else if(act==='fontDown')changeFont(-1);
+  else if(act==='fontUp')changeFont(1);
+  else if(act==='search')openSearch();
+  else if(act==='help')toggleHelp();
+}
+document.addEventListener('click',function(e){
+  let mm=document.getElementById('mobileMoreMenu');
+  if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
+});
+// 点击移动端信息条跳转下一页
+function mobileInfoTap(){goSlide(1)}
+// ========== localStorage ==========
+const LS=(k,d)=>localStorage.getItem(k)||d;
+const LSset=(k,v)=>localStorage.setItem(k,v);
+
+// ========== 主题 ==========
+// ========== 在线编辑器下拉 ==========
+document.addEventListener('DOMContentLoaded',function(){
+    var ideBtn=document.getElementById('ideBtn');
+    if(ideBtn){
+        ideBtn.onclick=function(e){
+            e.stopPropagation();
+            document.getElementById('ideMenu').classList.toggle('show');
+        };
+    }
+    document.querySelectorAll('.dropdown-item').forEach(function(el){
+        el.onclick=function(e){
+            e.preventDefault();
+            window.open(this.dataset.url,'_blank');
+            document.getElementById('ideMenu').classList.remove('show');
+        };
+    });
+    document.addEventListener('click',function(){
+        document.getElementById('ideMenu').classList.remove('show');
+    });
+});
+
+// ========== 主题 ==========
+if(LS('theme','dark')==='light')document.body.classList.add('light');
+function toggleTheme(){
+    const il=document.body.classList.toggle('light');
+    LSset('theme',il?'light':'dark');
+    document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+document.addEventListener('DOMContentLoaded',()=>{
+    document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
+    // 初始化移动端信息
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+    }
+});
+
+// ========== 字号 ==========
+const FONT_SIZES=['xs','sm','md','lg','xl'];
+let fontIdx=FONT_SIZES.indexOf(LS('font','md'));
+if(fontIdx<0)fontIdx=2;
+if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+function changeFont(d){
+    document.body.classList.remove('font-'+FONT_SIZES[fontIdx]);
+    fontIdx=Math.max(0,Math.min(FONT_SIZES.length-1,fontIdx+d));
+    if(fontIdx!==2)document.body.classList.add('font-'+FONT_SIZES[fontIdx]);
+    LSset('font',FONT_SIZES[fontIdx]);
+}
+
+// ========== 幻灯片 ==========
+let slides=document.querySelectorAll('.slide,.cover'),
+    navLinks=document.querySelectorAll('.nav-link'),
+    curr=0,total=16,contentTotal=14;
+
+// 进度圆点
+// 侧边栏点击
+navLinks.forEach((l,i)=>l.addEventListener('click',e=>{e.preventDefault();showSlide(i);}));
+let dotsHtml='';
+for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" onclick="showSlide(${i})"></span>`;
+document.getElementById('progressDots').innerHTML=dotsHtml;
+let dots=document.querySelectorAll('.progress-dot');
+
+function showSlide(idx){
+    if(idx<0||idx>=total)return;
+    slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
+    navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    curr=idx;
+    let cp=Math.max(0,Math.min(idx,contentTotal));
+    document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
+    document.getElementById('progressText').textContent=cp+' / '+contentTotal;
+    let mi=document.getElementById('mobileInfo');
+    if(mi){
+        mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
+        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+    }
+    document.getElementById('mainArea').scrollTop=0;
+    document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
+    updateNav();
+}
+function goSlide(d){ showSlide(curr+d); }
+function updateNav(){
+    document.getElementById('prevBtn').disabled=curr===0;
+    document.getElementById('nextBtn').disabled=curr===total-1;
+    LSset('page_'+window.location.pathname.split('/').pop(), curr);
+}
+
+// 键盘
+document.addEventListener('keydown',e=>{
+    if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
+    if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
+    if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+});
+
+// ========== 搜索 ==========
+function openSearch(){document.getElementById('searchPanel').classList.add('open');document.getElementById('searchInput').focus();document.getElementById('searchInput').value='';document.getElementById('searchResults').innerHTML=''}
+function closeSearch(){document.getElementById('searchPanel').classList.remove('open')}
+function toggleHelp(){document.getElementById('helpOverlay').classList.toggle('open')}
+function closeHelp(){document.getElementById('helpOverlay').classList.remove('open')}
+// 课件目录
+function toggleCatalog(){
+    let p=document.getElementById('catalogPanel');
+    if(!p.classList.contains('open')){loadCatalog();p.classList.add('open')}else{p.classList.remove('open')}
+}
+function closeCatalog(){document.getElementById('catalogPanel').classList.remove('open')}
+function loadCatalog(){
+    let c=document.getElementById('catalogList');
+    if(c.children.length>0)return;
+    let current=window.location.pathname.split('/').pop();
+    let items=window.__CATALOG__||[];
+    if(!items.length){c.innerHTML='<div class="catalog-item" style="color:var(--text-muted)">暂无课件</div>';return}
+    items.forEach(item=>{
+        let a=document.createElement('a');a.className='catalog-item';a.href=encodeURIComponent(item.file);
+        if(item.file===current)a.classList.add('current');
+        a.innerHTML=`<span class="catalog-num">${item.label.split(' · ')[0]}</span><span>${item.label.split(' · ').slice(1).join(' · ')||item.label}</span>`;
+        c.appendChild(a);
+    });
+}
+function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
+function doSearch(){
+    let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
+    c.innerHTML='';if(q.length<2)return;
+    let r=[];
+    slides.forEach((s,i)=>{
+        let raw=s.textContent,lower=raw.toLowerCase(),idx=lower.indexOf(qLower);
+        if(idx<0)return;
+        let start=Math.max(0,idx-15),end=Math.min(raw.length,idx+q.length+30);
+        let ex=raw.substring(start,end);
+        if(start>0)ex='...'+ex;
+        if(end<raw.length)ex=ex+'...';
+        // 高亮匹配词
+        let re=new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+        ex=ex.replace(re,'<mark>$1</mark>');
+        r.push({idx:i,excerpt:ex,slide:s});
+    });
+    r.slice(0,20).forEach(x=>{
+        let a=document.createElement('a');a.className='search-item';a.href='#';
+        let title=navLinks[x.idx]?.textContent.replace(/^\d+\.\s*/,'')||('页面'+(x.idx+1));
+        a.innerHTML=`<div class="sr-lesson">${x.idx+1}. ${title}</div><div class="sr-text">${x.excerpt}</div>`;
+        a.onclick=e=>{e.preventDefault();showSlide(x.idx);closeSearch();};
+        c.appendChild(a);
+    });
+}
+
+// ========== 复制 ==========
+function copyCode(cid,btn){
+    let code=document.getElementById(cid).textContent;
+    navigator.clipboard.writeText(code).then(()=>{
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    }).catch(()=>{
+        // fallback
+        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
+        document.execCommand('copy');document.body.removeChild(ta);
+        btn.textContent='✅ 已复制';btn.classList.add('copied');
+        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
+    });
+}
+
+// ========== 初始化 ==========
+hljs.highlightAll();
+// 折叠面板
+function toggleFold(btn){
+    btn.classList.toggle('open');
+    let content=btn.nextElementSibling;
+    if(!content||!content.classList.contains('fold-content')) content=content.nextElementSibling;
+    if(content&&content.classList.contains('fold-content')) content.classList.toggle('show');
+}
+let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
+if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+</script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>C#程序设计基础 — 先知课堂</title>
+<style>
+:root{
+--bg-primary:#0A0E27;--bg-secondary:#0D1430;--bg-card:rgba(17,24,39,0.95);
+--bg-input:#0B1020;--border:rgba(255,255,255,0.06);
+--text:#E8EAED;--text-muted:#9AA0A6;
+--accent:#00D4AA;--accent2:#4FC3F7;--accent-dim:rgba(0,212,170,0.08);
+--orange:#F59E0B;--blue:#818CF8;
+--green:#22C55E;--green-bg:rgba(34,197,94,0.08);--green-border:rgba(34,197,94,0.3);
+--font-size:16px;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html,body{min-height:100%;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
+::-webkit-scrollbar{width:8px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
+::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+
+.hero{text-align:center;padding:64px 24px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(0,212,170,0.06),transparent 70%);pointer-events:none}
+.hero-badge{display:inline-block;background:var(--accent-dim);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:5px 16px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1px;margin-bottom:20px}
+.hero h1{font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-1px;margin-bottom:12px}
+.hero p{color:var(--text-muted);font-size:15px;max-width:560px;margin:0 auto;line-height:1.8}
+.hero-meta{display:flex;justify-content:center;gap:32px;margin-top:24px;flex-wrap:wrap}
+.hero-meta span{font-size:13px;color:var(--text-muted)}
+.hero-meta strong{color:var(--accent2);font-weight:600}
+
+.catalog{max-width:960px;margin:0 auto;padding:16px 24px 80px}
+.catalog-section{margin-bottom:36px}
+.section-title{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px;padding-bottom:10px;border-bottom:1px solid rgba(0,212,170,0.15)}
+.section-title .num{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:0}
+.section-desc{font-size:13px;color:var(--text-muted);margin-left:auto;font-weight:400;text-transform:none;letter-spacing:0}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.card-link{display:block;text-decoration:none;color:inherit;background:linear-gradient(135deg,var(--bg-card),rgba(13,20,48,0.85));border:1px solid var(--border);border-radius:14px;padding:20px 22px;transition:all .3s;position:relative;overflow:hidden}
+.card-link::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:0;transition:opacity .3s}
+.card-link:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 8px 28px rgba(0,212,170,0.12);transform:translateY(-3px)}
+.card-link:hover::before{opacity:1}
+.card-link .tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;color:var(--accent);background:var(--accent-dim);border:1px solid rgba(0,212,170,0.15);padding:2px 8px;border-radius:5px;margin-bottom:10px}
+.card-link h3{font-size:17px;font-weight:700;color:var(--text);margin-bottom:6px;line-height:1.4}
+.card-link:hover h3{color:var(--accent)}
+.card-link p{font-size:13px;color:var(--text-muted);line-height:1.6}
+.card-link .arrow{position:absolute;right:20px;bottom:20px;font-size:18px;color:var(--text-muted);transition:all .3s}
+.card-link:hover .arrow{color:var(--accent);transform:translateX(4px)}
+
+.footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:12px;border-top:1px solid var(--border);margin-top:40px}
+.footer a{color:var(--accent2);text-decoration:none}
+.footer a:hover{color:var(--accent)}
+
+@media(max-width:640px){
+.hero{padding:40px 16px 28px}
+.hero h1{font-size:26px}
+.grid{grid-template-columns:1fr}
+.catalog{padding:12px 16px 60px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">🏫 汕头职业技术学院 · 电子信息学院</div>
+  <h1>C# 程序设计基础</h1>
+  <p>2026 级课程 · 先知课堂交互式课件</p>
+  <div class="hero-meta">
+    <span>📚 共 <strong>21</strong> 个课件</span>
+    <span>🧑‍🏫 授课教师 <strong>彭堉斌</strong></span>
+    <span>📖 教材：人邮版《C#程序设计基础入门教程（第3版）》</span>
+  </div>
+</div>
+
+<div class="catalog">
+
+  <!-- 基础入门 -->
+  <div class="catalog-section">
+    <div class="section-title">
+      <span class="num">1</span>
+      基础入门
+      <span class="section-desc">环境搭建 · 语法基础 · 数据类型</span>
+    </div>
+    <div class="grid">
+      <a class="card-link" href="课件1_认识C#与课程介绍.html">
+        <span class="tag">课件 01</span>
+        <h3>认识 C# 与课程介绍</h3>
+        <p>AI 时代为什么还要学编程？C# 语言全貌、.NET 生态与课程规划。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件2_开发环境与AI辅助编程.html">
+        <span class="tag">课件 02</span>
+        <h3>开发环境与 AI 辅助编程</h3>
+        <p>VS Code / VS 安装配置、第一个 C# 程序、AI 辅助编程入门。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件3_变量与基本数据类型.html">
+        <span class="tag">课件 03</span>
+        <h3>变量与基本数据类型</h3>
+        <p>整型、浮点型、字符型、布尔型、变量声明与类型系统。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件4_运算符与表达式.html">
+        <span class="tag">课件 04</span>
+        <h3>运算符与表达式</h3>
+        <p>算术、关系、逻辑、位运算、三元运算符与优先级。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件5_类型转换.html">
+        <span class="tag">课件 05</span>
+        <h3>类型转换</h3>
+        <p>隐式转换、强制转换、Parse / ToString、var 类型推断。</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 流程控制 -->
+  <div class="catalog-section">
+    <div class="section-title">
+      <span class="num">2</span>
+      流程控制
+      <span class="section-desc">分支 · 循环 · 字符串 · 数组 · 集合</span>
+    </div>
+    <div class="grid">
+      <a class="card-link" href="课件6_流程控制_分支语句.html">
+        <span class="tag">课件 06</span>
+        <h3>流程控制 — 分支语句</h3>
+        <p>if-else、switch、嵌套分支与条件表达式实战。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件7_流程控制_循环语句.html">
+        <span class="tag">课件 07</span>
+        <h3>流程控制 — 循环语句</h3>
+        <p>while、do-while、for、foreach、循环控制与嵌套。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件8_字符及字符串操作.html">
+        <span class="tag">课件 08</span>
+        <h3>字符及字符串操作</h3>
+        <p>char 与 string、字符串方法、StringBuilder 高效拼接。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件9_数组.html">
+        <span class="tag">课件 09</span>
+        <h3>数组</h3>
+        <p>一维数组、多维数组、数组遍历与常用操作。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件10_集合.html">
+        <span class="tag">课件 10</span>
+        <h3>集合</h3>
+        <p>List、Dictionary、队列与栈、LINQ 基础入门。</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 面向对象 -->
+  <div class="catalog-section">
+    <div class="section-title">
+      <span class="num">3</span>
+      面向对象编程
+      <span class="section-desc">类与对象 · 封装 · 继承 · 结构体与枚举</span>
+    </div>
+    <div class="grid">
+      <a class="card-link" href="课件11_类的概念与方法上.html">
+        <span class="tag">课件 11</span>
+        <h3>类的概念与方法（上）</h3>
+        <p>类与对象、字段与属性、构造函数、方法定义。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件12_类的概念与方法下.html">
+        <span class="tag">课件 12</span>
+        <h3>类的概念与方法（下）</h3>
+        <p>方法重载、static 修饰符、参数传递（ref / out / params）。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件13_封装与访问控制.html">
+        <span class="tag">课件 13</span>
+        <h3>封装与访问控制</h3>
+        <p>访问修饰符、属性封装、自动属性、封装设计原则。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件14_结构体与枚举.html">
+        <span class="tag">课件 14</span>
+        <h3>结构体与枚举</h3>
+        <p>struct 定义、枚举类型、值类型与引用类型对比。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件15_类的继承.html">
+        <span class="tag">课件 15</span>
+        <h3>类的继承</h3>
+        <p>继承机制、virtual / override、base 关键字、多态入门。</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 实战应用 -->
+  <div class="catalog-section">
+    <div class="section-title">
+      <span class="num">4</span>
+      实战应用
+      <span class="section-desc">文件操作 · 常用类 · 项目实战 · GUI · 期末大作业</span>
+    </div>
+    <div class="grid">
+      <a class="card-link" href="课件16_文件操作.html">
+        <span class="tag">课件 16</span>
+        <h3>文件操作</h3>
+        <p>File / StreamReader / StreamWriter、文件读写与异常处理。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件17_CSharp常用类.html">
+        <span class="tag">课件 17</span>
+        <h3>C# 常用类</h3>
+        <p>Math、DateTime、String 高级用法、常用工具类汇总。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件18_项目实战_图书管理系统.html">
+        <span class="tag">课件 18</span>
+        <h3>项目实战 — 图书管理系统</h3>
+        <p>综合运用类 + 集合 + 文件 IO，AI 协作开发实战。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件19_Avalonia跨平台窗体入门.html">
+        <span class="tag">课件 19</span>
+        <h3>Avalonia 跨平台窗体入门</h3>
+        <p>Avalonia 框架、窗体创建、基础布局、跨平台 GUI 开发。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件20_Avalonia跨平台窗体控件进阶.html">
+        <span class="tag">课件 20</span>
+        <h3>Avalonia 跨平台窗体控件进阶</h3>
+        <p>常用控件、数据绑定、事件处理、界面美化。</p>
+        <span class="arrow">→</span>
+      </a>
+      <a class="card-link" href="课件21_期末大作业.html">
+        <span class="tag">课件 21</span>
+        <h3>期末大作业</h3>
+        <p>自选主题管理系统：类 + 集合 + 文件 IO + Avalonia 界面 + 事件。</p>
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  <p>© 2026 汕头职业技术学院 · 电子信息学院 · 彭堉斌</p>
+  <p style="margin-top:6px;">教材：<a href="https://tch.ityxb.com/textbook/detail/2c9385f09b4efbf5019b9cb151310253" target="_blank" rel="noopener">人邮版《C#程序设计基础入门教程（第3版）》</a></p>
+</div>
+
+</body>
+</html>
