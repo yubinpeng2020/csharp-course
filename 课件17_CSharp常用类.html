@@ -378,8 +378,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>Math — 数学计算</h1>
 <div class="ok-box">当你要算圆的面积时——<code>Math.PI * Math.Pow(半径, 2)</code>，一行搞定。C# 把数学公式全封装在 <code>Math</code> 类里，拿来就用。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>Math.Abs(x)</code></td><td>绝对值</td><td><code>Abs(-5)</code> → 5</td></tr><tr><td><code>Math.Max(a,b)</code> / <code>Min(a,b)</code></td><td>最大值/最小值</td><td><code>Max(10,20)</code> → 20</td></tr><tr><td><code>Math.Pow(x,y)</code></td><td>x 的 y 次方</td><td><code>Pow(2,3)</code> → 8</td></tr><tr><td><code>Math.Sqrt(x)</code></td><td>平方根</td><td><code>Sqrt(16)</code> → 4</td></tr><tr><td><code>Math.Round(x,n)</code></td><td>四舍五入到 n 位</td><td><code>Round(3.14159,2)</code> → 3.14</td></tr><tr><td><code>Math.Floor(x)</code> / <code>Ceiling(x)</code></td><td>向下/向上取整</td><td><code>Floor(3.9)</code> → 3</td></tr><tr><td><code>Math.PI</code></td><td>圆周率常量</td><td>3.14159...</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336826176',this)">复制</button></div>
-<pre id="c_4336826176"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373362112',this)">复制</button></div>
+<pre id="c_4373362112"><code class="language-csharp">using System;
 
 class Program
 {
@@ -411,8 +411,8 @@ class Program
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>DateTime — 日期时间</h1>
 <div class="ok-box">当你要算自己活了多少天时——<code>DateTime.Today - 生日</code>，直接拿到天数。日期加减、格式化输出都在 <code>DateTime</code> 里。</div><div class="card"><table><tr><th>方法/属性</th><th>作用</th><th>示例</th></tr><tr><td><code>DateTime.Now</code></td><td>当前日期时间</td><td><code>2026-07-01 14:30:00</code></td></tr><tr><td><code>DateTime.Today</code></td><td>今天（时间归零）</td><td><code>2026-07-01 00:00:00</code></td></tr><tr><td><code>new DateTime(y,m,d)</code></td><td>指定日期</td><td><code>new DateTime(2000,1,1)</code></td></tr><tr><td><code>dt.AddDays(n)</code> / <code>AddMonths(n)</code></td><td>加减天/月</td><td><code>today.AddDays(7)</code> → 下周</td></tr><tr><td><code>dt2 - dt1</code></td><td>日期差 → TimeSpan</td><td><code>now - birthday</code> → 活了 X 天</td></tr><tr><td><code>dt.ToString(&quot;格式&quot;)</code></td><td>格式化输出</td><td><code>&quot;yyyy-MM-dd&quot;</code></td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336823744',this)">复制</button></div>
-<pre id="c_4336823744"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373359680',this)">复制</button></div>
+<pre id="c_4373359680"><code class="language-csharp">using System;
 
 class Program
 {
@@ -443,8 +443,8 @@ class Program
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>Random — 随机数</h1>
 <div class="ok-box">当你要写个抽奖程序时——<code>new Random().Next(0, 名单长度)</code>，随机选一个人。骰子、硬币、验证码，全靠 <code>Random</code>。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>new Random()</code></td><td>创建随机数生成器</td><td><code>Random rand = new Random();</code></td></tr><tr><td><code>rand.Next()</code></td><td>任意非负整数</td><td><code>Next()</code> → 0~21亿</td></tr><tr><td><code>rand.Next(max)</code></td><td>0 ~ max-1</td><td><code>Next(100)</code> → 0~99</td></tr><tr><td><code>rand.Next(min,max)</code></td><td>min ~ max-1</td><td><code>Next(1,7)</code> → 1~6</td></tr><tr><td><code>rand.NextDouble()</code></td><td>0.0 ~ 1.0 小数</td><td><code>NextDouble()</code> → 0.73...</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336822848',this)">复制</button></div>
-<pre id="c_4336822848"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373358784',this)">复制</button></div>
+<pre id="c_4373358784"><code class="language-csharp">using System;
 
 class Program
 {
@@ -479,8 +479,8 @@ class Program
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>Convert — 类型转换</h1>
 <div class="ok-box">用户输入永远是 <code>string</code>——<code>&quot;25&quot;</code> 想拿来算，得先变成 <code>int</code>。<code>Convert</code> 就是专门做这个的，而且比 <code>Parse</code> 更宽容。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>入参为 null</th></tr><tr><td><code>Convert.ToInt32(s)</code></td><td>string → int</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToDouble(s)</code></td><td>string → double</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToBoolean(s)</code></td><td>string → bool</td><td>返回 false ✅</td></tr><tr><td><code>Convert.ToString(x)</code></td><td>任意类型 → string</td><td><code>&quot;&quot;</code></td></tr><tr><td><code>int.Parse(s)</code></td><td>对比：同功能</td><td>💥 抛异常</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336821952',this)">复制</button></div>
-<pre id="c_4336821952"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373357888',this)">复制</button></div>
+<pre id="c_4373357888"><code class="language-csharp">using System;
 
 class Program
 {
@@ -507,8 +507,8 @@ class Program
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>Path — 文件路径处理</h1>
 <div class="ok-box"><code>C:\照片\2026\me.jpg</code> 这个路径，怎么取出文件名、后缀名、目录？<code>Path</code> 类专门干这个，再也不用自己拆字符串了。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例（path = <code>C:\照片\me.jpg</code>）</th></tr><tr><td><code>Path.GetFileName(p)</code></td><td>取文件名</td><td><code>&quot;me.jpg&quot;</code></td></tr><tr><td><code>Path.GetFileNameWithoutExtension(p)</code></td><td>无后缀文件名</td><td><code>&quot;me&quot;</code></td></tr><tr><td><code>Path.GetExtension(p)</code></td><td>取后缀</td><td><code>&quot;.jpg&quot;</code></td></tr><tr><td><code>Path.GetDirectoryName(p)</code></td><td>取目录</td><td><code>&quot;C:\照片&quot;</code></td></tr><tr><td><code>Path.Combine(a,b,c)</code></td><td>安全拼接路径</td><td><code>&quot;C:\照片\2026&quot;</code></td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336820992',this)">复制</button></div>
-<pre id="c_4336820992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373356608',this)">复制</button></div>
+<pre id="c_4373356608"><code class="language-csharp">using System;
 using System.IO;
 
 class Program
@@ -538,8 +538,8 @@ class Program
 ✅ 正确！
 ...
 做对 4/5 题，用时 23.5 秒</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819776',this)">复制</button></div>
-<pre id="c_4336819776"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373355712',this)">复制</button></div>
+<pre id="c_4373355712"><code class="language-csharp">using System;
 
 class Program
 {
@@ -572,8 +572,8 @@ class Program
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：把5题改成10题；把加法改成乘法（<code>*</code>），体验四类知识联动</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>rand.Next(10, 100)</code> — Random 生成题目数字（页面5）</li><li><code>Convert.ToInt32(Console.ReadLine())</code> — Convert 把用户输入转 int（页面6）</li><li><code>Math.Abs(answer - (a + b)) == 0</code> — Math 判断答对没有（页面3）</li><li><code>(DateTime.Now - start).TotalSeconds</code> — DateTime 计时（页面4）</li><li>四行代码，四个类联动——这就是&quot;常用类&quot;的真实用法</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——随机出1道乘法题：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819648',this)">复制</button></div>
-<pre id="c_4336819648"><code class="language-csharp"><span class="code-blank">___</span> rand = new <span class="code-blank">___</span>();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373355584',this)">复制</button></div>
+<pre id="c_4373355584"><code class="language-csharp"><span class="code-blank">___</span> rand = new <span class="code-blank">___</span>();
 int a = rand.Next(<span class="code-blank">___</span>, 20);   // 1~19
 int b = rand.Next(1, <span class="code-blank">___</span>);    // 1~9
 Console.Write($&quot;{a} × {b} = &quot;);
@@ -583,8 +583,8 @@ if (answer <span class="code-blank">___</span> a * b)         // 判断是否答
 else
     Console.WriteLine($&quot;错了，答案是 {a * b}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336819200',this)">复制</button></div>
-<pre id="c_4336819200"><code class="language-csharp">Random rand = new Random();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373355136',this)">复制</button></div>
+<pre id="c_4373355136"><code class="language-csharp">Random rand = new Random();
 int a = rand.Next(1, 20);
 int b = rand.Next(1, 10);
 Console.Write($&quot;{a} × {b} = &quot;);
@@ -618,8 +618,8 @@ else
 --------------------
 全班平均分：84.6
 最高分学生：周八（277分）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>File.ReadAllLines</code> — 读文件全部行（页面7 文件操作）</li><li><code>Convert.ToInt32</code> — string 转数字（页面6 类型转换）</li><li><code>Math.Round(x, 1)</code> — 四舍五入保留1位小数（页面3 常用类）</li><li><code>DateTime.Now</code> — 取当前日期时间（页面4 常用类）</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336817728',this)">复制</button></div>
-<pre id="c_4336817728"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373353664',this)">复制</button></div>
+<pre id="c_4373353664"><code class="language-csharp">using System;
 using System.IO;
 
 class Program
@@ -665,8 +665,8 @@ class Program
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336817344',this)">复制</button></div>
-<pre id="c_4336817344"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373353280',this)">复制</button></div>
+<pre id="c_4373353280"><code class="language-csharp">using System;
 using System.IO;
 
 class Program
@@ -712,8 +712,8 @@ class Program
     }
 }</code></pre>
 </div></div></div><div class="card"><ul><li>动手：把 <code>scores.txt</code> 改成你自己的班级数据，看结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>File.ReadAllLines</code> — 逐行读取文件（Path 相关，页面7）</li><li><code>Convert.ToInt32</code> — 文件读出来都是 string，必须转数字（页面6）</li><li><code>Math.Round(..., 1)</code> — 保留一位小数（页面3）</li><li><code>DateTime.Now</code> — 生成报告日期（页面4）</li><li>每行代码都精准用到页面3-7的内容——&quot;综合&quot;二字落到实处</li></ul></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个目标日期（如 <code>2026-12-31</code>），程序算出<strong>距离今天还有多少天</strong>。<br>要求：用 <code>DateTime</code> 和 <code>TimeSpan</code> 自己算差值，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336816896',this)">复制</button></div>
-<pre id="c_4336816896"><code class="language-csharp">DateTime target = DateTime.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373352832',this)">复制</button></div>
+<pre id="c_4373352832"><code class="language-csharp">DateTime target = DateTime.Parse(Console.ReadLine());
 TimeSpan diff = target - DateTime.Now;
 Console.WriteLine($&quot;距离目标还有 {diff.Days} 天&quot;);</code></pre>
 </div></div></div>
@@ -721,8 +721,8 @@ Console.WriteLine($&quot;距离目标还有 {diff.Days} 天&quot;);</code></pre>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>输入三角形两边长 a、b 和夹角角度（度），用公式 <code>面积 = 0.5 × a × b × sin(角度转弧度)</code> 计算面积，保留两位小数。提示：弧度 = 角度 × <code>Math.PI / 180</code>。</p><ul><li>知识：<code>Math.Sin</code>、<code>Math.PI</code>、<code>Math.Round</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入边a：→ 3</code></li></ul><ul><li>输入：<code>请输入边b：→ 4</code></li></ul><ul><li>输入：<code>请输入夹角（度）：→ 90</code></li></ul><ul><li>输出：<code>面积 = 6.00</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>输入两个日期（格式 yyyy-MM-dd），计算它们之间相差多少天，以及&quot;约等于多少个月&quot;（按每月30天计，保留1位小数）。</p><ul><li>知识：<code>DateTime.Parse</code>、日期相减得 <code>TimeSpan</code>、<code>Math.Round</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入开始日期：→ 2026-01-01</code></li></ul><ul><li>输入：<code>请输入结束日期：→ 2026-07-01</code></li></ul><ul><li>输出：<code>相差 181 天</code></li></ul><ul><li>输出：<code>约 6.0 个月</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>用 <code>Random</code> 随机生成5道<strong>两位数加减法</strong>题（50%概率加法、50%概率减法），用户作答后统计得分和正确率。减法题不能出现负数结果（检测到就重出）。</p><ul><li>知识：<code>Random</code>（<strong>必须用 <code>new Random(42)</code> 固定种子</strong>，否则验收输出不一致）、<code>Math.Abs</code>（判断正误）、正确率 = 做对数 / 5 × 100</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入答案（第1题 34 + 57）：→ 91</code></li></ul><ul><li>输入：<code>请输入答案（第2题 82 - 15）：→ 67</code></li></ul><ul><li>输入：<code>请输入答案（第3题 45 + 28）：→ 73</code></li></ul><ul><li>输入：<code>请输入答案（第4题 91 - 46）：→ 40</code></li></ul><ul><li>输入：<code>请输入答案（第5题 16 + 78）：→ 94</code></li></ul><ul><li>输出：<code>第1题：34 + 57 = 91 ✅</code></li></ul><ul><li>输出：<code>第2题：82 - 15 = 67 ✅</code></li></ul><ul><li>输出：<code>第3题：45 + 28 = 73 ✅</code></li></ul><ul><li>输出：<code>第4题：91 - 46 = 40 ❌ 答案是 45</code></li></ul><ul><li>输出：<code>第5题：16 + 78 = 94 ✅</code></li></ul><ul><li>输出：<code>做对 4/5 题，正确率 80%</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>从 <code>names.txt</code>（一行一个名字）读取学生名单，用户输入每组人数 N，用 <code>Random</code> 打乱后分成若干组，输出分组结果。如果最后一组不足 N 人也单独成组。输出分组时间。</p><ul><li>知识：<code>File.ReadAllLines</code>、<code>Random</code>（<strong>必须用 <code>new Random(42)</code> 固定种子</strong>）、<code>DateTime</code>、<code>Math.Ceiling</code>（算需要几组）</li><li>提示：把名单放到 <code>List&lt;string&gt;</code> 里，<code>rand.Next(i, names.Count)</code> 随机交换位置实现洗牌</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入每组人数：→ 5</code></li></ul><ul><li>输出：<code>分组时间：2026-07-15 14:30:22</code></li></ul><ul><li>输出：<code>共12人，每组5人，分3组</code></li></ul><ul><li>输出：<code>第1组：王五 钱十三 陈七 吴九 孙十二</code></li></ul><ul><li>输出：<code>第2组：杨十四 张三 冯十一 周八 赵六</code></li></ul><ul><li>输出：<code>第3组：李四 郑十</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每道题用注释分隔<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336816000',this)">复制</button></div>
-<pre id="c_4336816000"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373351936',this)">复制</button></div>
+<pre id="c_4373351936"><code class="language-csharp">using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -811,7 +811,7 @@ class Program
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

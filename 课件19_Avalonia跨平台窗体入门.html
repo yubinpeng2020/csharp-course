@@ -495,8 +495,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>常用控件 — TextBlock / TextBox / Button</h1>
 <div class="ok-box">⚠️ <strong>和 WinForms 的三个大不同（务必先看）</strong><br>1. 显示文字用 <strong><code>TextBlock</code></strong>，不是 <code>Label</code>（<code>Label</code> 在 Avalonia 是给别的控件加快捷键的，不用来显示文字）<br>2. 修改属性名变了：<code>BackColor</code> → <code>Background</code>、<code>Enabled</code> → <code>IsEnabled</code>、<code>ReadOnly</code> → <code>IsReadOnly</code><br>3. <strong>没有 <code>MessageBox.Show</code></strong>！要提示用户，用窗口上的 <code>TextBlock</code> 显示文字。本课都用 <code>TextBlock</code> 显示提示</div><div class="card"><h3>XAML 快速看懂</h3><p>XAML 是用&quot;标签&quot;描述界面的语言。Avalonia 的文件后缀是 <strong><code>.axaml</code></strong>（不是 <code>.xaml</code>，特意和 WPF 区分开）：</p><ul><li><strong>标签名 = 控件类名</strong>：<code>&lt;Button&gt;</code> 就是按钮，<code>&lt;TextBox&gt;</code> 就是输入框</li><li><strong>标签里的属性 = 控件属性</strong>：<code>Background=&quot;Blue&quot;</code>、<code>Content=&quot;确定&quot;</code> 都是在设属性</li><li><strong>标签之间的内容 = 控件的&quot;内容&quot;</strong>：<code>&lt;Button&gt;确定&lt;/Button&gt;</code> 等价于 <code>Content=&quot;确定&quot;</code></li><li>文件开头通常有三个命名空间（<code>xmlns</code>、<code>xmlns:x</code>、<code>x:Class</code>），照模板写即可，不用背</li></ul></div><div class="ok-box">💡 XAML 看着像网页 HTML，但它描述的是一棵&quot;对象树&quot;：每个标签对应一个 C# 对象，属性就是对象的字段。看懂这点，后面换控件只是换标签名。</div><div class="card"><p>界面写在 <code>MainWindow.axaml</code> 里，用 <strong><code>StackPanel</code></strong>（竖直排列容器）把控件一个个摞起来：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378781824',this)">复制</button></div>
-<pre id="c_4378781824"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376683968',this)">复制</button></div>
+<pre id="c_4376683968"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock x:Name=&quot;tip&quot; Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -507,20 +507,20 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>布局基础 — 控件摆在哪里</h1>
 <div class="ok-box">控件不能随便乱飘，得放进&quot;布局容器&quot;里，由容器决定它们怎么排列。Avalonia 常用 5 种布局容器：</div><div class="card"><h3>1. StackPanel —— 摞起来 / 排成行</h3><p>控件一个接一个竖直（默认）或水平排列，<code>Spacing</code> 控制间距：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378780992',this)">复制</button></div>
-<pre id="c_4378780992"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376683136',this)">复制</button></div>
+<pre id="c_4376683136"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
     &lt;Button Content=&quot;按钮1&quot; /&gt;
     &lt;Button Content=&quot;按钮2&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><h3>2. Grid —— 表格（最灵活）</h3><p>用 <code>ColumnDefinitions</code> / <code>RowDefinitions</code> 划分行列，<code>*</code> 表示按比例、<code>Auto</code> 表示按内容；再用 <code>Grid.Row</code> / <code>Grid.Column</code> 把控件放进指定格：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378780736',this)">复制</button></div>
-<pre id="c_4378780736"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376682880',this)">复制</button></div>
+<pre id="c_4376682880"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Content=&quot;左上&quot; /&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Content=&quot;右上&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
 </div><div class="ok-box">💡 <code>*</code> 和 <code>Auto</code> 是 Grid 的灵魂：前者按比例分剩余空间，后者刚好包住内容。</div><div class="card"><h3>3. DockPanel —— 靠边停靠</h3><p>子控件用 <code>DockPanel.Dock=&quot;Top/Left/Right/Bottom&quot;</code> 贴边；<code>LastChildFill=&quot;True&quot;</code> 让最后一个填满剩余区：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378780480',this)">复制</button></div>
-<pre id="c_4378780480"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376682304',this)">复制</button></div>
+<pre id="c_4376682304"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
     &lt;Button DockPanel.Dock=&quot;Top&quot; Content=&quot;顶栏&quot; /&gt;
     &lt;Button DockPanel.Dock=&quot;Left&quot; Content=&quot;侧栏&quot; /&gt;
     &lt;TextBlock Text=&quot;中间填充区&quot; /&gt;
@@ -530,16 +530,16 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>事件 — 按钮点击做什么</h1>
 <div class="card"><p>在 XAML 里用 <code>Click=&quot;方法名&quot;</code> 把按钮和代码关联，再到 <code>MainWindow.axaml.cs</code> 里写这个方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378779648',this)">复制</button></div>
-<pre id="c_4378779648"><code class="language-csharp">// MainWindow.axaml 里：&lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376681792',this)">复制</button></div>
+<pre id="c_4376681792"><code class="language-csharp">// MainWindow.axaml 里：&lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
 // 对应的代码（MainWindow.axaml.cs）：
 public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     // 在这里写点击按钮后执行的代码
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378779584',this)">复制</button></div>
-<pre id="c_4378779584"><code class="language-csharp">// 示例：点击按钮，把输入框的内容显示到结果 TextBlock 上
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376681728',this)">复制</button></div>
+<pre id="c_4376681728"><code class="language-csharp">// 示例：点击按钮，把输入框的内容显示到结果 TextBlock 上
 public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     string name = nameBox.Text;            // 获取输入框内容
@@ -550,8 +550,8 @@ public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>修改控件属性</h1>
 <div class="card"><p>可以在代码里动态修改属性（注意属性名和 WinForms 不同）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378779328',this)">复制</button></div>
-<pre id="c_4378779328"><code class="language-csharp">// 在事件方法中修改控件属性
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376681472',this)">复制</button></div>
+<pre id="c_4376681472"><code class="language-csharp">// 在事件方法中修改控件属性
 public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     // 修改文字 / 禁用按钮
@@ -570,8 +570,8 @@ public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 姓名问候器</h1>
 <div class="ok-box">用 TextBox 输入姓名，点击按钮后在 TextBlock 显示问候语——掌握 XAML 的 <code>x:Name</code> 和 C# 事件处理。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378778496',this)">复制</button></div>
-<pre id="c_4378778496"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376680640',this)">复制</button></div>
+<pre id="c_4376680640"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -579,8 +579,8 @@ public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e
     &lt;TextBlock x:Name=&quot;result&quot; Text=&quot;结果会显示在这里&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378778560',this)">复制</button></div>
-<pre id="c_4378778560"><code class="language-csharp">public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376680704',this)">复制</button></div>
+<pre id="c_4376680704"><code class="language-csharp">public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     string name = nameBox.Text;
     if (string.IsNullOrWhiteSpace(name))
@@ -597,15 +597,15 @@ public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArg
     result.Text = &quot;结果会显示在这里&quot;;
 }</code></pre>
 </div><div class="card"><ul><li>动手：试试空输入直接点&quot;确定&quot;，再看输入&quot;张三&quot;后的结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>x:Name=&quot;nameBox&quot;</code> —— 给 XAML 里的控件起名，C# 代码就能用这个名字访问它</li><li>Avalonia <strong>没有 MessageBox</strong>！要用窗口上的 <code>TextBlock</code> 显示提示文字</li><li><code>string.IsNullOrWhiteSpace(name)</code> —— 检查是否为空或全空格，比 <code>name == &quot;&quot;</code> 更安全</li><li>事件方法签名固定为 <code>(object? sender, RoutedEventArgs e)</code>，<code>Click=&quot;方法名&quot;</code> 会自动关联</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，加上&quot;清空&quot;按钮的功能（点击后清空 TextBox 和结果 TextBlock）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378777920',this)">复制</button></div>
-<pre id="c_4378777920"><code class="language-csharp">public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376680064',this)">复制</button></div>
+<pre id="c_4376680064"><code class="language-csharp">public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     nameBox.Text = <span class="code-blank">___</span>;
     result.Text = <span class="code-blank">___</span>;
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378778304',this)">复制</button></div>
-<pre id="c_4378778304"><code class="language-csharp">public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376680448',this)">复制</button></div>
+<pre id="c_4376680448"><code class="language-csharp">public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     nameBox.Text = &quot;&quot;;
     result.Text = &quot;结果会显示在这里&quot;;
@@ -622,16 +622,16 @@ public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArg
 密码：123456
 （尝试错误的密码如 111111 —— 应提示错误并清空密码框）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>（正确时）✅ 登录成功！（文字变绿）
 （错误时）❌ 用户名或密码错误（文字变红，密码框自动清空）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>PasswordChar=&quot;*&quot;</code> —— 让密码框显示为星号，但 <code>Text</code> 属性仍是真实密码</li><li>颜色用 <code>Foreground = Brushes.Green</code>，<strong>不是 ForeColor</strong></li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378776640',this)">复制</button></div>
-<pre id="c_4378776640"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376678784',this)">复制</button></div>
+<pre id="c_4376678784"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;<span class="code-blank">___</span>&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378776704',this)">复制</button></div>
-<pre id="c_4378776704"><code class="language-csharp">public void LoginBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376678848',this)">复制</button></div>
+<pre id="c_4376678848"><code class="language-csharp">public void LoginBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     string user = userBox.Text;
     string pass = passBox.Text;
@@ -650,16 +650,16 @@ public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArg
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4378776512',this)">复制</button></div>
-<pre id="c_4378776512"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376678656',this)">复制</button></div>
+<pre id="c_4376678656"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;*&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378776576',this)">复制</button></div>
-<pre id="c_4378776576"><code class="language-csharp">public void LoginBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376678720',this)">复制</button></div>
+<pre id="c_4376678720"><code class="language-csharp">public void LoginBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
 {
     string user = userBox.Text;
     string pass = passBox.Text;
@@ -749,7 +749,7 @@ public void ClearBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArg
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

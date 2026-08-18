@@ -385,8 +385,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>字符串的声明与拼接</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311164672',this)">复制</button></div>
-<pre id="c_4311164672"><code class="language-csharp">string name = &quot;张三&quot;;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4352894720',this)">复制</button></div>
+<pre id="c_4352894720"><code class="language-csharp">string name = &quot;张三&quot;;
 string empty = &quot;&quot;;          // 空字符串，不等于 null
 string path = @&quot;C:\Users\&quot;; // @：原样输出，不转义
 
@@ -399,8 +399,8 @@ string d = $&quot;{a} {b}&quot;;     // &quot;Hello World&quot;（推荐）</cod
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>字符串长度与判空</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310841728',this)">复制</button></div>
-<pre id="c_4310841728"><code class="language-csharp">string str = &quot;Hello World&quot;;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347099200',this)">复制</button></div>
+<pre id="c_4347099200"><code class="language-csharp">string str = &quot;Hello World&quot;;
 Console.WriteLine(str.Length);      // 11（空格也算）
 
 string str2 = &quot;你好，世界&quot;;
@@ -418,8 +418,8 @@ if (string.IsNullOrEmpty(userInput))  // 更安全的空判断
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>截取子串 — Substring</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310840448',this)">复制</button></div>
-<pre id="c_4310840448"><code class="language-csharp">string str = &quot;Hello World&quot;;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347098048',this)">复制</button></div>
+<pre id="c_4347098048"><code class="language-csharp">string str = &quot;Hello World&quot;;
 
 string s1 = str.Substring(6);       // 从索引6到末尾 → &quot;World&quot;
 string s2 = str.Substring(0, 5);    // 从索引0开始，取5个字符 → &quot;Hello&quot;
@@ -432,8 +432,8 @@ string s2 = str.Substring(0, 5);    // 从索引0开始，取5个字符 → &quo
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>替换 — Replace</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310839488',this)">复制</button></div>
-<pre id="c_4310839488"><code class="language-csharp">// Replace：替换所有匹配的子串
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347097088',this)">复制</button></div>
+<pre id="c_4347097088"><code class="language-csharp">// Replace：替换所有匹配的子串
 string str = &quot;苹果,香蕉,苹果,橘子&quot;;
 string s1 = str.Replace(&quot;苹果&quot;, &quot;草莓&quot;);
 Console.WriteLine(s1);  // &quot;草莓,香蕉,草莓,橘子&quot;
@@ -446,8 +446,8 @@ string s2 = input.Replace(&quot; &quot;, &quot;&quot;);  // &quot;123&quot;</cod
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>拆分 — Split</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310839744',this)">复制</button></div>
-<pre id="c_4310839744"><code class="language-csharp">// Split：按分隔符拆成数组
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347097344',this)">复制</button></div>
+<pre id="c_4347097344"><code class="language-csharp">// Split：按分隔符拆成数组
 string fruits = &quot;苹果,香蕉,橘子&quot;;
 string[] arr = fruits.Split(',');
 // 结果：arr[0]=&quot;苹果&quot;, arr[1]=&quot;香蕉&quot;, arr[2]=&quot;橘子&quot;
@@ -468,8 +468,8 @@ foreach (string w in arr2)
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>大小写转换与去空格</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310839296',this)">复制</button></div>
-<pre id="c_4310839296"><code class="language-csharp">// ToUpper / ToLower：大小写转换
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347096896',this)">复制</button></div>
+<pre id="c_4347096896"><code class="language-csharp">// ToUpper / ToLower：大小写转换
 string name = &quot;Hello&quot;;
 Console.WriteLine(name.ToUpper());  // &quot;HELLO&quot;
 Console.WriteLine(name.ToLower());  // &quot;hello&quot;
@@ -484,8 +484,8 @@ Console.WriteLine(input.TrimEnd());    // &quot;  张三&quot;</code></pre>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>链式调用</h1>
 <div class="card"><p>多个字符串方法可以像火车一样连起来写，从左到右依次执行。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310839168',this)">复制</button></div>
-<pre id="c_4310839168"><code class="language-csharp">string answer = Console.ReadLine()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347096768',this)">复制</button></div>
+<pre id="c_4347096768"><code class="language-csharp">string answer = Console.ReadLine()
                        .Trim()      // ① 去掉前后空格
                        .ToLower();  // ② 转为小写
 if (answer == &quot;yes&quot;) { ... }        // ③ 比较（不区分大小写）</code></pre>
@@ -496,8 +496,8 @@ if (answer == &quot;yes&quot;) { ... }        // ③ 比较（不区分大小写
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>查找与判断</h1>
 <div class="card"><table><tr><th>方法</th><th>说明</th><th>示例</th></tr><tr><td><code>Contains(str)</code></td><td>是否包含</td><td><code>&quot;hello&quot;.Contains(&quot;ll&quot;)</code> → true</td></tr><tr><td><code>IndexOf(str)</code></td><td>首次出现位置，找不到返回-1</td><td><code>&quot;hello&quot;.IndexOf(&quot;l&quot;)</code> → 2</td></tr><tr><td><code>StartsWith(str)</code></td><td>是否以XX开头</td><td><code>&quot;test.cs&quot;.StartsWith(&quot;test&quot;)</code> → true</td></tr><tr><td><code>EndsWith(str)</code></td><td>是否以XX结尾</td><td><code>&quot;test.cs&quot;.EndsWith(&quot;.cs&quot;)</code> → true</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310837888',this)">复制</button></div>
-<pre id="c_4310837888"><code class="language-csharp">// 判断文件类型
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347095488',this)">复制</button></div>
+<pre id="c_4347095488"><code class="language-csharp">// 判断文件类型
 string filename = &quot;report.docx&quot;;
 if (filename.EndsWith(&quot;.docx&quot;) || filename.EndsWith(&quot;.doc&quot;))
     Console.WriteLine(&quot;这是一个Word文档&quot;);
@@ -511,8 +511,8 @@ if (phone.StartsWith(&quot;1&quot;) &amp;&amp; phone.Length == 11)
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂练习1 — 查找与截取</h1>
 <div class="ok-box">解析邮箱地址：检查是否含@，拆分用户名和域名，判断邮箱类型。用到 Contains / IndexOf / Substring / EndsWith。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310837568',this)">复制</button></div>
-<pre id="c_4310837568"><code class="language-csharp">Console.Write(&quot;请输入邮箱地址：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347095168',this)">复制</button></div>
+<pre id="c_4347095168"><code class="language-csharp">Console.Write(&quot;请输入邮箱地址：&quot;);
 string email = Console.ReadLine().Trim();
 
 if (email.Contains(&quot;@&quot;))
@@ -539,8 +539,8 @@ else
     Console.WriteLine(&quot;这不是一个有效的邮箱地址！&quot;);
 }</code></pre>
 </div><div class="card"><ul><li>动手：加上判断域名是否以 www. 开头</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Contains(&quot;@&quot;)</code> 判断邮箱是否合法 — 先检查有没有 @</li><li><code>IndexOf(&quot;@&quot;)</code> 找到 @ 的位置，<code>Substring</code> 根据位置截取用户名和域名</li><li><code>EndsWith</code> 判断邮箱服务商</li><li>口诀：<strong>先 Contains 判断，再 IndexOf 定位，最后 Substring 截取</strong></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次解析网址，拆分协议和主机名：</p></div><div class="ok-box">例如输入 <code><a href="https://www.baidu.com</code>" target="_blank" rel="noopener">https://www.baidu.com<code></a> → 输出 </code>协议：https<code>，</code>主机：www.baidu.com`</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310837056',this)">复制</button></div>
-<pre id="c_4310837056"><code class="language-csharp">Console.Write(&quot;请输入网址：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347094656',this)">复制</button></div>
+<pre id="c_4347094656"><code class="language-csharp">Console.Write(&quot;请输入网址：&quot;);
 string url = Console.ReadLine().Trim();
 
 if (url.<span class="code-blank">___</span>(&quot;://&quot;))
@@ -555,8 +555,8 @@ if (url.<span class="code-blank">___</span>(&quot;://&quot;))
     Console.WriteLine(&quot;网址格式不正确！&quot;);
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310836992',this)">复制</button></div>
-<pre id="c_4310836992"><code class="language-csharp">Console.Write(&quot;请输入网址：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347094592',this)">复制</button></div>
+<pre id="c_4347094592"><code class="language-csharp">Console.Write(&quot;请输入网址：&quot;);
 string url = Console.ReadLine().Trim();
 
 if (url.Contains(&quot;://&quot;))
@@ -576,8 +576,8 @@ else
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂练习2 — 清洗与拆分</h1>
 <div class="ok-box">输入一句带空格和标点的英文，清洗后按空格拆分，统计单词数。用到 Trim / Replace / Split / ToLower / Length。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310836672',this)">复制</button></div>
-<pre id="c_4310836672"><code class="language-csharp">Console.Write(&quot;请输入一句英文：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347094272',this)">复制</button></div>
+<pre id="c_4347094272"><code class="language-csharp">Console.Write(&quot;请输入一句英文：&quot;);
 string raw = Console.ReadLine();
 
 // 链式调用：去空格、去标点、转小写
@@ -592,8 +592,8 @@ Console.WriteLine($&quot;共 {words.Length} 个单词：&quot;);
 foreach (string w in words)
     Console.WriteLine($&quot;  · {w}&quot;);</code></pre>
 </div><div class="card"><ul><li>动手：统计每个单词的长度</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Replace</code> 连续调用去掉标点 — 这就是链式调用的威力</li><li><code>Split(' ')</code> 按空格切成数组，<code>Length</code> 统计单词数</li><li><code>foreach</code> 逐词输出（循环见课件7）</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——输入路径，清洗后拆分目录层级：</p></div><div class="ok-box">例如输入 <code>C:\Users\Admin\Desktop</code> → 输出 4 层：<code>C:</code> <code>Users</code> <code>Admin</code> <code>Desktop</code></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310836160',this)">复制</button></div>
-<pre id="c_4310836160"><code class="language-csharp">Console.Write(&quot;请输入文件路径：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347093760',this)">复制</button></div>
+<pre id="c_4347093760"><code class="language-csharp">Console.Write(&quot;请输入文件路径：&quot;);
 string path = Console.ReadLine();
 
 path = path.<span class="code-blank">___</span>();                // 去首尾空格
@@ -604,8 +604,8 @@ Console.WriteLine($&quot;共 {dirs.<span class="code-blank">___</span>} 层目�
 <span class="code-blank">___</span> (string d in dirs)
     Console.WriteLine($&quot;  ├─ {d}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310836096',this)">复制</button></div>
-<pre id="c_4310836096"><code class="language-csharp">Console.Write(&quot;请输入文件路径：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347093696',this)">复制</button></div>
+<pre id="c_4347093696"><code class="language-csharp">Console.Write(&quot;请输入文件路径：&quot;);
 string path = Console.ReadLine();
 
 path = path.Trim();
@@ -620,8 +620,8 @@ foreach (string d in dirs)
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>字符串相等比较</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310837824',this)">复制</button></div>
-<pre id="c_4310837824"><code class="language-csharp">string a = &quot;hello&quot;;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347095424',this)">复制</button></div>
+<pre id="c_4347095424"><code class="language-csharp">string a = &quot;hello&quot;;
 string b = &quot;Hello&quot;;
 
 // ==：比较内容是否相同（区分大小写，日常最常用）
@@ -635,8 +635,8 @@ Console.WriteLine(a.Equals(b, StringComparison.OrdinalIgnoreCase)); // true ⭐<
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>格式化字符串</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310835776',this)">复制</button></div>
-<pre id="c_4310835776"><code class="language-csharp">// 控制小数位数
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347093056',this)">复制</button></div>
+<pre id="c_4347093056"><code class="language-csharp">// 控制小数位数
 double pi = 3.1415926;
 Console.WriteLine($&quot;{pi:F2}&quot;);        // &quot;3.14&quot;（保留2位）
 
@@ -654,8 +654,8 @@ Console.WriteLine($&quot;{money:C}&quot;);      // &quot;￥1,234.50&quot;</code
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>StringBuilder — 高效拼接</h1>
 <div class="ok-box">💡 循环里大量拼接字符串时，<code>string</code> 每次都会创建新对象，<code>StringBuilder</code> 在原缓冲区上追加，性能更高。</div><div class="card"><table><tr><th>方式</th><th>特点</th><th>适用场景</th></tr><tr><td><code>string</code> 拼接</td><td>每次创建新对象，产生垃圾</td><td>少量拼接（&lt; 5 次）</td></tr><tr><td><code>StringBuilder</code></td><td>在内部缓冲区追加，不产生垃圾</td><td>循环中拼接、大量拼接</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310834432',this)">复制</button></div>
-<pre id="c_4310834432"><code class="language-csharp">using System.Text;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347092032',this)">复制</button></div>
+<pre id="c_4347092032"><code class="language-csharp">using System.Text;
 
 // ❌ 循环里用 string 拼接 — 每次都创建新字符串
 string s = &quot;&quot;;
@@ -682,8 +682,8 @@ string result = sb.ToString();   // 最后再转成 string</code></pre>
 用户名长度：9（有效✅）
 密码：********（已隐藏）
 密码强度：中等（含字母+数字，长度8）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用户名：<code>Trim()</code> + <code>ToLower()</code> + 检查是否有空格用 <code>Contains(&quot; &quot;)</code></li><li>密码：<code>Length</code> 判长度，逐字符判断是否含字母/数字</li><li>方法链：<code>raw.Trim().ToLower()</code> 一步完成清洗</li><li>密码显示用 <code>new string('*', password.Length)</code> 掩码</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310832256',this)">复制</button></div>
-<pre id="c_4310832256"><code class="language-csharp">Console.Write(&quot;请输入用户名：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347089856',this)">复制</button></div>
+<pre id="c_4347089856"><code class="language-csharp">Console.Write(&quot;请输入用户名：&quot;);
 string rawName = Console.ReadLine();
 string name = rawName.<span class="code-blank">___</span>().<span class="code-blank">___</span>();   // 去空格+转小写
 
@@ -720,8 +720,8 @@ else
     strength = &quot;弱（建议加字母+数字，至少8位）&quot;;
 Console.WriteLine($&quot;密码强度：{strength}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310832000',this)">复制</button></div>
-<pre id="c_4310832000"><code class="language-csharp">Console.Write(&quot;请输入用户名：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347089600',this)">复制</button></div>
+<pre id="c_4347089600"><code class="language-csharp">Console.Write(&quot;请输入用户名：&quot;);
 string rawName = Console.ReadLine();
 string name = rawName.Trim().ToLower();
 
@@ -755,8 +755,8 @@ else
     strength = &quot;弱（建议加字母+数字，至少8位）&quot;;
 Console.WriteLine($&quot;密码强度：{strength}&quot;);</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一段文字和一个字符，输出该<strong>字符在文字中出现的次数</strong>。<br>要求：自己用循环遍历每个字符并计数，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310831488',this)">复制</button></div>
-<pre id="c_4310831488"><code class="language-csharp">string text = Console.ReadLine();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347089088',this)">复制</button></div>
+<pre id="c_4347089088"><code class="language-csharp">string text = Console.ReadLine();
 char ch = Console.ReadLine()[0];
 int count = 0;
 foreach (char c in text)
@@ -767,8 +767,8 @@ Console.WriteLine($&quot;字符 '{ch}' 出现了 {count} 次&quot;);</code></pre
 <div class="slide" data-page="18"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入密码，检测其强度。要求：长度至少 8 位，同时包含字母和数字。</p><ul><li>提示：<code>Length</code> + 遍历每个字符用 <code>char.IsLetter()</code> 和 <code>char.IsDigit()</code> 判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入密码：→ abc12345</code></li></ul><ul><li>输出：<code>密码强度：强</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个英文句子，统计元音字母（a、e、i、o、u）和辅音字母各有多少个，不区分大小写。</p><ul><li>提示：<code>ToLower()</code> 统一转小写，判断是否为元音，不是且为字母的就是辅音</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入字符串：→ Hello World</code></li></ul><ul><li>输出：<code>元音：3，辅音：7</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入&quot;YYYY-MM-DD&quot;格式的日期字符串，用 <code>Split</code> 拆分后用 <code>$&quot;{D5}&quot;</code> 或 <code>$&quot;D2&quot;</code> 格式化输出为&quot;YYYY年MM月DD日&quot;。</p><ul><li>提示：<code>Split('-')</code> → arr[0]年, arr[1]月, arr[2]日</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入日期：→ 2026-07-01</code></li></ul><ul><li>输出：<code>2026年07月01日</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>编写程序：输入一个身份证号，先验证长度是否为18位，再提取出生日期（第7-14位），最后用 <code>Substring</code> 截取年/月/日并格式化输出。</p><ul><li>提示：<code>Length == 18</code> 验证，<code>Substring(6, 4)</code> + <code>Substring(10, 2)</code> + <code>Substring(12, 2)</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入身份证号：→ 440582199511205214</code></li></ul><ul><li>输出：<code>出生日期：1995年11月20日</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310830080',this)">复制</button></div>
-<pre id="c_4310830080"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347087680',this)">复制</button></div>
+<pre id="c_4347087680"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -853,7 +853,7 @@ Console.WriteLine($&quot;字符 '{ch}' 出现了 {count} 次&quot;);</code></pre
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

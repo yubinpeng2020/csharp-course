@@ -378,8 +378,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>方法重载</h1>
 <div class="card"><p>上节课写了 <code>Add(int a, int b)</code>，两个整数相加。现在需求来了：</p></div><div class="card"><ul><li>两个整数相加 → <code>Add(3, 5)</code> ✅ 已有</li><li>三个整数相加 → 怎么办？再写一个方法叫 <code>AddThree</code>？</li><li>两个小数相加 → 叫 <code>AddDouble</code>？</li></ul></div><div class="card"><p>名字会越来越乱，调用方得记一堆方法名。<strong>能不能都叫 Add？</strong></p></div><div class="ok-box">答案就是<strong>方法重载</strong>——同一个方法名，参数不同，各干各的。调用方只需写 <code>Add(...)</code>，系统根据传的参数自动选对的版本。</div><div class="card"><h3>现实类比：「洗」一个动词，洗什么配什么</h3></div><div class="card"><table><tr><th>场景</th><th>方法</th><th>参数</th></tr><tr><td>洗脸</td><td><code>洗(水)</code></td><td>只需要水</td></tr><tr><td>洗衣服</td><td><code>洗(衣服, 洗衣液)</code></td><td>需要衣服+洗衣液</td></tr><tr><td>洗碗</td><td><code>洗(碗, 洗洁精)</code></td><td>需要碗+洗洁精</td></tr></table></div><div class="card"><p>三种&quot;洗&quot;，名字一样参数不同——这就是重载。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374262016',this)">复制</button></div>
-<pre id="c_4374262016"><code class="language-csharp">class Calculator
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315590144',this)">复制</button></div>
+<pre id="c_4315590144"><code class="language-csharp">class Calculator
 {
     public int Add(int a, int b) { ... }          // 两个整数
     public int Add(int a, int b, int c) { ... }    // 三个整数
@@ -390,8 +390,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>构造方法重载</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374261312',this)">复制</button></div>
-<pre id="c_4374261312"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315589440',this)">复制</button></div>
+<pre id="c_4315589440"><code class="language-csharp">class Student
 {
     public string name;
     public int age;
@@ -415,21 +415,21 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
     public Student() { }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374261248',this)">复制</button></div>
-<pre id="c_4374261248"><code class="language-csharp">Student s1 = new Student(&quot;张三&quot;, 18, 85);  // 给什么参数，自动匹配哪个构造方法
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315589376',this)">复制</button></div>
+<pre id="c_4315589376"><code class="language-csharp">Student s1 = new Student(&quot;张三&quot;, 18, 85);  // 给什么参数，自动匹配哪个构造方法
 Student s2 = new Student(&quot;李四&quot;);           // 只给姓名
 Student s3 = new Student();                // 什么都不给</code></pre>
 </div><div class="card"><ul><li>同一个 <code>new Student( )</code>，参数不同就走不同的构造方法</li></ul></div><div class="ok-box">💡 既然有对象初始化器 <code>new Student { name=&quot;张三&quot; }</code>，还需要构造函数重载吗？<strong>需要！看三个场景——</strong></div><div class="card"><p><strong>场景一：强制传参。</strong> 初始化器可以不写 <code>age</code>（默认 0），但业务上学生必须有年龄。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374260800',this)">复制</button></div>
-<pre id="c_4374260800"><code class="language-csharp">// ❌ 初始化器：漏了 age，没人提醒
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588928',this)">复制</button></div>
+<pre id="c_4315588928"><code class="language-csharp">// ❌ 初始化器：漏了 age，没人提醒
 var s = new Student { name = &quot;张三&quot; };  // age = 0，静默通过
 
 // ✅ 构造函数：不传 age 直接编译报错
 public Student(string name, int age) { ... }
 var s = new Student(&quot;张三&quot;);  // ❌ 编译错误：缺少参数</code></pre>
 </div><div class="card"><p><strong>场景二：做校验。</strong> 年龄不能为负，初始化器赋值完了才发现不了。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374260864',this)">复制</button></div>
-<pre id="c_4374260864"><code class="language-csharp">// ❌ 初始化器：负数静默通过
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588992',this)">复制</button></div>
+<pre id="c_4315588992"><code class="language-csharp">// ❌ 初始化器：负数静默通过
 var s = new Student { name = &quot;张三&quot;, age = -5 };  // 没人管
 
 // ✅ 构造函数：当场拦截
@@ -439,8 +439,8 @@ public Student(string name, int age)
     this.name = name; this.age = age;
 }</code></pre>
 </div><div class="card"><p><strong>场景三：private 字段。</strong> 初始化器只能碰 <code>public</code> 的字段，<code>private</code> 的根本看不见。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374260928',this)">复制</button></div>
-<pre id="c_4374260928"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315589056',this)">复制</button></div>
+<pre id="c_4315589056"><code class="language-csharp">class Student
 {
     private string id;      // 学号，外部不能乱改
     public string name;
@@ -457,8 +457,8 @@ public Student(string name, int age)
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 方法重载</h1>
 <div class="ok-box">用方法重载改造一个打印工具——不管传什么类型的参数，都叫同一个方法名 <code>Print</code>。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374260480',this)">复制</button></div>
-<pre id="c_4374260480"><code class="language-csharp">class Printer
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588608',this)">复制</button></div>
+<pre id="c_4315588608"><code class="language-csharp">class Printer
 {
     public void Print(int value)
     {
@@ -476,14 +476,14 @@ public Student(string name, int age)
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374260416',this)">复制</button></div>
-<pre id="c_4374260416"><code class="language-csharp">Printer p = new Printer();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588544',this)">复制</button></div>
+<pre id="c_4315588544"><code class="language-csharp">Printer p = new Printer();
 p.Print(100);       // 整数：100
 p.Print(3.14);      // 小数：3.14
 p.Print(&quot;Hello&quot;);   // 字符串：「Hello」</code></pre>
 </div><div class="card"><ul><li>动手：给 <code>Printer</code> 再加一个 <code>Print(bool value)</code> 重载，输出「布尔值：True/False」</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>三个 <code>Print</code> 方法名完全一样，C# 靠参数类型自动区分——传 <code>int</code> 走第一个，传 <code>string</code> 走第三个</li><li>这就是重载的核心价值：调用方只管写 <code>p.Print(...)</code>，不用记 <code>PrintInt</code>、<code>PrintDouble</code>、<code>PrintString</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——下面的三个 <code>Multiply</code> 还没写完，请依次补全：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374259968',this)">复制</button></div>
-<pre id="c_4374259968"><code class="language-csharp">class Calculator
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588096',this)">复制</button></div>
+<pre id="c_4315588096"><code class="language-csharp">class Calculator
 {
     // 1. 两个整数相乘：补全返回类型、参数和 return 语句
     <span class="code-blank">___</span> int Multiply(<span class="code-blank">___</span>, <span class="code-blank">___</span> b)
@@ -499,8 +499,8 @@ p.Print(&quot;Hello&quot;);   // 字符串：「Hello」</code></pre>
 
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374259904',this)">复制</button></div>
-<pre id="c_4374259904"><code class="language-csharp">class Calculator
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315588032',this)">复制</button></div>
+<pre id="c_4315588032"><code class="language-csharp">class Calculator
 {
     public int Multiply(int a, int b)
     {
@@ -522,15 +522,15 @@ p.Print(&quot;Hello&quot;);   // 字符串：「Hello」</code></pre>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>static — 属于类，不属于对象</h1>
 <div class="card"><p>来看一段代码，注意 <code>static</code> 关键字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374264192',this)">复制</button></div>
-<pre id="c_4374264192"><code class="language-csharp">class Classroom
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315592448',this)">复制</button></div>
+<pre id="c_4315592448"><code class="language-csharp">class Classroom
 {
     public string studentName;           // 普通字段：每人不同
     public static int temperature = 26;  // static 字段：全班共用
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374264064',this)">复制</button></div>
-<pre id="c_4374264064"><code class="language-csharp">// 普通字段：必须先 new 对象才能用
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315592064',this)">复制</button></div>
+<pre id="c_4315592064"><code class="language-csharp">// 普通字段：必须先 new 对象才能用
 Classroom c1 = new Classroom();
 c1.studentName = &quot;张三&quot;;       // ✅ 通过对象访问
 
@@ -542,8 +542,8 @@ Console.WriteLine(Classroom.temperature);  // 28</code></pre>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>static 示例 — 学生计数器</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374259136',this)">复制</button></div>
-<pre id="c_4374259136"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315587264',this)">复制</button></div>
+<pre id="c_4315587264"><code class="language-csharp">class Student
 {
     public string name;
     public static int totalCount = 0;      // 全班共享一份
@@ -560,8 +560,8 @@ Console.WriteLine(Classroom.temperature);  // 28</code></pre>
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374259072',this)">复制</button></div>
-<pre id="c_4374259072"><code class="language-csharp">Student s1 = new Student(&quot;张三&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315587200',this)">复制</button></div>
+<pre id="c_4315587200"><code class="language-csharp">Student s1 = new Student(&quot;张三&quot;);
 Student s2 = new Student(&quot;李四&quot;);
 Student.ShowTotal();   // 共有 2 名学生（类名.方法名，无需 new）
 // 每个 new Student(...) 执行时都会 totalCount++，因为 static 是共享的</code></pre>
@@ -570,8 +570,8 @@ Student.ShowTotal();   // 共有 2 名学生（类名.方法名，无需 new）
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习2 — 最大公约数与质数判断</h1>
 <div class="ok-box">定义静态工具类，包含求最大公约数和判断质数的方法，直接用类名调用，体会 <code>static</code> 的便利。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374257728',this)">复制</button></div>
-<pre id="c_4374257728"><code class="language-csharp">class MathTool
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315585856',this)">复制</button></div>
+<pre id="c_4315585856"><code class="language-csharp">class MathTool
 {
     // GCD（最大公约数）：两个数都能整除的最大数
     public static int GCD(int a, int b)
@@ -595,14 +595,14 @@ Student.ShowTotal();   // 共有 2 名学生（类名.方法名，无需 new）
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374257664',this)">复制</button></div>
-<pre id="c_4374257664"><code class="language-csharp">// 直接用 类名.方法名()，省去 new 的步骤
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315585792',this)">复制</button></div>
+<pre id="c_4315585792"><code class="language-csharp">// 直接用 类名.方法名()，省去 new 的步骤
 Console.WriteLine(MathTool.GCD(48, 18));    // 6
 Console.WriteLine(MathTool.IsPrime(7));     // True
 Console.WriteLine(MathTool.IsPrime(10));    // False</code></pre>
 </div><div class="card"><ul><li>动手：用 <code>MathTool.GCD()</code> 求 24 和 36 的最大公约数，看看结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>GCD</code> 和 <code>IsPrime</code> 都是 <code>static</code>——不需要创建对象，像使用 <code>Console.WriteLine()</code> 一样直接 <code>MathTool.GCD(...)</code> 就能调用</li><li><code>static</code> 方法的好处：像工具箱里的工具，随拿随用，不用先&quot;买一套新工具箱&quot;</li><li><code>IsPrime</code> 的循环条件 <code>i * i &lt;= num</code> 是质数判定的优化写法：如果 <code>num</code> 是合数，必有一个因子 ≤ √num</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>MathTool</code> 添加 <code>Square</code> 和 <code>Cube</code> 方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374257216',this)">复制</button></div>
-<pre id="c_4374257216"><code class="language-csharp">class MathTool
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315585344',this)">复制</button></div>
+<pre id="c_4315585344"><code class="language-csharp">class MathTool
 {
     // 求平方
     public <span class="code-blank">___</span> int Square(int x)
@@ -621,8 +621,8 @@ Console.WriteLine(MathTool.IsPrime(10));    // False</code></pre>
 Console.WriteLine(MathTool.Square(5));   // 25
 Console.WriteLine(MathTool.<span class="code-blank">___</span>(3));      // 27</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374257152',this)">复制</button></div>
-<pre id="c_4374257152"><code class="language-csharp">class MathTool
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315585280',this)">复制</button></div>
+<pre id="c_4315585280"><code class="language-csharp">class MathTool
 {
     public static int Square(int x)
     {
@@ -661,8 +661,8 @@ Console.WriteLine(MathTool.Cube(3));     // 27</code></pre>
 商品A：¥19.9 × 61件  总价：¥1213.9
 商品B：¥5.0 × 70件  总价：¥350.0
 当前共有 2 种商品</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>三个构造重载：完整（名称+价格+库存）、精简（名称+价格，库存默认0）、默认（空）</li><li>三个入库方法重载：<code>Restock(int qty)</code> 指定数量、<code>Restock()</code> 默认+1、<code>Restock(double rate)</code> 按比例补货</li><li><code>static int TotalTypes</code> 统计商品种类</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374254592',this)">复制</button></div>
-<pre id="c_4374254592"><code class="language-csharp">class Product
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315582720',this)">复制</button></div>
+<pre id="c_4315582720"><code class="language-csharp">class Product
 {
     public string name;
     public double price;
@@ -736,8 +736,8 @@ Console.WriteLine(&quot;\\n--- 入库后 ---&quot;);
 <span class="code-blank">___</span>.Show();
 Console.WriteLine($&quot;当前共有 {Product.<span class="code-blank">___</span>} 种商品&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374254976',this)">复制</button></div>
-<pre id="c_4374254976"><code class="language-csharp">class Product
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315583104',this)">复制</button></div>
+<pre id="c_4315583104"><code class="language-csharp">class Product
 {
     public string name;
     public double price;
@@ -804,8 +804,8 @@ p1.Show();
 p2.Show();
 Console.WriteLine($&quot;当前共有 {Product.TotalTypes} 种商品&quot;);</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：用<strong>递归</strong>写一个方法 <code>Factorial(n)</code>，返回 n 的阶乘（n! = n × (n-1) × … × 1，0! = 1）。<br>要求：自己写递归方法并在 <code>Main</code> 里调用，不能用循环代替。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374254272',this)">复制</button></div>
-<pre id="c_4374254272"><code class="language-csharp">static long Factorial(int n)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315582400',this)">复制</button></div>
+<pre id="c_4315582400"><code class="language-csharp">static long Factorial(int n)
 {
     if (n &lt;= 1) return 1;            // 递归出口
     return n * Factorial(n - 1);     // 自己调用自己
@@ -818,8 +818,8 @@ Console.WriteLine($&quot;{n}! = {Factorial(n)}&quot;);</code></pre>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Rectangle</code> 类：构造方法初始化长宽，<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）、<code>IsSquare()</code>（判断正方形）。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>长5 宽3 矩形：面积=15，周长=16，正方形？False</code></li></ul><ul><li>输出：<code>长4 宽4 矩形：面积=16，周长=16，正方形？True</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Student</code> 类（字段+构造+方法），数组存3个学生，用 static 方法找出平均分最高的学生。</p><ul><li>提示：<code>public static Student GetBest(Student[] students)</code> 遍历比较</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>学生数据 = 张三(80,75,82)、李四(88,92,78)、王五(95,82,90)</code></li></ul><ul><li>输出：<code>最高分：王五（平均89.0）</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>设计 <code>Logger</code> 日志类，综合运用构造重载 + 方法重载 + static 计数：</p><ul><li><strong>构造重载</strong>：<code>Logger(string name)</code> 指定日志名称、<code>Logger()</code> 默认名称&quot;系统日志&quot;</li><li><strong>方法重载</strong>：<code>Log(string msg)</code> 普通日志、<code>Log(string msg, string level)</code> 带级别（如 INFO、ERROR）</li><li><strong>static</strong> <code>int TotalLogs</code>：所有实例共享，每次调用 Log 都 +1</li><li>提示：构造方法里也要能区分不同 Logger 实例的名字</li></ul></div><div class="ok-box">💬 日志级别是什么？<br>- <code>INFO</code>（信息）— 正常运行记录，如&quot;程序启动&quot;、&quot;用户登录&quot;<br>- <code>WARN</code>（警告）— 有点问题但不影响运行，如&quot;密码即将过期&quot;<br>- <code>ERROR</code>（错误）— 出问题了，如&quot;文件未找到&quot;<br>- 题中只需把级别当普通字符串传进去，<code>Log(&quot;程序启动&quot;, &quot;INFO&quot;)</code> 即可</div><div class="ok-box">验收示范：<ul><li>输入：<code>创建系统日志和安全日志两个 Logger</code></li></ul><ul><li>输出：<code>[系统日志] INFO: 程序启动</code></li></ul><ul><li>输出：<code>[系统日志] ERROR: 文件未找到</code></li></ul><ul><li>输出：<code>[安全日志] INFO: 用户登录</code></li></ul><ul><li>输出：<code>[安全日志] WARN: 密码即将过期</code></li></ul><ul><li>输出：<code>共记录 4 条日志</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>设计 <code>ScoreConverter</code> 分数转换类，综合运用构造 + 方法重载 + static：</p><ul><li><strong>构造方法</strong>：<code>ScoreConverter(double fullScore)</code> 指定满分（如 100、150）</li><li><strong>方法重载</strong>：</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score)</code> → 转换为百分制</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double[] scores)</code> → 批量转换，返回平均值</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score, string targetScale)</code> → 转到指定分制（如 &quot;120&quot;）</li><li><strong>static</strong> <code>int ConversionCount</code>：统计所有实例共执行了多少次转换</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>满分150的试卷，转百分制</code></li></ul><ul><li>输出：<code>135分 → 百分制：90.0</code></li></ul><ul><li>输出：<code>120分 → 百分制：80.0</code></li></ul><ul><li>输出：<code>[132, 120, 141] 平均 → 百分制：87.3</code></li></ul><ul><li>输出：<code>90分 → 120分制：72.0</code></li></ul><ul><li>输出：<code>共执行 4 次转换</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374254016',this)">复制</button></div>
-<pre id="c_4374254016"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315582144',this)">复制</button></div>
+<pre id="c_4315582144"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -906,7 +906,7 @@ Console.WriteLine($&quot;{n}! = {Factorial(n)}&quot;);</code></pre>
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

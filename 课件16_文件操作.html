@@ -386,8 +386,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>文件操作的两个核心类</h1>
 <div class="card"><p>C# 用两个类搞定所有文件读写，一个管写、一个管读：</p></div><div class="card"><table><tr><th>类</th><th>方向</th><th>比喻</th><th>核心方法</th></tr><tr><td><code>StreamWriter</code></td><td>程序 → 文件</td><td>把字写在纸上</td><td><code>Write()</code> <code>WriteLine()</code></td></tr><tr><td><code>StreamReader</code></td><td>文件 → 程序</td><td>看书上的字</td><td><code>ReadLine()</code> <code>ReadToEnd()</code></td></tr></table></div><div class="card"><h3>StreamWriter — 写入文件</h3></div><div class="card"><p>注意：<code>StreamWriter</code> 和 <code>StreamReader</code> 都在 <code>System.IO</code> 命名空间里，文件开头要加 <code>using System.IO;</code>。</p></div><div class="card"><p>完整可运行的代码——运行后在项目文件夹里就能看到生成的 <code>test.txt</code>（和 <code>.cs</code> 文件同级）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355714752',this)">复制</button></div>
-<pre id="c_4355714752"><code class="language-csharp">using System.IO;  // 文件操作都在这个命名空间
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341607744',this)">复制</button></div>
+<pre id="c_4341607744"><code class="language-csharp">using System.IO;  // 文件操作都在这个命名空间
 
 class Program
 {
@@ -399,19 +399,19 @@ class Program
     }
 }</code></pre>
 </div><div class="card"><p>但有个坑——<strong>万一忘了 <code>Close()</code></strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355714624',this)">复制</button></div>
-<pre id="c_4355714624"><code class="language-csharp">StreamWriter sw = new StreamWriter(&quot;test.txt&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341607616',this)">复制</button></div>
+<pre id="c_4341607616"><code class="language-csharp">StreamWriter sw = new StreamWriter(&quot;test.txt&quot;);
 sw.WriteLine(&quot;Hello&quot;);
 // 忘了 sw.Close() —— 文件一直锁着，关掉程序才释放 ⚠️</code></pre>
 </div><div class="card"><p>后果：文件被你的程序占着，别的程序打不开，你自己都删不掉。</p></div><div class="card"><p>好消息：用 <code>using</code> 解决——离开 <code>{ }</code> 自动关闭：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355714496',this)">复制</button></div>
-<pre id="c_4355714496"><code class="language-csharp">using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341607488',this)">复制</button></div>
+<pre id="c_4341607488"><code class="language-csharp">using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
 {
     sw.WriteLine(&quot;Hello&quot;);
 }  // ← 到这自动 Close()，天塌了都关</code></pre>
 </div><div class="ok-box">💡 从这页开始，所有文件操作代码都用 <code>using</code> 包裹。</div><div class="card"><p><code>WriteLine</code> 写完自动换行，<code>Write</code> 不换行：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355714240',this)">复制</button></div>
-<pre id="c_4355714240"><code class="language-csharp">using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341607232',this)">复制</button></div>
+<pre id="c_4341607232"><code class="language-csharp">using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
 {
     sw.Write(&quot;Hello&quot;);      // 不换行
     sw.Write(&quot;World&quot;);      // → HelloWorld
@@ -419,8 +419,8 @@ sw.WriteLine(&quot;Hello&quot;);
     sw.WriteLine(&quot;第二行&quot;);  // → 第一行\n第二行
 }</code></pre>
 </div><div class="card"><p>默认每次写入会<strong>清空原文件</strong>，加 <code>true</code> 变成追加：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355714304',this)">复制</button></div>
-<pre id="c_4355714304"><code class="language-csharp">// 覆盖写入（默认）
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341607296',this)">复制</button></div>
+<pre id="c_4341607296"><code class="language-csharp">// 覆盖写入（默认）
 using (StreamWriter sw = new StreamWriter(&quot;score.txt&quot;))
     sw.WriteLine(&quot;张三 85&quot;);
 // score.txt → &quot;张三 85&quot;
@@ -430,8 +430,8 @@ using (StreamWriter sw = new StreamWriter(&quot;score.txt&quot;, true))
     sw.WriteLine(&quot;李四 90&quot;);
 // score.txt → &quot;张三 85\n李四 90&quot;</code></pre>
 </div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;)</code> → 覆盖写入，从头写</p></div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;, true)</code> → 追加写入，原有内容保留</p></div><div class="card"><h3>StreamReader — 读取文件</h3></div><div class="card"><p>同样用 <code>using</code> 包裹，两种读法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355713856',this)">复制</button></div>
-<pre id="c_4355713856"><code class="language-csharp">// 逐行读取
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341606848',this)">复制</button></div>
+<pre id="c_4341606848"><code class="language-csharp">// 逐行读取
 using (StreamReader sr = new StreamReader(&quot;score.txt&quot;))
 {
     string line;
@@ -450,8 +450,8 @@ using (StreamReader sr = new StreamReader(&quot;score.txt&quot;))
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>File 类 — 一行搞定读和写</h1>
 <div class="card"><p>StreamReader/Writer 灵活但步骤多。<code>File</code> 类提供快捷方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355715968',this)">复制</button></div>
-<pre id="c_4355715968"><code class="language-csharp">using System.IO;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341608960',this)">复制</button></div>
+<pre id="c_4341608960"><code class="language-csharp">using System.IO;
 
 // 写入：一行搞定
 File.WriteAllText(&quot;hello.txt&quot;, &quot;Hello World&quot;);
@@ -476,8 +476,8 @@ File.AppendAllText(&quot;log.txt&quot;, &quot;程序启动\n&quot;);</code></pre
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>异常处理 — try-catch</h1>
 <div class="card"><p>上了用了 <code>File.ReadAllText()</code> 读文件，但如果文件压根不存在呢？程序直接崩——C# 会在出错时生成一个 <code>Exception</code> 对象（装着错误信息），没人拦截它就一路抛到最外层，程序闪退。</p></div><div class="card"><p>不想让它崩？用 <code>try-catch</code> 兜住：<code>try</code> 里放可能出错的代码，<code>catch</code> 里写怎么善后。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355712960',this)">复制</button></div>
-<pre id="c_4355712960"><code class="language-csharp">try
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341605952',this)">复制</button></div>
+<pre id="c_4341605952"><code class="language-csharp">try
 {
     string content = File.ReadAllText(&quot;data.txt&quot;);   // 尝试读取
     Console.WriteLine(content);
@@ -491,8 +491,8 @@ catch (Exception ex)                                 // 其他所有错误
     Console.WriteLine($&quot;出错了：{ex.Message}&quot;);
 }</code></pre>
 </div><div class="card"><p>常见的文件异常类型，按具体→笼统的顺序写：</p></div><div class="card"><table><tr><th>catch 类型</th><th>捕获场景</th></tr><tr><td><code>FileNotFoundException</code></td><td>文件不存在</td></tr><tr><td><code>DirectoryNotFoundException</code></td><td>文件夹不存在</td></tr><tr><td><code>IOException</code></td><td>读写失败（被占用、无权限等）</td></tr><tr><td><code>Exception</code></td><td>兜底——上面没匹配到的全归它</td></tr></table></div><div class="ok-box">💡 你还可以主动 <code>throw</code> 异常——在自己的方法里发现不合理参数时抛出去，让调用者用 <code>try-catch</code> 兜住：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355712256',this)">复制</button></div>
-<pre id="c_4355712256"><code class="language-csharp">void Withdraw(double amount)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341605248',this)">复制</button></div>
+<pre id="c_4341605248"><code class="language-csharp">void Withdraw(double amount)
 {
     if (amount &lt;= 0)
         throw new ArgumentException(&quot;取款金额必须大于0&quot;);
@@ -501,8 +501,8 @@ catch (Exception ex)                                 // 其他所有错误
     balance -= amount;
 }</code></pre>
 </div><div class="card"><p>调用方用 try-catch 接住：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355712320',this)">复制</button></div>
-<pre id="c_4355712320"><code class="language-csharp">try
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341605312',this)">复制</button></div>
+<pre id="c_4341605312"><code class="language-csharp">try
 {
     Withdraw(-100);
 }
@@ -515,8 +515,8 @@ catch (InvalidOperationException ex)
     Console.WriteLine($&quot;操作失败：{ex.Message}&quot;);
 }</code></pre>
 </div><div class="card"><p>还有 <code>finally</code>——不管 try 里出不出事，<code>finally</code> 里的代码一定执行。典型场景是关闭文件：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355712128',this)">复制</button></div>
-<pre id="c_4355712128"><code class="language-csharp">StreamReader sr = null;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341605120',this)">复制</button></div>
+<pre id="c_4341605120"><code class="language-csharp">StreamReader sr = null;
 try
 {
     sr = new StreamReader(&quot;data.txt&quot;);
@@ -542,8 +542,8 @@ finally
 李四：90分
 王五：78分
 平均分：84.3</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355711616',this)">复制</button></div>
-<pre id="c_4355711616"><code class="language-csharp">using System.IO;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341604288',this)">复制</button></div>
+<pre id="c_4341604288"><code class="language-csharp">using System.IO;
 
 // ① 输入成绩，追加到文件
 using (StreamWriter sw = new StreamWriter(&quot;scores.txt&quot;, true))
@@ -560,8 +560,8 @@ using (StreamWriter sw = new StreamWriter(&quot;scores.txt&quot;, true))
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：把 <code>true</code> 去掉，观察第二次运行时之前的成绩还在不在</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>new StreamWriter(file, true)</code> 的 <code>true</code> = 追加模式，旧数据保留</li><li>不加 <code>true</code> = 覆盖模式，每次运行清空文件重写</li><li><code>File.Exists()</code> 判断文件是否存在，避免读不存在的文件崩掉</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——②读取文件并计算平均分：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355710976',this)">复制</button></div>
-<pre id="c_4355710976"><code class="language-csharp">// ② 读取文件，计算平均分
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341603968',this)">复制</button></div>
+<pre id="c_4341603968"><code class="language-csharp">// ② 读取文件，计算平均分
 if (<span class="code-blank">___</span>.<span class="code-blank">___</span>(&quot;scores.txt&quot;))
 {
     string[] lines = File.<span class="code-blank">___</span>(&quot;scores.txt&quot;);
@@ -576,8 +576,8 @@ if (<span class="code-blank">___</span>.<span class="code-blank">___</span>(&quo
     Console.WriteLine($&quot;平均分：{(double)<span class="code-blank">___</span> / count:F1}&quot;);
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355710848',this)">复制</button></div>
-<pre id="c_4355710848"><code class="language-csharp">if (File.Exists(&quot;scores.txt&quot;))
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341603840',this)">复制</button></div>
+<pre id="c_4341603840"><code class="language-csharp">if (File.Exists(&quot;scores.txt&quot;))
 {
     string[] lines = File.ReadAllLines(&quot;scores.txt&quot;);
     int sum = 0, count = 0;
@@ -605,8 +605,8 @@ if (<span class="code-blank">___</span>.<span class="code-blank">___</span>(&quo
 4（退出）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三：13800138000
 李四：13900139000
 张三：13800138000（查找结果）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>File.AppendAllText(文件, 内容)</code> 追加一行，自动处理关闭</li><li><code>File.ReadAllLines(文件)</code> 读全部行返回数组</li><li><code>File.Exists(文件)</code> 判断文件是否存在，读/查前先判断</li><li>查找用 <code>line.StartsWith(关键词)</code></li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355708352',this)">复制</button></div>
-<pre id="c_4355708352"><code class="language-csharp">using System.IO;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341601344',this)">复制</button></div>
+<pre id="c_4341601344"><code class="language-csharp">using System.IO;
 
 string file = &quot;contacts.txt&quot;;
 
@@ -649,8 +649,8 @@ while (true)
     else <span class="code-blank">___</span>;
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355708736',this)">复制</button></div>
-<pre id="c_4355708736"><code class="language-csharp">using System.IO;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341601728',this)">复制</button></div>
+<pre id="c_4341601728"><code class="language-csharp">using System.IO;
 
 string file = &quot;contacts.txt&quot;;
 
@@ -693,8 +693,8 @@ while (true)
     else break;
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己用 <code>StreamReader</code> 打开一个文本文件，<strong>逐行读取</strong>并统计：总行数、以及所有行的总字符数（不含换行）。<br>要求：自己写循环读取，不依赖 <code>File.ReadAllLines</code> 一次性读入。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355708096',this)">复制</button></div>
-<pre id="c_4355708096"><code class="language-csharp">int lines = 0, chars = 0;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341601088',this)">复制</button></div>
+<pre id="c_4341601088"><code class="language-csharp">int lines = 0, chars = 0;
 using (StreamReader sr = new StreamReader(&quot;data.txt&quot;))
 {
     string line;
@@ -710,8 +710,8 @@ Console.WriteLine($&quot;共 {lines} 行，{chars} 个字符&quot;);</code></pre
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（3分）</h3><p>编写成绩分析程序：读取 <code>scores.txt</code>（每行格式：<code>姓名 成绩</code>），输出最高分、最低分、平均分和及格率（≥60分的人数/总人数）。用 <code>try-catch</code> 处理文件不存在的情况。</p><ul><li>提示：<code>File.ReadAllLines()</code> + <code>Split(' ')</code> 拆分行</li></ul></div><div class="ok-box">期望输入：<code>scores.txt</code> 含 张三 85 / 李四 90 / 王五 78 / 赵六 55 / 孙七 60<br>验收示范：<ul><li>输出：<code>最高分：90</code></li></ul><ul><li>输出：<code>最低分：55</code></li></ul><ul><li>输出：<code>平均分：73.6</code></li></ul><ul><li>输出：<code>及格率：80.0%</code></li></ul></div><div class="card"><h3>题2（4分）</h3><p>编写日志系统：实现一个类 <code>Logger</code>，构造方法接收文件路径，<code>Log(string msg)</code> 方法追加写入 <code>[时间] msg</code>（用 <code>DateTime.Now</code>）。在 <code>Main()</code> 里创建 Logger 实例，记录三次不同操作，然后读取全部日志显示。</p><ul><li>提示：<code>DateTime.Now.ToString(&quot;yyyy-MM-dd HH:mm:ss&quot;)</code></li></ul></div><div class="ok-box">期望输入：依次写入 <code>程序启动</code> / <code>用户登录</code> / <code>数据保存</code><br>验收示范：<ul><li>输出：<code>[2026-07-28 10:30:00] 程序启动</code></li></ul><ul><li>输出：<code>[2026-07-28 10:30:05] 用户登录</code></li></ul><ul><li>输出：<code>[2026-07-28 10:30:10] 数据保存</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>将课件10的购物车数据（List&lt;Product&gt;，产品名/价格/数量）保存到 <code>cart.txt</code>，格式为 <code>产品名,价格,数量</code> 每行一条。程序再次运行时从文件恢复购物车，用户可继续添加商品后重新保存。</p><ul><li>提示：<code>File.WriteAllLines(file, list)</code> + <code>File.ReadAllLines(file)</code>，用 <code>Split(',')</code> 还原对象</li></ul></div><div class="ok-box">期望输入：可乐,3,2 / 薯片,5,1（保存→重启→追加：瓜子,8,1）<br>验收示范：<ul><li>输出：<code>可乐 x2 = 6元</code></li></ul><ul><li>输出：<code>薯片 x1 = 5元</code></li></ul><ul><li>输出：<code>瓜子 x1 = 8元</code></li></ul><ul><li>输出：<code>总计：19元</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>实现文件加密解密：读取 <code>message.txt</code>（纯文本），每个字符的 ASCII 值 +3 后写回 <code>encrypted.txt</code>；再读取 <code>encrypted.txt</code>，每个字符 -3 还原为 <code>decrypted.txt</code>。需要处理可能出现的文件异常。</p><ul><li>提示：<code>File.ReadAllText()</code> 读，<code>foreach (char c in text)</code> 遍历，<code>(char)(c + 3)</code> 转换，<code>File.WriteAllText()</code> 写</li></ul></div><div class="ok-box">期望输入：<code>message.txt</code> 内容 <code>Hello World</code><br>验收示范：<ul><li>输出：<code>encrypted.txt → Khoor#Zruog</code></li></ul><ul><li>输出：<code>decrypted.txt → Hello World</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，题2的 Logger 类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4355707648',this)">复制</button></div>
-<pre id="c_4355707648"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341600640',this)">复制</button></div>
+<pre id="c_4341600640"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -798,7 +798,7 @@ Console.WriteLine($&quot;共 {lines} 行，{chars} 个字符&quot;);</code></pre
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

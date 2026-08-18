@@ -377,21 +377,21 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>什么是类型转换？</h1>
 <div class="card"><p>类型转换就是把一种数据类型变成另一种，让不同类型的数据可以互相配合。</p></div><div class="card"><h3>什么时候需要：</h3></div><div class="card"><ul><li>计算时类型不匹配：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346095296',this)">复制</button></div>
-<pre id="c_4346095296"><code class="language-csharp">  int count = 5;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4356040384',this)">复制</button></div>
+<pre id="c_4356040384"><code class="language-csharp">  int count = 5;
   double price = 9.9;
   double total = count * price;   // int 自动转为 double</code></pre>
 </div><div class="card"><ul><li>用户输入都是 string，必须转成数字才能计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345771072',this)">复制</button></div>
-<pre id="c_4345771072"><code class="language-csharp">  string input = Console.ReadLine();  // &quot;18&quot;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345246592',this)">复制</button></div>
+<pre id="c_4345246592"><code class="language-csharp">  string input = Console.ReadLine();  // &quot;18&quot;
   int age = int.Parse(input);         // string → int</code></pre>
 </div><div class="card"><h3>两种方式：</h3></div><div class="card"><table><tr><th>方式</th><th>谁来干</th><th>什么时候</th></tr><tr><td><strong>隐式转换</strong>（自动）</td><td>编译器自动完成</td><td>小 → 大，不会丢数据</td></tr><tr><td><strong>显式转换</strong>（手动）</td><td>你自己写代码</td><td>大 → 小，或 string → 数字</td></tr></table></div><div class="ok-box"><strong>&quot;范围&quot;就是能装多少东西</strong>：<code>int</code> 装整数（±21亿），<code>double</code> 能装带小数点的更大数字。<code>int</code> → <code>double</code> = 小杯子倒进大桶，安全。</div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>隐式转换 — 自动类型转换</h1>
 <div class="card"><ul><li>小范围 → 大范围，编译器自动完成，安全</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345771648',this)">复制</button></div>
-<pre id="c_4345771648"><code class="language-csharp">  int a = 100;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345247168',this)">复制</button></div>
+<pre id="c_4345247168"><code class="language-csharp">  int a = 100;
   double b = a;        // int → double，b = 100.0
   long c = a;          // int → long
   float d = a;         // int → float</code></pre>
@@ -400,15 +400,15 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>显式转换 — 强制类型转换</h1>
 <div class="card"><ul><li>大范围 → 小范围，需要手动指定，可能丢失精度</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345768896',this)">复制</button></div>
-<pre id="c_4345768896"><code class="language-csharp">  double pi = 3.14159;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345244416',this)">复制</button></div>
+<pre id="c_4345244416"><code class="language-csharp">  double pi = 3.14159;
   int x = (int)pi;       // 强制转换，x = 3，小数被截断！
   
   double price = 9.99;
   int yuan = (int)price; // yuan = 9，不是四舍五入</code></pre>
 </div><div class="card"><ul><li>语法：<code>(目标类型)表达式</code></li><li>⚠️ 强制转换是<strong>截断</strong>，不是四舍五入</li></ul></div><div class="card"><h3>精度丢失示例</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345768704',this)">复制</button></div>
-<pre id="c_4345768704"><code class="language-csharp">byte a;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345244224',this)">复制</button></div>
+<pre id="c_4345244224"><code class="language-csharp">byte a;
 int b = 298;
 a = (byte)b;
 // b = 298（int占4字节）
@@ -418,8 +418,8 @@ a = (byte)b;
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — 类型转换</h1>
 <div class="ok-box">练习自动转换和强制转换，理解 int↔double 互转的规则和精度问题。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345767744',this)">复制</button></div>
-<pre id="c_4345767744"><code class="language-csharp">// 自动转换
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345243264',this)">复制</button></div>
+<pre id="c_4345243264"><code class="language-csharp">// 自动转换
 int count = 10;
 double total = count;     // int → double，安全
 Console.WriteLine($&quot;total = {total}&quot;);   // 输出：10
@@ -433,24 +433,24 @@ Console.WriteLine($&quot;yuan = {yuan}&quot;);      // 输出：9
 int rounded = (int)(price + 0.5);  // 9.99+0.5=10.49 → 10
 Console.WriteLine($&quot;四舍五入 = {rounded}&quot;);  // 输出：10</code></pre>
 </div><div class="card"><ul><li>动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(int)</code> 强制转换是截断小数，不是四舍五入</li><li>四舍五入技巧：<code>(int)(数 + 0.5)</code> — 先加0.5再截断</li><li>小→大自动转，大→小必须手动加 <code>(int)</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：用 double 计算两个整数的平均值（注意先转成 double 再除）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345767232',this)">复制</button></div>
-<pre id="c_4345767232"><code class="language-csharp">int a = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345242752',this)">复制</button></div>
+<pre id="c_4345242752"><code class="language-csharp">int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 <span class="code-blank">___</span> avg = (<span class="code-blank">___</span>)(a + b) / 2.0;
 Console.WriteLine($&quot;平均值 = {<span class="code-blank">___</span>}&quot;);</code></pre>
 </div><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345767168',this)">复制</button></div>
-<pre id="c_4345767168"><code class="language-csharp">double price = 9.99;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345242688',this)">复制</button></div>
+<pre id="c_4345242688"><code class="language-csharp">double price = 9.99;
 int yuan = (<span class="code-blank">___</span>)price;     // 截断小数，结果是<span class="code-blank">___</span>
 Console.WriteLine($&quot;整数部分是 {yuan}&quot;);</code></pre>
 </div><div class="card"><p><strong>小题3</strong>：用四舍五入技巧保留整数</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345767040',this)">复制</button></div>
-<pre id="c_4345767040"><code class="language-csharp">double x = 7.8;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345242560',this)">复制</button></div>
+<pre id="c_4345242560"><code class="language-csharp">double x = 7.8;
 int r = (int)(<span class="code-blank">___</span> + 0.5);   // 先加0.5再截断，结果是<span class="code-blank">___</span>
 Console.WriteLine($&quot;四舍五入后 = {r}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345766912',this)">复制</button></div>
-<pre id="c_4345766912"><code class="language-csharp">int a = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345242432',this)">复制</button></div>
+<pre id="c_4345242432"><code class="language-csharp">int a = int.Parse(Console.ReadLine());
 int b = int.Parse(Console.ReadLine());
 double avg = (double)(a + b) / 2.0;
 Console.WriteLine($&quot;平均值 = {avg}&quot;);
@@ -467,20 +467,20 @@ Console.WriteLine($&quot;四舍五入后 = {r}&quot;);</code></pre>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>string ↔ 数值互转</h1>
 <div class="card"><h3>string → 数值：Parse</h3><p>用户输入都是 string，计算前必须转换：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345768192',this)">复制</button></div>
-<pre id="c_4345768192"><code class="language-csharp">Console.Write(&quot;请输入年龄：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345243712',this)">复制</button></div>
+<pre id="c_4345243712"><code class="language-csharp">Console.Write(&quot;请输入年龄：&quot;);
 string input = Console.ReadLine();    // 得到 &quot;18&quot;（string）
 int age = int.Parse(input);           // string → int</code></pre>
 </div><div class="card"><table><tr><th>目标类型</th><th>方法</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>int.Parse()</code></td><td><code>int n = int.Parse(&quot;123&quot;);</code></td></tr><tr><td><code>double</code></td><td><code>double.Parse()</code></td><td><code>double d = double.Parse(&quot;3.14&quot;);</code></td></tr><tr><td><code>float</code></td><td><code>float.Parse()</code></td><td><code>float f = float.Parse(&quot;9.9&quot;);</code></td></tr><tr><td><code>bool</code></td><td><code>bool.Parse()</code></td><td><code>bool b = bool.Parse(&quot;true&quot;);</code></td></tr></table></div><div class="card"><h3>数值 → string：ToString</h3><p>反过来，把数字变成文字显示：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345765696',this)">复制</button></div>
-<pre id="c_4345765696"><code class="language-csharp">int score = 95;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345241216',this)">复制</button></div>
+<pre id="c_4345241216"><code class="language-csharp">int score = 95;
 string s = score.ToString();   // &quot;95&quot;
 
 double pi = 3.14;
 string s2 = pi.ToString();     // &quot;3.14&quot;</code></pre>
 </div><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345765760',this)">复制</button></div>
-<pre id="c_4345765760"><code class="language-csharp">int a = 10, b = 20;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345241280',this)">复制</button></div>
+<pre id="c_4345241280"><code class="language-csharp">int a = 10, b = 20;
 string result = $&quot;{a} + {b} = {a + b}&quot;;  // &quot;10 + 20 = 30&quot;</code></pre>
 </div>
 </div></div>
@@ -493,8 +493,8 @@ string result = $&quot;{a} + {b} = {a + b}&quot;;  // &quot;10 + 20 = 30&quot;</
 <div class="ok-box">输入摄氏度，自动转换成华氏度并输出，同时展示整数截断的效果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入摄氏度：25
 25°C = 77°F
 华氏度（整数）= 77</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345764608',this)">复制</button></div>
-<pre id="c_4345764608"><code class="language-csharp">Console.Write(&quot;请输入摄氏度：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345240128',this)">复制</button></div>
+<pre id="c_4345240128"><code class="language-csharp">Console.Write(&quot;请输入摄氏度：&quot;);
 string input = Console.ReadLine();
 double celsius = double.Parse(<span class="code-blank">___</span>);
 
@@ -508,8 +508,8 @@ Console.WriteLine($&quot;{celsius}°C = {<span class="code-blank">___</span>}°F
 int f1 = (<span class="code-blank">___</span>)fahrenheit;
 Console.WriteLine($&quot;华氏度（整数）= {<span class="code-blank">___</span>}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345764864',this)">复制</button></div>
-<pre id="c_4345764864"><code class="language-csharp">Console.Write(&quot;请输入摄氏度：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345240384',this)">复制</button></div>
+<pre id="c_4345240384"><code class="language-csharp">Console.Write(&quot;请输入摄氏度：&quot;);
 string input = Console.ReadLine();
 double celsius = double.Parse(input);
 
@@ -519,8 +519,8 @@ Console.WriteLine($&quot;{celsius}°C = {fahrenheit}°F&quot;);
 int f1 = (int)fahrenheit;
 Console.WriteLine($&quot;华氏度（整数）= {f1}&quot;);</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345764288',this)">复制</button></div>
-<pre id="c_4345764288"><code class="language-csharp">string input = Console.ReadLine();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345239808',this)">复制</button></div>
+<pre id="c_4345239808"><code class="language-csharp">string input = Console.ReadLine();
 string[] parts = input.Split(',');
 double sum = 0;
 foreach (string p in parts)
@@ -531,8 +531,8 @@ Console.WriteLine($&quot;共 {parts.Length} 个数，总和 = {sum}&quot;);</cod
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成「X 小时 Y 分 Z 秒」格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 59.5</code></li></ul><ul><li>输出：<code>原始成绩59.5 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345762816',this)">复制</button></div>
-<pre id="c_4345762816"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345238336',this)">复制</button></div>
+<pre id="c_4345238336"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -618,7 +618,7 @@ Console.WriteLine($&quot;共 {parts.Length} 个数，总和 = {sum}&quot;);</cod
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

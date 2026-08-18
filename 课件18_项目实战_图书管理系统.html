@@ -448,8 +448,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 │  ToString() →                   │
 │  &quot;C#入门 | 张老师 | ¥45 | 库存5&quot; │
 └─────────────────────────────────┘</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337117952',this)">复制</button></div>
-<pre id="c_4337117952"><code class="language-csharp">class Book
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315867200',this)">复制</button></div>
+<pre id="c_4315867200"><code class="language-csharp">class Book
 {
     public string Title { get; set; }       // 书名
     public string Author { get; set; }      // 作者
@@ -472,8 +472,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>BookManager — 数据统筹类</h1>
 <div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116864',this)">复制</button></div>
-<pre id="c_4337116864"><code class="language-csharp">static class BookManager
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315866112',this)">复制</button></div>
+<pre id="c_4315866112"><code class="language-csharp">static class BookManager
 {
     public static string FilePath = &quot;books.txt&quot;;
     public static List&lt;Book&gt; books = new List&lt;Book&gt;();
@@ -497,8 +497,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
                              └──────────────────────┘
   ① ReadAllLines 读每行      ③ new Book(...) 创建对象
   ② Split('|') 拆成4段       ④ books.Add(book) 加入列表</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116608',this)">复制</button></div>
-<pre id="c_4337116608"><code class="language-csharp">public static void LoadBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315865856',this)">复制</button></div>
+<pre id="c_4315865856"><code class="language-csharp">public static void LoadBooks()
 {
     books.Clear();
     if (!File.Exists(FilePath))
@@ -522,8 +522,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
   │       68,2)           │   ① foreach 遍历列表
   └──────────────────────┘   ② 拼接成 &quot;Title|Author|Price|Stock&quot;
                              ③ WriteAllLines 一次写完</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337116096',this)">复制</button></div>
-<pre id="c_4337116096"><code class="language-csharp">public static void SaveBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315865024',this)">复制</button></div>
+<pre id="c_4315865024"><code class="language-csharp">public static void SaveBooks()
 {
     List&lt;string&gt; lines = new List&lt;string&gt;();
     foreach (Book b in books)
@@ -548,8 +548,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 ╠══════════════════════╣
 ║ 选择：_              ║
 ╚══════════════════════╝</code></pre><div class="card"><p><code>Main</code> 只做三件事：<strong>启动时加载 → 循环显示菜单 → 退出时保存</strong>。所有业务逻辑全在 BookManager，<code>Main</code> 只管分发任务。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337115008',this)">复制</button></div>
-<pre id="c_4337115008"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315864256',this)">复制</button></div>
+<pre id="c_4315864256"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -587,8 +587,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
   └──────────────────────┘     └─────────────────────────┘
   books.Count = 3               for (int i=0; i&lt;Count; i++)
                                 $&quot;[{i+1}] {books[i]}&quot;</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337113408',this)">复制</button></div>
-<pre id="c_4337113408"><code class="language-csharp">public static void ShowBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315862656',this)">复制</button></div>
+<pre id="c_4315862656"><code class="language-csharp">public static void ShowBooks()
 {
     if (books.Count == 0)
     {
@@ -610,8 +610,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
                                           └─────────────────┘
                                                     ↓
                                               ✅ 添加成功</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337113280',this)">复制</button></div>
-<pre id="c_4337113280"><code class="language-csharp">public static void AddBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315862528',this)">复制</button></div>
+<pre id="c_4315862528"><code class="language-csharp">public static void AddBook()
 {
     Console.Write(&quot;书名：&quot;);
     string title = Console.ReadLine();
@@ -634,8 +634,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
     Console.WriteLine(&quot;✅ 添加成功&quot;);
 }</code></pre>
 </div><div class="ok-box"><strong>🧐 新东西：<code>TryParse</code> 和 <code>out</code> 参数</strong> —— 之前一直用 <code>int.Parse()</code>，但 <code>Parse</code> 有个致命缺点：用户输入 <code>&quot;abc&quot;</code>，程序直接崩（<code>FormatException</code>）。<code>TryParse</code> 是安全版：<strong>不崩，而是返回 <code>true</code>/<code>false</code> 告诉你成没成功</strong>。成功的话，结果通过 <code>out</code> 参数带出来：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337112384',this)">复制</button></div>
-<pre id="c_4337112384"><code class="language-csharp">// Parse：转失败就炸
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315861632',this)">复制</button></div>
+<pre id="c_4315861632"><code class="language-csharp">// Parse：转失败就炸
 int x = int.Parse(&quot;abc&quot;);   // 💥 异常
 
 // TryParse：返回 bool，结果放 out 变量里
@@ -654,8 +654,8 @@ else
                         │        │ books.Add(new Book(...))
                         │        │     ↓
                         │        │ ✅ 添加成功</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337112000',this)">复制</button></div>
-<pre id="c_4337112000"><code class="language-csharp">public static void AddBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315861248',this)">复制</button></div>
+<pre id="c_4315861248"><code class="language-csharp">public static void AddBook()
 {
     Console.Write(&quot;书名：&quot;);
     string title = Console.ReadLine();
@@ -688,8 +688,8 @@ else
           b.Stock += 5   │        │
                ↓        │        │
           ✅ 库存已更新   │        │</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337111680',this)">复制</button></div>
-<pre id="c_4337111680"><code class="language-csharp">public static void AddBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315860928',this)">复制</button></div>
+<pre id="c_4315860928"><code class="language-csharp">public static void AddBook()
 {
     Console.Write(&quot;书名：&quot;);
     string title = Console.ReadLine();
@@ -739,8 +739,8 @@ else
                      ↓    │        │   ↓
                输出 [i+1]  │        │ 跳过，继续
                books[i]    │        │</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110784',this)">复制</button></div>
-<pre id="c_4337110784"><code class="language-csharp">public static void SearchBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315860032',this)">复制</button></div>
+<pre id="c_4315860032"><code class="language-csharp">public static void SearchBooks()
 {
     Console.Write(&quot;输入书名关键词：&quot;);
     string keyword = Console.ReadLine().ToLower();
@@ -749,8 +749,8 @@ else
             Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
 }</code></pre>
 </div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box">🐛 <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box">🤔 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110912',this)">复制</button></div>
-<pre id="c_4337110912"><code class="language-csharp">public static void SearchBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315860160',this)">复制</button></div>
+<pre id="c_4315860160"><code class="language-csharp">public static void SearchBooks()
 {
     Console.Write(&quot;输入书名关键词：&quot;);
     string keyword = Console.ReadLine().ToLower();
@@ -769,8 +769,8 @@ else
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>bool found = false</code> — 先假设没找到，循环里匹配到了就改成 <code>true</code></li><li><code>if (!found)</code> — 循环跑完了还是 <code>false</code>，说明一本都没匹配到，输出提示</li></ul></div><div class="card"><h3>BorrowBook() 借书 — 先跑通，再防崩</h3><p>借书的逻辑：先列出所有书 → 选编号 → 库存 -1。先写个能跑的：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337110016',this)">复制</button></div>
-<pre id="c_4337110016"><code class="language-csharp">public static void BorrowBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315859264',this)">复制</button></div>
+<pre id="c_4315859264"><code class="language-csharp">public static void BorrowBook()
 {
     ShowBooks();
     Console.Write(&quot;选择要借的图书编号：&quot;);
@@ -784,8 +784,8 @@ else
     Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
 }</code></pre>
 </div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box">🐛 <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box">🤔 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337109504',this)">复制</button></div>
-<pre id="c_4337109504"><code class="language-csharp">public static void BorrowBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315858752',this)">复制</button></div>
+<pre id="c_4315858752"><code class="language-csharp">public static void BorrowBook()
 {
     if (books.Count == 0)
     {
@@ -814,8 +814,8 @@ else
     Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
 }</code></pre>
 </div><div class="ok-box">💡 <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有「不对劲的情况」都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是「列表里一条记录都没有」，<code>Stock == 0</code> 是「这本书的库存被借光了但记录还在」。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337109184',this)">复制</button></div>
-<pre id="c_4337109184"><code class="language-csharp">public static void ReturnBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315858432',this)">复制</button></div>
+<pre id="c_4315858432"><code class="language-csharp">public static void ReturnBook()
 {
     if (books.Count == 0)
     {
@@ -910,7 +910,7 @@ else
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

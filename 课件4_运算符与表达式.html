@@ -382,12 +382,12 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>算术运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th><th>结果</th></tr><tr><td><code>+</code></td><td>加</td><td><code>5 + 2</code></td><td>7</td></tr><tr><td><code>-</code></td><td>减</td><td><code>5 - 2</code></td><td>3</td></tr><tr><td><code>*</code></td><td>乘</td><td><code>5 * 2</code></td><td>10</td></tr><tr><td><code>/</code></td><td>除</td><td><code>5 / 2</code></td><td>2</td></tr><tr><td><code>%</code></td><td>取余（模）</td><td><code>5 % 2</code></td><td>1</td></tr></table></div><div class="card"><ul><li>取余运算：求除法后的余数，如 <code>10 % 3 = 1</code></li></ul></div><div class="card"><h3>整数除法的陷阱</h3><ul><li>⚠️ 整数 ÷ 整数 = 整数（截断小数部分）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368200256',this)">复制</button></div>
-<pre id="c_4368200256"><code class="language-csharp">  int a = 5 / 2;     // a = 2，不是2.5！
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379308224',this)">复制</button></div>
+<pre id="c_4379308224"><code class="language-csharp">  int a = 5 / 2;     // a = 2，不是2.5！
   int b = 10 / 3;    // b = 3</code></pre>
 </div><div class="card"><ul><li>想要小数结果 → 至少有一个操作数是小数：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368200000',this)">复制</button></div>
-<pre id="c_4368200000"><code class="language-csharp">  double c = 5.0 / 2;    // c = 2.5 ✅
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379307968',this)">复制</button></div>
+<pre id="c_4379307968"><code class="language-csharp">  double c = 5.0 / 2;    // c = 2.5 ✅
   double d = 5 / 2.0;    // d = 2.5 ✅
   double e = (double)5 / 2;  // e = 2.5 ✅ 先把5强制转为5.0，再除以2</code></pre>
 </div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 5 / 2 = 2，小数部分被截断了？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">因为 <code>int</code> 类型只能存储整数。两个 <code>int</code> 做除法时，C# 按照整数除法规则，结果也是 <code>int</code>，小数部分直接被丢弃（不是四舍五入）。这和数学里的除法不一样，是编程语言的设计规则。</div></div>
@@ -395,8 +395,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>自增自减</h1>
 <div class="card"><table><tr><th>运算符</th><th>名称</th><th>等价于</th></tr><tr><td><code>x++</code></td><td>后置自增</td><td>先用x，再加1</td></tr><tr><td><code>++x</code></td><td>前置自增</td><td>先加1，再用x</td></tr><tr><td><code>x--</code></td><td>后置自减</td><td>先用x，再减1</td></tr><tr><td><code>--x</code></td><td>前置自减</td><td>先减1，再用x</td></tr></table></div><div class="card"><ul><li>前置 vs 后置的区别：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368199232',this)">复制</button></div>
-<pre id="c_4368199232"><code class="language-csharp">  int a = 5;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379307200',this)">复制</button></div>
+<pre id="c_4379307200"><code class="language-csharp">  int a = 5;
   int b = a++;   // b = 5, a = 6  (先把a的值5赋给b，a再加1)
   int c = ++a;   // c = 7, a = 7  (a先加1变成7，再把7赋给c)
 
@@ -408,8 +408,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 算术运算</h1>
 <div class="ok-box">动手算几道算术题，同时观察整数除法和自增自减的效果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368198528',this)">复制</button></div>
-<pre id="c_4368198528"><code class="language-csharp">int a = 10, b = 3;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379306496',this)">复制</button></div>
+<pre id="c_4379306496"><code class="language-csharp">int a = 10, b = 3;
 
 Console.WriteLine($&quot;a + b = {a + b}&quot;);   // 13
 Console.WriteLine($&quot;a - b = {a - b}&quot;);   // 7
@@ -421,23 +421,23 @@ int x = 5;
 Console.WriteLine($&quot;x++ = {x++}&quot;);       // 输出5，x变成6
 Console.WriteLine($&quot;++x = {++x}&quot;);       // x从6变成7，输出7</code></pre>
 </div><div class="card"><ul><li>动手：修改a和b的值，观察输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>整数除法 <code>10 / 3 = 3</code>，小数部分被截断，不会四舍五入</li><li><code>x++</code> 先用后加，<code>++x</code> 先加后用</li><li>取余 <code>%</code> 是求余数，不是百分比</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：将摄氏度转为华氏度（公式：F = C × 9 / 5 + 32）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368198016',this)">复制</button></div>
-<pre id="c_4368198016"><code class="language-csharp">double c = 25;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379305984',this)">复制</button></div>
+<pre id="c_4379305984"><code class="language-csharp">double c = 25;
 double f = <span class="code-blank">___</span>;
 Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77</code></pre>
 </div><div class="card"><p><strong>小题2</strong>：用复合赋值运算符让分数变化，填写运算符</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197952',this)">复制</button></div>
-<pre id="c_4368197952"><code class="language-csharp">int score = 80;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379305920',this)">复制</button></div>
+<pre id="c_4379305920"><code class="language-csharp">int score = 80;
 score <span class="code-blank">___</span> 10;        // 加10，score变成90
 score <span class="code-blank">___</span> 3;         // 除以3，score变成30
 Console.WriteLine($&quot;最终分数={score}&quot;);</code></pre>
 </div><div class="card"><p><strong>小题3</strong>：观察 <code>n++</code> 的&quot;先用后加&quot;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197824',this)">复制</button></div>
-<pre id="c_4368197824"><code class="language-csharp">int n = 5;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379305792',this)">复制</button></div>
+<pre id="c_4379305792"><code class="language-csharp">int n = 5;
 Console.WriteLine(n++);   // 输出<span class="code-blank">___</span>，之后 n 变成<span class="code-blank">___</span></code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368197696',this)">复制</button></div>
-<pre id="c_4368197696"><code class="language-csharp">double c = 25;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379305664',this)">复制</button></div>
+<pre id="c_4379305664"><code class="language-csharp">double c = 25;
 double f = c * 9 / 5 + 32;
 Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77
 
@@ -453,8 +453,8 @@ Console.WriteLine(n++);   // 输出5，之后 n 变成6</code></pre>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>赋值运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>示例</th><th>等价于</th></tr><tr><td><code>=</code></td><td><code>x = 5;</code></td><td>—</td></tr><tr><td><code>+=</code></td><td><code>x += 3;</code></td><td><code>x = x + 3;</code></td></tr><tr><td><code>-=</code></td><td><code>x -= 3;</code></td><td><code>x = x - 3;</code></td></tr><tr><td><code>*=</code></td><td><code>x *= 3;</code></td><td><code>x = x * 3;</code></td></tr><tr><td><code>/=</code></td><td><code>x /= 3;</code></td><td><code>x = x / 3;</code></td></tr><tr><td><code>%=</code></td><td><code>x %= 3;</code></td><td><code>x = x % 3;</code></td></tr></table></div><div class="card"><ul><li>复合赋值运算符 = 先运算再赋值，写法更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368196864',this)">复制</button></div>
-<pre id="c_4368196864"><code class="language-csharp">  int score = 80;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379304832',this)">复制</button></div>
+<pre id="c_4379304832"><code class="language-csharp">  int score = 80;
   score += 10;   // score = 90
   score /= 3;    // score = 30</code></pre>
 </div>
@@ -462,8 +462,8 @@ Console.WriteLine(n++);   // 输出5，之后 n 变成6</code></pre>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>关系运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例（结果）</th></tr><tr><td><code>==</code></td><td>等于</td><td><code>5 == 5</code> → true</td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>5 != 3</code> → true</td></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>5 &gt; 3</code> → true</td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>5 &lt; 3</code> → false</td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>5 &gt;= 5</code> → true</td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>5 &lt;= 3</code> → false</td></tr></table></div><div class="card"><ul><li>比较结果一定是 <code>bool</code> 类型（true/false）</li><li>⚠️ 等于用 <code>==</code>（两个等号），一个 <code>=</code> 是赋值</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368195712',this)">复制</button></div>
-<pre id="c_4368195712"><code class="language-csharp">  int age = 18;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379303680',this)">复制</button></div>
+<pre id="c_4379303680"><code class="language-csharp">  int age = 18;
   bool isAdult = (age &gt;= 18);   // true
   bool isTen = (age == 10);     // false</code></pre>
 </div>
@@ -471,12 +471,12 @@ Console.WriteLine(n++);   // 输出5，之后 n 变成6</code></pre>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>逻辑运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（两个条件都满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个即可）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="card"><ul><li>真值表：</li></ul></div><div class="card"><table><tr><th>A</th><th>B</th><th>A <code>&amp;&amp;</code> B</th><th>A <code>||</code> B</th><th><code>!</code>A</th></tr><tr><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr><tr><td>true</td><td>false</td><td>false</td><td>true</td><td>false</td></tr><tr><td>false</td><td>true</td><td>false</td><td>true</td><td>true</td></tr><tr><td>false</td><td>false</td><td>false</td><td>false</td><td>true</td></tr></table></div><div class="card"><h3>短路特性</h3><ul><li><code>&amp;&amp;</code>：如果左边为 false，右边不再计算（因为结果一定是 false）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368194176',this)">复制</button></div>
-<pre id="c_4368194176"><code class="language-csharp">  int a = 0;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379302144',this)">复制</button></div>
+<pre id="c_4379302144"><code class="language-csharp">  int a = 0;
   bool r = (a &gt; 10) &amp;&amp; (a++ &gt; 0);  // a++ 不会执行！a仍为0</code></pre>
 </div><div class="card"><ul><li><code>||</code>：如果左边为 true，右边不再计算（因为结果一定是 true）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368193984',this)">复制</button></div>
-<pre id="c_4368193984"><code class="language-csharp">  int b = 5;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379301952',this)">复制</button></div>
+<pre id="c_4379301952"><code class="language-csharp">  int b = 5;
   bool r = (b &gt; 0) || (b++ &gt; 10);  // b++ 不会执行！b仍为5</code></pre>
 </div><div class="card"><ul><li>⚠️ 短路特性可能导致后面的表达式不执行，要注意</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 短路是什么意思？有什么用？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">&quot;短路&quot;像智能开关——<code>&amp;&amp;</code> 左边为 false 时，右边就不看了（反正结果一定是 false）；<code>||</code> 左边为 true 时，右边也不看了。好处是提升效率，但也可能让后面的 <code>a++</code>、<code>b++</code> 被跳过，写代码时要小心。</div></div>
 </div></div>
@@ -487,8 +487,8 @@ Console.WriteLine(n++);   // 输出5，之后 n 变成6</code></pre>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习2 — 条件判断</h1>
 <div class="ok-box">用关系运算符判断分数是否及格，再用逻辑运算符组合多个条件判断天气。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191936',this)">复制</button></div>
-<pre id="c_4368191936"><code class="language-csharp">int score = 85;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379299904',this)">复制</button></div>
+<pre id="c_4379299904"><code class="language-csharp">int score = 85;
 
 bool isPass = (score &gt;= 60);
 Console.WriteLine($&quot;及格：{isPass}&quot;);
@@ -504,13 +504,13 @@ Console.WriteLine($&quot;分数有效：{isValid}&quot;);
 bool needCheck = (score &lt; 60) || (score &gt; 100);
 Console.WriteLine($&quot;需要关注：{needCheck}&quot;);</code></pre>
 </div><div class="card"><ul><li>动手：把 score 改成 95、55、-10，观察每个 bool 值的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>&amp;&amp;</code> 两边都 true 才为 true，<code>||</code> 一边 true 就为 true</li><li><code>!</code> 取反：<code>!true</code> → false</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全下面代码，判断一个数是否在 1~100 之间：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191360',this)">复制</button></div>
-<pre id="c_4368191360"><code class="language-csharp">int n = 50;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379299328',this)">复制</button></div>
+<pre id="c_4379299328"><code class="language-csharp">int n = 50;
 bool inRange = (n <span class="code-blank">___</span> 1) <span class="code-blank">___</span> (n <span class="code-blank">___</span> 100);
 Console.WriteLine($&quot;n在有效范围：{<span class="code-blank">___</span>}&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368191552',this)">复制</button></div>
-<pre id="c_4368191552"><code class="language-csharp">int n = 50;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379299520',this)">复制</button></div>
+<pre id="c_4379299520"><code class="language-csharp">int n = 50;
 bool inRange = (n &gt;= 1) &amp;&amp; (n &lt;= 100);
 Console.WriteLine($&quot;n在有效范围：{inRange}&quot;);</code></pre>
 </div></div></div>
@@ -518,8 +518,8 @@ Console.WriteLine($&quot;n在有效范围：{inRange}&quot;);</code></pre>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>三元运算符（?:）</h1>
 <div class="card"><ul><li>格式：<code>条件 ? 结果1 : 结果2</code></li><li>如果条件为 <code>true</code> → 返回<code>结果1</code>；否则 → 返回<code>结果2</code></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368190912',this)">复制</button></div>
-<pre id="c_4368190912"><code class="language-csharp">  int score = 75;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379298880',this)">复制</button></div>
+<pre id="c_4379298880"><code class="language-csharp">  int score = 75;
   string result = (score &gt;= 60) ? &quot;及格&quot; : &quot;不及格&quot;;
   // result = &quot;及格&quot;
 
@@ -531,8 +531,8 @@ Console.WriteLine($&quot;n在有效范围：{inRange}&quot;);</code></pre>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>运算符优先级</h1>
 <div class="card"><ul><li>当多个运算符同时出现，计算顺序按优先级：</li></ul></div><div class="card"><table><tr><th>优先级</th><th>运算符</th></tr><tr><td>高</td><td><code>()</code> 括号</td></tr><tr><td>↑</td><td><code>++</code> <code>--</code> <code>!</code>（一元）</td></tr><tr><td></td><td><code>*</code> <code>/</code> <code>%</code></td></tr><tr><td></td><td><code>+</code> <code>-</code></td></tr><tr><td></td><td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td></tr><tr><td></td><td><code>==</code> <code>!=</code></td></tr><tr><td></td><td><code>&amp;&amp;</code></td></tr><tr><td>↓</td><td><code>||</code></td></tr><tr><td>低</td><td><code>=</code> <code>+=</code> <code>-=</code> 等（赋值）</td></tr></table></div><div class="card"><ul><li>记不住就用<strong>括号</strong>，括号里优先计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368188608',this)">复制</button></div>
-<pre id="c_4368188608"><code class="language-csharp">  int r1 = 2 + 3 * 4;      // 14（先乘后加）
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379296576',this)">复制</button></div>
+<pre id="c_4379296576"><code class="language-csharp">  int r1 = 2 + 3 * 4;      // 14（先乘后加）
   int r2 = (2 + 3) * 4;    // 20（括号优先）</code></pre>
 </div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 记不住优先级怎么办？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))"><strong>用括号！</strong>括号内的永远先算，加了括号代码也更清晰。<code>2 + 3 × 4</code> 不如 <code>2 + (3 × 4)</code> 一眼看得懂。考试可能让你背，写代码时用括号就行。</div></div>
 </div></div>
@@ -546,8 +546,8 @@ Console.WriteLine($&quot;n在有效范围：{inRange}&quot;);</code></pre>
 请输入运算符（+、-、*、/）：*
 请输入第二个数字：3
 10 * 3 = 30</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>用 <code>if (op == &quot;+&quot;)</code> / <code>else if (op == &quot;-&quot;)</code> 等判断运算符</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368186304',this)">复制</button></div>
-<pre id="c_4368186304"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379277888',this)">复制</button></div>
+<pre id="c_4379277888"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
 double num1 = <span class="code-blank">___</span>;
 
 Console.Write(&quot;请输入运算符（+、-、*、/）：&quot;);
@@ -570,8 +570,8 @@ if (<span class="code-blank">___</span>)
 else
     Console.WriteLine(&quot;运算符无效！&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368186560',this)">复制</button></div>
-<pre id="c_4368186560"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379278144',this)">复制</button></div>
+<pre id="c_4379278144"><code class="language-csharp">Console.Write(&quot;请输入第一个数字：&quot;);
 double num1 = double.Parse(Console.ReadLine());
 
 Console.Write(&quot;请输入运算符（+、-、*、/）：&quot;);
@@ -594,8 +594,8 @@ if (valid)
 else
     Console.WriteLine(&quot;运算符无效！&quot;);</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个<strong>年份</strong>，判断是否为<strong>闰年</strong>并输出结果。<br>闰年规则：能被 4 整除且不能被 100 整除，<strong>或者</strong>能被 400 整除。<br>要求：用逻辑运算符 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 和取余 <code>%</code> 自己写判断，不能用现成模板。<br>提示：<code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code></div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368185984',this)">复制</button></div>
-<pre id="c_4368185984"><code class="language-csharp">int year = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379277568',this)">复制</button></div>
+<pre id="c_4379277568"><code class="language-csharp">int year = int.Parse(Console.ReadLine());
 bool isLeap = (year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0;
 Console.WriteLine(isLeap ? $&quot;{year} 是闰年&quot; : $&quot;{year} 不是闰年&quot;);</code></pre>
 </div></div></div>
@@ -603,8 +603,8 @@ Console.WriteLine(isLeap ? $&quot;{year} 是闰年&quot; : $&quot;{year} 不是�
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4368184448',this)">复制</button></div>
-<pre id="c_4368184448"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379276032',this)">复制</button></div>
+<pre id="c_4379276032"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -689,7 +689,7 @@ Console.WriteLine(isLeap ? $&quot;{year} 是闰年&quot; : $&quot;{year} 不是�
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();

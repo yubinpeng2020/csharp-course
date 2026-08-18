@@ -379,27 +379,27 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>数组的局限性</h1>
 <div class="card"><p>数组很好用，但有三个死穴：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346849152',this)">复制</button></div>
-<pre id="c_4346849152"><code class="language-csharp">int[] scores = { 85, 90, 78 };   // 3个元素
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315604608',this)">复制</button></div>
+<pre id="c_4315604608"><code class="language-csharp">int[] scores = { 85, 90, 78 };   // 3个元素
 scores[3] = 92;    // ❌ 越界！不能往里面加第4个</code></pre>
 </div><div class="card"><table><tr><th>局限</th><th>说明</th></tr><tr><td>大小固定</td><td>创建后不能增删元素</td></tr><tr><td>没有查找方法</td><td><code>Contains(&quot;张三&quot;)</code> 不支持</td></tr><tr><td>没有删除方法</td><td>想删&quot;第2个学生&quot;？只能手动移位</td></tr></table></div><div class="card"><ul><li>解决方案：C# 提供了<strong>集合</strong>——动态可增长的数据容器</li></ul></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>List&lt;T&gt; — 动态数组</h1>
 <div class="card"><p>List 就像一个<strong>会自动变长的数组</strong>。数组创建后大小就固定了，不能加人也不能删人；List 可以随时增删元素，长度自动跟着变。</p></div><div class="card"><table><tr><th></th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>大小</td><td>创建时固定</td><td>随时增删，自动扩容</td></tr><tr><td>增删</td><td>❌ 不支持</td><td>✅ Add / Remove</td></tr><tr><td>查找</td><td>❌ 手写循环</td><td>✅ Contains 直接查</td></tr><tr><td>遍历</td><td>for / foreach</td><td>for / foreach（完全一样）</td></tr></table></div><div class="ok-box">List 不是 C# 自带的，存放在<strong>集合库</strong>里，需要先引入：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523840',this)">复制</button></div>
-<pre id="c_4346523840"><code class="language-csharp">using System.Collections.Generic;  // 引入集合库</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315278976',this)">复制</button></div>
+<pre id="c_4315278976"><code class="language-csharp">using System.Collections.Generic;  // 引入集合库</code></pre>
 </div><div class="card"><p><code>System.Collections.Generic</code> 是集合库的&quot;地址&quot;，<code>using</code> 就是告诉程序&quot;我要用这里的工具&quot;（课件2讲过 <code>using System</code> 同理）。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523584',this)">复制</button></div>
-<pre id="c_4346523584"><code class="language-csharp">// 数组的写法：类型[] 变量名
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315278720',this)">复制</button></div>
+<pre id="c_4315278720"><code class="language-csharp">// 数组的写法：类型[] 变量名
 int[] arr = new int[5];
 
 // List 的写法：List&lt;类型&gt; 变量名
 List&lt;int&gt; scores = new List&lt;int&gt;();
 //      ↑ 尖括号里的 int 和数组的 int[] 一样，都是指定&quot;装什么类型&quot;</code></pre>
 </div><div class="card"><ul><li><code>List&lt;T&gt;</code> 的 <code>T</code> 就是个占位符，用的时候换成具体类型：<code>List&lt;int&gt;</code>、<code>List&lt;string&gt;</code></li><li>不需要指定大小，会自动扩容</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523648',this)">复制</button></div>
-<pre id="c_4346523648"><code class="language-csharp">scores.Add(85);   // 往末尾追加
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315278784',this)">复制</button></div>
+<pre id="c_4315278784"><code class="language-csharp">scores.Add(85);   // 往末尾追加
 scores.Add(90);
 scores.Add(78);
 scores[1] = 95;   // 改元素，和数组一样用 []</code></pre>
@@ -408,8 +408,8 @@ scores[1] = 95;   // 改元素，和数组一样用 []</code></pre>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>List 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>获取数量</td><td><code>arr.Length</code></td><td><code>list.Count</code></td></tr><tr><td>访问元素</td><td><code>arr[0]</code></td><td><code>list[0]</code></td></tr><tr><td>增</td><td>❌</td><td><code>Add()</code> <code>Insert()</code></td></tr><tr><td>删</td><td>❌</td><td><code>Remove()</code> <code>RemoveAt()</code></td></tr><tr><td>查找</td><td>❌</td><td><code>Contains()</code></td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346523072',this)">复制</button></div>
-<pre id="c_4346523072"><code class="language-csharp">List&lt;string&gt; names = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315278208',this)">复制</button></div>
+<pre id="c_4315278208"><code class="language-csharp">List&lt;string&gt; names = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
 
 // Add：追加
 names.Add(&quot;赵六&quot;);
@@ -433,8 +433,8 @@ Console.WriteLine($&quot;共 {names.Count} 人&quot;);</code></pre>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>List 创建与遍历</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346522368',this)">复制</button></div>
-<pre id="c_4346522368"><code class="language-csharp">// 方式1：new + 初始化（最常用）
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315277504',this)">复制</button></div>
+<pre id="c_4315277504"><code class="language-csharp">// 方式1：new + 初始化（最常用）
 List&lt;int&gt; scores = new List&lt;int&gt; { 85, 90, 78, 88, 92 };
 
 // 方式2：空列表，逐个添加
@@ -445,8 +445,8 @@ names.Add(&quot;张三&quot;); names.Add(&quot;李四&quot;);
 int[] arr = { 85, 90, 78 };
 List&lt;int&gt; scores2 = new List&lt;int&gt;(arr);</code></pre>
 </div><div class="card"><p>遍历——for 和 foreach 都可以：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346522176',this)">复制</button></div>
-<pre id="c_4346522176"><code class="language-csharp">for (int i = 0; i &lt; scores.Count; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315277312',this)">复制</button></div>
+<pre id="c_4315277312"><code class="language-csharp">for (int i = 0; i &lt; scores.Count; i++)
     Console.WriteLine(scores[i]);
 
 foreach (int s in scores)
@@ -456,8 +456,8 @@ foreach (int s in scores)
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — List 学生管理</h1>
 <div class="ok-box">用 List&lt;string&gt; 管理学生名单：新增、删除、查找，体会和数组的区别。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521856',this)">复制</button></div>
-<pre id="c_4346521856"><code class="language-csharp">List&lt;string&gt; students = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315276992',this)">复制</button></div>
+<pre id="c_4315276992"><code class="language-csharp">List&lt;string&gt; students = new List&lt;string&gt; { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot; };
 
 students.Add(&quot;赵六&quot;);
 Console.WriteLine($&quot;新增后共 {students.Count} 人&quot;);
@@ -473,8 +473,8 @@ if (students.Contains(Console.ReadLine()))
 else
     Console.WriteLine(&quot;不在列表中&quot;);</code></pre>
 </div><div class="card"><ul><li>动手：加上&quot;修改姓名&quot;和&quot;在第1位插入&quot;功能</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>List&lt;T&gt;</code> 不用指定大小，<code>Add()</code> 往末尾加，<code>Count</code> 自动更新</li><li><code>RemoveAt(索引)</code> 按位置删，<code>Contains()</code> 检查是否存在——数组没有这两个</li><li>增删改查都比数组方便，这就是 List 的价值</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用 List 管理待办事项：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521408',this)">复制</button></div>
-<pre id="c_4346521408"><code class="language-csharp">List&lt;string&gt; todos = new <span class="code-blank">___</span> { &quot;写作业&quot;, &quot;复习&quot; };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315276544',this)">复制</button></div>
+<pre id="c_4315276544"><code class="language-csharp">List&lt;string&gt; todos = new <span class="code-blank">___</span> { &quot;写作业&quot;, &quot;复习&quot; };
 
 todos.<span class="code-blank">___</span>(&quot;做练习&quot;);                     // 添加到末尾
 todos.<span class="code-blank">___</span>(0, &quot;先吃早餐&quot;);                // 在第1位插入
@@ -487,8 +487,8 @@ Console.WriteLine($&quot;共 {todos.<span class="code-blank">___</span>} 件事�
 if (todos.<span class="code-blank">___</span>(&quot;写作业&quot;))
     todos.<span class="code-blank">___</span>(&quot;写作业&quot;);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346521600',this)">复制</button></div>
-<pre id="c_4346521600"><code class="language-csharp">List&lt;string&gt; todos = new List&lt;string&gt; { &quot;写作业&quot;, &quot;复习&quot; };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315276736',this)">复制</button></div>
+<pre id="c_4315276736"><code class="language-csharp">List&lt;string&gt; todos = new List&lt;string&gt; { &quot;写作业&quot;, &quot;复习&quot; };
 
 todos.Add(&quot;做练习&quot;);
 todos.Insert(0, &quot;先吃早餐&quot;);
@@ -507,15 +507,15 @@ if (todos.Contains(&quot;写作业&quot;))
 [0] → &quot;张三&quot;                &quot;张三&quot; → 85 分
 [1] → &quot;李四&quot;                &quot;李四&quot; → 90 分
 [2] → &quot;王五&quot;                &quot;王五&quot; → 78 分</code></pre><div class="card"><h3><code>&lt;K,V&gt;</code> 里为什么有两个类型？</h3></div><div class="card"><p><code>List&lt;T&gt;</code> 只有一个占位符（装什么类型），<code>Dictionary&lt;K,V&gt;</code> 有两个——K 管键的类型，V 管值的类型：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346520768',this)">复制</button></div>
-<pre id="c_4346520768"><code class="language-csharp">List&lt;string&gt; names;              // 一个 T：装什么
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315275904',this)">复制</button></div>
+<pre id="c_4315275904"><code class="language-csharp">List&lt;string&gt; names;              // 一个 T：装什么
 Dictionary&lt;string, int&gt; scores;  // K=键的类型, V=值的类型
 //              ↑键      ↑值
 //          &quot;张三&quot;  →  85
 //          &quot;李四&quot;  →  90</code></pre>
 </div><div class="ok-box">K 和 V 不限于 <code>string</code> → <code>int</code>，可以是任意类型的组合——<code>Dictionary&lt;int, string&gt;</code>（学号→姓名）、<code>Dictionary&lt;string, bool&gt;</code>（姓名→是否及格）都行。</div><div class="card"><h3>代码创建：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346520832',this)">复制</button></div>
-<pre id="c_4346520832"><code class="language-csharp">using System.Collections.Generic;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315275968',this)">复制</button></div>
+<pre id="c_4315275968"><code class="language-csharp">using System.Collections.Generic;
 
 Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;();
 
@@ -529,8 +529,8 @@ Console.WriteLine(scores[&quot;张三&quot;]);   // 85 — 按键取值</code></
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>Dictionary 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>代码</th><th>说明</th></tr><tr><td>增/改</td><td><code>dict[&quot;键&quot;] = 值</code></td><td>键不存在→新增，键已存在→覆盖（同一个语法）</td></tr><tr><td>删</td><td><code>dict.Remove(&quot;键&quot;)</code></td><td>按键删除，键不存在也不会报错</td></tr><tr><td>查</td><td>先 <code>dict.ContainsKey(&quot;键&quot;)</code> 再 <code>dict[&quot;键&quot;]</code></td><td>先判断再取值，避免键不存在时报错</td></tr><tr><td>遍历</td><td><code>foreach (var kv in dict)</code></td><td><code>kv.Key</code> 取键，<code>kv.Value</code> 取值</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346519616',this)">复制</button></div>
-<pre id="c_4346519616"><code class="language-csharp">Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315274752',this)">复制</button></div>
+<pre id="c_4315274752"><code class="language-csharp">Dictionary&lt;string, int&gt; scores = new Dictionary&lt;string, int&gt;
 {
     { &quot;张三&quot;, 85 }, { &quot;李四&quot;, 90 }, { &quot;王五&quot;, 78 }
 };
@@ -566,8 +566,8 @@ foreach (var kv in scores)
 已添加：苹果 ×3
 2
 苹果 ×3</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>cart[商品名] = 数量</code> — 增/改都用这个语法</li><li><code>cart.Remove(商品名)</code> 删除，<code>foreach (var kv in cart)</code> 查看</li><li>while 循环 + switch/if 实现菜单交互</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346518272',this)">复制</button></div>
-<pre id="c_4346518272"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = <span class="code-blank">___</span> Dictionary&lt;string, int&gt;();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315273408',this)">复制</button></div>
+<pre id="c_4315273408"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = <span class="code-blank">___</span> Dictionary&lt;string, int&gt;();
 
 while (true)
 {
@@ -593,8 +593,8 @@ while (true)
     else <span class="code-blank">___</span>;
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346518016',this)">复制</button></div>
-<pre id="c_4346518016"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = new Dictionary&lt;string, int&gt;();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315273152',this)">复制</button></div>
+<pre id="c_4315273152"><code class="language-csharp">Dictionary&lt;string, int&gt; cart = new Dictionary&lt;string, int&gt;();
 
 while (true)
 {
@@ -620,8 +620,8 @@ while (true)
     else break;
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入若干个整数（逗号分隔），用 <code>List</code> 存储并<strong>去掉重复</strong>，输出去重后的列表。<br>要求：自己写——拆分、转换、遍历判断是否已存在再添加，不能用 <code>Distinct()</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346517504',this)">复制</button></div>
-<pre id="c_4346517504"><code class="language-csharp">string input = Console.ReadLine();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315272640',this)">复制</button></div>
+<pre id="c_4315272640"><code class="language-csharp">string input = Console.ReadLine();
 List&lt;int&gt; list = new List&lt;int&gt;();
 foreach (string p in input.Split(','))
 {
@@ -634,8 +634,8 @@ foreach (int v in list) Console.Write(v + &quot; &quot;);</code></pre>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>创建 <code>List&lt;int&gt;</code> 存储10个随机数，计算总和与平均值，找出最大值。</p><ul><li>提示：<code>Random rand = new Random(42);</code> 固定种子保证验收输出一致，<code>rand.Next(1, 101)</code> 生成 1~100 的随机数</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>总和：512</code></li></ul><ul><li>输出：<code>平均值：51.2</code></li></ul><ul><li>输出：<code>最大值：98</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用 <code>Dictionary&lt;string, string&gt;</code> 做简易通讯录：姓名→手机号，支持增、删、查。</p><ul><li>数据：<code>张三:13800138000, 李四:13900139000, 王五:13700137000</code></li><li>提示：增/改用 <code>dict[&quot;姓名&quot;] = &quot;手机号&quot;</code>，删用 <code>Remove</code>，查用 <code>ContainsKey</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入姓名（exit退出）：→ 张三</code></li></ul><ul><li>输出：<code>张三：13800138000</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>用 <code>List&lt;int&gt;</code> 实现动态成绩录入：不断输入成绩直到输入 -1 结束，计算平均分和及格率。</p><ul><li>提示：<code>while (true)</code> + <code>Add()</code> + <code>break</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩（-1结束）：→ 85</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 90</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 78</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 60</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ -1</code></li></ul><ul><li>输出：<code>平均分：78.3，及格率：100%</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>统计一句话中每个单词出现的次数（用 <code>Dictionary&lt;string, int&gt;</code>）。</p><ul><li>数据：<code>string sentence = &quot;apple banana apple orange banana apple&quot;;</code></li><li>提示：用 <code>Split(' ')</code> 拆词，遍历每个词，<code>dict[词]</code> 累加</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4346515904',this)">复制</button></div>
-<pre id="c_4346515904"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4315271040',this)">复制</button></div>
+<pre id="c_4315271040"><code class="language-csharp">class Program
 {
     static void Main()
     {

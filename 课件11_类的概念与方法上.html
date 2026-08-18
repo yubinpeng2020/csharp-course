@@ -378,8 +378,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>为什么需要类？</h1>
 <div class="ok-box">前面学了变量、数组、集合——数据越存越多，但它们散落在 <code>Main</code> 里互不关联。一个学生有姓名、年龄、成绩，这三块数据本该属于同一个整体——这节课学类，把数据和功能打包到一起。</div><div class="card"><p>到目前为止写的代码，变量和逻辑全塞在 <code>Main</code> 里——系统小还能撑，一旦系统变大，<code>Main</code> 就变成了几百行的&quot;垃圾堆&quot;：想改个东西得翻半天，想复制一段逻辑到处粘贴，多人合作更是灾难。</p></div><div class="card"><p>更致命的是，现实中的&quot;东西&quot;（比如学生）天然带着数据和功能——不说类的话，就得：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380178112',this)">复制</button></div>
-<pre id="c_4380178112"><code class="language-csharp">string name1 = &quot;张三&quot;; int age1 = 18; double score1 = 85;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379833280',this)">复制</button></div>
+<pre id="c_4379833280"><code class="language-csharp">string name1 = &quot;张三&quot;; int age1 = 18; double score1 = 85;
 string name2 = &quot;李四&quot;; int age2 = 19; double score2 = 90;
 // 如果100个学生……直接崩溃</code></pre>
 </div><div class="card"><p><strong>类的解决方案</strong>：把相关数据和功能<strong>打包</strong>在一起，一个&quot;学生类&quot;就管学生的事，清晰、可复用、不互相打架。</p></div>
@@ -413,8 +413,8 @@ string name2 = &quot;李四&quot;; int age2 = 19; double score2 = 90;
 │ s1.Grow()    │     │ s2.Grow()    │
 └──────────────┘     └──────────────┘
    ▲ 同一个模板，不同的数据                   ▲</code></pre><div class="card"><ul><li>类就像一个<strong>大盒子框架</strong>，里面分成两格：一格装数据（字段），一格装功能（方法）</li><li>用 <code>new</code> 创建对象时，就从这个框架&quot;复印&quot;出一份——每个对象字段值自己填，方法共用同一套</li></ul></div><div class="card"><h3>生活中的类比：</h3></div><div class="card"><table><tr><th>比喻</th><th>类（Class）</th><th>对象（Object）</th></tr><tr><td>手机</td><td>设计图纸</td><td>生产出来的真手机（无数部）</td></tr><tr><td>饼干</td><td>模具</td><td>压出来的饼干（形状相同，馅料不同）</td></tr><tr><td>学生表</td><td>空白登记表模板</td><td>填好的张三的表、李四的表</td></tr><tr><td>盖房</td><td>户型图纸</td><td>盖好的房子</td></tr></table></div><div class="card"><ul><li><strong>类</strong> = 定义了&quot;有什么数据&quot;和&quot;能做什么事&quot;的<strong>模板</strong></li><li><strong>对象</strong> = 按模板创建的<strong>具体实例</strong>，每个对象的字段值可以不同</li></ul></div><div class="card"><p>用已学过的类型理解：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380176128',this)">复制</button></div>
-<pre id="c_4380176128"><code class="language-csharp">int a = 10;          // int 是&quot;类型&quot;，a 是&quot;具体的值&quot;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379831296',this)">复制</button></div>
+<pre id="c_4379831296"><code class="language-csharp">int a = 10;          // int 是&quot;类型&quot;，a 是&quot;具体的值&quot;
 string s = &quot;hello&quot;;  // string 是&quot;类型&quot;，s 是&quot;具体的字符串&quot;
 
 Student s1 = new Student();  // Student 是你定义的&quot;类型&quot;
@@ -425,8 +425,8 @@ Student s1 = new Student();  // Student 是你定义的&quot;类型&quot;
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>定义第一个类并创建对象</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175616',this)">复制</button></div>
-<pre id="c_4380175616"><code class="language-csharp">class Person           // class 关键字 + 类名（Pascal命名规范）
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379830784',this)">复制</button></div>
+<pre id="c_4379830784"><code class="language-csharp">class Person           // class 关键字 + 类名（Pascal命名规范）
 {
     // 字段 = 人的特征（数据）
     public string name;     // 姓名
@@ -446,13 +446,13 @@ Student s1 = new Student();  // Student 是你定义的&quot;类型&quot;
     }
 }</code></pre>
 </div><div class="card"><p>类的定义写好了，怎么用？标准写法跟声明变量很像：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175488',this)">复制</button></div>
-<pre id="c_4380175488"><code class="language-csharp">// 变量的标准写法             创建对象的标准写法
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379830656',this)">复制</button></div>
+<pre id="c_4379830656"><code class="language-csharp">// 变量的标准写法             创建对象的标准写法
 int age = 18;                Person p1 = new Person();
 //   ↑类型  ↑变量名  ↑值       ↑类型  ↑对象名  ↑new 创建实例</code></pre>
 </div><div class="card"><h3><code>new</code> 关键字——把蓝图变成现实</h3></div><div class="card"><p><code>new</code> 你其实已经用过了——<code>new int[5]</code> 是在内存里分配一个数组。现在 <code>new Person()</code> 是分配一个 Person 对象的&quot;家&quot;：</p></div><div class="card"><ul><li><code>new</code> = 在内存中开辟一块空间，按类的模板把字段和方法装进去</li><li>没有 <code>new</code>，类只是图纸；有了 <code>new</code>，才拿到一个可以操作的真实对象</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175040',this)">复制</button></div>
-<pre id="c_4380175040"><code class="language-csharp">// 用 new 关键字创建对象（按图纸生产一部新手机）
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379830208',this)">复制</button></div>
+<pre id="c_4379830208"><code class="language-csharp">// 用 new 关键字创建对象（按图纸生产一部新手机）
 Person p1 = new Person();
 p1.name = &quot;张三&quot;;
 p1.age = 18;
@@ -468,15 +468,15 @@ p2.height = 1.80;
 p2.SayHello();  // 你好，我叫李四，今年20岁
 p1.SayHello();  // 你好，我叫张三，今年19岁 ← p1没变</code></pre>
 </div><div class="card"><ul><li><code>.</code> = 访问对象的成员（字段/方法）</li><li>每个<strong>对象</strong>拥有一套独立的字段值，<strong>互不干扰</strong></li><li style="margin-left:24px;list-style-type:circle">💬 就像同一份空白表格复印了 100 份，每个人填自己的信息——张三在自己的表上把年龄改成 19 岁，李四表上的年龄纹丝不动。100 个对象 = 100 份独立数据。</li><li>💡 对象初始化器：创建对象的同时在 <code>{ }</code> 里直接赋值，更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380174528',this)">复制</button></div>
-<pre id="c_4380174528"><code class="language-csharp">  Person p = new Person { name = &quot;张三&quot;, age = 18, height = 1.75 };</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379829696',this)">复制</button></div>
+<pre id="c_4379829696"><code class="language-csharp">  Person p = new Person { name = &quot;张三&quot;, age = 18, height = 1.75 };</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>方法的参数与返回值</h1>
 <div class="card"><p>上页我们调用了 <code>SayHello()</code>、<code>Grow()</code> 等方法。这些方法到底是怎么定义出来的？看一个「两数相加」的完整例子：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380175744',this)">复制</button></div>
-<pre id="c_4380175744"><code class="language-csharp">class Calculator
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379830912',this)">复制</button></div>
+<pre id="c_4379830912"><code class="language-csharp">class Calculator
 {
     public int Add(int a, int b)             // 有参数，有返回值
     { return a + b; }
@@ -490,11 +490,11 @@ p1.SayHello();  // 你好，我叫张三，今年19岁 ← p1没变</code></pre>
 </div><div class="card"><p>拿 <code>Add</code> 方法拆开看，由五部分组成：</p></div><pre class="plain-box"><code>public   int    Add    (int a, int b)   { return a + b; }
   ↑       ↑      ↑          ↑                  ↑
 访问修饰符 返回类型 方法名   参数列表（输入）    方法体（做什么）</code></pre><div class="card"><ul><li><code>public</code> = <strong>公开的</strong>——谁都能调。<code>private</code>/<code>protected</code> 后面课件细讲，目前统一用 <code>public</code></li><li><code>int</code> = <strong>返回类型</strong>——方法执行完把什么类型的数据还给调用者。<code>int</code> 还数字，<code>double</code> 还小数，<code>void</code> 表示「不还东西」</li><li><code>(int a, int b)</code> = <strong>参数列表</strong>——调用时要传的数据，<code>a</code> 和 <code>b</code> 在这方法里当局部变量用</li><li><code>{ return a + b; }</code> = <strong>方法体</strong>——真正干活的代码</li></ul></div><div class="ok-box">方法的公式：<code>public 返回类型 方法名(参数列表) { 方法体 }</code></div><div class="card"><p>调用它的时候：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380173888',this)">复制</button></div>
-<pre id="c_4380173888"><code class="language-csharp">int result = calc.Add(3, 5);   // 3和5传进去，Add 方法执行，return 8 传出来</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379829056',this)">复制</button></div>
+<pre id="c_4379829056"><code class="language-csharp">int result = calc.Add(3, 5);   // 3和5传进去，Add 方法执行，return 8 传出来</code></pre>
 </div><div class="card"><p><code>void</code> vs 有返回值的区别：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380173760',this)">复制</button></div>
-<pre id="c_4380173760"><code class="language-csharp">// Add 有 int 返回值 → 可接住，可继续参与运算
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379828928',this)">复制</button></div>
+<pre id="c_4379828928"><code class="language-csharp">// Add 有 int 返回值 → 可接住，可继续参与运算
 int sum = calc.Add(3, 5);
 Console.WriteLine(sum + 10);        // 15
 
@@ -506,8 +506,8 @@ calc.PrintSum(3, 5);                // 只能让它直接执行
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 学生成绩计算</h1>
 <div class="ok-box">定义 Student 类，包含语数英字段和计算总分/平均分的方法，创建对象并输出。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380172032',this)">复制</button></div>
-<pre id="c_4380172032"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379827200',this)">复制</button></div>
+<pre id="c_4379827200"><code class="language-csharp">class Student
 {
     public string name;
     public double chinese;
@@ -527,15 +527,15 @@ calc.PrintSum(3, 5);                // 只能让它直接执行
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171904',this)">复制</button></div>
-<pre id="c_4380171904"><code class="language-csharp">Student s = new Student();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379827072',this)">复制</button></div>
+<pre id="c_4379827072"><code class="language-csharp">Student s = new Student();
 s.name = &quot;张三&quot;;
 s.chinese = 85; s.math = 90; s.english = 78;
 Console.WriteLine($&quot;{s.name} 总分：{s.GetTotal()}，平均：{s.GetAverage():F1}&quot;);
 // 张三 总分：253，平均：84.3</code></pre>
 </div><div class="card"><ul><li>动手：把张三的成绩改成你自己的各科分数，看输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>字段 <code>chinese</code>、<code>math</code>、<code>english</code> 是学生的&quot;数据&quot;，方法 <code>GetTotal()</code>、<code>GetAverage()</code> 是学生的&quot;功能&quot;</li><li><code>GetAverage()</code> 内部调用 <code>GetTotal()</code>——方法之间可以互相配合，不用把所有逻辑堆在一个方法里</li><li>平均分里 <code>/ 3</code> 是硬编码的，更好的写法是用字段个数动态计算</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义一个 Car 类：要求含 <code>brand</code>（品牌）和 <code>speed</code>（速度）字段，以及一个 <code>Drive()</code> 方法输出行驶信息，最后创建对象并调用。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171968',this)">复制</button></div>
-<pre id="c_4380171968"><code class="language-csharp"><span class="code-blank">___</span> Car
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379827136',this)">复制</button></div>
+<pre id="c_4379827136"><code class="language-csharp"><span class="code-blank">___</span> Car
 {
     public string brand;     // 品牌
     public int speed;        // 速度
@@ -552,8 +552,8 @@ myCar.brand = &quot;宝马&quot;;
 myCar.speed = 120;
 myCar.<span class="code-blank">___</span>();</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171456',this)">复制</button></div>
-<pre id="c_4380171456"><code class="language-csharp">class Car
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379826624',this)">复制</button></div>
+<pre id="c_4379826624"><code class="language-csharp">class Car
 {
     public string brand;
     public int speed;
@@ -575,8 +575,8 @@ myCar.Drive();</code></pre>
 <div class="card"><p>前面写 <code>new Person()</code> 时，对象创建完还得一行行 <code>p.name =</code>、<code>p.age =</code> 赋值。能不能创建时就一步到位？<strong>构造方法</strong>就是干这个的。</p></div><div class="card"><p>一个构造方法长这样：</p></div><pre class="plain-box"><code>public   Person   (string n, int a)   { name = n;  age = a; }
   ↑        ↑             ↑                    ↑
 访问修饰符  类名         参数列表             方法体（初始化字段）</code></pre><div class="card"><p>构造方法就是<strong>特殊的方法</strong>，有三个特殊之处：</p></div><div class="card"><ul><li><strong>名字 = 类名</strong>：必须和类同名，不是随便起的方法名</li><li><strong>没有返回值类型</strong>：连 <code>void</code> 都不写（和普通方法的区别）</li><li><strong>自动调用</strong>：用 <code>new</code> 创建对象时自动执行，不用手动调</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171072',this)">复制</button></div>
-<pre id="c_4380171072"><code class="language-csharp">class Person
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379826240',this)">复制</button></div>
+<pre id="c_4379826240"><code class="language-csharp">class Person
 {
     public string name;
     public int age;
@@ -590,8 +590,8 @@ myCar.Drive();</code></pre>
     public Person() { }                  // 无参构造（如果没写，系统会默认生成一个空的）
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380170944',this)">复制</button></div>
-<pre id="c_4380170944"><code class="language-csharp">// 创建对象时就能直接赋值，不用分行写 name =、age =
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379826112',this)">复制</button></div>
+<pre id="c_4379826112"><code class="language-csharp">// 创建对象时就能直接赋值，不用分行写 name =、age =
 Person p1 = new Person(&quot;张三&quot;, 18);   // 用有参构造，一步到位
 Person p2 = new Person();             // 用无参构造，之后手动赋值
 p2.name = &quot;李四&quot;; p2.age = 19;
@@ -600,8 +600,8 @@ p2.name = &quot;李四&quot;; p2.age = 19;
 Person p3 = new Person();
 p3.name = &quot;王五&quot;; p3.age = 20;         // 需要3行</code></pre>
 </div><div class="card"><ul><li>构造方法 = 出厂设置，创建对象时自动执行，<strong>只执行一次</strong></li></ul></div><div class="card"><p>上面示例用了 <code>string n, int a</code> 当参数名，虽然能跑，但 <code>n</code>、<code>a</code> 看不出含义。更好的写法是把参数名写得和字段名一样——清楚。但问题来了：<strong>名字一样，谁来区分？</strong></p></div><div class="card"><p>这时候就要用 <code>this</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380171008',this)">复制</button></div>
-<pre id="c_4380171008"><code class="language-csharp">class Person
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379826176',this)">复制</button></div>
+<pre id="c_4379826176"><code class="language-csharp">class Person
 {
     public string name;
     public int age;
@@ -628,8 +628,8 @@ p3.name = &quot;王五&quot;; p3.age = 20;         // 需要3行</code></pre>
 <div class="ok-box">定义 BankAccount 类，实现存钱/取钱功能，取钱时检查余额是否足够。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>存入500元，余额：1500
 取出200元，余额：1300
 余额不足！</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>构造方法：<code>BankAccount(string owner, double balance)</code> 一步到位</li><li><code>this.owner = owner</code> —— 参数和字段同名时用 <code>this.</code> 区分</li><li>取钱时 <code>if (amount &gt; balance)</code> 检查余额，返回 <code>bool</code> 告诉调用者是否成功</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168576',this)">复制</button></div>
-<pre id="c_4380168576"><code class="language-csharp">class BankAccount
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379823744',this)">复制</button></div>
+<pre id="c_4379823744"><code class="language-csharp">class BankAccount
 {
     public string owner;
     <span class="code-blank">___</span> double balance;          // private：外部不能直接访问
@@ -665,8 +665,8 @@ acc.<span class="code-blank">___</span>(500);
 acc.<span class="code-blank">___</span>(200);
 acc.Withdraw(2000);</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168832',this)">复制</button></div>
-<pre id="c_4380168832"><code class="language-csharp">class BankAccount
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379824000',this)">复制</button></div>
+<pre id="c_4379824000"><code class="language-csharp">class BankAccount
 {
     public string owner;
     private double balance;
@@ -701,8 +701,8 @@ acc.Deposit(500);
 acc.Withdraw(200);
 acc.Withdraw(2000);</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己定义一个 <code>Rectangle</code>（长方形）类，含<strong>长、宽</strong>两个字段，以及计算<strong>面积</strong>和<strong>周长</strong>的方法；在 <code>Main</code> 里读入长、宽并调用方法输出。<br>要求：完整定义类 + <code>Main</code> 调用，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380168320',this)">复制</button></div>
-<pre id="c_4380168320"><code class="language-csharp">class Rectangle
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379823488',this)">复制</button></div>
+<pre id="c_4379823488"><code class="language-csharp">class Rectangle
 {
     public double Width;
     public double Height;
@@ -724,8 +724,8 @@ class Program
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Book</code> 类，字段：<code>title</code>（书名）、<code>author</code>（作者）、<code>price</code>（价格），方法 <code>ShowInfo()</code> 输出所有信息。</p><ul><li>在 Main 中创建两本不同的书并调用 <code>ShowInfo()</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》作者张三 价格：45元</code></li></ul></div><div class="card"><h3>题2（2分）</h3><p>给 <code>Book</code> 类添加构造方法，创建对象时直接初始化所有字段。</p><ul><li>提示：<code>public Book(string title, string author, double price)</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>数据同题1</code></li></ul><ul><li>输出：<code>用构造方法一步到位，不再分行赋值</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>定义 <code>Rectangle</code> 类，字段：<code>width</code>、<code>height</code>，方法：<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）。</p><ul><li>创建两个矩形对象，分别输出面积和周长</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入宽：→ 5</code></li></ul><ul><li>输入：<code>请输入高：→ 3</code></li></ul><ul><li>输出：<code>面积：15</code></li></ul><ul><li>输出：<code>周长：16</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Student</code> 类，字段：<code>name</code>、3门课成绩（<code>chinese</code>、<code>math</code>、<code>english</code>），方法：<code>GetTotal()</code>、<code>GetAverage()</code>。</p><ul><li>构造方法初始化姓名和成绩，创建对象后输出总分和平均分</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>总分：253</code></li></ul><ul><li>输出：<code>平均分：84.3</code></li></ul><ul><li>输出：<code>最高分学生：张三</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4380167552',this)">复制</button></div>
-<pre id="c_4380167552"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379822720',this)">复制</button></div>
+<pre id="c_4379822720"><code class="language-csharp">class Program
 {
     static void Main()
     {
@@ -812,7 +812,7 @@ class Program
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();
