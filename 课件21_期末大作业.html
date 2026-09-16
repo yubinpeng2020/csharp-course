@@ -62,10 +62,11 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .dropdown-menu.show{display:block}
 .dropdown-item{display:block;padding:10px 16px;color:var(--text);font-size:13px;text-decoration:none;transition:background .2s;cursor:pointer;white-space:nowrap}
 .dropdown-item:hover{background:var(--accent-dim);color:var(--accent)}
-.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}}
+.dropdown-item:not(:last-child){border-bottom:1px solid var(--border)}
 
 /* ===== 幻灯片 ===== */
 .slides-container{flex:1;position:relative;overflow:hidden}
+#mainArea .slides-container{position:relative !important;overflow:hidden !important;min-height:calc(100vh - 60px)}
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
@@ -300,15 +301,56 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .cover{padding-left:40px;padding-right:40px}
 .cover h1{font-size:32px}
 .nav-buttons{right:12px;bottom:12px}
-.header-bar{padding:8px 12px;gap:8px;flex-wrap:nowrap}
+.header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
+.header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
 .header-dropdown{display:none}
 .header-btn[onclick^="changeFont"]{display:none}
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
+.mi-page{display:none}
 .mobile-more{display:inline-block}
+.slides-container{min-height:calc(100vh - 54px)}
 }
+
+/* ===== 平铺模式（连续显示全部页面，用于导出 PDF） ===== */
+html.flat-mode,body.flat-mode{height:auto;overflow:visible}
+.flat-mode .container{height:auto;overflow:visible}
+.flat-mode .main-area{overflow:visible}
+.flat-mode .sidebar{display:none}
+.flat-mode .slides-container{overflow:visible;height:auto}
+.flat-mode .slide{position:static;opacity:1;transform:none;pointer-events:auto;height:auto;overflow:visible;margin:0 0 28px}
+.flat-mode .slide::before{display:none}
+.flat-mode .slide-inner{padding:36px 48px 32px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,0.02)}
+.flat-mode .cover{position:static;opacity:1;transform:none;pointer-events:auto;height:auto;overflow:visible;margin:0 0 28px;border:1px solid var(--border);border-radius:14px}
+.flat-mode .nav-buttons{display:none}
+.flat-mode .progress-dots{display:none}
+.flat-mode .header-bar{position:sticky;top:0}
+
+/* ===== 图片显示模式切换（card 内图片放下方大图显示） ===== */
+.img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
+.img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
+.img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+
+/* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
+@media print{
+*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+html,body{height:auto!important;overflow:visible!important}
+.sidebar,.header-bar,.progress-dots,.nav-buttons,.search-panel,#helpOverlay,#qrZoom,.mobile-more{display:none!important}
+.container{display:block!important;height:auto!important}
+.main-area{display:block!important;overflow:visible!important;padding:0!important}
+.slides-container{overflow:visible!important;height:auto!important}
+.slide,.cover{position:static!important;opacity:1!important;transform:none!important;pointer-events:auto!important;height:auto!important;overflow:visible!important;break-inside:avoid;page-break-inside:avoid}
+.slide::before,.cover::before{display:none!important}
+.slide-inner{max-width:100%!important;padding:20px 24px!important;margin:0 0 20px!important;border:1px solid rgba(255,255,255,0.14)!important;border-radius:10px!important}
+pre,pre code{page-break-inside:avoid}
+.fold-toggle{display:none!important}
+.fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -336,7 +378,9 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <span class="progress-text" id="progressText">0 / 13</span>
         </div>
-        <div class="mobile-info" id="mobileInfo"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
+        <button class="header-btn" id="imgBtn" onclick="toggleImgBottom()" title="切换图片显示位置（右侧小图 / 下方大图）">🖼️ 图下</button>
         <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
         <div class="header-dropdown">
           <button class="header-btn" id="ideBtn">💻 在线编辑器 ▾</button>
@@ -358,6 +402,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
             <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
             <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
             <div class="mm-item" onclick="mobileAction('search')">🔍 搜索</div>
+            <div class="mm-item" onclick="mobileAction('flat')">📄 平铺/分页</div>
+            <div class="mm-item" onclick="mobileAction('imgbottom')">🖼️ 图下/侧图</div>
             <div class="mm-item" onclick="mobileAction('help')">❓ 使用帮助</div>
           </div>
         </div>
@@ -421,8 +467,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>参考案例框架 — 以&quot;图书管理&quot;为例</h1>
 <div class="ok-box">下面是一套可直接套用的骨架，把 <code>Book</code> 换成你的主题类即可。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4352583872',this)">复制</button></div>
-<pre id="c_4352583872"><code class="language-csharp">// 1) 模型类：一条记录
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376520640',this)">复制</button></div>
+<pre id="c_4376520640"><code class="language-csharp">// 1) 模型类：一条记录
 public class Book
 {
     public int Id { get; set; }
@@ -458,8 +504,8 @@ void Save()
     File.WriteAllLines(file, lines);
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4352583744',this)">复制</button></div>
-<pre id="c_4352583744"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376520512',this)">复制</button></div>
+<pre id="c_4376520512"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
     &lt;TextBox x:Name=&quot;authorBox&quot; Watermark=&quot;作者&quot; /&gt;
@@ -551,7 +597,7 @@ void Save()
 <div class="toast" id="toast"></div>
 
 <script>
-window.__CATALOG__ = [{"file": "课件1_认识C#与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识CSharp与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · CSharp常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
+window.__CATALOG__ = [{"file": "课件1_认识CSharp与课程介绍.html", "label": "课件1 · 认识C#与课程介绍"}, {"file": "课件2_开发环境与AI辅助编程.html", "label": "课件2 · 开发环境与AI辅助编程"}, {"file": "课件3_变量与基本数据类型.html", "label": "课件3 · 变量与基本数据类型"}, {"file": "课件4_运算符与表达式.html", "label": "课件4 · 运算符与表达式"}, {"file": "课件5_类型转换.html", "label": "课件5 · 类型转换"}, {"file": "课件6_流程控制_分支语句.html", "label": "课件6 · 流程控制 - 分支语句"}, {"file": "课件7_流程控制_循环语句.html", "label": "课件7 · 流程控制 - 循环语句"}, {"file": "课件8_字符及字符串操作.html", "label": "课件8 · 字符及字符串操作"}, {"file": "课件9_数组.html", "label": "课件9 · 数组"}, {"file": "课件10_集合.html", "label": "课件10 · 集合"}, {"file": "课件11_类的概念与方法上.html", "label": "课件11 · 类的概念与方法上"}, {"file": "课件12_类的概念与方法下.html", "label": "课件12 · 类的概念与方法下"}, {"file": "课件13_封装与访问控制.html", "label": "课件13 · 封装与访问控制"}, {"file": "课件14_结构体与枚举.html", "label": "课件14 · 结构体与枚举"}, {"file": "课件15_类的继承.html", "label": "课件15 · 类的继承"}, {"file": "课件16_文件操作.html", "label": "课件16 · 文件操作"}, {"file": "课件17_CSharp常用类.html", "label": "课件17 · C#常用类"}, {"file": "课件18_项目实战_图书管理系统.html", "label": "课件18 · 项目实战 - 图书管理系统"}, {"file": "课件19_Avalonia跨平台窗体入门.html", "label": "课件19 · Avalonia跨平台窗体入门"}, {"file": "课件20_Avalonia跨平台窗体控件进阶.html", "label": "课件20 · Avalonia跨平台窗体控件进阶"}, {"file": "课件21_期末大作业.html", "label": "课件21 · 期末大作业"}];
 // 当前课件标签（从 catalog 中查找当前文件名）
 let LESSON_LABEL='';(function(){
   let cur=window.location.pathname.split('/').pop();
@@ -567,6 +613,8 @@ function mobileAction(act){
   else if(act==='fontDown')changeFont(-1);
   else if(act==='fontUp')changeFont(1);
   else if(act==='search')openSearch();
+  else if(act==='flat')toggleFlat();
+  else if(act==='imgbottom')toggleImgBottom();
   else if(act==='help')toggleHelp();
 }
 document.addEventListener('click',function(e){
@@ -607,6 +655,25 @@ function toggleTheme(){
     const il=document.body.classList.toggle('light');
     LSset('theme',il?'light':'dark');
     document.getElementById('themeBtn').textContent=il?'☀️浅色':'🌙深色';
+}
+
+// ========== 平铺模式（连续显示全部页面，导出 PDF 用） ==========
+function toggleFlat(){
+    const on=document.body.classList.toggle('flat-mode');
+    document.documentElement.classList.toggle('flat-mode',on);
+    const btn=document.getElementById('flatBtn');
+    if(btn)btn.textContent=on?'🗂️ 分页':'📄 平铺';
+    LSset('flat',on?'1':'0');
+    if(!on)showSlide(curr);   // 切回分页时回到当前页
+}
+
+// ========== 图片显示模式（右侧小图 / 下方大图） ==========
+function toggleImgBottom(){
+    const on=document.body.classList.toggle('img-bottom');
+    document.documentElement.classList.toggle('img-bottom',on);
+    const btn=document.getElementById('imgBtn');
+    if(btn)btn.textContent=on?'🖼️ 侧图':'🖼️ 图下';
+    LSset('imgmode',on?'1':'0');
 }
 document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('themeBtn').textContent=document.body.classList.contains('light')?'☀️浅色':'🌙深色';
@@ -753,6 +820,10 @@ function toggleFold(btn){
 }
 let savedPage=parseInt(LS('page_'+window.location.pathname.split('/').pop(),'0'));
 if(savedPage>0&&savedPage<total)showSlide(savedPage);else showSlide(0);
+// 恢复上次的平铺/分页模式
+if(LS('flat','0')==='1')toggleFlat();
+// 恢复上次的图片显示模式
+if(LS('imgmode','0')==='1')toggleImgBottom();
 </script>
 </body>
 </html>
