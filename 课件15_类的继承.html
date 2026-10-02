@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -437,161 +440,229 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>这种关系能解决什么问题？</h1>
 <div class="card"><p>核心就四个字：<strong>代码复用</strong>。把共有的东西放在父类，子类只写自己独有的，不用抄一遍。</p></div><div class="card"><p>来看反面教材——不用继承有多痛苦：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311642112',this)">复制</button></div>
-<pre id="c_4311642112"><code class="language-csharp">class Student
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public void Introduce() { ... }
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345503872',this)">复制</button></div>
+<pre id="c_4345503872"><code class="language-csharp">using System;
 
-// 大学生类——和 Student 几乎一样，只多了专业
-class CollegeStudent
+namespace HelloWorld
 {
-    public string Name { get; set; }      // ——和 Student 重复！
-    public int Age { get; set; }          // ——和 Student 重复！
-    public string Major { get; set; }     // 唯一的新东西
-    public void Introduce() { ... }       // ——和 Student 重复！
+    class Student
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public void Introduce() { ... }
+    }
+
+    // 大学生类——和 Student 几乎一样，只多了专业
+    class CollegeStudent
+    {
+        public string Name { get; set; }      // ——和 Student 重复！
+        public int Age { get; set; }          // ——和 Student 重复！
+        public string Major { get; set; }     // 唯一的新东西
+        public void Introduce() { ... }       // ——和 Student 重复！
+    }
 }</code></pre>
 </div><div class="card"><p>既然大学生是一种学生，那直接复用学生的代码不就好了？来看继承的语法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311641984',this)">复制</button></div>
-<pre id="c_4311641984"><code class="language-csharp">// 父类（基类）——提供通用代码
-class Student
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345503744',this)">复制</button></div>
+<pre id="c_4345503744"><code class="language-csharp">using System;
 
-    public void Introduce()
+namespace HelloWorld
+{
+    // 父类（基类）——提供通用代码
+    class Student
     {
-        Console.WriteLine($&quot;我叫{Name}，{Age}岁&quot;);
-    }
-}
+        public string Name { get; set; }
+        public int Age { get; set; }
 
-// 子类（派生类）——继承父类 + 自己的扩展
-class CollegeStudent : Student     // : 后面跟父类名
-{
-    public string Major { get; set; }   // 子类独有字段
+        public void Introduce()
+        {
+            Console.WriteLine($&quot;我叫{Name}，{Age}岁&quot;);
+        }
+    }
+
+    // 子类（派生类）——继承父类 + 自己的扩展
+    class CollegeStudent : Student     // : 后面跟父类名
+    {
+        public string Major { get; set; }   // 子类独有字段
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311641792',this)">复制</button></div>
-<pre id="c_4311641792"><code class="language-csharp">CollegeStudent cs = new CollegeStudent();
-cs.Name = &quot;张三&quot;;      // ✅ 继承来的
-cs.Age = 20;           // ✅ 继承来的
-cs.Major = &quot;计算机&quot;;    // ✅ 自己的
-cs.Introduce();        // ✅ 继承来的——我叫张三，20岁</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345503616',this)">复制</button></div>
+<pre id="c_4345503616"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            CollegeStudent cs = new CollegeStudent();
+            cs.Name = &quot;张三&quot;;      // ✅ 继承来的
+            cs.Age = 20;           // ✅ 继承来的
+            cs.Major = &quot;计算机&quot;;    // ✅ 自己的
+            cs.Introduce();        // ✅ 继承来的——我叫张三，20岁
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>子类继承父类的成员，但能访问哪些取决于<strong>修饰符</strong>（详见下页）</li></ul></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>protected — 给子类开的&quot;后门&quot;</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311642496',this)">复制</button></div>
-<pre id="c_4311642496"><code class="language-csharp">class Student
-{
-    public string Name { get; set; }       // 谁都能访问
-    private int score;                      // 只有自己能用
-    protected int age;                      // 自己和子类能用
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345504896',this)">复制</button></div>
+<pre id="c_4345504896"><code class="language-csharp">using System;
 
-class CollegeStudent : Student
+namespace HelloWorld
 {
-    public void ShowAge()
+    class Student
     {
-        Console.WriteLine(age);   // ✅ protected，子类可以访问
-        // Console.WriteLine(score);  // ❌ private，子类也碰不了
+        public string Name { get; set; }       // 谁都能访问
+        private int score;                      // 只有自己能用
+        protected int age;                      // 自己和子类能用
+    }
+
+    class CollegeStudent : Student
+    {
+        public void ShowAge()
+        {
+            Console.WriteLine(age);   // ✅ protected，子类可以访问
+            // Console.WriteLine(score);  // ❌ private，子类也碰不了
+        }
     }
 }</code></pre>
 </div><div class="card"><table><tr><th>修饰符</th><th>子类能访问？</th><th>说明</th></tr><tr><td><code>public</code></td><td>✅ 能</td><td>外部和子类都能用</td></tr><tr><td><code>private</code></td><td>❌ 不能</td><td>只有父类自己能用，子类也碰不到</td></tr><tr><td><code>protected</code></td><td>✅ 能</td><td>只有<strong>自己</strong>和<strong>子类</strong>能用，外部不行</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>base — 调用父类构造方法</h1>
-<div class="card"><p>课件12学过 <code>this</code>——它指代&quot;当前这个对象&quot;。在继承体系里，<code>base</code> 指代&quot;父类那一部分&quot;。逻辑很自然：<strong><code>this</code> 是自己，<code>base</code> 是爹</strong>。</p></div><div class="card"><p>来看代码——子类的构造方法怎么把 Name、Age 交给父类去初始化：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311640704',this)">复制</button></div>
-<pre id="c_4311640704"><code class="language-csharp">class Student
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
+<div class="card"><p>课件12学过 <code>this</code>——它指代&quot;当前这个对象&quot;。在继承体系里，<code>base</code> 指代&quot;父类那一部分&quot;。逻辑很自然：<strong><code>this</code> 是自己，<code>base</code> 是爹</strong>。</p></div><div class="card"><p>来看代码——子类的构造方法怎么把 Name、Age 交给父类去初始化：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345502400',this)">复制</button></div>
+<pre id="c_4345502400"><code class="language-csharp">using System;
 
-    public Student(string name, int age)
+namespace HelloWorld
+{
+    class Student
     {
-        Name = name; Age = age;
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public Student(string name, int age)
+        {
+            Name = name; Age = age;
+        }
     }
-}
 
-class CollegeStudent : Student
-{
-    public string Major { get; set; }
-
-    // base(name, age) → 把参数传给父类构造方法
-    public CollegeStudent(string name, int age, string major)
-        : base(name, age)           // 先调用父类构造
+    class CollegeStudent : Student
     {
-        Major = major;              // 再初始化自己的字段
+        public string Major { get; set; }
+
+        // base(name, age) → 把参数传给父类构造方法
+        public CollegeStudent(string name, int age, string major)
+        : base(name, age)           // 先调用父类构造
+        {
+            Major = major;              // 再初始化自己的字段
+        }
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311640640',this)">复制</button></div>
-<pre id="c_4311640640"><code class="language-csharp">CollegeStudent cs = new CollegeStudent(&quot;张三&quot;, 20, &quot;计算机&quot;);
-// 父类的 Name、Age 由 base(name, age) 自动设置</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345502336',this)">复制</button></div>
+<pre id="c_4345502336"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            CollegeStudent cs = new CollegeStudent(&quot;张三&quot;, 20, &quot;计算机&quot;);
+            // 父类的 Name、Age 由 base(name, age) 自动设置
+        }
+    }
+}</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>多态 — virtual 与 override</h1>
 <div class="card"><p>先搞懂概念：<strong>多态</strong>就是&quot;父类引用指向子类对象，同一个方法调用，结果取决于实际是什么子类&quot;。生活中的多态——遥控器上的&quot;播放&quot;键：按下去，电视播画面、音响播音乐、DVD播光盘。同一个按钮，不同设备，行为不同。</p></div><div class="card"><p>在 C# 里实现多态需要两个关键字：父类用 <code>virtual</code>，子类用 <code>override</code>。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311640320',this)">复制</button></div>
-<pre id="c_4311640320"><code class="language-csharp">class Student
-{
-    public string Name { get; set; }
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345502016',this)">复制</button></div>
+<pre id="c_4345502016"><code class="language-csharp">using System;
 
-    public virtual void Introduce()        // virtual = &quot;子类可以重写我&quot;
+namespace HelloWorld
+{
+    class Student
     {
-        Console.WriteLine($&quot;我叫{Name}&quot;);
+        public string Name { get; set; }
+
+        public virtual void Introduce()        // virtual = &quot;子类可以重写我&quot;
+        {
+            Console.WriteLine($&quot;我叫{Name}&quot;);
+        }
     }
-}
 
-class CollegeStudent : Student
-{
-    public string Major { get; set; }
-
-    public override void Introduce()       // override = &quot;我改了父类的版本&quot;
+    class CollegeStudent : Student
     {
-        Console.WriteLine($&quot;我叫{Name}，专业{Major}&quot;);
+        public string Major { get; set; }
+
+        public override void Introduce()       // override = &quot;我改了父类的版本&quot;
+        {
+            Console.WriteLine($&quot;我叫{Name}，专业{Major}&quot;);
+        }
     }
 }</code></pre>
 </div><div class="card"><p>现在来看多态的实际效果——<strong>声明的是 Student 类型，但执行的是 CollegeStudent 的方法</strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311640128',this)">复制</button></div>
-<pre id="c_4311640128"><code class="language-csharp">Student s1 = new Student { Name = &quot;张三&quot; };
-Student s2 = new CollegeStudent { Name = &quot;李四&quot;, Major = &quot;计算机&quot; };
-//     ↑ 声明为 Student                  ↑ 实际是 CollegeStudent
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345501888',this)">复制</button></div>
+<pre id="c_4345501888"><code class="language-csharp">using System;
 
-s1.Introduce();   // 我叫张三        —— 普���学生，走 Student.Introduce()
-s2.Introduce();   // 我叫李四，专业计算机 —— 大学生，走 CollegeStudent.Introduce()
-//                ↑ 同一个 Introduce() 调用，结果完全不同——这就是多态！</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Student s1 = new Student { Name = &quot;张三&quot; };
+            Student s2 = new CollegeStudent { Name = &quot;李四&quot;, Major = &quot;计算机&quot; };
+            //     ↑ 声明为 Student                  ↑ 实际是 CollegeStudent
+
+            s1.Introduce();   // 我叫张三        —— 普���学生，走 Student.Introduce()
+            s2.Introduce();   // 我叫李四，专业计算机 —— 大学生，走 CollegeStudent.Introduce()
+            //                ↑ 同一个 Introduce() 调用，结果完全不同——这就是多态！
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>⚠️ 关键规则：</p></div><div class="card"><table><tr><th>情况</th><th>结果</th></tr><tr><td>父类没 <code>virtual</code>，子类写 <code>override</code></td><td>❌ 编译报错</td></tr><tr><td>父类有 <code>virtual</code>，子类不写 <code>override</code></td><td>正常继承，用父类方法</td></tr><tr><td>父类有 <code>virtual</code>，子类写 <code>override</code></td><td>✅ 调用子类自己的版本</td></tr></table></div><div class="ok-box">下页会讲 <code>abstract</code>：<code>abstract</code> 强制子类必须重写，<code>virtual</code> 让子类可选。两者都搭配 <code>override</code> 使用，区别在于父类提不提供默认实现。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>抽象类 — 不能 new 的父类</h1>
 <div class="card"><p>先搞清楚&quot;抽象&quot;二字在编程里是什么意思——它不是你画的抽象画，而是<strong>不完整、不具体</strong>。</p></div><div class="card"><ul><li>你可以指着笼子里的一只狗说&quot;这是动物&quot;，但不能凭空指着空气说&quot;这是动物&quot;——「动物」本身太模糊，没法具体到一只活物</li><li>代码同理：<code>new Animal()</code> 到底叫声是什么？没法回答。所以把它标成 <code>abstract</code>，告诉编译器：<strong>别让人 new 我，我只当模板</strong></li></ul></div><div class="card"><p>三个实际作用：</p></div><div class="card"><ol><li><strong>防止创建无意义的对象</strong>：世上没有一只叫&quot;动物&quot;的动物，<code>new Animal()</code> 没意义</li><li><strong>强迫子类统一行为</strong>：所有动物都要会叫，但狗叫和猫叫不一样——父类规定&quot;必须会叫&quot;，子类各自实现</li><li><strong>表明设计意图</strong>：告诉其他开发者&quot;这个类是模板，别直接用，去继承它&quot;</li></ol></div><div class="card"><p>用 <code>abstract</code> 标记后，这个类只能被继承，不能 <code>new</code>。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311639040',this)">复制</button></div>
-<pre id="c_4311639040"><code class="language-csharp">abstract class Animal           // abstract = 抽象类，不能 new
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345500800',this)">复制</button></div>
+<pre id="c_4345500800"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Name { get; set; }
-    public Animal(string name) { Name = name; }
-
-    // 抽象方法：只有声明，没有 { } 实现体，强迫子类必须重写！
-    public abstract void Speak();
-}
-
-// Animal a = new Animal(&quot;?&quot;);  // ❌ 抽象类不能 new！</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311638976',this)">复制</button></div>
-<pre id="c_4311638976"><code class="language-csharp">class Dog : Animal
-{
-    public Dog(string name) : base(name) { }
-
-    // ⚠️ 如果父类是 abstract，子类必须 override 所有抽象方法，否则编译报错
-    public override void Speak()
+    abstract class Animal           // abstract = 抽象类，不能 new
     {
-        Console.WriteLine($&quot;{Name}：汪汪！&quot;);
+        public string Name { get; set; }
+        public Animal(string name) { Name = name; }
+
+        // 抽象方法：只有声明，没有 { } 实现体，强迫子类必须重写！
+        public abstract void Speak();
+    }
+
+    // Animal a = new Animal(&quot;?&quot;);  // ❌ 抽象类不能 new！
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345500736',this)">复制</button></div>
+<pre id="c_4345500736"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Dog : Animal
+    {
+        public Dog(string name) : base(name) { }
+
+        // ⚠️ 如果父类是 abstract，子类必须 override 所有抽象方法，否则编译报错
+        public override void Speak()
+        {
+            Console.WriteLine($&quot;{Name}：汪汪！&quot;);
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>abstract</code> 类 = 模板，不能 new，只能被继承</li><li><code>abstract</code> 方法 = 只有声明没有实现，子类必须 override</li><li>上面的页面8已讲另一种方案 <code>virtual</code>——父类给默认实现，子类可选要不要改</li></ul></div>
@@ -599,126 +670,185 @@ s2.Introduce();   // 我叫李四，专业计算机 —— 大学生，走 Colle
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>is 和 as — 类型的判断与转换</h1>
 <div class="card"><p>学完继承和多态，你已经能写 <code>Animal[]</code> 统一管理猫狗鸟。但有个实际问题——遍历数组时，怎么知道当前这只到底是狗还是猫？&quot;我只想让狗叫，猫跳过&quot;、&quot;我想把狗转回 Dog 类型调用它独有的方法&quot;——这就需要 <code>is</code> 和 <code>as</code>。</p></div><div class="card"><h3><code>is</code> — 判断&quot;它是不是&quot;某个类型</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311637760',this)">复制</button></div>
-<pre id="c_4311637760"><code class="language-csharp">Animal pet = new Dog(&quot;旺财&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345499456',this)">复制</button></div>
+<pre id="c_4345499456"><code class="language-csharp">using System;
 
-if (pet is Dog)
-    Console.WriteLine(&quot;这是一只狗&quot;);      // ✅ 输出
-if (pet is Cat)
-    Console.WriteLine(&quot;这不是猫&quot;);        // ❌ 不输出
-if (pet is Animal)
-    Console.WriteLine(&quot;肯定是动物&quot;);      // ✅ 子类 is 父类 → true</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311637696',this)">复制</button></div>
-<pre id="c_4311637696"><code class="language-csharp">// 实战：遍历动物数组，只让狗叫
-Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
-foreach (Animal a in pets)
+namespace HelloWorld
 {
-    if (a is Dog)
-        a.Speak();   // 只有狗会叫，猫被跳过
+    class Program
+    {
+        static void Main()
+        {
+            Animal pet = new Dog(&quot;旺财&quot;);
+
+            if (pet is Dog)
+            Console.WriteLine(&quot;这是一只狗&quot;);      // ✅ 输出
+            if (pet is Cat)
+            Console.WriteLine(&quot;这不是猫&quot;);        // ❌ 不输出
+            if (pet is Animal)
+            Console.WriteLine(&quot;肯定是动物&quot;);      // ✅ 子类 is 父类 → true
+        }
+    }
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345499392',this)">复制</button></div>
+<pre id="c_4345499392"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 实战：遍历动物数组，只让狗叫
+            Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
+            foreach (Animal a in pets)
+            {
+                if (a is Dog)
+                a.Speak();   // 只有狗会叫，猫被跳过
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><h3><code>as</code> — 安全类型转换（不像强制转换那么容易崩）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311637504',this)">复制</button></div>
-<pre id="c_4311637504"><code class="language-csharp">Animal pet = new Dog(&quot;旺财&quot;);
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345499200',this)">复制</button></div>
+<pre id="c_4345499200"><code class="language-csharp">using System;
 
-Dog d = pet as Dog;     // ✅ 狗转狗，成功
-if (d != null) d.Speak();
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Animal pet = new Dog(&quot;旺财&quot;);
 
-Cat c = pet as Cat;     // ❌ 狗不是猫，c = null（不报错！）
-if (c == null) Console.WriteLine(&quot;这不是猫！&quot;);</code></pre>
+            Dog d = pet as Dog;     // ✅ 狗转狗，成功
+            if (d != null) d.Speak();
+
+            Cat c = pet as Cat;     // ❌ 狗不是猫，c = null（不报错！）
+            if (c == null) Console.WriteLine(&quot;这不是猫！&quot;);
+        }
+    }
+}</code></pre>
 </div><div class="card"><table><tr><th></th><th><code>(Dog)pet</code> 强制转换</th><th><code>pet as Dog</code></th></tr><tr><td>转换失败</td><td>💥 抛异常，不处理程序崩溃</td><td>返回 <code>null</code>，不崩溃</td></tr><tr><td>适用场景</td><td>100% 确定是同类型</td><td>不确定，先试试看</td></tr></table></div><div class="ok-box">💡 一句话：<code>is</code> 问&quot;你是不是&quot;，<code>as</code> 说&quot;试试转成你&quot;。不确定类型时用 <code>as</code> + null 判断比强制转换安全得多。</div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 动物继承</h1>
-<div class="ok-box">定义 Animal 父类（virtual Speak），派生 Dog 和 Cat 子类各自重写叫声。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311636672',this)">复制</button></div>
-<pre id="c_4311636672"><code class="language-csharp">class Animal
-{
-    public string Name { get; set; }
-    public Animal(string name) { Name = name; }
+<div class="ok-box">定义 Animal 父类（virtual Speak），派生 Dog 和 Cat 子类各自重写叫声。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345498176',this)">复制</button></div>
+<pre id="c_4345498176"><code class="language-csharp">using System;
 
-    // virtual = 允许子类用自己的叫声替换
-    public virtual void Speak()
+namespace HelloWorld
+{
+    class Animal
     {
-        Console.WriteLine($&quot;{Name} 发出声音&quot;);
+        public string Name { get; set; }
+        public Animal(string name) { Name = name; }
+
+        // virtual = 允许子类用自己的叫声替换
+        public virtual void Speak()
+        {
+            Console.WriteLine($&quot;{Name} 发出声音&quot;);
+        }
     }
-}
 
-class Dog : Animal
-{
-    public Dog(string name) : base(name) { }
-    public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：汪汪！&quot;);
-}
+    class Dog : Animal
+    {
+        public Dog(string name) : base(name) { }
+        public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：汪汪！&quot;);
+    }
 
-class Cat : Animal
-{
-    public Cat(string name) : base(name) { }
-    public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：喵喵！&quot;);
+    class Cat : Animal
+    {
+        public Cat(string name) : base(name) { }
+        public override void Speak() =&gt; Console.WriteLine($&quot;{Name}：喵喵！&quot;);
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311636608',this)">复制</button></div>
-<pre id="c_4311636608"><code class="language-csharp">Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
-foreach (Animal a in pets)
-    a.Speak();
-// 旺财：汪汪！ 咪咪：喵喵！ 大黄：汪汪！</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345498112',this)">复制</button></div>
+<pre id="c_4345498112"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Animal[] pets = { new Dog(&quot;旺财&quot;), new Cat(&quot;咪咪&quot;), new Dog(&quot;大黄&quot;) };
+            foreach (Animal a in pets)
+            a.Speak();
+            // 旺财：汪汪！ 咪咪：喵喵！ 大黄：汪汪！
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>动手：把 <code>Speak()</code> 的 <code>virtual</code> / <code>override</code> 去掉，观察输出有什么变化</li><li>进阶：在 foreach 里加 <code>if (a is Dog)</code> 和 <code>if (a is Cat)</code>，分别统计狗和猫的数量</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>virtual</code> 是父类的承诺：这个方法的实现子类可以替换</li><li><code>override</code> 是子类说：我来提供自己的版本</li><li>去掉它们后 <code>foreach</code> 里全输出&quot;发出声音&quot;——失去了多态</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vehicle</code> 父类和子类：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311636096',this)">复制</button></div>
-<pre id="c_4311636096"><code class="language-csharp">class Vehicle
-{
-    public string Brand { get; set; }
-    public <span class="code-blank">___</span>(string brand) { Brand = brand; }
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345497600',this)">复制</button></div>
+<pre id="c_4345497600"><code class="language-csharp">using System;
 
-    public <span class="code-blank">___</span> void Run()
+namespace HelloWorld
+{
+    class Vehicle
     {
-        Console.WriteLine(&quot;交通工具在行驶&quot;);
+        public string Brand { get; set; }
+        public <span class="code-blank">___</span>(string brand) { Brand = brand; }
+
+        public <span class="code-blank">___</span> void Run()
+        {
+            Console.WriteLine(&quot;交通工具在行驶&quot;);
+        }
     }
-}
 
-class Car : <span class="code-blank">___</span>
-{
-    public <span class="code-blank">___</span> : <span class="code-blank">___</span>(brand) { }
-    public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
-}
+    class Car : <span class="code-blank">___</span>
+    {
+        public <span class="code-blank">___</span> : <span class="code-blank">___</span>(brand) { }
+        public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
+    }
 
-class Boat : Vehicle
-{
-    public Boat(string brand) : <span class="code-blank">___</span>(brand) { }
-    public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
-}
+    class Boat : Vehicle
+    {
+        public Boat(string brand) : <span class="code-blank">___</span>(brand) { }
+        public <span class="code-blank">___</span> void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
+    }
 
-// 测试
-Vehicle[] vehicles = { new <span class="code-blank">___</span>(&quot;奔驰&quot;), new <span class="code-blank">___</span>(&quot;远洋号&quot;) };
-foreach (Vehicle v in <span class="code-blank">___</span>)
+    // 测试
+    Vehicle[] vehicles = { new <span class="code-blank">___</span>(&quot;奔驰&quot;), new <span class="code-blank">___</span>(&quot;远洋号&quot;) };
+    foreach (Vehicle v in <span class="code-blank">___</span>)
     v.Run();
-// 奔驰汽车在公路上跑  远洋号船在水上漂</code></pre>
+    // 奔驰汽车在公路上跑  远洋号船在水上漂
+}</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311636032',this)">复制</button></div>
-<pre id="c_4311636032"><code class="language-csharp">class Vehicle
-{
-    public string Brand { get; set; }
-    public Vehicle(string brand) { Brand = brand; }
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345497536',this)">复制</button></div>
+<pre id="c_4345497536"><code class="language-csharp">using System;
 
-    public virtual void Run()
+namespace HelloWorld
+{
+    class Vehicle
     {
-        Console.WriteLine(&quot;交通工具在行驶&quot;);
+        public string Brand { get; set; }
+        public Vehicle(string brand) { Brand = brand; }
+
+        public virtual void Run()
+        {
+            Console.WriteLine(&quot;交通工具在行驶&quot;);
+        }
     }
-}
 
-class Car : Vehicle
-{
-    public Car(string brand) : base(brand) { }
-    public override void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
-}
+    class Car : Vehicle
+    {
+        public Car(string brand) : base(brand) { }
+        public override void Run() =&gt; Console.WriteLine($&quot;{Brand}汽车在公路上跑&quot;);
+    }
 
-class Boat : Vehicle
-{
-    public Boat(string brand) : base(brand) { }
-    public override void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
-}
+    class Boat : Vehicle
+    {
+        public Boat(string brand) : base(brand) { }
+        public override void Run() =&gt; Console.WriteLine($&quot;{Brand}船在水上漂&quot;);
+    }
 
-Vehicle[] vehicles = { new Car(&quot;奔驰&quot;), new Boat(&quot;远洋号&quot;) };
-foreach (Vehicle v in vehicles)
-    v.Run();</code></pre>
+    Vehicle[] vehicles = { new Car(&quot;奔驰&quot;), new Boat(&quot;远洋号&quot;) };
+    foreach (Vehicle v in vehicles)
+    v.Run();
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
@@ -730,167 +860,187 @@ foreach (Vehicle v in vehicles)
 <div class="ok-box">综合运用继承：父类定义通用行为，子类扩展独特功能。</div><div class="card"><h3>期望输入：</h3></div><div class="card"><ul><li>张三 创建基础账户，余额1000 → 尝试取1200（应失败）</li><li>李四 创建活期账户，余额5000，年利率3% → 计息一次</li><li>王五 创建信用卡账户，余额3000，透支额度2000 → 取4000（透支成功）</li></ul></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三 余额：1000（取1200失败）
 李四 余额：5150（年利率3%）
 王五 余额：-1000（透支额度2000）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>父类 <code>BankAccount</code>：存钱/取钱/Info，<code>virtual</code> 标记可重写的方法</li><li>子类 <code>SavingsAccount</code>：新增利息 + 重写 Info（显示利率）</li><li>子类 <code>CreditAccount</code>：重写取钱（加上透支额度）+ 重写 Info</li><li><code>Balance</code> 用 <code>protected set</code>，子类才能改</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311634688',this)">复制</button></div>
-<pre id="c_4311634688"><code class="language-csharp">// ===== 父类：基础银行账户 =====
-class BankAccount
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345496192',this)">复制</button></div>
+<pre id="c_4345496192"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Owner { get; set; }
-    public double Balance { get; <span class="code-blank">___</span> set; }
-
-    public BankAccount(string owner, double balance)
-    { Owner = owner; <span class="code-blank">___</span> = balance; }
-
-    // 存钱：金额必须大于0
-    public <span class="code-blank">___</span> void Deposit(double amount)
+    // ===== 父类：基础银行账户 =====
+    class BankAccount
     {
-        if (amount &gt; 0) Balance += amount;
+        public string Owner { get; set; }
+        public double Balance { get; <span class="code-blank">___</span> set; }
+
+        public BankAccount(string owner, double balance)
+        { Owner = owner; <span class="code-blank">___</span> = balance; }
+
+        // 存钱：金额必须大于0
+        public <span class="code-blank">___</span> void Deposit(double amount)
+        {
+            if (amount &gt; 0) Balance += amount;
+        }
+
+        // 取钱：不能超过余额，返回是否成功
+        public <span class="code-blank">___</span> bool Withdraw(double amount)
+        {
+            if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
+            { Balance -= amount; return true; }
+            return <span class="code-blank">___</span>;
+        }
+
+        // 显示账户信息（子类会重写）
+        public virtual string Info =&gt; $&quot;{Owner} 余额：{<span class="code-blank">___</span>}&quot;;
     }
 
-    // 取钱：不能超过余额，返回是否成功
-    public <span class="code-blank">___</span> bool Withdraw(double amount)
+    // ===== 子类1：活期账户 =====
+    class SavingsAccount : <span class="code-blank">___</span>
     {
-        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
-        { Balance -= amount; return true; }
-        return <span class="code-blank">___</span>;
-    }
-
-    // 显示账户信息（子类会重写）
-    public virtual string Info =&gt; $&quot;{Owner} 余额：{<span class="code-blank">___</span>}&quot;;
-}
-
-// ===== 子类1：活期账户 =====
-class SavingsAccount : <span class="code-blank">___</span>
-{
-    public double Rate { get; set; }
-    public SavingsAccount(string owner, double balance, double rate)
+        public double Rate { get; set; }
+        public SavingsAccount(string owner, double balance, double rate)
         : <span class="code-blank">___</span>(owner, balance) { Rate = rate; }
 
-    // 新增：计算利息并存入（父类没有这个方法）
-    public void AddInterest()
-    { Balance += Balance * <span class="code-blank">___</span>; }
+        // 新增：计算利息并存入（父类没有这个方法）
+        public void AddInterest()
+        { Balance += Balance * <span class="code-blank">___</span>; }
 
-    // 重写：信息里加上利率
-    public override string Info =&gt;
+        // 重写：信息里加上利率
+        public override string Info =&gt;
         $&quot;{Owner} 余额：{Balance}（年利率{<span class="code-blank">___</span>:P0}）&quot;;
-}
+    }
 
-// ===== 子类2：信用卡账户 =====
-class CreditAccount : BankAccount
-{
-    public double CreditLimit { get; set; }
-    public CreditAccount(string owner, double balance, double limit)
+    // ===== 子类2：信用卡账户 =====
+    class CreditAccount : BankAccount
+    {
+        public double CreditLimit { get; set; }
+        public CreditAccount(string owner, double balance, double limit)
         : <span class="code-blank">___</span>(owner, balance) { CreditLimit = limit; }
 
-    // 重写取钱：可用透支额度
-    public override <span class="code-blank">___</span> Withdraw(double amount)
-    {
-        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + <span class="code-blank">___</span>)
-        { Balance -= amount; return true; }
-        return false;
-    }
+        // 重写取钱：可用透支额度
+        public override <span class="code-blank">___</span> Withdraw(double amount)
+        {
+            if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + <span class="code-blank">___</span>)
+            { Balance -= amount; return true; }
+            return false;
+        }
 
-    // 重写：信息里加上透支额度
-    public <span class="code-blank">___</span> string Info =&gt;
+        // 重写：信息里加上透支额度
+        public <span class="code-blank">___</span> string Info =&gt;
         $&quot;{Owner} 余额：{<span class="code-blank">___</span>}（透支额度{CreditLimit}）&quot;;
+    }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311635072',this)">复制</button></div>
-<pre id="c_4311635072"><code class="language-csharp">class BankAccount
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345496576',this)">复制</button></div>
+<pre id="c_4345496576"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Owner { get; set; }
-    public double Balance { get; protected set; }
-
-    public BankAccount(string owner, double balance)
-    { Owner = owner; Balance = balance; }
-
-    // 存钱：金额必须大于0
-    public virtual void Deposit(double amount)
+    class BankAccount
     {
-        if (amount &gt; 0) Balance += amount;
+        public string Owner { get; set; }
+        public double Balance { get; protected set; }
+
+        public BankAccount(string owner, double balance)
+        { Owner = owner; Balance = balance; }
+
+        // 存钱：金额必须大于0
+        public virtual void Deposit(double amount)
+        {
+            if (amount &gt; 0) Balance += amount;
+        }
+
+        // 取钱：不能超过余额，返回是否成功
+        public virtual bool Withdraw(double amount)
+        {
+            if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
+            { Balance -= amount; return true; }
+            return false;
+        }
+
+        // 显示账户信息（子类会重写）
+        public virtual string Info =&gt; $&quot;{Owner} 余额：{Balance}&quot;;
     }
 
-    // 取钱：不能超过余额，返回是否成功
-    public virtual bool Withdraw(double amount)
+    class SavingsAccount : BankAccount
     {
-        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance)
-        { Balance -= amount; return true; }
-        return false;
-    }
-
-    // 显示账户信息（子类会重写）
-    public virtual string Info =&gt; $&quot;{Owner} 余额：{Balance}&quot;;
-}
-
-class SavingsAccount : BankAccount
-{
-    public double Rate { get; set; }
-    public SavingsAccount(string owner, double balance, double rate)
+        public double Rate { get; set; }
+        public SavingsAccount(string owner, double balance, double rate)
         : base(owner, balance) { Rate = rate; }
 
-    // 新增：计算利息并存入
-    public void AddInterest()
-    { Balance += Balance * Rate; }
+        // 新增：计算利息并存入
+        public void AddInterest()
+        { Balance += Balance * Rate; }
 
-    // 重写：信息里加上利率
-    public override string Info =&gt;
+        // 重写：信息里加上利率
+        public override string Info =&gt;
         $&quot;{Owner} 余额：{Balance}（年利率{Rate:P0}）&quot;;
-}
-
-class CreditAccount : BankAccount
-{
-    public double CreditLimit { get; set; }
-    public CreditAccount(string owner, double balance, double limit)
-        : base(owner, balance) { CreditLimit = limit; }
-
-    // 重写取钱：可用透支额度
-    public override bool Withdraw(double amount)
-    {
-        if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + CreditLimit)
-        { Balance -= amount; return true; }
-        return false;
     }
 
-    // 重写：信息里加上透支额度
-    public override string Info =&gt;
+    class CreditAccount : BankAccount
+    {
+        public double CreditLimit { get; set; }
+        public CreditAccount(string owner, double balance, double limit)
+        : base(owner, balance) { CreditLimit = limit; }
+
+        // 重写取钱：可用透支额度
+        public override bool Withdraw(double amount)
+        {
+            if (amount &gt; 0 &amp;&amp; amount &lt;= Balance + CreditLimit)
+            { Balance -= amount; return true; }
+            return false;
+        }
+
+        // 重写：信息里加上透支额度
+        public override string Info =&gt;
         $&quot;{Owner} 余额：{Balance}（透支额度{CreditLimit}）&quot;;
+    }
 }</code></pre>
 </div></div></div><div class="ok-box">💡 多态进阶：把三种账户放 <code>BankAccount[]</code> 数组里，foreach 统一打 Info。然后加一行——用 <code>is SavingsAccount</code> 判断，只对活期账户调 <code>AddInterest()</code>。</div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：在银行账户体系里<strong>新增一个子类</strong> <code>LoanAccount</code>（贷款账户），继承 <code>BankAccount</code>，重写 <code>Info</code> 显示&quot;欠款金额&quot;（用负数余额表示）。<br>要求：自己写完整子类 + 一行 <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311634368',this)">复制</button></div>
-<pre id="c_4311634368"><code class="language-csharp">class LoanAccount : BankAccount
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345495872',this)">复制</button></div>
+<pre id="c_4345495872"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public LoanAccount(string owner, double debt)
+    class LoanAccount : BankAccount
+    {
+        public LoanAccount(string owner, double debt)
         : base(owner, -debt) { }
-    public override string Info =&gt;
+        public override string Info =&gt;
         $&quot;{Owner} 欠款：{-Balance}&quot;;
-}
-// Main 中：
-LoanAccount loan = new LoanAccount(&quot;赵六&quot;, 5000);
-Console.WriteLine(loan.Info);</code></pre>
+    }
+    // Main 中：
+    LoanAccount loan = new LoanAccount(&quot;赵六&quot;, 5000);
+    Console.WriteLine(loan.Info);
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Shape</code> 抽象类（<code>abstract double GetArea()</code>），派生 <code>Rectangle</code>（宽×高）和 <code>Circle</code>（π×r²）各自实现面积计算。</p><ul><li>提示：<code>abstract</code> 方法没有 <code>{ }</code> 体，子类必须 <code>override</code>；<code>Math.PI</code></li></ul></div><div class="ok-box">期望输入：<code>矩形(5, 3)</code> / <code>圆(r=2)</code><br>验收示范：<ul><li>输出：<code>矩形面积：15</code></li></ul><ul><li>输出：<code>圆面积：12.57</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Employee</code> 父类（Name、virtual <code>CalcSalary()</code> 返回基本工资3000），派生 <code>FullTime</code>（工资不变）和 <code>SalesPerson</code>（重写：3000 + 销售额×10%）。把 3 个不同类型的员工放进 <code>Employee[]</code>，foreach 统一调 <code>CalcSalary()</code> 算总工资。<strong>额外要求</strong>：在循环里用 <code>is</code> 判断类型，分别统计全职和销售的人数。</p><ul><li>提示：<code>if (emp is FullTime)</code> 和 <code>if (emp is SalesPerson)</code></li></ul></div><div class="ok-box">期望输入：<code>张三(全职) + 李四(销售/50000) + 王五(全职)</code> 放数组统一算<br>验收示范：<ul><li>输出：<code>张三工资：3000</code></li></ul><ul><li>输出：<code>李四工资：8000</code></li></ul><ul><li>输出：<code>王五工资：3000</code></li></ul><ul><li>输出：<code>全职2人 销售1人 总工资：14000</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>先定义 <code>Account</code> 父类：Username 公开、password 用 <code>protected</code>（子类可见外部不可见）、virtual <code>Login(string pwd)</code> 比对密码返回 bool。再定义 <code>AdminAccount : Account</code>：新增 adminKey，提供自己的 <code>Login(string pwd, string key)</code> —— 在里面先调 <code>base.Login(pwd)</code> 验密码，密码对了再验 adminKey，全是 true 才算管理员登录成功。</p><ul><li>提示：<code>protected</code> 字段在子类的 <code>Login</code> 方法里可以直接访问 <code>password</code>；<code>base.Login(pwd)</code> 拿到父类验证结果</li></ul></div><div class="ok-box">期望输入：<code>admin/admin123</code> + adminKey=<code>secret</code> → 登录成功；<code>admin/wrong</code> + adminKey=<code>secret</code> → 密码错误<br>验收示范：<ul><li>输出：<code>admin + 正确密码 → 管理员登录成功</code></li></ul><ul><li>输出：<code>admin + 错误密码 → 密码错误</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>用综合练习的银行账户体系：给父类 <code>BankAccount</code> 加 <code>TransferTo(BankAccount other, double amount)</code> —— 从自己账户取钱 <code>Withdraw(amount)</code>，成功则调 <code>other.Deposit(amount)</code> 给对方加钱。然后定义 <code>CreditAccount : BankAccount</code>，重写 <code>TransferTo</code> 支持透支转账。<strong>额外要求</strong>：转账前用 <code>as</code> 安全地判断对方是否为 <code>CreditAccount</code>，如果是就打印&quot;对方是信用卡账户&quot;。</p><ul><li>提示：<code>other as CreditAccount</code>，为 null 就不是信用卡</li></ul></div><div class="ok-box">期望输入：<code>张三(1000) → 转账500给 → 李四(500)</code><br>验收示范：<ul><li>输出：<code>张三 余额：500</code></li></ul><ul><li>输出：<code>李四 余额：1000</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311632832',this)">复制</button></div>
-<pre id="c_4311632832"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4345462272',this)">复制</button></div>
+<pre id="c_4345462272"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        // ==================== 第1题 ====================
+        static void Main()
+        {
+            // ==================== 第1题 ====================
 
 
-        // ==================== 第2题 ====================
+            // ==================== 第2题 ====================
 
 
-        // ==================== 第3题 ====================
+            // ==================== 第3题 ====================
 
 
-        // ==================== 第4题 ====================
+            // ==================== 第4题 ====================
 
+        }
     }
-}
 
-        // ===== 各类定义写在这里 =====</code></pre>
+    // ===== 各类定义写在这里 =====
+}</code></pre>
 </div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner end-page">

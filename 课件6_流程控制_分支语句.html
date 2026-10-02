@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -434,313 +437,533 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>单分支 if</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306546624',this)">复制</button></div>
-<pre id="c_4306546624"><code class="language-csharp">if (条件)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373372864',this)">复制</button></div>
+<pre id="c_4373372864"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 条件为 true 时执行
+    class Program
+    {
+        static void Main()
+        {
+            if (条件)
+            {
+                // 条件为 true 时执行
+            }
+        }
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306546496',this)">复制</button></div>
-<pre id="c_4306546496"><code class="language-csharp">int score = 85;
-if (score &gt;= 60)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373372800',this)">复制</button></div>
+<pre id="c_4373372800"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;你及格了！&quot;);
-}
-// score=85 → 输出&quot;你及格了！&quot;
-// score=50 → 什么都不输出</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int score = 85;
+            if (score &gt;= 60)
+            {
+                Console.WriteLine(&quot;你及格了！&quot;);
+            }
+            // score=85 → 输出&quot;你及格了！&quot;
+            // score=50 → 什么都不输出
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>条件必须是 <code>bool</code> 类型（true/false）</li><li>只有条件成立时，<code>{ }</code> 里的代码才执行</li></ul></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>快速回顾 — 关系运算符</h1>
 <div class="card"><p>if 的条件通常用关系运算符构成：</p></div><div class="card"><table><tr><th>运算符</th><th>含义</th><th>示例</th></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>a &gt; 10</code></td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>a &lt; 0</code></td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>score &gt;= 60</code></td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>age &lt;= 18</code></td></tr><tr><td><code>==</code></td><td>等于</td><td><code>level == 3</code></td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>name != &quot;&quot;</code></td></tr></table></div><div class="card"><ul><li>⚠️ <code>==</code> 是比较，<code>=</code> 是赋值，别搞混</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306545856',this)">复制</button></div>
-<pre id="c_4306545856"><code class="language-csharp">  if (a = 10)   // ❌ 编译错误！= 是赋值，int 不能当 bool
-  if (a == 10)  // ✅ 正确</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373372224',this)">复制</button></div>
+<pre id="c_4373372224"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            if (a = 10)   // ❌ 编译错误！= 是赋值，int 不能当 bool
+            if (a == 10)  // ✅ 正确
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>⚠️ 更隐蔽的坑——bool 变量不会报错，但逻辑全乱</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306544576',this)">复制</button></div>
-<pre id="c_4306544576"><code class="language-csharp">  bool doorOpen = false;
-  if (doorOpen = true)  // ❌ = 是赋值！doorOpen 被改成 true，if 永远进
-  if (doorOpen == true) // ✅ == 是比较</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373371072',this)">复制</button></div>
+<pre id="c_4373371072"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            bool doorOpen = false;
+            if (doorOpen = true)  // ❌ = 是赋值！doorOpen 被改成 true，if 永远进
+            if (doorOpen == true) // ✅ == 是比较
+        }
+    }
+}</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>逻辑运算符组合条件</h1>
 <div class="card"><table><tr><th>运算符</th><th>含义</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（都要满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306544128',this)">复制</button></div>
-<pre id="c_4306544128"><code class="language-csharp">int age = 25;
-if (age &gt;= 18 &amp;&amp; age &lt;= 60)
-{
-    Console.WriteLine(&quot;你是劳动力人口&quot;);
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373370432',this)">复制</button></div>
+<pre id="c_4373370432"><code class="language-csharp">using System;
 
-int score = 120;
-if (score &lt; 0 || score &gt; 100)
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;分数无效！&quot;);
+    class Program
+    {
+        static void Main()
+        {
+            int age = 25;
+            if (age &gt;= 18 &amp;&amp; age &lt;= 60)
+            {
+                Console.WriteLine(&quot;你是劳动力人口&quot;);
+            }
+
+            int score = 120;
+            if (score &lt; 0 || score &gt; 100)
+            {
+                Console.WriteLine(&quot;分数无效！&quot;);
+            }
+        }
+    }
 }</code></pre>
 </div><div class="ok-box">💡 回顾课件4：<code>&amp;&amp;</code> 左边为 false 时不执行右边，<code>||</code> 左边为 true 时不执行右边（短路特性）</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>双分支 if-else</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306543872',this)">复制</button></div>
-<pre id="c_4306543872"><code class="language-csharp">if (条件)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373369536',this)">复制</button></div>
+<pre id="c_4373369536"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 条件为 true 时执行
-}
-else
-{
-    // 条件为 false 时执行
+    class Program
+    {
+        static void Main()
+        {
+            if (条件)
+            {
+                // 条件为 true 时执行
+            }
+            else
+            {
+                // 条件为 false 时执行
+            }
+        }
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306543936',this)">复制</button></div>
-<pre id="c_4306543936"><code class="language-csharp">int score = 55;
-if (score &gt;= 60)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373369472',this)">复制</button></div>
+<pre id="c_4373369472"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;及格&quot;);
-}
-else
-{
-    Console.WriteLine(&quot;不及格&quot;);
-}
-// 输出：不及格</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int score = 55;
+            if (score &gt;= 60)
+            {
+                Console.WriteLine(&quot;及格&quot;);
+            }
+            else
+            {
+                Console.WriteLine(&quot;不及格&quot;);
+            }
+            // 输出：不及格
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>两条路必走一条，不会都不执行</li></ul></div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>多分支 if-else if</h1>
-<div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306543168',this)">复制</button></div>
-<pre id="c_4306543168"><code class="language-csharp">if (条件1)
-{
-    // 条件1成立
-}
-else if (条件2)
-{
-    // 条件1不成立，条件2成立
-}
-else if (条件3)
-{
-    // 条件1、2不成立，条件3成立
-}
-else
-{
-    // 以上都不成立
-}</code></pre>
-</div><div class="card"><ul><li>从上往下逐个判断，<strong>第一个成立的就执行，后面的不再判断</strong></li></ul></div><div class="card"><h3>示例：成绩等级判断</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306542912',this)">复制</button></div>
-<pre id="c_4306542912"><code class="language-csharp">Console.Write(&quot;请输入成绩：&quot;);
-int score = int.Parse(Console.ReadLine());
+<div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373368576',this)">复制</button></div>
+<pre id="c_4373368576"><code class="language-csharp">using System;
 
-if (score &gt;= 90)
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;等级：A&quot;);
-}
-else if (score &gt;= 80)
+    class Program
+    {
+        static void Main()
+        {
+            if (条件1)
+            {
+                // 条件1成立
+            }
+            else if (条件2)
+            {
+                // 条件1不成立，条件2成立
+            }
+            else if (条件3)
+            {
+                // 条件1、2不成立，条件3成立
+            }
+            else
+            {
+                // 以上都不成立
+            }
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li>从上往下逐个判断，<strong>第一个成立的就执行，后面的不再判断</strong></li></ul></div><div class="card"><h3>示例：成绩等级判断</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373368320',this)">复制</button></div>
+<pre id="c_4373368320"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;等级：B&quot;);
-}
-else if (score &gt;= 70)
-{
-    Console.WriteLine(&quot;等级：C&quot;);
-}
-else if (score &gt;= 60)
-{
-    Console.WriteLine(&quot;等级：D&quot;);
-}
-else
-{
-    Console.WriteLine(&quot;等级：F（不及格）&quot;);
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请输入成绩：&quot;);
+            int score = int.Parse(Console.ReadLine());
+
+            if (score &gt;= 90)
+            {
+                Console.WriteLine(&quot;等级：A&quot;);
+            }
+            else if (score &gt;= 80)
+            {
+                Console.WriteLine(&quot;等级：B&quot;);
+            }
+            else if (score &gt;= 70)
+            {
+                Console.WriteLine(&quot;等级：C&quot;);
+            }
+            else if (score &gt;= 60)
+            {
+                Console.WriteLine(&quot;等级：D&quot;);
+            }
+            else
+            {
+                Console.WriteLine(&quot;等级：F（不及格）&quot;);
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><ul><li>⚠️ 注意顺序：<code>&gt;= 90</code> 必须放最前面。如果先写 <code>&gt;= 60</code>，90分也会被判为 D</li></ul></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>嵌套 if</h1>
-<div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306543552',this)">复制</button></div>
-<pre id="c_4306543552"><code class="language-csharp">if (isMember)           // 外层：是会员？
+<div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373370048',this)">复制</button></div>
+<pre id="c_4373370048"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (amount &gt;= 500)  // 内层：消费满500？
+    class Program
     {
-        Console.WriteLine(&quot;打8折！&quot;);
+        static void Main()
+        {
+            if (isMember)           // 外层：是会员？
+            {
+                if (amount &gt;= 500)  // 内层：消费满500？
+                {
+                    Console.WriteLine(&quot;打8折！&quot;);
+                }
+                else
+                {
+                    Console.WriteLine(&quot;打9折！&quot;);
+                }
+            }
+            else
+            {
+                Console.WriteLine(&quot;原价，或先注册会员&quot;);
+            }
+        }
     }
-    else
-    {
-        Console.WriteLine(&quot;打9折！&quot;);
-    }
-}
-else
-{
-    Console.WriteLine(&quot;原价，或先注册会员&quot;);
 }</code></pre>
 </div><div class="card"><ul><li>嵌套不要超过3层，否则逻辑很难追踪</li><li>书写时缩进，让层次清晰</li></ul></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — if-else</h1>
 <div class="ok-box">输入一个整数，用 if-else 判断是奇数还是偶数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306542016',this)">复制</button></div>
-<pre id="c_4306542016"><code class="language-csharp">// 判断奇偶数
-Console.Write(&quot;请输入一个整数：&quot;);
-int num = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373367232',this)">复制</button></div>
+<pre id="c_4373367232"><code class="language-csharp">using System;
 
-if (num % 2 == 0)
+namespace HelloWorld
 {
-    Console.WriteLine($&quot;{num} 是偶数&quot;);
-}
-else
-{
-    Console.WriteLine($&quot;{num} 是奇数&quot;);
+    class Program
+    {
+        static void Main()
+        {
+            // 判断奇偶数
+            Console.Write(&quot;请输入一个整数：&quot;);
+            int num = int.Parse(Console.ReadLine());
+
+            if (num % 2 == 0)
+            {
+                Console.WriteLine($&quot;{num} 是偶数&quot;);
+            }
+            else
+            {
+                Console.WriteLine($&quot;{num} 是奇数&quot;);
+            }
+        }
+    }
 }</code></pre>
-</div><div class="card"><ul><li>动手：试试不同数字，理解 <code>%</code> 取余的作用</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>%</code> 是取余运算符，<code>num % 2 == 0</code> 表示能被 2 整除</li><li>if-else 二选一：条件成立走 if 块，不成立走 else 块</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次判断一个数是正数还是负数：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306541568',this)">复制</button></div>
-<pre id="c_4306541568"><code class="language-csharp">Console.Write(&quot;请输入一个整数：&quot;);
-int n = <span class="code-blank">___</span>;
+</div><div class="card"><ul><li>动手：试试不同数字，理解 <code>%</code> 取余的作用</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>%</code> 是取余运算符，<code>num % 2 == 0</code> 表示能被 2 整除</li><li>if-else 二选一：条件成立走 if 块，不成立走 else 块</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次判断一个数是正数还是负数：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373366784',this)">复制</button></div>
+<pre id="c_4373366784"><code class="language-csharp">using System;
 
-if (n <span class="code-blank">___</span> 0)
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;正数&quot;);
-}
-<span class="code-blank">___</span> if (n &lt; 0)
-{
-    Console.WriteLine(<span class="code-blank">___</span>);
-}
-else
-{
-    Console.WriteLine(&quot;零&quot;);
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请输入一个整数：&quot;);
+            int n = <span class="code-blank">___</span>;
+
+            if (n <span class="code-blank">___</span> 0)
+            {
+                Console.WriteLine(&quot;正数&quot;);
+            }
+            <span class="code-blank">___</span> if (n &lt; 0)
+            {
+                Console.WriteLine(<span class="code-blank">___</span>);
+            }
+            else
+            {
+                Console.WriteLine(&quot;零&quot;);
+            }
+        }
+    }
 }</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306541760',this)">复制</button></div>
-<pre id="c_4306541760"><code class="language-csharp">Console.Write(&quot;请输入一个整数：&quot;);
-int n = int.Parse(Console.ReadLine());
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373366976',this)">复制</button></div>
+<pre id="c_4373366976"><code class="language-csharp">using System;
 
-if (n &gt; 0)
+namespace HelloWorld
 {
-    Console.WriteLine(&quot;正数&quot;);
-}
-else if (n &lt; 0)
-{
-    Console.WriteLine(&quot;负数&quot;);
-}
-else
-{
-    Console.WriteLine(&quot;零&quot;);
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请输入一个整数：&quot;);
+            int n = int.Parse(Console.ReadLine());
+
+            if (n &gt; 0)
+            {
+                Console.WriteLine(&quot;正数&quot;);
+            }
+            else if (n &lt; 0)
+            {
+                Console.WriteLine(&quot;负数&quot;);
+            }
+            else
+            {
+                Console.WriteLine(&quot;零&quot;);
+            }
+        }
+    }
 }</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>switch 语句</h1>
 <div class="ok-box">当一个变量有多个固定取值，每个值对应一种操作，用 switch 比 if-else if 更清晰。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306541056',this)">复制</button></div>
-<pre id="c_4306541056"><code class="language-csharp">switch (表达式)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373366656',this)">复制</button></div>
+<pre id="c_4373366656"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    case 值1:
-        // 匹配值1时执行
-        break;
-    case 值2:
-        // 匹配值2时执行
-        break;
-    default:
-        // 都不匹配时执行
-        break;
+    class Program
+    {
+        static void Main()
+        {
+            switch (表达式)
+            {
+                case 值1:
+                // 匹配值1时执行
+                break;
+                case 值2:
+                // 匹配值2时执行
+                break;
+                default:
+                // 都不匹配时执行
+                break;
+            }
+        }
+    }
 }</code></pre>
-</div><div class="card"><ul><li><code>break;</code> 不能忘——用来跳出 switch，阻止继续往下执行</li><li>不加 <code>break;</code>，C# 会直接<strong>编译报错</strong>（不像 C/C++ 那样会&quot;穿透&quot;到下一个 case）</li></ul></div><div class="card"><h3>示例：输入数字，输出星期</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306540736',this)">复制</button></div>
-<pre id="c_4306540736"><code class="language-csharp">Console.Write(&quot;输入数字1-7：&quot;);
-int day = int.Parse(Console.ReadLine());
-string dayName;
+</div><div class="card"><ul><li><code>break;</code> 不能忘——用来跳出 switch，阻止继续往下执行</li><li>不加 <code>break;</code>，C# 会直接<strong>编译报错</strong>（不像 C/C++ 那样会&quot;穿透&quot;到下一个 case）</li></ul></div><div class="card"><h3>示例：输入数字，输出星期</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373366336',this)">复制</button></div>
+<pre id="c_4373366336"><code class="language-csharp">using System;
 
-switch (day)
+namespace HelloWorld
 {
-    case 1: dayName = &quot;星期一&quot;; break;
-    case 2: dayName = &quot;星期二&quot;; break;
-    case 3: dayName = &quot;星期三&quot;; break;
-    case 4: dayName = &quot;星期四&quot;; break;
-    case 5: dayName = &quot;星期五&quot;; break;
-    case 6: dayName = &quot;星期六&quot;; break;
-    case 7: dayName = &quot;星期日&quot;; break;
-    default: dayName = &quot;无效数字&quot;; break;
-}
-Console.WriteLine(dayName);</code></pre>
-</div><div class="card"><ul><li>💡 <strong>switch 表达式</strong>（简写版）：当 switch 只是用来选一个值时，可以更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306540352',this)">复制</button></div>
-<pre id="c_4306540352"><code class="language-csharp">  Console.Write(&quot;输入数字1-7：&quot;);
-  int day = int.Parse(Console.ReadLine());
-  string dayName = day switch
-  {
-      1 =&gt; &quot;星期一&quot;,
-      2 =&gt; &quot;星期二&quot;,
-      3 =&gt; &quot;星期三&quot;,
-      4 =&gt; &quot;星期四&quot;,
-      5 =&gt; &quot;星期五&quot;,
-      6 =&gt; &quot;星期六&quot;,
-      7 =&gt; &quot;星期日&quot;,
-      _ =&gt; &quot;无效数字&quot;    // _ 代表&quot;其他所有情况&quot;
-  };
-  Console.WriteLine(dayName);</code></pre>
-</div><div class="card"><p>和传统 switch 效果一样，但不需要 break 和重复赋值。后面课件会用到这种写法。</p></div><div class="card"><h3>switch 和 if 条件的核心区别：</h3></div><div class="card"><table><tr><th></th><th>if</th><th>switch</th></tr><tr><td>条件类型</td><td>可以是 <code>&gt;</code>、<code>&lt;</code>、<code>==</code> 等任意比较</td><td>只能是<strong>相等的固定值</strong></td></tr><tr><td>示例</td><td><code>if (score &gt;= 90)</code> ✅</td><td><code>switch (90)</code> ❌ 没有实际意义</td></tr><tr><td></td><td><code>if (day == 1)</code> ✅</td><td><code>switch (day) { case 1: ... }</code> ✅</td></tr></table></div><div class="ok-box">简而言之：<strong>if 判断&quot;是或不是&quot;（比较），switch 判断&quot;是哪个&quot;（匹配固定值）。</strong></div><div class="card"><table><tr><th>场景</th><th>推荐</th><th>理由</th></tr><tr><td>判断范围（&gt;、&lt;）</td><td><code>if-else if</code></td><td>switch 不支持范围比较</td></tr><tr><td>判断相等（固定值）</td><td><code>switch</code></td><td>代码更清晰整齐</td></tr><tr><td>判断条件复杂</td><td><code>if-else if</code></td><td>switch 只判断单一变量</td></tr><tr><td>少量分支（2-3个）</td><td><code>if-else</code></td><td>够用就行</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306539392',this)">复制</button></div>
-<pre id="c_4306539392"><code class="language-csharp">// 判断范围 → 用 if-else if
-if (score &gt;= 90) { ... }        // ✅ if-else if
-else if (score &gt;= 80) { ... }
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;输入数字1-7：&quot;);
+            int day = int.Parse(Console.ReadLine());
+            string dayName;
 
-// 判断固定值 → 用 switch
-switch (level)                   // ✅ switch
-{ case 1: ... case 2: ... }</code></pre>
+            switch (day)
+            {
+                case 1: dayName = &quot;星期一&quot;; break;
+                case 2: dayName = &quot;星期二&quot;; break;
+                case 3: dayName = &quot;星期三&quot;; break;
+                case 4: dayName = &quot;星期四&quot;; break;
+                case 5: dayName = &quot;星期五&quot;; break;
+                case 6: dayName = &quot;星期六&quot;; break;
+                case 7: dayName = &quot;星期日&quot;; break;
+                default: dayName = &quot;无效数字&quot;; break;
+            }
+            Console.WriteLine(dayName);
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li>💡 <strong>switch 表达式</strong>（简写版）：当 switch 只是用来选一个值时，可以更简洁</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373366080',this)">复制</button></div>
+<pre id="c_4373366080"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;输入数字1-7：&quot;);
+            int day = int.Parse(Console.ReadLine());
+            string dayName = day switch
+            {
+                1 =&gt; &quot;星期一&quot;,
+                2 =&gt; &quot;星期二&quot;,
+                3 =&gt; &quot;星期三&quot;,
+                4 =&gt; &quot;星期四&quot;,
+                5 =&gt; &quot;星期五&quot;,
+                6 =&gt; &quot;星期六&quot;,
+                7 =&gt; &quot;星期日&quot;,
+                _ =&gt; &quot;无效数字&quot;    // _ 代表&quot;其他所有情况&quot;
+            };
+            Console.WriteLine(dayName);
+        }
+    }
+}</code></pre>
+</div><div class="card"><p>和传统 switch 效果一样，但不需要 break 和重复赋值。后面课件会用到这种写法。</p></div><div class="card"><h3>switch 和 if 条件的核心区别：</h3></div><div class="card"><table><tr><th></th><th>if</th><th>switch</th></tr><tr><td>条件类型</td><td>可以是 <code>&gt;</code>、<code>&lt;</code>、<code>==</code> 等任意比较</td><td>只能是<strong>相等的固定值</strong></td></tr><tr><td>示例</td><td><code>if (score &gt;= 90)</code> ✅</td><td><code>switch (90)</code> ❌ 没有实际意义</td></tr><tr><td></td><td><code>if (day == 1)</code> ✅</td><td><code>switch (day) { case 1: ... }</code> ✅</td></tr></table></div><div class="ok-box">简而言之：<strong>if 判断&quot;是或不是&quot;（比较），switch 判断&quot;是哪个&quot;（匹配固定值）。</strong></div><div class="card"><table><tr><th>场景</th><th>推荐</th><th>理由</th></tr><tr><td>判断范围（&gt;、&lt;）</td><td><code>if-else if</code></td><td>switch 不支持范围比较</td></tr><tr><td>判断相等（固定值）</td><td><code>switch</code></td><td>代码更清晰整齐</td></tr><tr><td>判断条件复杂</td><td><code>if-else if</code></td><td>switch 只判断单一变量</td></tr><tr><td>少量分支（2-3个）</td><td><code>if-else</code></td><td>够用就行</td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373365120',this)">复制</button></div>
+<pre id="c_4373365120"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 判断范围 → 用 if-else if
+            if (score &gt;= 90) { ... }        // ✅ if-else if
+            else if (score &gt;= 80) { ... }
+
+            // 判断固定值 → 用 switch
+            switch (level)                   // ✅ switch
+            { case 1: ... case 2: ... }
+        }
+    }
+}</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂练习2 — switch 练习</h1>
-<div class="ok-box">用 switch 实现四则运算选择器：输入运算符和两个数，输出结果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306541312',this)">复制</button></div>
-<pre id="c_4306541312"><code class="language-csharp">Console.Write(&quot;请选择操作（+、-、*、/）：&quot;);
-char op = char.Parse(Console.ReadLine());
+<div class="ok-box">用 switch 实现四则运算选择器：输入运算符和两个数，输出结果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373368896',this)">复制</button></div>
+<pre id="c_4373368896"><code class="language-csharp">using System;
 
-Console.Write(&quot;输入数字1：&quot;);
-double a = double.Parse(Console.ReadLine());
-Console.Write(&quot;输入数字2：&quot;);
-double b = double.Parse(Console.ReadLine());
-
-switch (op)
+namespace HelloWorld
 {
-    case '+': Console.WriteLine($&quot;{a}+{b}={a+b}&quot;); break;
-    case '-': Console.WriteLine($&quot;{a}-{b}={a-b}&quot;); break;
-    case '*': Console.WriteLine($&quot;{a}*{b}={a*b}&quot;); break;
-    case '/': Console.WriteLine($&quot;{a}/{b}={a/b}&quot;); break;
-    default: Console.WriteLine(&quot;无效操作符&quot;); break;
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请选择操作（+、-、*、/）：&quot;);
+            char op = char.Parse(Console.ReadLine());
+
+            Console.Write(&quot;输入数字1：&quot;);
+            double a = double.Parse(Console.ReadLine());
+            Console.Write(&quot;输入数字2：&quot;);
+            double b = double.Parse(Console.ReadLine());
+
+            switch (op)
+            {
+                case '+': Console.WriteLine($&quot;{a}+{b}={a+b}&quot;); break;
+                case '-': Console.WriteLine($&quot;{a}-{b}={a-b}&quot;); break;
+                case '*': Console.WriteLine($&quot;{a}*{b}={a*b}&quot;); break;
+                case '/': Console.WriteLine($&quot;{a}/{b}={a/b}&quot;); break;
+                default: Console.WriteLine(&quot;无效操作符&quot;); break;
+            }
+        }
+    }
 }</code></pre>
-</div><div class="card"><ul><li>动手：把 switch 改成 if-else if，看哪种写法更清晰</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>switch 适合「一个变量匹配多个固定值」的场景</li><li><code>break</code> 不能忘，否则会穿透到下一个 case</li><li><code>default</code> 是都不匹配时的兜底分支</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次用 switch 把成绩分数转为等级：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306538944',this)">复制</button></div>
-<pre id="c_4306538944"><code class="language-csharp">Console.Write(&quot;请输入成绩（0-100）：&quot;);
-int score = int.Parse(Console.ReadLine());
-int level = score / 10;  // 取十位数
+</div><div class="card"><ul><li>动手：把 switch 改成 if-else if，看哪种写法更清晰</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>switch 适合「一个变量匹配多个固定值」的场景</li><li><code>break</code> 不能忘，否则会穿透到下一个 case</li><li><code>default</code> 是都不匹配时的兜底分支</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次用 switch 把成绩分数转为等级：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373365056',this)">复制</button></div>
+<pre id="c_4373365056"><code class="language-csharp">using System;
 
-string grade;
-<span class="code-blank">___</span> (level)
+namespace HelloWorld
 {
-    <span class="code-blank">___</span> 10:
-    case 9: grade = &quot;A&quot;; <span class="code-blank">___</span>;
-    case 8: grade = &quot;B&quot;; break;
-    case 7: grade = &quot;C&quot;; break;
-    case 6: grade = &quot;D&quot;; break;
-    <span class="code-blank">___</span>: grade = &quot;F&quot;; break;
-}
-Console.WriteLine(<span class="code-blank">___</span>);</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306539136',this)">复制</button></div>
-<pre id="c_4306539136"><code class="language-csharp">Console.Write(&quot;请输入成绩（0-100）：&quot;);
-int score = int.Parse(Console.ReadLine());
-int level = score / 10;
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请输入成绩（0-100）：&quot;);
+            int score = int.Parse(Console.ReadLine());
+            int level = score / 10;  // 取十位数
 
-string grade;
-switch (level)
+            string grade;
+            <span class="code-blank">___</span> (level)
+            {
+                <span class="code-blank">___</span> 10:
+                case 9: grade = &quot;A&quot;; <span class="code-blank">___</span>;
+                case 8: grade = &quot;B&quot;; break;
+                case 7: grade = &quot;C&quot;; break;
+                case 6: grade = &quot;D&quot;; break;
+                <span class="code-blank">___</span>: grade = &quot;F&quot;; break;
+            }
+            Console.WriteLine(<span class="code-blank">___</span>);
+        }
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373368640',this)">复制</button></div>
+<pre id="c_4373368640"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    case 10:
-    case 9: grade = &quot;A&quot;; break;
-    case 8: grade = &quot;B&quot;; break;
-    case 7: grade = &quot;C&quot;; break;
-    case 6: grade = &quot;D&quot;; break;
-    default: grade = &quot;F&quot;; break;
-}
-Console.WriteLine(grade);</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            Console.Write(&quot;请输入成绩（0-100）：&quot;);
+            int score = int.Parse(Console.ReadLine());
+            int level = score / 10;
+
+            string grade;
+            switch (level)
+            {
+                case 10:
+                case 9: grade = &quot;A&quot;; break;
+                case 8: grade = &quot;B&quot;; break;
+                case 7: grade = &quot;C&quot;; break;
+                case 6: grade = &quot;D&quot;; break;
+                default: grade = &quot;F&quot;; break;
+            }
+            Console.WriteLine(grade);
+        }
+    }
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
@@ -756,94 +979,132 @@ Console.WriteLine(grade);</code></pre>
 请选择：2
 输入两个数：5 8
 5+8=13</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>switch (choice)</code> 处理菜单选择</li><li>每个 case 内部用 <code>Console.ReadLine()</code> 获取对应输入</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306537216',this)">复制</button></div>
-<pre id="c_4306537216"><code class="language-csharp">Console.WriteLine(&quot;==== 简易菜单 ====&quot;);
-Console.WriteLine(&quot;1. 打招呼&quot;);
-Console.WriteLine(&quot;2. 算加法&quot;);
-Console.WriteLine(&quot;3. 判断奇偶&quot;);
-Console.Write(&quot;请选择：&quot;);
-int choice = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373330432',this)">复制</button></div>
+<pre id="c_4373330432"><code class="language-csharp">using System;
 
-switch (<span class="code-blank">___</span>)
+namespace HelloWorld
 {
-    case 1:
-        Console.Write(&quot;你的名字？&quot;);
-        Console.WriteLine($&quot;你好，{Console.ReadLine()}！&quot;);
-        <span class="code-blank">___</span>;
-    case 2:
-        Console.Write(&quot;输入两个数：&quot;);
-        int x = int.Parse(Console.ReadLine());
-        int y = int.Parse(Console.ReadLine());
-        Console.WriteLine($&quot;{x}+{y}={<span class="code-blank">___</span>}&quot;);
-        break;
-    case 3:
-        Console.Write(&quot;输入一个数：&quot;);
-        int n = int.Parse(Console.ReadLine());
-        Console.WriteLine(<span class="code-blank">___</span>);
-        break;
-    <span class="code-blank">___</span>:
-        Console.WriteLine(&quot;无效选择&quot;);
-        break;
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(&quot;==== 简易菜单 ====&quot;);
+            Console.WriteLine(&quot;1. 打招呼&quot;);
+            Console.WriteLine(&quot;2. 算加法&quot;);
+            Console.WriteLine(&quot;3. 判断奇偶&quot;);
+            Console.Write(&quot;请选择：&quot;);
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (<span class="code-blank">___</span>)
+            {
+                case 1:
+                Console.Write(&quot;你的名字？&quot;);
+                Console.WriteLine($&quot;你好，{Console.ReadLine()}！&quot;);
+                <span class="code-blank">___</span>;
+                case 2:
+                Console.Write(&quot;输入两个数：&quot;);
+                int x = int.Parse(Console.ReadLine());
+                int y = int.Parse(Console.ReadLine());
+                Console.WriteLine($&quot;{x}+{y}={<span class="code-blank">___</span>}&quot;);
+                break;
+                case 3:
+                Console.Write(&quot;输入一个数：&quot;);
+                int n = int.Parse(Console.ReadLine());
+                Console.WriteLine(<span class="code-blank">___</span>);
+                break;
+                <span class="code-blank">___</span>:
+                Console.WriteLine(&quot;无效选择&quot;);
+                break;
+            }
+        }
+    }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306537024',this)">复制</button></div>
-<pre id="c_4306537024"><code class="language-csharp">Console.WriteLine(&quot;==== 简易菜单 ====&quot;);
-Console.WriteLine(&quot;1. 打招呼&quot;);
-Console.WriteLine(&quot;2. 算加法&quot;);
-Console.WriteLine(&quot;3. 判断奇偶&quot;);
-Console.Write(&quot;请选择：&quot;);
-int choice = int.Parse(Console.ReadLine());
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373330240',this)">复制</button></div>
+<pre id="c_4373330240"><code class="language-csharp">using System;
 
-switch (choice)
+namespace HelloWorld
 {
-    case 1:
-        Console.Write(&quot;你的名字？&quot;);
-        Console.WriteLine($&quot;你好，{Console.ReadLine()}！&quot;);
-        break;
-    case 2:
-        Console.Write(&quot;输入两个数：&quot;);
-        int x = int.Parse(Console.ReadLine());
-        int y = int.Parse(Console.ReadLine());
-        Console.WriteLine($&quot;{x}+{y}={x+y}&quot;);
-        break;
-    case 3:
-        Console.Write(&quot;输入一个数：&quot;);
-        int n = int.Parse(Console.ReadLine());
-        Console.WriteLine(n % 2 == 0 ? &quot;偶数&quot; : &quot;奇数&quot;);
-        break;
-    default:
-        Console.WriteLine(&quot;无效选择&quot;);
-        break;
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine(&quot;==== 简易菜单 ====&quot;);
+            Console.WriteLine(&quot;1. 打招呼&quot;);
+            Console.WriteLine(&quot;2. 算加法&quot;);
+            Console.WriteLine(&quot;3. 判断奇偶&quot;);
+            Console.Write(&quot;请选择：&quot;);
+            int choice = int.Parse(Console.ReadLine());
+
+            switch (choice)
+            {
+                case 1:
+                Console.Write(&quot;你的名字？&quot;);
+                Console.WriteLine($&quot;你好，{Console.ReadLine()}！&quot;);
+                break;
+                case 2:
+                Console.Write(&quot;输入两个数：&quot;);
+                int x = int.Parse(Console.ReadLine());
+                int y = int.Parse(Console.ReadLine());
+                Console.WriteLine($&quot;{x}+{y}={x+y}&quot;);
+                break;
+                case 3:
+                Console.Write(&quot;输入一个数：&quot;);
+                int n = int.Parse(Console.ReadLine());
+                Console.WriteLine(n % 2 == 0 ? &quot;偶数&quot; : &quot;奇数&quot;);
+                break;
+                default:
+                Console.WriteLine(&quot;无效选择&quot;);
+                break;
+            }
+        }
+    }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入 0~100 的<strong>成绩</strong>，输出对应<strong>等级</strong>：<br>90 及以上 → <code>A</code>，80~89 → <code>B</code>，70~79 → <code>C</code>，60~69 → <code>D</code>，60 以下 → <code>F</code>。<br>要求：自己写 <code>if - else if</code> 链判断，不能用现成模板。<br>提示：用 <code>&gt;=</code> 从高往低判断，命中一个就结束。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306536448',this)">复制</button></div>
-<pre id="c_4306536448"><code class="language-csharp">int score = int.Parse(Console.ReadLine());
-if (score &gt;= 90) Console.WriteLine(&quot;A&quot;);
-else if (score &gt;= 80) Console.WriteLine(&quot;B&quot;);
-else if (score &gt;= 70) Console.WriteLine(&quot;C&quot;);
-else if (score &gt;= 60) Console.WriteLine(&quot;D&quot;);
-else Console.WriteLine(&quot;F&quot;);</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373329728',this)">复制</button></div>
+<pre id="c_4373329728"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int score = int.Parse(Console.ReadLine());
+            if (score &gt;= 90) Console.WriteLine(&quot;A&quot;);
+            else if (score &gt;= 80) Console.WriteLine(&quot;B&quot;);
+            else if (score &gt;= 70) Console.WriteLine(&quot;C&quot;);
+            else if (score &gt;= 60) Console.WriteLine(&quot;D&quot;);
+            else Console.WriteLine(&quot;F&quot;);
+        }
+    }
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入一个年份，判断是否为闰年。</p><ul><li>条件：能被 4 整除但不能被 100 整除，或者能被 400 整除</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年份：→ 2024</code></li></ul><ul><li>输出：<code>2024 是闰年</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入两个数和运算符（+、-、*、/），用 if-else if 实现计算器。</p><ul><li>注意：除法时判断除数是否为 0</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个数：→ 10</code></li></ul><ul><li>输入：<code>请输入运算符：→ /</code></li></ul><ul><li>输入：<code>请输入第二个数：→ 3</code></li></ul><ul><li>输出：<code>10 / 3 = 3.33</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入三个整数，输出其中最大的那个。</p><ul><li>提示：用 if-else if + <code>&amp;&amp;</code> 组合条件</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 7</code></li></ul><ul><li>输入：<code>请输入第三个整数：→ 5</code></li></ul><ul><li>输出：<code>最大值为 7</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>编写程序：输入月份（1-12），输出该月有多少天（非闰年，2月按28天）。</p><ul><li>提示：用 switch，1/3/5/7/8/10/12 月 31 天，4/6/9/11 月 30 天</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入月份：→ 3</code></li></ul><ul><li>输出：<code>31 天</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306535744',this)">复制</button></div>
-<pre id="c_4306535744"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373331136',this)">复制</button></div>
+<pre id="c_4373331136"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        // ==================== 第1题 ====================
+        static void Main()
+        {
+            // ==================== 第1题 ====================
 
 
-        // ==================== 第2题 ====================
+            // ==================== 第2题 ====================
 
 
-        // ==================== 第3题 ====================
+            // ==================== 第3题 ====================
 
 
-        // ==================== 第4题 ====================
+            // ==================== 第4题 ====================
 
+        }
     }
 }</code></pre>
 </div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>

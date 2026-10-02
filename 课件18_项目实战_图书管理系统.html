@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -494,23 +497,28 @@ pre,pre code{page-break-inside:avoid}
 │  ToString() →                   │
 │  &quot;C#入门 | 张老师 | ¥45 | 库存5&quot; │
 └─────────────────────────────────┘</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382124032',this)">复制</button></div>
-<pre id="c_4382124032"><code class="language-csharp">class Book
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374092160',this)">复制</button></div>
+<pre id="c_4374092160"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Title { get; set; }       // 书名
-    public string Author { get; set; }      // 作者
-    public double Price { get; set; }       // 价格
-    public int Stock { get; set; }          // 库存
-
-    public Book(string title, string author, double price, int stock)
+    class Book
     {
-        Title = title; Author = author;
-        Price = price; Stock = stock;
-    }
+        public string Title { get; set; }       // 书名
+        public string Author { get; set; }      // 作者
+        public double Price { get; set; }       // 价格
+        public int Stock { get; set; }          // 库存
 
-    public override string ToString()
-    {
-        return $&quot;{Title} | {Author} | ¥{Price} | 库存{Stock}&quot;;
+        public Book(string title, string author, double price, int stock)
+        {
+            Title = title; Author = author;
+            Price = price; Stock = stock;
+        }
+
+        public override string ToString()
+        {
+            return $&quot;{Title} | {Author} | ¥{Price} | 库存{Stock}&quot;;
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li>构造方法 <code>Book(...)</code> — 创建对象时一次性填入书名、作者、价格、库存</li><li><code>public override string ToString()</code> — ⚠️ <strong>它不是自定义方法，是 <code>override</code>（重写）！</strong></li><li style="margin-left:24px;list-style-type:circle">C# 里所有类都继承自 <code>object</code>，<code>object</code> 自带 <code>ToString()</code>。不 override 的话，<code>Console.WriteLine(book)</code> 只输出类名 <code>&quot;Book&quot;</code>，没用。</li><li style="margin-left:24px;list-style-type:circle"><code>override</code> 把它<strong>替换</strong>成我们自己的格式化输出：「C#入门 | 张老师 | ¥45 | 库存5」</li><li style="margin-left:24px;list-style-type:circle">之后所有 <code>Console.WriteLine(book对象)</code> 和 <code>$&quot;{book对象}&quot;</code> 都会<strong>自动调用</strong>这个版本——写一次，到处用</li><li style="margin-left:24px;list-style-type:circle">回忆 课件15：<code>override</code> 就是子类用自己的方法覆盖父类的方法</li></ul></div>
@@ -518,19 +526,24 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>BookManager — 数据统筹类</h1>
 <div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382122944',this)">复制</button></div>
-<pre id="c_4382122944"><code class="language-csharp">static class BookManager
-{
-    public static string FilePath = &quot;books.txt&quot;;
-    public static List&lt;Book&gt; books = new List&lt;Book&gt;();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374089920',this)">复制</button></div>
+<pre id="c_4374089920"><code class="language-csharp">using System;
 
-    public static void LoadBooks() { /* TODO */ }
-    public static void SaveBooks() { /* TODO */ }
-    public static void AddBook() { /* TODO */ }
-    public static void ShowBooks() { /* TODO */ }
-    public static void SearchBooks() { /* TODO */ }
-    public static void BorrowBook() { /* TODO */ }
-    public static void ReturnBook() { /* TODO */ }
+namespace HelloWorld
+{
+    static class BookManager
+    {
+        public static string FilePath = &quot;books.txt&quot;;
+        public static List&lt;Book&gt; books = new List&lt;Book&gt;();
+
+        public static void LoadBooks() { /* TODO */ }
+        public static void SaveBooks() { /* TODO */ }
+        public static void AddBook() { /* TODO */ }
+        public static void ShowBooks() { /* TODO */ }
+        public static void SearchBooks() { /* TODO */ }
+        public static void BorrowBook() { /* TODO */ }
+        public static void ReturnBook() { /* TODO */ }
+    }
 }</code></pre>
 </div><div class="card"><h3>LoadBooks() — 启动时从文件加载到内存</h3></div><pre class="plain-box"><code>  📂 books.txt                📋 List&lt;Book&gt; books
   ┌──────────────────┐       ┌──────────────────────┐
@@ -543,19 +556,30 @@ pre,pre code{page-break-inside:avoid}
                              └──────────────────────┘
   ① ReadAllLines 读每行      ③ new Book(...) 创建对象
   ② Split('|') 拆成4段       ④ books.Add(book) 加入列表</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382122368',this)">复制</button></div>
-<pre id="c_4382122368"><code class="language-csharp">public static void LoadBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374089664',this)">复制</button></div>
+<pre id="c_4374089664"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    books.Clear();
-    if (!File.Exists(FilePath))
+    class Program
     {
-        return;
-    }
-    foreach (string line in File.ReadAllLines(FilePath))
-    {
-        string[] parts = line.Split('|');
-        books.Add(new Book(parts[0], parts[1],
-            double.Parse(parts[2]), int.Parse(parts[3])));
+        static void Main()
+        {
+            public static void LoadBooks()
+            {
+                books.Clear();
+                if (!File.Exists(FilePath))
+                {
+                    return;
+                }
+                foreach (string line in File.ReadAllLines(FilePath))
+                {
+                    string[] parts = line.Split('|');
+                    books.Add(new Book(parts[0], parts[1],
+                    double.Parse(parts[2]), int.Parse(parts[3])));
+                }
+            }
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>File.Exists</code> — 文件不存在就别读了，程序不会崩</li><li><code>ReadAllLines</code> — 把文件所有行读成 <code>string[]</code></li><li><code>Split('|')</code> — 按竖线拆开，每本书存成一行 <code>Title|Author|Price|Stock</code></li><li><code>double.Parse</code> / <code>int.Parse</code> — 文件里读出来都是 string，价格转 double，库存转 int</li></ul></div><div class="ok-box">📁 范例数据文件 <code>books.txt</code> 已准备好（4 列格式 <code>Title|Author|Price|Stock</code>），内容和上面 ASCII 图一样，复制到程序目录就能跑。题2 的 5 列新格式范例见同目录的 <code>books_isbn.txt</code>。</div><div class="card"><h3>SaveBooks() — 退出时从内存写回文件</h3></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books        📂 books.txt
@@ -568,15 +592,26 @@ pre,pre code{page-break-inside:avoid}
   │       68,2)           │   ① foreach 遍历列表
   └──────────────────────┘   ② 拼接成 &quot;Title|Author|Price|Stock&quot;
                              ③ WriteAllLines 一次写完</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382121856',this)">复制</button></div>
-<pre id="c_4382121856"><code class="language-csharp">public static void SaveBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374089152',this)">复制</button></div>
+<pre id="c_4374089152"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    List&lt;string&gt; lines = new List&lt;string&gt;();
-    foreach (Book b in books)
+    class Program
     {
-        lines.Add($&quot;{b.Title}|{b.Author}|{b.Price}|{b.Stock}&quot;);
+        static void Main()
+        {
+            public static void SaveBooks()
+            {
+                List&lt;string&gt; lines = new List&lt;string&gt;();
+                foreach (Book b in books)
+                {
+                    lines.Add($&quot;{b.Title}|{b.Author}|{b.Price}|{b.Stock}&quot;);
+                }
+                File.WriteAllLines(FilePath, lines);
+            }
+        }
     }
-    File.WriteAllLines(FilePath, lines);
 }</code></pre>
 </div><div class="card"><ul><li><code>foreach</code> 遍历列表，每本书拼成一行 <code>Title|Author|Price|Stock</code></li><li><code>WriteAllLines</code> — 把 <code>List&lt;string&gt;</code> 一次性写入文件</li><li>LoadBooks 用 <code>Split</code> 拆 → SaveBooks 用 <code>$&quot;{}&quot;</code> 拼——对称操作</li></ul></div><div class="ok-box">💡 LoadBooks 和 SaveBooks 是镜像操作：一个读、一个写。数据格式统一用 <code>|</code> 分隔，两边保持一致就行。</div>
 </div></div>
@@ -594,29 +629,34 @@ pre,pre code{page-break-inside:avoid}
 ╠══════════════════════╣
 ║ 选择：_              ║
 ╚══════════════════════╝</code></pre><div class="card"><p><code>Main</code> 只做三件事：<strong>启动时加载 → 循环显示菜单 → 退出时保存</strong>。所有业务逻辑全在 BookManager，<code>Main</code> 只管分发任务。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382121088',this)">复制</button></div>
-<pre id="c_4382121088"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374095040',this)">复制</button></div>
+<pre id="c_4374095040"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        BookManager.LoadBooks();            // ① 启动时加载数据
-        Console.WriteLine(&quot;=== 图书管理系统 ===&quot;);
-
-        while (true)                        // ② 无限循环，直到用户选退出
+        static void Main()
         {
-            Console.WriteLine(&quot;1.添加  2.查看  3.查找  4.借书  5.还书  6.退出&quot;);
-            Console.Write(&quot;选择：&quot;);
-            string choice = Console.ReadLine();
+            BookManager.LoadBooks();            // ① 启动时加载数据
+            Console.WriteLine(&quot;=== 图书管理系统 ===&quot;);
 
-            switch (choice)                 // ③ 根据输入分发到对应方法
+            while (true)                        // ② 无限循环，直到用户选退出
             {
-                case &quot;1&quot;: BookManager.AddBook(); break;
-                case &quot;2&quot;: BookManager.ShowBooks(); break;
-                case &quot;3&quot;: BookManager.SearchBooks(); break;
-                case &quot;4&quot;: BookManager.BorrowBook(); break;
-                case &quot;5&quot;: BookManager.ReturnBook(); break;
-                case &quot;6&quot;: BookManager.SaveBooks(); return;
-                default: Console.WriteLine(&quot;无效选择&quot;); break;
+                Console.WriteLine(&quot;1.添加  2.查看  3.查找  4.借书  5.还书  6.退出&quot;);
+                Console.Write(&quot;选择：&quot;);
+                string choice = Console.ReadLine();
+
+                switch (choice)                 // ③ 根据输入分发到对应方法
+                {
+                    case &quot;1&quot;: BookManager.AddBook(); break;
+                    case &quot;2&quot;: BookManager.ShowBooks(); break;
+                    case &quot;3&quot;: BookManager.SearchBooks(); break;
+                    case &quot;4&quot;: BookManager.BorrowBook(); break;
+                    case &quot;5&quot;: BookManager.ReturnBook(); break;
+                    case &quot;6&quot;: BookManager.SaveBooks(); return;
+                    default: Console.WriteLine(&quot;无效选择&quot;); break;
+                }
             }
         }
     }
@@ -633,17 +673,28 @@ pre,pre code{page-break-inside:avoid}
   └──────────────────────┘     └─────────────────────────┘
   books.Count = 3               for (int i=0; i&lt;Count; i++)
                                 $&quot;[{i+1}] {books[i]}&quot;</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382119488',this)">复制</button></div>
-<pre id="c_4382119488"><code class="language-csharp">public static void ShowBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374052736',this)">复制</button></div>
+<pre id="c_4374052736"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (books.Count == 0)
+    class Program
     {
-        Console.WriteLine(&quot;暂无图书&quot;);
-        return;
+        static void Main()
+        {
+            public static void ShowBooks()
+            {
+                if (books.Count == 0)
+                {
+                    Console.WriteLine(&quot;暂无图书&quot;);
+                    return;
+                }
+                Console.WriteLine($&quot;\n=== 图书列表（共{books.Count}本）===&quot;);
+                for (int i = 0; i &lt; books.Count; i++)
+                Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+            }
+        }
     }
-    Console.WriteLine($&quot;\n=== 图书列表（共{books.Count}本）===&quot;);
-    for (int i = 0; i &lt; books.Count; i++)
-        Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
 }</code></pre>
 </div><div class="card"><ul><li><strong>🤨 卫语句（Guard Clause）</strong> —— 第 1 行的 <code>if (books.Count == 0) { ... return; }</code> 就是卫语句：</li><li style="margin-left:24px;list-style-type:circle">把<strong>特殊情况先处理掉、提前 <code>return</code></strong>，后面的主逻辑不用包在 <code>else</code> 里，代码更平、更好读</li><li style="margin-left:24px;list-style-type:circle">对比：不用卫语句就得写 <code>if (books.Count == 0) { ... } else { 遍历输出 }</code>，多一层缩进</li><li style="margin-left:24px;list-style-type:circle">之后你会经常看到这种写法：<code>if (输入为空) return;</code>、<code>if (未登录) return;</code>……碰到就认得出</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li><li>写完这个就可以 <code>AddBook()</code> 加一本 → <code>ShowBooks()</code> 看一本，边写边测</li></ul></div><div class="card"><h3>AddBook() — 先跑通，别怕写错</h3><p>一开始不用想太多，能把书加进去就行：</p></div><pre class="plain-box"><code>┌──────────┐    ┌──────────┐    ┌──────────┐    ┌──────────┐
 │ 书名：    │ →  │ 作者：   │ →  │ 价格：   │ →  │ 库存：   │
@@ -655,40 +706,62 @@ pre,pre code{page-break-inside:avoid}
                                           │   new Book(...)) │
                                           └─────────────────┘
                                                     ↓
-                                              ✅ 添加成功</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382119360',this)">复制</button></div>
-<pre id="c_4382119360"><code class="language-csharp">public static void AddBook()
-{
-    Console.Write(&quot;书名：&quot;);
-    string title = Console.ReadLine();
-    Console.Write(&quot;作者：&quot;);
-    string author = Console.ReadLine();
-    Console.Write(&quot;价格：&quot;);
-    if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
-    {
-        Console.WriteLine(&quot;价格不合法&quot;);
-        return;
-    }
-    Console.Write(&quot;库存：&quot;);
-    if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
-    {
-        Console.WriteLine(&quot;库存不合法&quot;);
-        return;
-    }
+                                              ✅ 添加成功</code></pre><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374052608',this)">复制</button></div>
+<pre id="c_4374052608"><code class="language-csharp">using System;
 
-    books.Add(new Book(title, author, price, stock));
-    Console.WriteLine(&quot;✅ 添加成功&quot;);
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            public static void AddBook()
+            {
+                Console.Write(&quot;书名：&quot;);
+                string title = Console.ReadLine();
+                Console.Write(&quot;作者：&quot;);
+                string author = Console.ReadLine();
+                Console.Write(&quot;价格：&quot;);
+                if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
+                {
+                    Console.WriteLine(&quot;价格不合法&quot;);
+                    return;
+                }
+                Console.Write(&quot;库存：&quot;);
+                if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
+                {
+                    Console.WriteLine(&quot;库存不合法&quot;);
+                    return;
+                }
+
+                books.Add(new Book(title, author, price, stock));
+                Console.WriteLine(&quot;✅ 添加成功&quot;);
+            }
+        }
+    }
 }</code></pre>
 </div><div class="ok-box"><strong>🧐 新东西：<code>TryParse</code> 和 <code>out</code> 参数</strong> —— 之前一直用 <code>int.Parse()</code>，但 <code>Parse</code> 有个致命缺点：用户输入 <code>&quot;abc&quot;</code>，程序直接崩（<code>FormatException</code>）。<code>TryParse</code> 是安全版：<strong>不崩，而是返回 <code>true</code>/<code>false</code> 告诉你成没成功</strong>。成功的话，结果通过 <code>out</code> 参数带出来：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382118464',this)">复制</button></div>
-<pre id="c_4382118464"><code class="language-csharp">// Parse：转失败就炸
-int x = int.Parse(&quot;abc&quot;);   // 💥 异常
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374051776',this)">复制</button></div>
+<pre id="c_4374051776"><code class="language-csharp">using System;
 
-// TryParse：返回 bool，结果放 out 变量里
-if (int.TryParse(&quot;abc&quot;, out int x))
-    Console.WriteLine(x);   // 不执行——TryParse 返回 false
-else
-    Console.WriteLine(&quot;不是数字&quot;);  // 走这里</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // Parse：转失败就炸
+            int x = int.Parse(&quot;abc&quot;);   // 💥 异常
+
+            // TryParse：返回 bool，结果放 out 变量里
+            if (int.TryParse(&quot;abc&quot;, out int x))
+            Console.WriteLine(x);   // 不执行——TryParse 返回 false
+            else
+            Console.WriteLine(&quot;不是数字&quot;);  // 走这里
+        }
+    }
+}</code></pre>
 </div><div class="ok-box"><code>out int price</code> —— &quot;这个方法会帮我把值放到 <code>price</code> 里&quot;，不用先声明变量。<br><code>!double.TryParse(...)</code> —— <code>!</code> 取反，失败就进 if。<br><code>|| price &lt; 0</code> —— 即使转成功了，负数也不合法。<br>这也是卫语句：<strong>输入不合法 → 提示 → return</strong>，主逻辑继续往下走。</div><div class="ok-box">🐛 <strong>试一下</strong>：加一本&quot;C#入门&quot;，再加一本&quot;C#入门&quot;——列表里出现了两条一模一样的书。这肯定不对。</div><div class="ok-box">🤔 <strong>自己先想 5 分钟</strong>：怎么防止同一本书被加两次？想不出来？打开 AI 工具，把上面的代码发过去，问：<br><em>&quot;帮我给 AddBook 加一个查重功能——如果 books 列表里已经有同名的书，就提示'已存在'并拒绝添加。&quot;</em></div><div class="card"><h3>第一次改进：加查重</h3><p>AI 给你的思路就是：输入书名后，先 <code>foreach</code> 遍历一遍，同名就 <code>return</code> 拦截：</p></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
                 │ foreach 遍历 books │
                 │ 检查 Title 是否相同  │
@@ -699,26 +772,37 @@ else
               return    │        │     ↓
                         │        │ books.Add(new Book(...))
                         │        │     ↓
-                        │        │ ✅ 添加成功</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382118080',this)">复制</button></div>
-<pre id="c_4382118080"><code class="language-csharp">public static void AddBook()
-{
-    Console.Write(&quot;书名：&quot;);
-    string title = Console.ReadLine();
+                        │        │ ✅ 添加成功</code></pre><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374051328',this)">复制</button></div>
+<pre id="c_4374051328"><code class="language-csharp">using System;
 
-    // ⬇️ 加的：查重——同名书直接拦掉
-    foreach (Book b in books)
+namespace HelloWorld
+{
+    class Program
     {
-        if (b.Title == title)
+        static void Main()
         {
-            Console.WriteLine($&quot;《{title}》已存在，无法重复添加&quot;);
-            return;
+            public static void AddBook()
+            {
+                Console.Write(&quot;书名：&quot;);
+                string title = Console.ReadLine();
+
+                // ⬇️ 加的：查重——同名书直接拦掉
+                foreach (Book b in books)
+                {
+                    if (b.Title == title)
+                    {
+                        Console.WriteLine($&quot;《{title}》已存在，无法重复添加&quot;);
+                        return;
+                    }
+                }
+
+                Console.Write(&quot;作者：&quot;);
+                string author = Console.ReadLine();
+                // ... 后面同版本 1
+            }
         }
     }
-
-    Console.Write(&quot;作者：&quot;);
-    string author = Console.ReadLine();
-    // ... 后面同版本 1
 }</code></pre>
 </div><div class="ok-box">🐛 <strong>再试一个场景</strong>：图书管理员想补货——&quot;C#入门&quot;卖得好，库存从 5 本加到 10 本。结果上面这段代码直接弹「已存在，无法重复添加」……补货也被拦住了。</div><div class="ok-box">🤔 <strong>这次的问题不一样了</strong>：不是&quot;同名→拒绝&quot;，而是&quot;同名→追加库存&quot;。把改好的代码发给 AI，问：<br><em>&quot;现在用查重拦住了重复添加，但我还想支持补货：如果书名已存在，询问'追加数量'，加到原来的 Stock 上。&quot;</em></div><div class="card"><h3>第二次改进：重名就追加库存</h3></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
                 │ foreach 遍历 books │
@@ -734,44 +818,55 @@ else
           b.Stock += 5   │        │
                ↓        │        │
           ✅ 库存已更新   │        │</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382117760',this)">复制</button></div>
-<pre id="c_4382117760"><code class="language-csharp">public static void AddBook()
-{
-    Console.Write(&quot;书名：&quot;);
-    string title = Console.ReadLine();
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374051008',this)">复制</button></div>
+<pre id="c_4374051008"><code class="language-csharp">using System;
 
-    // 查重：找到了就加库存，没找到就新建
-    foreach (Book b in books)
+namespace HelloWorld
+{
+    class Program
     {
-        if (b.Title == title)
+        static void Main()
         {
-            Console.Write($&quot;《{title}》已存在（库存{b.Stock}），追加数量：&quot;);
-            if (int.TryParse(Console.ReadLine(), out int add) &amp;&amp; add &gt; 0)
+            public static void AddBook()
             {
-                b.Stock += add;
-                Console.WriteLine($&quot;✅ 库存已更新：{b.Stock}&quot;);
+                Console.Write(&quot;书名：&quot;);
+                string title = Console.ReadLine();
+
+                // 查重：找到了就加库存，没找到就新建
+                foreach (Book b in books)
+                {
+                    if (b.Title == title)
+                    {
+                        Console.Write($&quot;《{title}》已存在（库存{b.Stock}），追加数量：&quot;);
+                        if (int.TryParse(Console.ReadLine(), out int add) &amp;&amp; add &gt; 0)
+                        {
+                            b.Stock += add;
+                            Console.WriteLine($&quot;✅ 库存已更新：{b.Stock}&quot;);
+                        }
+                        return;
+                    }
+                }
+
+                Console.Write(&quot;作者：&quot;);
+                string author = Console.ReadLine();
+                Console.Write(&quot;价格：&quot;);
+                if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
+                {
+                    Console.WriteLine(&quot;价格不合法&quot;);
+                    return;
+                }
+                Console.Write(&quot;库存：&quot;);
+                if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
+                {
+                    Console.WriteLine(&quot;库存不合法&quot;);
+                    return;
+                }
+
+                books.Add(new Book(title, author, price, stock));
+                Console.WriteLine(&quot;✅ 添加成功&quot;);
             }
-            return;
         }
     }
-
-    Console.Write(&quot;作者：&quot;);
-    string author = Console.ReadLine();
-    Console.Write(&quot;价格：&quot;);
-    if (!double.TryParse(Console.ReadLine(), out double price) || price &lt; 0)
-    {
-        Console.WriteLine(&quot;价格不合法&quot;);
-        return;
-    }
-    Console.Write(&quot;库存：&quot;);
-    if (!int.TryParse(Console.ReadLine(), out int stock) || stock &lt; 0)
-    {
-        Console.WriteLine(&quot;库存不合法&quot;);
-        return;
-    }
-
-    books.Add(new Book(title, author, price, stock));
-    Console.WriteLine(&quot;✅ 添加成功&quot;);
 }</code></pre>
 </div><div class="ok-box">💡 <strong>回头看看我们一起做了什么</strong>：一个 <code>AddBook()</code>，从跑通 → 发现重复问题 → 改进 → 发现补货问题 → 再改进，总共磨了三版。每一版都是<strong>先发现问题、再分析原因、最后动手改代码</strong>。老师只是带着你走，AI 只是你卡住时的帮手——<strong>真正想清楚「要加什么功能」的人，是你自己</strong>。</div><div class="card"><ul><li><code>b.Stock += add</code> 直接修改现存对象的属性——List 存的是引用</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li></ul></div>
 </div></div>
@@ -785,104 +880,159 @@ else
                      ↓    │        │   ↓
                输出 [i+1]  │        │ 跳过，继续
                books[i]    │        │</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382116864',this)">复制</button></div>
-<pre id="c_4382116864"><code class="language-csharp">public static void SearchBooks()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374050176',this)">复制</button></div>
+<pre id="c_4374050176"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.Write(&quot;输入书名关键词：&quot;);
-    string keyword = Console.ReadLine().ToLower();
-    for (int i = 0; i &lt; books.Count; i++)
-        if (books[i].Title.ToLower().Contains(keyword))
-            Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
-}</code></pre>
-</div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box">🐛 <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box">🤔 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382116992',this)">复制</button></div>
-<pre id="c_4382116992"><code class="language-csharp">public static void SearchBooks()
-{
-    Console.Write(&quot;输入书名关键词：&quot;);
-    string keyword = Console.ReadLine().ToLower();
-    bool found = false;
-    for (int i = 0; i &lt; books.Count; i++)
+    class Program
     {
-        if (books[i].Title.ToLower().Contains(keyword))
+        static void Main()
         {
-            Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
-            found = true;
+            public static void SearchBooks()
+            {
+                Console.Write(&quot;输入书名关键词：&quot;);
+                string keyword = Console.ReadLine().ToLower();
+                for (int i = 0; i &lt; books.Count; i++)
+                if (books[i].Title.ToLower().Contains(keyword))
+                Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+            }
         }
     }
-    if (!found)
+}</code></pre>
+</div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box">🐛 <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box">🤔 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374049600',this)">复制</button></div>
+<pre id="c_4374049600"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
     {
-        Console.WriteLine(&quot;未找到匹配的图书&quot;);
+        static void Main()
+        {
+            public static void SearchBooks()
+            {
+                Console.Write(&quot;输入书名关键词：&quot;);
+                string keyword = Console.ReadLine().ToLower();
+                bool found = false;
+                for (int i = 0; i &lt; books.Count; i++)
+                {
+                    if (books[i].Title.ToLower().Contains(keyword))
+                    {
+                        Console.WriteLine($&quot;[{i + 1}] {books[i]}&quot;);
+                        found = true;
+                    }
+                }
+                if (!found)
+                {
+                    Console.WriteLine(&quot;未找到匹配的图书&quot;);
+                }
+            }
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>bool found = false</code> — 先假设没找到，循环里匹配到了就改成 <code>true</code></li><li><code>if (!found)</code> — 循环跑完了还是 <code>false</code>，说明一本都没匹配到，输出提示</li></ul></div><div class="card"><h3>BorrowBook() 借书 — 先跑通，再防崩</h3><p>借书的逻辑：先列出所有书 → 选编号 → 库存 -1。先写个能跑的：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382116096',this)">复制</button></div>
-<pre id="c_4382116096"><code class="language-csharp">public static void BorrowBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374049280',this)">复制</button></div>
+<pre id="c_4374049280"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    ShowBooks();
-    Console.Write(&quot;选择要借的图书编号：&quot;);
-    int index = int.Parse(Console.ReadLine()) - 1;
-    if (books[index].Stock == 0)
+    class Program
     {
-        Console.WriteLine(&quot;❌ 库存不足&quot;);
-        return;
+        static void Main()
+        {
+            public static void BorrowBook()
+            {
+                ShowBooks();
+                Console.Write(&quot;选择要借的图书编号：&quot;);
+                int index = int.Parse(Console.ReadLine()) - 1;
+                if (books[index].Stock == 0)
+                {
+                    Console.WriteLine(&quot;❌ 库存不足&quot;);
+                    return;
+                }
+                books[index].Stock--;
+                Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
+            }
+        }
     }
-    books[index].Stock--;
-    Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
 }</code></pre>
 </div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box">🐛 <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box">🤔 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382115584',this)">复制</button></div>
-<pre id="c_4382115584"><code class="language-csharp">public static void BorrowBook()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374048768',this)">复制</button></div>
+<pre id="c_4374048768"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (books.Count == 0)
+    class Program
     {
-        Console.WriteLine(&quot;暂无图书，无法借阅&quot;);
-        return;
+        static void Main()
+        {
+            public static void BorrowBook()
+            {
+                if (books.Count == 0)
+                {
+                    Console.WriteLine(&quot;暂无图书，无法借阅&quot;);
+                    return;
+                }
+                ShowBooks();
+                Console.Write(&quot;选择要借的图书编号：&quot;);
+                if (!int.TryParse(Console.ReadLine(), out int index))
+                {
+                    Console.WriteLine(&quot;请输入数字&quot;);
+                    return;
+                }
+                index = index - 1;
+                if (index &lt; 0 || index &gt;= books.Count)
+                {
+                    Console.WriteLine(&quot;编号不存在&quot;);
+                    return;
+                }
+                if (books[index].Stock == 0)
+                {
+                    Console.WriteLine(&quot;❌ 库存不足&quot;);
+                    return;
+                }
+                books[index].Stock--;
+                Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
+            }
+        }
     }
-    ShowBooks();
-    Console.Write(&quot;选择要借的图书编号：&quot;);
-    if (!int.TryParse(Console.ReadLine(), out int index))
-    {
-        Console.WriteLine(&quot;请输入数字&quot;);
-        return;
-    }
-    index = index - 1;
-    if (index &lt; 0 || index &gt;= books.Count)
-    {
-        Console.WriteLine(&quot;编号不存在&quot;);
-        return;
-    }
-    if (books[index].Stock == 0)
-    {
-        Console.WriteLine(&quot;❌ 库存不足&quot;);
-        return;
-    }
-    books[index].Stock--;
-    Console.WriteLine($&quot;✅ 已借出《{books[index].Title}》&quot;);
 }</code></pre>
-</div><div class="ok-box">💡 <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有「不对劲的情况」都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是「列表里一条记录都没有」，<code>Stock == 0</code> 是「这本书的库存被借光了但记录还在」。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4382115264',this)">复制</button></div>
-<pre id="c_4382115264"><code class="language-csharp">public static void ReturnBook()
+</div><div class="ok-box">💡 <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有「不对劲的情况」都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是「列表里一条记录都没有」，<code>Stock == 0</code> 是「这本书的库存被借光了但记录还在」。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374048448',this)">复制</button></div>
+<pre id="c_4374048448"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (books.Count == 0)
+    class Program
     {
-        Console.WriteLine(&quot;暂无图书，无法还书&quot;);
-        return;
+        static void Main()
+        {
+            public static void ReturnBook()
+            {
+                if (books.Count == 0)
+                {
+                    Console.WriteLine(&quot;暂无图书，无法还书&quot;);
+                    return;
+                }
+                ShowBooks();
+                Console.Write(&quot;选择要还的图书编号：&quot;);
+                if (!int.TryParse(Console.ReadLine(), out int index))
+                {
+                    Console.WriteLine(&quot;请输入数字&quot;);
+                    return;
+                }
+                index = index - 1;
+                if (index &lt; 0 || index &gt;= books.Count)
+                {
+                    Console.WriteLine(&quot;编号不存在&quot;);
+                    return;
+                }
+                books[index].Stock++;
+                Console.WriteLine($&quot;✅ 已归还《{books[index].Title}》&quot;);
+            }
+        }
     }
-    ShowBooks();
-    Console.Write(&quot;选择要还的图书编号：&quot;);
-    if (!int.TryParse(Console.ReadLine(), out int index))
-    {
-        Console.WriteLine(&quot;请输入数字&quot;);
-        return;
-    }
-    index = index - 1;
-    if (index &lt; 0 || index &gt;= books.Count)
-    {
-        Console.WriteLine(&quot;编号不存在&quot;);
-        return;
-    }
-    books[index].Stock++;
-    Console.WriteLine($&quot;✅ 已归还《{books[index].Title}》&quot;);
 }</code></pre>
 </div><div class="ok-box">💡 借书和还书放到一起看——你会发现写代码经常是<strong>「抄自己」</strong>：差不多的结构，改一两行就行。不是抄别人，是自己积累的套路。</div>
 </div></div>

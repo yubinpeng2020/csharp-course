@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -467,24 +470,28 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>参考案例框架 — 以&quot;图书管理&quot;为例</h1>
 <div class="ok-box">下面是一套可直接套用的骨架，把 <code>Book</code> 换成你的主题类即可。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376520640',this)">复制</button></div>
-<pre id="c_4376520640"><code class="language-csharp">// 1) 模型类：一条记录
-public class Book
-{
-    public int Id { get; set; }
-    public string Title { get; set; } = &quot;&quot;;
-    public string Author { get; set; } = &quot;&quot;;
-    public bool IsBorrowed { get; set; }
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342749760',this)">复制</button></div>
+<pre id="c_4342749760"><code class="language-csharp">using System;
 
-// 2) 数据集合 + 文件读写（放在 MainWindow.axaml.cs 或单独类）
-List&lt;Book&gt; books = new();
-string file = &quot;books.txt&quot;;
-
-void Load()
+namespace HelloWorld
 {
-    books.Clear();
-    if (File.Exists(file))
+    // 1) 模型类：一条记录
+    public class Book
+    {
+        public int Id { get; set; }
+        public string Title { get; set; } = &quot;&quot;;
+        public string Author { get; set; } = &quot;&quot;;
+        public bool IsBorrowed { get; set; }
+    }
+
+    // 2) 数据集合 + 文件读写（放在 MainWindow.axaml.cs 或单独类）
+    List&lt;Book&gt; books = new();
+    string file = &quot;books.txt&quot;;
+
+    void Load()
+    {
+        books.Clear();
+        if (File.Exists(file))
         foreach (var line in File.ReadAllLines(file))
         {
             var p = line.Split('|');
@@ -496,16 +503,17 @@ void Load()
                 IsBorrowed = bool.Parse(p[3])
             });
         }
-}
+    }
 
-void Save()
-{
-    var lines = books.Select(b =&gt; $&quot;{b.Id}|{b.Title}|{b.Author}|{b.IsBorrowed}&quot;);
-    File.WriteAllLines(file, lines);
+    void Save()
+    {
+        var lines = books.Select(b =&gt; $&quot;{b.Id}|{b.Title}|{b.Author}|{b.IsBorrowed}&quot;);
+        File.WriteAllLines(file, lines);
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376520512',this)">复制</button></div>
-<pre id="c_4376520512"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4342749632',this)">复制</button></div>
+<pre id="c_4342749632"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
     &lt;TextBox x:Name=&quot;authorBox&quot; Watermark=&quot;作者&quot; /&gt;

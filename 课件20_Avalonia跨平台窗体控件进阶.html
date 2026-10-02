@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -424,59 +427,81 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>CheckBox — 多选框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306397504',this)">复制</button></div>
-<pre id="c_4306397504"><code class="language-xml">&lt;CheckBox x:Name=&quot;chkMusic&quot; Content=&quot;音乐&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349528128',this)">复制</button></div>
+<pre id="c_4349528128"><code class="language-xml">&lt;CheckBox x:Name=&quot;chkMusic&quot; Content=&quot;音乐&quot; /&gt;
 &lt;CheckBox x:Name=&quot;chkSport&quot; Content=&quot;运动&quot; /&gt;
 &lt;CheckBox x:Name=&quot;chkGame&quot; Content=&quot;游戏&quot; /&gt;
 &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306397440',this)">复制</button></div>
-<pre id="c_4306397440"><code class="language-csharp">// 每个 CheckBox 独立，互不影响
-// CheckBox 的核心属性：IsChecked 是 bool?（null=未定，本课只用 true/false）
-public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349528064',this)">复制</button></div>
+<pre id="c_4349528064"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    string hobbies = &quot;你的爱好：&quot;;
-    if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
-    if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
-    if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
+    class Program
+    {
+        static void Main()
+        {
+            // 每个 CheckBox 独立，互不影响
+            // CheckBox 的核心属性：IsChecked 是 bool?（null=未定，本课只用 true/false）
+            public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                string hobbies = &quot;你的爱好：&quot;;
+                if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
+                if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
+                if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
 
-    if (chkMusic.IsChecked != true &amp;&amp; chkSport.IsChecked != true &amp;&amp; chkGame.IsChecked != true)
-        hobbies = &quot;你啥爱好都没有？&quot;;
+                if (chkMusic.IsChecked != true &amp;&amp; chkSport.IsChecked != true &amp;&amp; chkGame.IsChecked != true)
+                hobbies = &quot;你啥爱好都没有？&quot;;
 
-    result.Text = hobbies;
+                result.Text = hobbies;
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><table><tr><th>属性</th><th>说明</th></tr><tr><td><code>IsChecked</code></td><td><code>true</code>=选中，<code>false</code>=未选（类型是 <code>bool?</code>）</td></tr><tr><td><code>Content</code></td><td>选框后面的文字</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>RadioButton — 单选按钮</h1>
 <div class="card"><p>RadioButton 一组中只能选一个。<strong>关键：用 <code>GroupName</code> 属性分组——同 GroupName 的自动互斥，不同 GroupName 互不影响（不再需要 GroupBox 容器）。</strong></p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306073216',this)">复制</button></div>
-<pre id="c_4306073216"><code class="language-xml">&lt;RadioButton x:Name=&quot;rdoMale&quot; GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349240896',this)">复制</button></div>
+<pre id="c_4349240896"><code class="language-xml">&lt;RadioButton x:Name=&quot;rdoMale&quot; GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoFemale&quot; GroupName=&quot;gender&quot; Content=&quot;女&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoU18&quot; GroupName=&quot;age&quot; Content=&quot;18岁以下&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdo18to30&quot; GroupName=&quot;age&quot; Content=&quot;18-30岁&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoO30&quot; GroupName=&quot;age&quot; Content=&quot;30岁以上&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306071808',this)">复制</button></div>
-<pre id="c_4306071808"><code class="language-csharp">public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349240640',this)">复制</button></div>
+<pre id="c_4349240640"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
+    class Program
+    {
+        static void Main()
+        {
+            public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
 
-    string age = &quot;&quot;;
-    if (rdoU18.IsChecked == true) age = &quot;18岁以下&quot;;
-    else if (rdo18to30.IsChecked == true) age = &quot;18-30岁&quot;;
-    else if (rdoO30.IsChecked == true) age = &quot;30岁以上&quot;;
+                string age = &quot;&quot;;
+                if (rdoU18.IsChecked == true) age = &quot;18岁以下&quot;;
+                else if (rdo18to30.IsChecked == true) age = &quot;18-30岁&quot;;
+                else if (rdoO30.IsChecked == true) age = &quot;30岁以上&quot;;
 
-    result.Text = $&quot;性别：{gender}，年龄段：{age}&quot;;
+                result.Text = $&quot;性别：{gender}，年龄段：{age}&quot;;
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><table><tr><th>属性</th><th>说明</th></tr><tr><td><code>IsChecked</code></td><td>是否被选中（<code>bool?</code>）</td></tr><tr><td><code>Content</code></td><td>选项文字</td></tr><tr><td><code>GroupName</code></td><td>分组名，同组互斥</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>ComboBox — 下拉选择框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306071296',this)">复制</button></div>
-<pre id="c_4306071296"><code class="language-xml">&lt;ComboBox x:Name=&quot;gradeBox&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349239808',this)">复制</button></div>
+<pre id="c_4349239808"><code class="language-xml">&lt;ComboBox x:Name=&quot;gradeBox&quot;&gt;
     &lt;ComboBoxItem Content=&quot;大一&quot; /&gt;
     &lt;ComboBoxItem Content=&quot;大二&quot; /&gt;
     &lt;ComboBoxItem Content=&quot;大三&quot; /&gt;
@@ -484,22 +509,33 @@ public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e
 &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306071232',this)">复制</button></div>
-<pre id="c_4306071232"><code class="language-csharp">public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349239872',this)">复制</button></div>
+<pre id="c_4349239872"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // SelectedItem 是 ComboBoxItem，取它的 Content 才是文字
-    if (gradeBox.SelectedItem is ComboBoxItem item)
-        result.Text = $&quot;你选择了：{item.Content}&quot;;
-    else
-        result.Text = &quot;⚠️ 请先选择一个选项&quot;;   // 没有 MessageBox，用 TextBlock 提示
+    class Program
+    {
+        static void Main()
+        {
+            public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                // SelectedItem 是 ComboBoxItem，取它的 Content 才是文字
+                if (gradeBox.SelectedItem is ComboBoxItem item)
+                result.Text = $&quot;你选择了：{item.Content}&quot;;
+                else
+                result.Text = &quot;⚠️ 请先选择一个选项&quot;;   // 没有 MessageBox，用 TextBlock 提示
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><table><tr><th>属性</th><th>说明</th></tr><tr><td><code>Items</code> / 子元素</td><td>选项集合，XAML 里直接写 <code>&lt;ComboBoxItem&gt;</code></td></tr><tr><td><code>SelectedItem</code></td><td>选中的项（是 ComboBoxItem 对象）</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>ListBox — 列表框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306070784',this)">复制</button></div>
-<pre id="c_4306070784"><code class="language-xml">&lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349239360',this)">复制</button></div>
+<pre id="c_4349239360"><code class="language-xml">&lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
     &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;
     &lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
     &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;
@@ -507,77 +543,121 @@ public void OkBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e
 &lt;Button x:Name=&quot;showBtn&quot; Content=&quot;显示选中&quot; Click=&quot;ShowBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306070720',this)">复制</button></div>
-<pre id="c_4306070720"><code class="language-csharp">public void ShowBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349239424',this)">复制</button></div>
+<pre id="c_4349239424"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 遍历所有选中的项
-    string text = &quot;选中：&quot;;
-    foreach (var item in listMenu.SelectedItems)
-        if (item is ListBoxItem lbi) text += lbi.Content + &quot; &quot;;
-    result.Text = text;
+    class Program
+    {
+        static void Main()
+        {
+            public void ShowBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                // 遍历所有选中的项
+                string text = &quot;选中：&quot;;
+                foreach (var item in listMenu.SelectedItems)
+                if (item is ListBoxItem lbi) text += lbi.Content + &quot; &quot;;
+                result.Text = text;
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><table><tr><th>属性</th><th>说明</th></tr><tr><td><code>Items</code> / 子元素</td><td>列表项，XAML 里直接写 <code>&lt;ListBoxItem&gt;</code></td></tr><tr><td><code>SelectedItems</code></td><td>选中的多个项（多选时用）</td></tr><tr><td><code>SelectionMode</code></td><td><code>Single</code> = 单选，<code>Multiple</code> = 多选</td></tr></table></div><div class="card"><ul><li>添加项也可在代码里：<code>listMenu.Items.Add(&quot;鸡翅&quot;);</code></li><li>删除选中项：<code>listMenu.Items.Remove(listMenu.SelectedItem);</code></li></ul></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>其他常用控件</h1>
 <div class="card"><p><strong>NumericUpDown — 数字输入框</strong>：</p></div><div class="card"><p>限制用户只能输入数字，有 ▲▼ 按钮调节。关键属性：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306069632',this)">复制</button></div>
-<pre id="c_4306069632"><code class="language-xml">&lt;NumericUpDown x:Name=&quot;scoreBox&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;5&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349237440',this)">复制</button></div>
+<pre id="c_4349237440"><code class="language-xml">&lt;NumericUpDown x:Name=&quot;scoreBox&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;5&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306069568',this)">复制</button></div>
-<pre id="c_4306069568"><code class="language-csharp">// 读取值：Value 是 decimal 类型，给 int 用需强转 (int)
-int qty = (int)scoreBox.Value;
-double price = 9.9;
-result.Text = $&quot;总价：{qty * price:F1}&quot;;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349237376',this)">复制</button></div>
+<pre id="c_4349237376"><code class="language-csharp">using System;
 
-// 常用属性（在 XAML 里设置）：
-// Minimum = 0, Maximum = 100   → 限制范围
-// DecimalPlaces = 0           → 小数位数（0=整数）
-// Increment = 1               → 每次点击增减多少
-// Value = 5                   → 默认值</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 读取值：Value 是 decimal 类型，给 int 用需强转 (int)
+            int qty = (int)scoreBox.Value;
+            double price = 9.9;
+            result.Text = $&quot;总价：{qty * price:F1}&quot;;
+
+            // 常用属性（在 XAML 里设置）：
+            // Minimum = 0, Maximum = 100   → 限制范围
+            // DecimalPlaces = 0           → 小数位数（0=整数）
+            // Increment = 1               → 每次点击增减多少
+            // Value = 5                   → 默认值
+        }
+    }
+}</code></pre>
 </div><div class="card"><p><strong>分组（替代 GroupBox）</strong>：</p></div><div class="card"><p>Avalonia 没有 <code>GroupBox</code> 容器。用 <strong>布局容器 + 一个 <code>TextBlock</code> 标题</strong> 来分组即可，例如用 <code>StackPanel</code> 包一组控件，上面放标题文字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306069248',this)">复制</button></div>
-<pre id="c_4306069248"><code class="language-xml">&lt;StackPanel&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349237056',this)">复制</button></div>
+<pre id="c_4349237056"><code class="language-xml">&lt;StackPanel&gt;
     &lt;TextBlock Text=&quot;性别&quot; FontWeight=&quot;Bold&quot; /&gt;
     &lt;RadioButton GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
     &lt;RadioButton GroupName=&quot;gender&quot; Content=&quot;女&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><p><strong>Image — 图片显示</strong>（替代 PictureBox）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306069312',this)">复制</button></div>
-<pre id="c_4306069312"><code class="language-xml">&lt;Image x:Name=&quot;photo&quot; Source=&quot;photo.jpg&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349237120',this)">复制</button></div>
+<pre id="c_4349237120"><code class="language-xml">&lt;Image x:Name=&quot;photo&quot; Source=&quot;photo.jpg&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306069440',this)">复制</button></div>
-<pre id="c_4306069440"><code class="language-csharp">// 代码动态换图（图片放到项目根目录，并设为&quot;复制到输出目录&quot;）：
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349237248',this)">复制</button></div>
+<pre id="c_4349237248"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 代码动态换图（图片放到项目根目录，并设为&quot;复制到输出目录&quot;）：
 using Avalonia.Media.Imaging;
-photo.Source = new Bitmap(&quot;photo.jpg&quot;);</code></pre>
+            photo.Source = new Bitmap(&quot;photo.jpg&quot;);
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>注意：Avalonia 没有 <code>PictureBox</code> 和 <code>Image.FromFile</code>，图片控件叫 <code>Image</code>，用 <code>Source</code> 设图片（<code>Bitmap</code>）</li></ul></div><div class="card"><p><strong>Slider — 滑块</strong>：</p></div><div class="card"><p>拖动选一个范围内的值，比 NumericUpDown 更直观：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306068864',this)">复制</button></div>
-<pre id="c_4306068864"><code class="language-xml">&lt;Slider x:Name=&quot;volSlider&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;50&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349236672',this)">复制</button></div>
+<pre id="c_4349236672"><code class="language-xml">&lt;Slider x:Name=&quot;volSlider&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;50&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306068800',this)">复制</button></div>
-<pre id="c_4306068800"><code class="language-csharp">int v = (int)volSlider.Value;   // 拖动后读取当前值</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349236608',this)">复制</button></div>
+<pre id="c_4349236608"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int v = (int)volSlider.Value;   // 拖动后读取当前值
+        }
+    }
+}</code></pre>
 </div><div class="card"><p><strong>Border — 边框 / 底色</strong>（给一组控件加框分组）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306068608',this)">复制</button></div>
-<pre id="c_4306068608"><code class="language-xml">&lt;Border BorderBrush=&quot;Gray&quot; BorderThickness=&quot;1&quot; CornerRadius=&quot;6&quot; Padding=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349236416',this)">复制</button></div>
+<pre id="c_4349236416"><code class="language-xml">&lt;Border BorderBrush=&quot;Gray&quot; BorderThickness=&quot;1&quot; CornerRadius=&quot;6&quot; Padding=&quot;10&quot;&gt;
     &lt;StackPanel&gt;
         &lt;TextBlock Text=&quot;一组内容&quot; /&gt;
     &lt;/StackPanel&gt;
 &lt;/Border&gt;</code></pre>
 </div><div class="card"><p><strong>ScrollViewer — 滚动区域</strong>：内容超出容器高度时自动出现滚动条：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306068672',this)">复制</button></div>
-<pre id="c_4306068672"><code class="language-xml">&lt;ScrollViewer Height=&quot;200&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349236480',this)">复制</button></div>
+<pre id="c_4349236480"><code class="language-xml">&lt;ScrollViewer Height=&quot;200&quot;&gt;
     &lt;StackPanel&gt; ...很多控件... &lt;/StackPanel&gt;
 &lt;/ScrollViewer&gt;</code></pre>
 </div><div class="card"><p><strong>ToolTip — 悬浮提示</strong>：鼠标移到控件上显示说明文字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306068416',this)">复制</button></div>
-<pre id="c_4306068416"><code class="language-xml">&lt;Button Content=&quot;?&quot; ToolTip.Tip=&quot;点这里保存&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349236224',this)">复制</button></div>
+<pre id="c_4349236224"><code class="language-xml">&lt;Button Content=&quot;?&quot; ToolTip.Tip=&quot;点这里保存&quot; /&gt;</code></pre>
 </div><div class="ok-box">💡 <strong>控件地图小结</strong>：本课已学——文本(TextBlock/TextBox)、按钮(Button)、选择(CheckBox/RadioButton/ComboBox/ListBox)、数字(NumericUpDown/Slider)、图片(Image)、布局(StackPanel/Grid/DockPanel/WrapPanel/Canvas)。Avalonia 控件很多，记住&quot;画窗口、摆控件、写事件&quot;这套路，遇到新控件查官方文档即可。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习1 — 学生信息登记表</h1>
 <div class="ok-box">用 RadioButton（单选）、CheckBox（多选）、ComboBox（下拉）、NumericUpDown（数字）收集信息，提交后汇总显示——综合运用多种输入控件。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306067840',this)">复制</button></div>
-<pre id="c_4306067840"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349235520',this)">复制</button></div>
+<pre id="c_4349235520"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;姓名&quot; /&gt;
     &lt;StackPanel&gt;
         &lt;TextBlock Text=&quot;性别&quot; FontWeight=&quot;Bold&quot; /&gt;
@@ -599,71 +679,104 @@ photo.Source = new Bitmap(&quot;photo.jpg&quot;);</code></pre>
     &lt;Button x:Name=&quot;submitBtn&quot; Content=&quot;提交&quot; Click=&quot;SubmitBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306067776',this)">复制</button></div>
-<pre id="c_4306067776"><code class="language-csharp">public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349235456',this)">复制</button></div>
+<pre id="c_4349235456"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    string name = nameBox.Text;
-    string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
+    class Program
+    {
+        static void Main()
+        {
+            public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                string name = nameBox.Text;
+                string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
 
-    string hobbies = &quot;&quot;;
-    if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
-    if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
-    if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
-    if (string.IsNullOrEmpty(hobbies)) hobbies = &quot;无&quot;;
+                string hobbies = &quot;&quot;;
+                if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
+                if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
+                if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
+                if (string.IsNullOrEmpty(hobbies)) hobbies = &quot;无&quot;;
 
-    string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.Content.ToString() : &quot;未选&quot;;
-    int score = (int)scoreBox.Value;
+                string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.Content.ToString() : &quot;未选&quot;;
+                int score = (int)scoreBox.Value;
 
-    result.Text = $&quot;姓名：{name}
-性别：{gender}
-爱好：{hobbies}
-年级：{grade}
-评分：{score}&quot;;
+                result.Text = $&quot;姓名：{name}
+                性别：{gender}
+                爱好：{hobbies}
+                年级：{grade}
+                评分：{score}&quot;;
+            }
+        }
+    }
 }</code></pre>
-</div><div class="card"><ul><li>动手：把 NumericUpDown 的 <code>Maximum</code> 从 100 改成 30，再改回 100，对比控件变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>RadioButton</code> 要<strong>互斥</strong>，必须设相同的 <code>GroupName</code>（如 <code>GroupName=&quot;g&quot;</code>），否则可以同时选中</li><li><code>CheckBox.IsChecked</code> 是 <code>bool?</code>（可空布尔），用 <code>== true</code> 判断最安全</li><li><code>ComboBoxItem</code> 的 <code>Content</code> 才是文字，<code>SelectedItem</code> 是选中的整行对象，要 <code>as ComboBoxItem</code> 转换后再取 <code>.Content</code></li><li><code>NumericUpDown</code> 直接 <code>.Value</code> 取数字，设 <code>Minimum</code>/<code>Maximum</code> 限制范围</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，让&quot;提交&quot;按钮能把汇总信息显示在结果 TextBlock：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306067264',this)">复制</button></div>
-<pre id="c_4306067264"><code class="language-csharp">public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+</div><div class="card"><ul><li>动手：把 NumericUpDown 的 <code>Maximum</code> 从 100 改成 30，再改回 100，对比控件变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>RadioButton</code> 要<strong>互斥</strong>，必须设相同的 <code>GroupName</code>（如 <code>GroupName=&quot;g&quot;</code>），否则可以同时选中</li><li><code>CheckBox.IsChecked</code> 是 <code>bool?</code>（可空布尔），用 <code>== true</code> 判断最安全</li><li><code>ComboBoxItem</code> 的 <code>Content</code> 才是文字，<code>SelectedItem</code> 是选中的整行对象，要 <code>as ComboBoxItem</code> 转换后再取 <code>.Content</code></li><li><code>NumericUpDown</code> 直接 <code>.Value</code> 取数字，设 <code>Minimum</code>/<code>Maximum</code> 限制范围</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，让&quot;提交&quot;按钮能把汇总信息显示在结果 TextBlock：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349234944',this)">复制</button></div>
+<pre id="c_4349234944"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    string name = nameBox.Text;
-    string gender = rdoMale.<span class="code-blank">___</span> == true ? &quot;男&quot; : &quot;女&quot;;
+    class Program
+    {
+        static void Main()
+        {
+            public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                string name = nameBox.Text;
+                string gender = rdoMale.<span class="code-blank">___</span> == true ? &quot;男&quot; : &quot;女&quot;;
 
-    string hobbies = &quot;&quot;;
-    if (chkMusic.<span class="code-blank">___</span> == true) hobbies += &quot;<span class="code-blank">___</span> &quot;;
-    if (chkSport.<span class="code-blank">___</span> == true) hobbies += &quot;<span class="code-blank">___</span> &quot;;
-    if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
-    if (<span class="code-blank">___</span> (hobbies)) hobbies = &quot;无&quot;;
+                string hobbies = &quot;&quot;;
+                if (chkMusic.<span class="code-blank">___</span> == true) hobbies += &quot;<span class="code-blank">___</span> &quot;;
+                if (chkSport.<span class="code-blank">___</span> == true) hobbies += &quot;<span class="code-blank">___</span> &quot;;
+                if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
+                if (<span class="code-blank">___</span> (hobbies)) hobbies = &quot;无&quot;;
 
-    string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.<span class="code-blank">___</span>.ToString() : &quot;未选&quot;;
-    int score = (<span class="code-blank">___</span>)scoreBox.<span class="code-blank">___</span>;
+                string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.<span class="code-blank">___</span>.ToString() : &quot;未选&quot;;
+                int score = (<span class="code-blank">___</span>)scoreBox.<span class="code-blank">___</span>;
 
-    result.Text = $&quot;姓名：{name}
-<span class="code-blank">___</span>：{gender}
-爱好：{hobbies}
-年级：{grade}
-评分：{score}&quot;;
+                result.Text = $&quot;姓名：{name}
+                <span class="code-blank">___</span>：{gender}
+                爱好：{hobbies}
+                年级：{grade}
+                评分：{score}&quot;;
+            }
+        }
+    }
 }</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306067584',this)">复制</button></div>
-<pre id="c_4306067584"><code class="language-csharp">public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349235264',this)">复制</button></div>
+<pre id="c_4349235264"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    string name = nameBox.Text;
-    string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
+    class Program
+    {
+        static void Main()
+        {
+            public void SubmitBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                string name = nameBox.Text;
+                string gender = rdoMale.IsChecked == true ? &quot;男&quot; : &quot;女&quot;;
 
-    string hobbies = &quot;&quot;;
-    if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
-    if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
-    if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
-    if (string.IsNullOrEmpty(hobbies)) hobbies = &quot;无&quot;;
+                string hobbies = &quot;&quot;;
+                if (chkMusic.IsChecked == true) hobbies += &quot;音乐 &quot;;
+                if (chkSport.IsChecked == true) hobbies += &quot;运动 &quot;;
+                if (chkGame.IsChecked == true)  hobbies += &quot;游戏 &quot;;
+                if (string.IsNullOrEmpty(hobbies)) hobbies = &quot;无&quot;;
 
-    string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.Content.ToString() : &quot;未选&quot;;
-    int score = (int)scoreBox.Value;
+                string grade = gradeBox.SelectedItem is ComboBoxItem gi ? gi.Content.ToString() : &quot;未选&quot;;
+                int score = (int)scoreBox.Value;
 
-    result.Text = $&quot;姓名：{name}
-性别：{gender}
-爱好：{hobbies}
-年级：{grade}
-评分：{score}&quot;;
+                result.Text = $&quot;姓名：{name}
+                性别：{gender}
+                爱好：{hobbies}
+                年级：{grade}
+                评分：{score}&quot;;
+            }
+        }
+    }
 }</code></pre>
 </div></div></div>
 </div></div>
@@ -677,8 +790,8 @@ photo.Source = new Bitmap(&quot;photo.jpg&quot;);</code></pre>
 操作：选&quot;汉堡&quot;→ 点&quot;添加&quot;→ 选&quot;可乐&quot;→ 点&quot;添加&quot;
 （点&quot;汉堡&quot;再点&quot;&lt;&lt;移除&quot;→ 汉堡从已选消失，总价减少15）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>已选列表：汉堡、可乐
 总计：¥23</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>菜品和价格用 <code>Dictionary&lt;string,int&gt;</code> 存储，<code>menu[&quot;汉堡&quot;]</code> 直接取值</li><li>ListBox 的选中项通过 <code>SelectedItem is ListBoxItem</code> 判断类型后取 <code>.Content</code></li><li>总价用 <code>int total</code> 字段累加；移除时 <code>total -= menu[...]</code> 减去</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306065728',this)">复制</button></div>
-<pre id="c_4306065728"><code class="language-xml">&lt;DockPanel&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349233280',this)">复制</button></div>
+<pre id="c_4349233280"><code class="language-xml">&lt;DockPanel&gt;
     &lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;<span class="code-blank">___</span>&quot;&gt;
         &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;&lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
         &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;&lt;ListBoxItem Content=&quot;鸡翅&quot; /&gt;
@@ -688,35 +801,46 @@ photo.Source = new Bitmap(&quot;photo.jpg&quot;);</code></pre>
     &lt;Button x:Name=&quot;addBtn&quot; Content=&quot;添加&gt;&gt;&quot; Click=&quot;AddBtn_Click&quot; /&gt;
     &lt;Button x:Name=&quot;removeBtn&quot; Content=&quot;&lt;&lt;移除&quot; Click=&quot;RemoveBtn_Click&quot; /&gt;
 &lt;/DockPanel&gt;</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306066112',this)">复制</button></div>
-<pre id="c_4306066112"><code class="language-csharp">Dictionary&lt;string, int&gt; menu = new Dictionary&lt;string, int&gt;
-{ {&quot;汉堡&quot;, 15}, {&quot;薯条&quot;, <span class="code-blank">___</span>}, {&quot;可乐&quot;, 8}, {&quot;鸡翅&quot;, <span class="code-blank">___</span>} };
+</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349233664',this)">复制</button></div>
+<pre id="c_4349233664"><code class="language-csharp">using System;
 
-<span class="code-blank">___</span> total = 0;
-
-public void AddBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+namespace HelloWorld
 {
-    if (<span class="code-blank">___</span> is __ sel)
+    class Program
     {
-        listOrder.Items.Add(sel.<span class="code-blank">___</span>);
-        total += <span class="code-blank">___</span>[sel.Content.ToString()];
-        totalText.Text = $&quot;<span class="code-blank">___</span>：¥{total}&quot;;
-    }
-}
+        static void Main()
+        {
+            Dictionary&lt;string, int&gt; menu = new Dictionary&lt;string, int&gt;
+            { {&quot;汉堡&quot;, 15}, {&quot;薯条&quot;, <span class="code-blank">___</span>}, {&quot;可乐&quot;, 8}, {&quot;鸡翅&quot;, <span class="code-blank">___</span>} };
 
-public void RemoveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-{
-    if (<span class="code-blank">___</span> is ListBoxItem rem)
-    {
-        <span class="code-blank">___</span>Items.Remove(rem);
-        total -= menu[rem.<span class="code-blank">___</span>()];
-        totalText.Text = $&quot;<span class="code-blank">___</span>：¥{<span class="code-blank">___</span>}&quot;;
+            <span class="code-blank">___</span> total = 0;
+
+            public void AddBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                if (<span class="code-blank">___</span> is __ sel)
+                {
+                    listOrder.Items.Add(sel.<span class="code-blank">___</span>);
+                    total += <span class="code-blank">___</span>[sel.Content.ToString()];
+                    totalText.Text = $&quot;<span class="code-blank">___</span>：¥{total}&quot;;
+                }
+            }
+
+            public void RemoveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                if (<span class="code-blank">___</span> is ListBoxItem rem)
+                {
+                    <span class="code-blank">___</span>Items.Remove(rem);
+                    total -= menu[rem.<span class="code-blank">___</span>()];
+                    totalText.Text = $&quot;<span class="code-blank">___</span>：¥{<span class="code-blank">___</span>}&quot;;
+                }
+            }
+        }
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4306065664',this)">复制</button></div>
-<pre id="c_4306065664"><code class="language-xml">&lt;DockPanel&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4349233216',this)">复制</button></div>
+<pre id="c_4349233216"><code class="language-xml">&lt;DockPanel&gt;
     &lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
         &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;&lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
         &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;&lt;ListBoxItem Content=&quot;鸡翅&quot; /&gt;
@@ -726,30 +850,41 @@ public void RemoveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventAr
     &lt;Button x:Name=&quot;addBtn&quot; Content=&quot;添加&gt;&gt;&quot; Click=&quot;AddBtn_Click&quot; /&gt;
     &lt;Button x:Name=&quot;removeBtn&quot; Content=&quot;&lt;&lt;移除&quot; Click=&quot;RemoveBtn_Click&quot; /&gt;
 &lt;/DockPanel&gt;</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306065600',this)">复制</button></div>
-<pre id="c_4306065600"><code class="language-csharp">Dictionary&lt;string, int&gt; menu = new Dictionary&lt;string, int&gt;
-{ {&quot;汉堡&quot;, 15}, {&quot;薯条&quot;, 10}, {&quot;可乐&quot;, 8}, {&quot;鸡翅&quot;, 12} };
+</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349233152',this)">复制</button></div>
+<pre id="c_4349233152"><code class="language-csharp">using System;
 
-int total = 0;
-
-public void AddBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+namespace HelloWorld
 {
-    if (listMenu.SelectedItem is ListBoxItem sel)
+    class Program
     {
-        listOrder.Items.Add(sel.Content);
-        total += menu[sel.Content.ToString()];
-        totalText.Text = $&quot;总计：¥{total}&quot;;
-    }
-}
+        static void Main()
+        {
+            Dictionary&lt;string, int&gt; menu = new Dictionary&lt;string, int&gt;
+            { {&quot;汉堡&quot;, 15}, {&quot;薯条&quot;, 10}, {&quot;可乐&quot;, 8}, {&quot;鸡翅&quot;, 12} };
 
-public void RemoveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-{
-    if (listOrder.SelectedItem is ListBoxItem rem)
-    {
-        listOrder.Items.Remove(rem);
-        total -= menu[rem.Content.ToString()];
-        totalText.Text = $&quot;总计：¥{total}&quot;;
+            int total = 0;
+
+            public void AddBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                if (listMenu.SelectedItem is ListBoxItem sel)
+                {
+                    listOrder.Items.Add(sel.Content);
+                    total += menu[sel.Content.ToString()];
+                    totalText.Text = $&quot;总计：¥{total}&quot;;
+                }
+            }
+
+            public void RemoveBtn_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+            {
+                if (listOrder.SelectedItem is ListBoxItem rem)
+                {
+                    listOrder.Items.Remove(rem);
+                    total -= menu[rem.Content.ToString()];
+                    totalText.Text = $&quot;总计：¥{total}&quot;;
+                }
+            }
+        }
     }
 }</code></pre>
 </div></div></div>

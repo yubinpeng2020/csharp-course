@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -434,169 +437,334 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>while 循环</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340150080',this)">复制</button></div>
-<pre id="c_4340150080"><code class="language-csharp">while (条件)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344110400',this)">复制</button></div>
+<pre id="c_4344110400"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 条件为 true 时重复执行
+    class Program
+    {
+        static void Main()
+        {
+            while (条件)
+            {
+                // 条件为 true 时重复执行
+            }
+        }
+    }
 }</code></pre>
 </div><div class="card"><h3>正确示例：数到 5</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340149888',this)">复制</button></div>
-<pre id="c_4340149888"><code class="language-csharp">int count = 1;               // ① 初始值
-while (count &lt;= 5)           // ② 条件判断
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344110272',this)">复制</button></div>
+<pre id="c_4344110272"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine($&quot;第{count}次&quot;);
-    count++;                 // ③ 更新变量（不能忘！）
-}
-// 输出：第1次 第2次 … 第5次</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int count = 1;               // ① 初始值
+            while (count &lt;= 5)           // ② 条件判断
+            {
+                Console.WriteLine($&quot;第{count}次&quot;);
+                count++;                 // ③ 更新变量（不能忘！）
+            }
+            // 输出：第1次 第2次 … 第5次
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>条件为 true → 执行花括号里的代码 → 回到条件 → 再判断 → 直到条件为 false 退出</li><li>每次执行到最后，一定要让循环条件<strong>向 false 靠拢</strong></li></ul></div><div class="card"><h3>☠️ 死循环——最常见的坑</h3><p>忘了更新变量，条件永远为 true：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340149440',this)">复制</button></div>
-<pre id="c_4340149440"><code class="language-csharp">int x = 1;
-while (x &lt;= 5)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344109824',this)">复制</button></div>
+<pre id="c_4344109824"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine(x);
-    // 忘了 x++ ← x 始终是 1，条件 x &lt;= 5 永远成立！
-}
-// 输出：1 1 1 1 1 1 1 1 1 1 1 1 …（永远不会停）</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int x = 1;
+            while (x &lt;= 5)
+            {
+                Console.WriteLine(x);
+                // 忘了 x++ ← x 始终是 1，条件 x &lt;= 5 永远成立！
+            }
+            // 输出：1 1 1 1 1 1 1 1 1 1 1 1 …（永远不会停）
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>为什么这是大问题？</h3></div><div class="card"><ul><li>程序吃满 CPU，界面卡死，鼠标键盘没反应</li><li>在终端里 → 按 <code>Ctrl + C</code> 强制停止</li><li>在图形界面程序里 → 窗口冻结，只能强制关闭</li></ul></div><div class="ok-box">🔑 写 while 之前先想好三件事：① 初始值是什么 ② 什么时候停 ③ 每一步怎么变</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>do-while 循环</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340148928',this)">复制</button></div>
-<pre id="c_4340148928"><code class="language-csharp">do
-{
-    // 先执行一次
-} while (条件);  // 然后判断，条件成立继续</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340148800',this)">复制</button></div>
-<pre id="c_4340148800"><code class="language-csharp">int count = 1;
-do
-{
-    Console.WriteLine($&quot;第{count}次&quot;);
-    count++;
-} while (count &lt;= 5);
-// 输出：第1次 第2次 … 第5次</code></pre>
-</div><div class="card"><ul><li>while vs do-while 的区别：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340148864',this)">复制</button></div>
-<pre id="c_4340148864"><code class="language-csharp">  int x = 10;
-  while (x &lt; 5) { Console.WriteLine(&quot;不会输出&quot;); }   // 条件一开始就不成立
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344110976',this)">复制</button></div>
+<pre id="c_4344110976"><code class="language-csharp">using System;
 
-  do { Console.WriteLine(&quot;会输出一次&quot;); } while (x &lt; 5); // 至少执行一次！</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            do
+            {
+                // 先执行一次
+            } while (条件);  // 然后判断，条件成立继续
+        }
+    }
+}</code></pre>
+</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344109440',this)">复制</button></div>
+<pre id="c_4344109440"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int count = 1;
+            do
+            {
+                Console.WriteLine($&quot;第{count}次&quot;);
+                count++;
+            } while (count &lt;= 5);
+            // 输出：第1次 第2次 … 第5次
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li>while vs do-while 的区别：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344109248',this)">复制</button></div>
+<pre id="c_4344109248"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int x = 10;
+            while (x &lt; 5) { Console.WriteLine(&quot;不会输出&quot;); }   // 条件一开始就不成立
+
+            do { Console.WriteLine(&quot;会输出一次&quot;); } while (x &lt; 5); // 至少执行一次！
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>口诀：<strong>while 先看后做，do-while 先做后看</strong></li></ul></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>for 循环</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340148224',this)">复制</button></div>
-<pre id="c_4340148224"><code class="language-csharp">for (初始化; 条件; 更新)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344107968',this)">复制</button></div>
+<pre id="c_4344107968"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 循环体
+    class Program
+    {
+        static void Main()
+        {
+            for (初始化; 条件; 更新)
+            {
+                // 循环体
+            }
+        }
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340148096',this)">复制</button></div>
-<pre id="c_4340148096"><code class="language-csharp">for (int i = 1; i &lt;= 5; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344107904',this)">复制</button></div>
+<pre id="c_4344107904"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.WriteLine($&quot;第{i}次&quot;);
-}
-// 输出：第1次 第2次 … 第5次</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 1; i &lt;= 5; i++)
+            {
+                Console.WriteLine($&quot;第{i}次&quot;);
+            }
+            // 输出：第1次 第2次 … 第5次
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>执行顺序图解（i=1 开始，i&gt;5 退出）：</p></div><pre class="plain-box"><code>初始化  →  条件判断  →  循环体  →  更新  →  条件判断  → ...
 i=1      i&lt;=5? ✅     输出     i++变2    i&lt;=5? ✅
          i&lt;=5? ✅     输出     i++变3    i&lt;=5? ✅
          ...
          i&lt;=5? ❌ 停止</code></pre><div class="card"><ul><li>口诀：<strong>初始只一次，每次先判断后执行，每次执行完再更新</strong></li><li><code>i</code> 只在 for 内部有效</li></ul></div><div class="card"><h3>示例：求 1+2+3+...+100 的和</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340147584',this)">复制</button></div>
-<pre id="c_4340147584"><code class="language-csharp">int sum = 0;
-for (int i = 1; i &lt;= 100; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344107776',this)">复制</button></div>
+<pre id="c_4344107776"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    sum += i;    // 等价于 sum = sum + i
-}
-Console.WriteLine($&quot;1到100的和是：{sum}&quot;);  // 5050</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int sum = 0;
+            for (int i = 1; i &lt;= 100; i++)
+            {
+                sum += i;    // 等价于 sum = sum + i
+            }
+            Console.WriteLine($&quot;1到100的和是：{sum}&quot;);  // 5050
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>示例：求 1~100 中所有偶数的和</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340147456',this)">复制</button></div>
-<pre id="c_4340147456"><code class="language-csharp">int sum2 = 0;
-for (int i = 1; i &lt;= 100; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344107264',this)">复制</button></div>
+<pre id="c_4344107264"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (i % 2 == 0)   // 只加偶数
-        sum2 += i;
-}
-Console.WriteLine($&quot;偶数和：{sum2}&quot;);  // 2550</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int sum2 = 0;
+            for (int i = 1; i &lt;= 100; i++)
+            {
+                if (i % 2 == 0)   // 只加偶数
+                sum2 += i;
+            }
+            Console.WriteLine($&quot;偶数和：{sum2}&quot;);  // 2550
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li><code>sum += i</code> 是 <code>sum = sum + i</code> 的简写，每次循环把 i 累加进去</li><li>配合 if 可以在循环里筛选数据</li></ul></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>VS Code 调试技巧</h1>
 <div class="card"><p>靠 <code>Console.WriteLine</code> 查 bug 就像抹黑走路——调试器让你直接<strong>在代码里停车，看清每个变量</strong>。</p></div><div class="card"><h3>场景：成绩求和为什么不对？</h3></div><div class="card"><p>三科成绩 85、90、78，心算都知道是 253，但程序输出 168——少了一科。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340149056',this)">复制</button></div>
-<pre id="c_4340149056"><code class="language-csharp">int[] scores = { 85, 90, 78 };
-int sum = 0;
-for (int i = 1; i &lt; scores.Length; i++)   // 🤔 i 从 1 开始？
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344110784',this)">复制</button></div>
+<pre id="c_4344110784"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    sum += scores[i];                       // 🤔 每次加的是什么？
-}
-Console.WriteLine($&quot;总分：{sum}&quot;);          // 输出 168，而不是 253</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78 };
+            int sum = 0;
+            for (int i = 1; i &lt; scores.Length; i++)   // 🤔 i 从 1 开始？
+            {
+                sum += scores[i];                       // 🤔 每次加的是什么？
+            }
+            Console.WriteLine($&quot;总分：{sum}&quot;);          // 输出 168，而不是 253
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>程序没崩溃，但结果不对——这种<strong>&quot;静默 bug&quot;</strong>最难排查。来，用调试器拆开看。</p></div><div class="card"><h3>① 设断点</h3><img src="images/课件7/课件7_vs_breakpoint.png" alt="设断点" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>点 for 循环的 <code>}</code>（右大括号）和 <code>Console.WriteLine(...)</code> 两行的<strong>行号左边</strong>，各出现一个<strong>红色圆点</strong></li><li>程序跑到这两行会自动停——循环结束停在大括号看累加值，输出行停住看最终结果</li></ul></div><div class="card"><h3>② 启动调试</h3><img src="images/课件7/课件7_vs_debug_ui.png" alt="启动调试" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>按 <strong>F5</strong></li><li>或点左侧栏的<strong>运行与调试</strong>按钮（虫子图标），再点<strong>运行和调试</strong></li></ul><p>程序启动，到断点处自动暂停。此时注意三个区域：</p><ul><li><strong>代码区</strong>：黄色高亮行 = 即将执行但还没执行的一行</li><li><strong>变量面板</strong>（左侧）：显示所有局部变量的当前值</li><li><strong>调试工具栏</strong>（顶部）：F10（逐过程）、F11（逐语句）、F5（继续）</li></ul></div><div class="card"><h3>③ 逐过程分析（F10）</h3><img src="images/课件7/课件7_vs_hover.png" alt="逐过程" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>每按一次 F10，执行一行代码，观察变量面板的变化：</li></ul></div><div class="card"><table><tr><th>停在 for 的 <code>}</code></th><th><code>i</code> 的值</th><th><code>scores[i]</code></th><th><code>sum</code></th></tr><tr><td>第 1 次</td><td>1</td><td>90</td><td>90</td></tr><tr><td>第 2 次</td><td>2</td><td>78</td><td>168</td></tr></table></div><img src="images/课件7/课件7_vs_sum_168.png" alt="循环结束 sum=168" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><div class="card"><ul><li>按 F5 跳到 <code>Console.WriteLine</code> 断点，此时 sum = 168——不对，应该 253</li><li><strong>发现了！</strong> <code>i=1</code> 拿的是第二个元素（90），第一个元素 85 根本就没加到 sum 里。循环从 1 跑到 2，漏掉了索引 0 的 85</li><li>把 <code>int i = 1</code> 改成 <code>int i = 0</code>，再跑一次——sum 变成 253，对了</li></ul></div><div class="card"><h3>快捷键速查</h3></div><div class="card"><table><tr><th>操作</th><th>快捷键</th><th>相当于</th></tr><tr><td>设/取消断点</td><td><code>F9</code> / 点行号左边</td><td>在这里埋个&quot;停&quot;</td></tr><tr><td>开始调试</td><td><code>F5</code></td><td>跑到下一个断点</td></tr><tr><td>逐过程</td><td><code>F10</code></td><td>执行一行，不进方法</td></tr><tr><td>逐语句</td><td><code>F11</code></td><td>钻进去看方法内部</td></tr><tr><td>停止调试</td><td><code>Shift+F5</code></td><td>退出调试模式</td></tr></table></div><div class="ok-box">💡 出异常时调试器会自动停在崩溃行——直接看是哪行炸的、观察变量值就能定位原因。</div><div class="ok-box">🤖 <strong>AI 辅助调试</strong>：异常信息看不懂？把红色的错误信息（比如 <code>IndexOutOfRangeException</code>）整段贴给 AI，让它用中文翻译：哪行崩了、什么原因、怎么修。但修完要自己用调试器走一遍，确认真的修好了。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习1 — 三种循环对比</h1>
 <div class="ok-box">同一需求，三种写法：</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340143424',this)">复制</button></div>
-<pre id="c_4340143424"><code class="language-csharp">// 需求：输出 1 到 5
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344103872',this)">复制</button></div>
+<pre id="c_4344103872"><code class="language-csharp">using System;
 
-// while
-int i = 1;
-while (i &lt;= 5) { Console.WriteLine(i); i++; }
-
-// do-while
-int j = 1;
-do { Console.WriteLine(j); j++; } while (j &lt;= 5);
-
-// for（最简洁）
-for (int k = 1; k &lt;= 5; k++) { Console.WriteLine(k); }</code></pre>
-</div><div class="card"><ul><li>动手：用三种循环分别计算 1~10 的乘积</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>while：适合次数不确定的场景</li><li>do-while：至少执行一次，适合&quot;先做再说&quot;</li><li>for：初始化+条件+更新写在一起，次数确定时最简洁</li><li>三种循环可以互相替换，选最顺手的即可</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用三种循环输出 1 到 N 的平方：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340142912',this)">复制</button></div>
-<pre id="c_4340142912"><code class="language-csharp">int n = 3;  // 输出 1²、2²、3²
-
-// 补全 while 版本
-int a = 1;
-while (<span class="code-blank">___</span> &lt;= n) { Console.WriteLine(a * a); a++; }
-
-// 补全 for 版本
-for (int b = 1; b &lt;= n; <span class="code-blank">___</span>)
+namespace HelloWorld
 {
-    Console.WriteLine(<span class="code-blank">___</span> * b);
-}
+    class Program
+    {
+        static void Main()
+        {
+            // 需求：输出 1 到 5
 
-// 补全 do-while 版本
-int c = 1;
-do { Console.WriteLine(c * c); c++; } <span class="code-blank">___</span> (c &lt;= n);</code></pre>
+            // while
+            int i = 1;
+            while (i &lt;= 5) { Console.WriteLine(i); i++; }
+
+            // do-while
+            int j = 1;
+            do { Console.WriteLine(j); j++; } while (j &lt;= 5);
+
+            // for（最简洁）
+            for (int k = 1; k &lt;= 5; k++) { Console.WriteLine(k); }
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li>动手：用三种循环分别计算 1~10 的乘积</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>while：适合次数不确定的场景</li><li>do-while：至少执行一次，适合&quot;先做再说&quot;</li><li>for：初始化+条件+更新写在一起，次数确定时最简洁</li><li>三种循环可以互相替换，选最顺手的即可</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用三种循环输出 1 到 N 的平方：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344103360',this)">复制</button></div>
+<pre id="c_4344103360"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int n = 3;  // 输出 1²、2²、3²
+
+            // 补全 while 版本
+            int a = 1;
+            while (<span class="code-blank">___</span> &lt;= n) { Console.WriteLine(a * a); a++; }
+
+            // 补全 for 版本
+            for (int b = 1; b &lt;= n; <span class="code-blank">___</span>)
+            {
+                Console.WriteLine(<span class="code-blank">___</span> * b);
+            }
+
+            // 补全 do-while 版本
+            int c = 1;
+            do { Console.WriteLine(c * c); c++; } <span class="code-blank">___</span> (c &lt;= n);
+        }
+    }
+}</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340143104',this)">复制</button></div>
-<pre id="c_4340143104"><code class="language-csharp">int n = 3;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344103552',this)">复制</button></div>
+<pre id="c_4344103552"><code class="language-csharp">using System;
 
-int a = 1;
-while (a &lt;= n) { Console.WriteLine(a * a); a++; }
-
-for (int b = 1; b &lt;= n; b++)
+namespace HelloWorld
 {
-    Console.WriteLine(b * b);
-}
+    class Program
+    {
+        static void Main()
+        {
+            int n = 3;
 
-int c = 1;
-do { Console.WriteLine(c * c); c++; } while (c &lt;= n);</code></pre>
+            int a = 1;
+            while (a &lt;= n) { Console.WriteLine(a * a); a++; }
+
+            for (int b = 1; b &lt;= n; b++)
+            {
+                Console.WriteLine(b * b);
+            }
+
+            int c = 1;
+            do { Console.WriteLine(c * c); c++; } while (c &lt;= n);
+        }
+    }
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>循环嵌套 — 九九乘法表</h1>
 <div class="card"><ul><li>循环里面再套一个循环，解决复杂重复问题</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340144128',this)">复制</button></div>
-<pre id="c_4340144128"><code class="language-csharp">  // 外层控制行，内层控制列
-  for (int i = 1; i &lt;= 9; i++)         // 行：1~9
-  {
-      for (int j = 1; j &lt;= i; j++)     // 列：1~当前行号
-      {
-          Console.Write($&quot;{j}×{i}={i*j}\t&quot;);
-      }
-      Console.WriteLine();              // 一行结束，换行
-  }</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344108096',this)">复制</button></div>
+<pre id="c_4344108096"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 外层控制行，内层控制列
+            for (int i = 1; i &lt;= 9; i++)         // 行：1~9
+            {
+                for (int j = 1; j &lt;= i; j++)     // 列：1~当前行号
+                {
+                    Console.Write($&quot;{j}×{i}={i*j}\t&quot;);
+                }
+                Console.WriteLine();              // 一行结束，换行
+            }
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>i 和 j 是怎么变化的？逐行拆解：</h3></div><div class="card"><table><tr><th>外层 i</th><th>内层 j 的变化</th><th>j 跑了多少次？</th><th>输出这一行</th></tr><tr><td>i = 1</td><td>j = 1 → 条件 <code>j &lt;= 1</code> → 输出 → j++ → 条件不成立退出</td><td>1 次</td><td><code>1×1=1</code></td></tr><tr><td>i = 2</td><td>j = 1 → 2 → 条件 <code>j &lt;= 2</code> → j=3 退出</td><td>2 次</td><td><code>1×2=2  2×2=4</code></td></tr><tr><td>i = 3</td><td>j = 1 → 2 → 3 → j=4 退出</td><td>3 次</td><td><code>1×3=3  2×3=6  3×3=9</code></td></tr><tr><td>...</td><td>...</td><td>...</td><td>...</td></tr><tr><td>i = 9</td><td>j = 1 → 2 → ... → 9 → j=10 退出</td><td>9 次</td><td>完整一行</td></tr></table></div><div class="card"><ul><li>🔑 <strong>关键规律</strong>：外层 i 每走一步，内层 j 都会<strong>整个跑一轮</strong>（从 1 到 i）</li><li><code>Console.Write()</code> 不换行，<code>Console.WriteLine()</code> 换行——这才是&quot;一行多个算式&quot;的秘密</li><li>输出效果：</li></ul></div><pre class="plain-box"><code>  1×1=1
   1×2=2    2×2=4
   1×3=3    2×3=6    3×3=9
@@ -605,14 +773,25 @@ do { Console.WriteLine(c * c); c++; } while (c &lt;= n);</code></pre>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>break — 跳出循环</h1>
 <div class="ok-box">break = &quot;我不玩了，到此为止&quot;。遇到 break，<strong>立刻跳出整个循环</strong>，后面的代码不执行，循环后面的代码继续。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340142016',this)">复制</button></div>
-<pre id="c_4340142016"><code class="language-csharp">for (int i = 1; i &lt;= 10; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344070016',this)">复制</button></div>
+<pre id="c_4344070016"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (i == 5)
-        break;           // i=5 时直接跳出去
-    Console.WriteLine(i);
-}
-// 输出：1 2 3 4</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 1; i &lt;= 10; i++)
+            {
+                if (i == 5)
+                break;           // i=5 时直接跳出去
+                Console.WriteLine(i);
+            }
+            // 输出：1 2 3 4
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>执行过程逐行看：</h3></div><pre class="plain-box"><code>i=1 → 输出 1 → i++
 i=2 → 输出 2 → i++
 i=3 → 输出 3 → i++
@@ -620,16 +799,27 @@ i=4 → 输出 4 → i++
 i=5 → 💥 break! → 跳出 for，不输出 5
               ↓
        循环后面的代码继续…</code></pre><div class="ok-box">🏃 就像跑 10 圈，跑到第 5 圈摔了一跤——直接出局，后面 6、7、8、9、10 都不跑了</div><div class="ok-box">🛗 就像坐电梯从 1 楼上 10 楼，到了 5 楼发现有急事，按开门键冲出去——上面的 6~10 楼跟我没关系了</div><div class="ok-box">🔍 就像在全班花名册里找&quot;张三&quot;，找到的那一刻合上本子走人——后面的人不用看了</div><div class="card"><h3>实战应用：猜数字游戏</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340142080',this)">复制</button></div>
-<pre id="c_4340142080"><code class="language-csharp">int answer = 7;
-int guess;
-while (true)              // 无限循环，靠 break 退出
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344069888',this)">复制</button></div>
+<pre id="c_4344069888"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    guess = int.Parse(Console.ReadLine());
-    if (guess == answer)
+    class Program
     {
-        Console.WriteLine(&quot;猜对了！&quot;);
-        break;            // 猜对就退出，不再问了
+        static void Main()
+        {
+            int answer = 7;
+            int guess;
+            while (true)              // 无限循环，靠 break 退出
+            {
+                guess = int.Parse(Console.ReadLine());
+                if (guess == answer)
+                {
+                    Console.WriteLine(&quot;猜对了！&quot;);
+                    break;            // 猜对就退出，不再问了
+                }
+            }
+        }
     }
 }</code></pre>
 </div>
@@ -637,14 +827,25 @@ while (true)              // 无限循环，靠 break 退出
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>continue — 跳过本次循环</h1>
 <div class="ok-box">continue = &quot;这一轮我不玩了，下一轮继续&quot;。遇到 continue，<strong>跳过本轮剩余代码</strong>，直接进入下一次循环，循环不会终止。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340141440',this)">复制</button></div>
-<pre id="c_4340141440"><code class="language-csharp">for (int i = 1; i &lt;= 5; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344108288',this)">复制</button></div>
+<pre id="c_4344108288"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    if (i == 3)
-        continue;         // i=3 时跳过，不输出
-    Console.WriteLine(i);
-}
-// 输出：1 2 4 5（跳过了 3）</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 1; i &lt;= 5; i++)
+            {
+                if (i == 3)
+                continue;         // i=3 时跳过，不输出
+                Console.WriteLine(i);
+            }
+            // 输出：1 2 4 5（跳过了 3）
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>执行过程逐行看：</h3></div><pre class="plain-box"><code>i=1 → 输出 1 → i++
 i=2 → 输出 2 → i++
 i=3 → ⏭️ continue! 跳过 Console.WriteLine → i++ → 继续下一轮
@@ -653,74 +854,107 @@ i=5 → 输出 5 → i++ → 条件不满足退出</code></pre><div class="ok-bo
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂练习2 — 猜数字</h1>
-<div class="ok-box">实现猜数字游戏：随机生成1~100的数字，用户每次猜完提示太大/太小，猜对显示次数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340139520',this)">复制</button></div>
-<pre id="c_4340139520"><code class="language-csharp">Random rand = new Random();
-int answer = rand.Next(1, 101);  // 1~100 随机数
-int guess = 0;
-int count = 0;
+<div class="ok-box">实现猜数字游戏：随机生成1~100的数字，用户每次猜完提示太大/太小，猜对显示次数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344067520',this)">复制</button></div>
+<pre id="c_4344067520"><code class="language-csharp">using System;
 
-Console.WriteLine(&quot;猜数字游戏（1~100）&quot;);
-while (true)
+namespace HelloWorld
 {
-    count++;
-    Console.Write($&quot;第{count}次猜测：&quot;);
-    guess = int.Parse(Console.ReadLine());
-
-    if (guess &gt; answer)
-        Console.WriteLine(&quot;太大了！&quot;);
-    else if (guess &lt; answer)
-        Console.WriteLine(&quot;太小了！&quot;);
-    else
+    class Program
     {
-        Console.WriteLine($&quot;猜对了！你用了{count}次&quot;);
-        break;
+        static void Main()
+        {
+            Random rand = new Random();
+            int answer = rand.Next(1, 101);  // 1~100 随机数
+            int guess = 0;
+            int count = 0;
+
+            Console.WriteLine(&quot;猜数字游戏（1~100）&quot;);
+            while (true)
+            {
+                count++;
+                Console.Write($&quot;第{count}次猜测：&quot;);
+                guess = int.Parse(Console.ReadLine());
+
+                if (guess &gt; answer)
+                Console.WriteLine(&quot;太大了！&quot;);
+                else if (guess &lt; answer)
+                Console.WriteLine(&quot;太小了！&quot;);
+                else
+                {
+                    Console.WriteLine($&quot;猜对了！你用了{count}次&quot;);
+                    break;
+                }
+            }
+        }
     }
 }</code></pre>
-</div><div class="card"><ul><li>动手：加上次数限制（超过7次算失败）</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>while (true)</code> 是死循环，靠 <code>break</code> 退出——猜对才跳出去</li><li><code>rand.Next(1, 101)</code> 生成 1~100 的随机数（左闭右开）</li><li><code>count++</code> 记录猜测次数</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340139072',this)">复制</button></div>
-<pre id="c_4340139072"><code class="language-csharp">Random rand = new Random();
-int answer = rand.Next(1, 101);
-int guess, count = 0;
+</div><div class="card"><ul><li>动手：加上次数限制（超过7次算失败）</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>while (true)</code> 是死循环，靠 <code>break</code> 退出——猜对才跳出去</li><li><code>rand.Next(1, 101)</code> 生成 1~100 的随机数（左闭右开）</li><li><code>count++</code> 记录猜测次数</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344067072',this)">复制</button></div>
+<pre id="c_4344067072"><code class="language-csharp">using System;
 
-Console.WriteLine(&quot;猜数字（1~100），最多 7 次！&quot;);
-while (count &lt; 7)
+namespace HelloWorld
 {
-    count++;
-    Console.Write($&quot;第{<span class="code-blank">___</span>}次：&quot;);
-    guess = int.Parse(Console.ReadLine());
-
-    if (<span class="code-blank">___</span> &gt; answer) Console.WriteLine(&quot;太大了！&quot;);
-    <span class="code-blank">___</span> if (guess &lt; answer) Console.WriteLine(&quot;太小了！&quot;);
-    else
+    class Program
     {
-        Console.WriteLine(&quot;猜对了！&quot;);
-        <span class="code-blank">___</span>;
-    }
-}
-if (count == 7) Console.WriteLine($&quot;答案是{answer}，游戏结束&quot;);</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340139264',this)">复制</button></div>
-<pre id="c_4340139264"><code class="language-csharp">Random rand = new Random();
-int answer = rand.Next(1, 101);
-int guess, count = 0;
+        static void Main()
+        {
+            Random rand = new Random();
+            int answer = rand.Next(1, 101);
+            int guess, count = 0;
 
-Console.WriteLine(&quot;猜数字（1~100），最多 7 次！&quot;);
-while (count &lt; 7)
+            Console.WriteLine(&quot;猜数字（1~100），最多 7 次！&quot;);
+            while (count &lt; 7)
+            {
+                count++;
+                Console.Write($&quot;第{<span class="code-blank">___</span>}次：&quot;);
+                guess = int.Parse(Console.ReadLine());
+
+                if (<span class="code-blank">___</span> &gt; answer) Console.WriteLine(&quot;太大了！&quot;);
+                <span class="code-blank">___</span> if (guess &lt; answer) Console.WriteLine(&quot;太小了！&quot;);
+                else
+                {
+                    Console.WriteLine(&quot;猜对了！&quot;);
+                    <span class="code-blank">___</span>;
+                }
+            }
+            if (count == 7) Console.WriteLine($&quot;答案是{answer}，游戏结束&quot;);
+        }
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344067264',this)">复制</button></div>
+<pre id="c_4344067264"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    count++;
-    Console.Write($&quot;第{count}次：&quot;);
-    guess = int.Parse(Console.ReadLine());
-
-    if (guess &gt; answer) Console.WriteLine(&quot;太大了！&quot;);
-    else if (guess &lt; answer) Console.WriteLine(&quot;太小了！&quot;);
-    else
+    class Program
     {
-        Console.WriteLine(&quot;猜对了！&quot;);
-        break;
+        static void Main()
+        {
+            Random rand = new Random();
+            int answer = rand.Next(1, 101);
+            int guess, count = 0;
+
+            Console.WriteLine(&quot;猜数字（1~100），最多 7 次！&quot;);
+            while (count &lt; 7)
+            {
+                count++;
+                Console.Write($&quot;第{count}次：&quot;);
+                guess = int.Parse(Console.ReadLine());
+
+                if (guess &gt; answer) Console.WriteLine(&quot;太大了！&quot;);
+                else if (guess &lt; answer) Console.WriteLine(&quot;太小了！&quot;);
+                else
+                {
+                    Console.WriteLine(&quot;猜对了！&quot;);
+                    break;
+                }
+            }
+            if (count == 7) Console.WriteLine($&quot;答案是{answer}，游戏结束&quot;);
+        }
     }
-}
-if (count == 7) Console.WriteLine($&quot;答案是{answer}，游戏结束&quot;);</code></pre>
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
@@ -734,45 +968,78 @@ if (count == 7) Console.WriteLine($&quot;答案是{answer}，游戏结束&quot;)
   *****
  *******
 *********</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>外层 for 控制行数（i），共 5 行</li><li>每行先输出空格：第 i 行需要 <code>5 - i</code> 个空格</li><li>再输出星号：第 i 行需要 <code>2 × i - 1</code> 个星号</li><li>空格和星号各用一个内层 for 循环</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340138752',this)">复制</button></div>
-<pre id="c_4340138752"><code class="language-csharp">for (int i = 1; i &lt;= 5; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344065856',this)">复制</button></div>
+<pre id="c_4344065856"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    // 先输出空格
-    for (int j = 1; j &lt;= <span class="code-blank">___</span>; j++)
+    class Program
     {
-        Console.Write(&quot; &quot;);
+        static void Main()
+        {
+            for (int i = 1; i &lt;= 5; i++)
+            {
+                // 先输出空格
+                for (int j = 1; j &lt;= <span class="code-blank">___</span>; j++)
+                {
+                    Console.Write(&quot; &quot;);
+                }
+                // 再输出星号
+                for (int k = 1; k &lt;= <span class="code-blank">___</span>; k++)
+                {
+                    Console.Write(<span class="code-blank">___</span>);
+                }
+                Console.<span class="code-blank">___</span>;
+            }
+        }
     }
-    // 再输出星号
-    for (int k = 1; k &lt;= <span class="code-blank">___</span>; k++)
-    {
-        Console.Write(<span class="code-blank">___</span>);
-    }
-    Console.<span class="code-blank">___</span>;
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340138496',this)">复制</button></div>
-<pre id="c_4340138496"><code class="language-csharp">for (int i = 1; i &lt;= 5; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344065600',this)">复制</button></div>
+<pre id="c_4344065600"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    for (int j = 1; j &lt;= 5 - i; j++)
+    class Program
     {
-        Console.Write(&quot; &quot;);
+        static void Main()
+        {
+            for (int i = 1; i &lt;= 5; i++)
+            {
+                for (int j = 1; j &lt;= 5 - i; j++)
+                {
+                    Console.Write(&quot; &quot;);
+                }
+                for (int k = 1; k &lt;= 2 * i - 1; k++)
+                {
+                    Console.Write(&quot;*&quot;);
+                }
+                Console.WriteLine();
+            }
+        }
     }
-    for (int k = 1; k &lt;= 2 * i - 1; k++)
-    {
-        Console.Write(&quot;*&quot;);
-    }
-    Console.WriteLine();
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个正整数 n，输出<strong>斐波那契数列</strong>的前 n 项。<br>斐波那契：第1、2项都是1，之后每项 = 前两项之和（1, 1, 2, 3, 5, 8…）。<br>要求：自己用循环写，维护&quot;前两项&quot;变量递推，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340138048',this)">复制</button></div>
-<pre id="c_4340138048"><code class="language-csharp">int n = int.Parse(Console.ReadLine());
-int a = 1, b = 1;
-for (int i = 1; i &lt;= n; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344065152',this)">复制</button></div>
+<pre id="c_4344065152"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.Write(a + &quot; &quot;);
-    int next = a + b;   // 算出下一项
-    a = b;              // 旧 b 变新 a
-    b = next;           // 新项变新 b
+    class Program
+    {
+        static void Main()
+        {
+            int n = int.Parse(Console.ReadLine());
+            int a = 1, b = 1;
+            for (int i = 1; i &lt;= n; i++)
+            {
+                Console.Write(a + &quot; &quot;);
+                int next = a + b;   // 算出下一项
+                a = b;              // 旧 b 变新 a
+                b = next;           // 新项变新 b
+            }
+        }
+    }
 }</code></pre>
 </div></div></div>
 </div></div>
@@ -783,22 +1050,27 @@ for (int i = 1; i &lt;= n; i++)
 *****
  ***
   *</code></pre><div class="card"><ul><li>提示：先输出空格，再输出星号</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：见题面中的菱形图案</li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340120128',this)">复制</button></div>
-<pre id="c_4340120128"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344066688',this)">复制</button></div>
+<pre id="c_4344066688"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        // ==================== 第1题 ====================
+        static void Main()
+        {
+            // ==================== 第1题 ====================
 
 
-        // ==================== 第2题 ====================
+            // ==================== 第2题 ====================
 
 
-        // ==================== 第3题 ====================
+            // ==================== 第3题 ====================
 
 
-        // ==================== 第4题 ====================
+            // ==================== 第4题 ====================
 
+        }
     }
 }</code></pre>
 </div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>

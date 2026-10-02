@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -430,78 +433,144 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>数组的定义与访问</h1>
 <div class="card"><h3>三种定义方式：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383469312',this)">复制</button></div>
-<pre id="c_4383469312"><code class="language-csharp">// 方式1：声明 + 分配空间
-int[] scores = new int[5];          // 5个元素，默认值都是0
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378664384',this)">复制</button></div>
+<pre id="c_4378664384"><code class="language-csharp">using System;
 
-// 方式2：声明 + 初始化（最常用）
-int[] scores = { 85, 90, 78, 88, 92 };
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 方式1：声明 + 分配空间
+            int[] scores = new int[5];          // 5个元素，默认值都是0
 
-// 方式3：先分配，再逐个赋值
-int[] scores = new int[3];
-scores[0] = 85; scores[1] = 90; scores[2] = 78;</code></pre>
+            // 方式2：声明 + 初始化（最常用）
+            int[] scores = { 85, 90, 78, 88, 92 };
+
+            // 方式3：先分配，再逐个赋值
+            int[] scores = new int[3];
+            scores[0] = 85; scores[1] = 90; scores[2] = 78;
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>访问元素：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383469120',this)">复制</button></div>
-<pre id="c_4383469120"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378664256',this)">复制</button></div>
+<pre id="c_4378664256"><code class="language-csharp">using System;
 
-int first = scores[0];             // 读取 → 85
-scores[2] = 80;                    // 修改 → 78 变 80
-Console.WriteLine(scores.Length);  // 长度 → 5
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92 };
 
-// ⚠️ 索引越界会报错！
-// scores[5] = 100;  // ❌ 只有 0~4 五个位置</code></pre>
+            int first = scores[0];             // 读取 → 85
+            scores[2] = 80;                    // 修改 → 78 变 80
+            Console.WriteLine(scores.Length);  // 长度 → 5
+
+            // ⚠️ 索引越界会报错！
+            // scores[5] = 100;  // ❌ 只有 0~4 五个位置
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>关于 <code>Length</code>：</h3></div><div class="card"><ul><li><code>Length</code> 不是方法（没有括号），是数组自带的<strong>属性</strong>，直接返回元素个数</li><li>索引从 0 开始，最后一个元素是 <code>Length - 1</code></li><li>写 <code>i &lt;= scores.Length</code> 是新手最常见错误——会导致索引越界</li></ul></div><div class="card"><h3>for 循环遍历：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383469184',this)">复制</button></div>
-<pre id="c_4383469184"><code class="language-csharp">for (int i = 0; i &lt; scores.Length; i++)
-    Console.WriteLine($&quot;第{i+1}个：{scores[i]}&quot;);</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378663744',this)">复制</button></div>
+<pre id="c_4378663744"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            for (int i = 0; i &lt; scores.Length; i++)
+            Console.WriteLine($&quot;第{i+1}个：{scores[i]}&quot;);
+        }
+    }
+}</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1</h1>
 <div class="ok-box">用数组存储5个成绩，计算总分、平均分和及格人数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383468032',this)">复制</button></div>
-<pre id="c_4383468032"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378663232',this)">复制</button></div>
+<pre id="c_4378663232"><code class="language-csharp">using System;
 
-int sum = 0;
-for (int i = 0; i &lt; scores.Length; i++)
-    sum += scores[i];
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92 };
 
-double avg = (double)sum / scores.Length;
-Console.WriteLine($&quot;总分：{sum}，平均分：{avg:F1}&quot;);
+            int sum = 0;
+            for (int i = 0; i &lt; scores.Length; i++)
+            sum += scores[i];
 
-int passCount = 0;
-for (int i = 0; i &lt; scores.Length; i++)
-    if (scores[i] &gt;= 60)
-        passCount++;
-Console.WriteLine($&quot;及格人数：{passCount}/{scores.Length}&quot;);</code></pre>
+            double avg = (double)sum / scores.Length;
+            Console.WriteLine($&quot;总分：{sum}，平均分：{avg:F1}&quot;);
+
+            int passCount = 0;
+            for (int i = 0; i &lt; scores.Length; i++)
+            if (scores[i] &gt;= 60)
+            passCount++;
+            Console.WriteLine($&quot;及格人数：{passCount}/{scores.Length}&quot;);
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>动手：把 scores 改成自己的数据，观察结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>scores.Length</code> 获取数组长度，循环不用写死数字</li><li><code>(double)sum / scores.Length</code> 强制转 double，否则整数除法会丢掉小数</li><li>两个 for 循环各做一件事——遍历求和、遍历统计</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——求一周的<strong>最高温、最低温、平均温</strong>，并<strong>统计高温天数</strong>（&gt;30）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383467584',this)">复制</button></div>
-<pre id="c_4383467584"><code class="language-csharp">int[] temps = { 28, 32, 25, 30, 35, 27, 31 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378662528',this)">复制</button></div>
+<pre id="c_4378662528"><code class="language-csharp">using System;
 
-int max = temps[0], min = temps[0], sum = 0, hot = 0;
-<span class="code-blank">___</span> (int i = 0; i &lt; temps.<span class="code-blank">___</span>; i++)
+namespace HelloWorld
 {
-    if (temps[i] &gt; max) max = temps[<span class="code-blank">___</span>];
-    if (temps[i] &lt; <span class="code-blank">___</span>) min = temps[i];
-    sum += <span class="code-blank">___</span>;
-    if (temps[i] &gt; 30) <span class="code-blank">___</span>++;
-}
-double avg = (double)sum / temps.Length;
-Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，高温天：{hot}&quot;);</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] temps = { 28, 32, 25, 30, 35, 27, 31 };
+
+            int max = temps[0], min = temps[0], sum = 0, hot = 0;
+            <span class="code-blank">___</span> (int i = 0; i &lt; temps.<span class="code-blank">___</span>; i++)
+            {
+                if (temps[i] &gt; max) max = temps[<span class="code-blank">___</span>];
+                if (temps[i] &lt; <span class="code-blank">___</span>) min = temps[i];
+                sum += <span class="code-blank">___</span>;
+                if (temps[i] &gt; 30) <span class="code-blank">___</span>++;
+            }
+            double avg = (double)sum / temps.Length;
+            Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，高温天：{hot}&quot;);
+        }
+    }
+}</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383467776',this)">复制</button></div>
-<pre id="c_4383467776"><code class="language-csharp">int[] temps = { 28, 32, 25, 30, 35, 27, 31 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378662976',this)">复制</button></div>
+<pre id="c_4378662976"><code class="language-csharp">using System;
 
-int max = temps[0], min = temps[0], sum = 0, hot = 0;
-for (int i = 0; i &lt; temps.Length; i++)
+namespace HelloWorld
 {
-    if (temps[i] &gt; max) max = temps[i];
-    if (temps[i] &lt; min) min = temps[i];
-    sum += temps[i];
-    if (temps[i] &gt; 30) hot++;
-}
-double avg = (double)sum / temps.Length;
-Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，高温天：{hot}&quot;);</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] temps = { 28, 32, 25, 30, 35, 27, 31 };
+
+            int max = temps[0], min = temps[0], sum = 0, hot = 0;
+            for (int i = 0; i &lt; temps.Length; i++)
+            {
+                if (temps[i] &gt; max) max = temps[i];
+                if (temps[i] &lt; min) min = temps[i];
+                sum += temps[i];
+                if (temps[i] &gt; 30) hot++;
+            }
+            double avg = (double)sum / temps.Length;
+            Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，高温天：{hot}&quot;);
+        }
+    }
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
@@ -509,56 +578,100 @@ Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，�
 <div class="card"><ul><li><code>foreach</code> 是专门遍历集合的循环，比 <code>for</code> 更简洁</li><li>语法拆解：</li></ul></div><pre class="plain-box"><code>  foreach ( int    s      in   scores  )
           ↑类型  ↑临时变量 ↑in ↑数组名
           每次循环，当前元素的值赋给 s</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383467264',this)">复制</button></div>
-<pre id="c_4383467264"><code class="language-csharp">int[] scores = { 85, 90, 78 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378665216',this)">复制</button></div>
+<pre id="c_4378665216"><code class="language-csharp">using System;
 
-// for 版本
-for (int i = 0; i &lt; scores.Length; i++)
-    Console.WriteLine(scores[i]);
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78 };
 
-// foreach 版本（不需要索引时推荐）
-foreach (int s in scores)
-    Console.WriteLine(s);</code></pre>
+            // for 版本
+            for (int i = 0; i &lt; scores.Length; i++)
+            Console.WriteLine(scores[i]);
+
+            // foreach 版本（不需要索引时推荐）
+            foreach (int s in scores)
+            Console.WriteLine(s);
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>✅ 适合：求和、找最值、显示列表</li><li>⚠️ foreach 中 <code>s</code> 是只读的，不能修改数组元素！要修改用 <code>for</code></li><li>不需要手动写 <code>i++</code> 和 <code>scores[i]</code>，更简洁安全</li></ul></div><div class="card"><h3>上页的成绩求和，用 foreach 重写：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383466816',this)">复制</button></div>
-<pre id="c_4383466816"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378662144',this)">复制</button></div>
+<pre id="c_4378662144"><code class="language-csharp">using System;
 
-// for 版本 —— 需要手动用 i 取元素
-int sum1 = 0;
-for (int i = 0; i &lt; scores.Length; i++)
-    sum1 += scores[i];
-Console.WriteLine($&quot;总分(for)：{sum1}&quot;);   // 433
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92 };
 
-// foreach 版本 —— 直接拿元素，不用管索引
-int sum2 = 0;
-foreach (int s in scores)
-    sum2 += s;
-Console.WriteLine($&quot;总分(foreach)：{sum2}&quot;); // 433</code></pre>
+            // for 版本 —— 需要手动用 i 取元素
+            int sum1 = 0;
+            for (int i = 0; i &lt; scores.Length; i++)
+            sum1 += scores[i];
+            Console.WriteLine($&quot;总分(for)：{sum1}&quot;);   // 433
+
+            // foreach 版本 —— 直接拿元素，不用管索引
+            int sum2 = 0;
+            foreach (int s in scores)
+            sum2 += s;
+            Console.WriteLine($&quot;总分(foreach)：{sum2}&quot;); // 433
+        }
+    }
+}</code></pre>
 </div><div class="ok-box">只要<strong>不关心索引、只遍历每个元素</strong>，foreach 就是首选。</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>数组最值</h1>
 <div class="card"><p>手工找最大值的思路：<strong>先假设第一个是最大值，逐个比较，遇到更大的就替换</strong></p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383469568',this)">复制</button></div>
-<pre id="c_4383469568"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378661824',this)">复制</button></div>
+<pre id="c_4378661824"><code class="language-csharp">using System;
 
-int max = scores[0];           // 假设第一个最大
-for (int i = 1; i &lt; scores.Length; i++)
+namespace HelloWorld
 {
-    if (scores[i] &gt; max)
-        max = scores[i];       // 发现更大的就替换
-}
-Console.WriteLine($&quot;最高分：{max}&quot;);   // 92</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92 };
+
+            int max = scores[0];           // 假设第一个最大
+            for (int i = 1; i &lt; scores.Length; i++)
+            {
+                if (scores[i] &gt; max)
+                max = scores[i];       // 发现更大的就替换
+            }
+            Console.WriteLine($&quot;最高分：{max}&quot;);   // 92
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>找最小值把 <code>&gt;</code> 换成 <code>&lt;</code> 即可。</p></div><div class="card"><p>快捷方式——C# 提供了现成方法（需 <code>using System.Linq;</code>）：</p></div><div class="card"><table><tr><th>方法</th><th>作用</th><th>返回值</th></tr><tr><td><code>scores.Max()</code></td><td>找最大值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Min()</code></td><td>找最小值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Sum()</code></td><td>求总和</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Average()</code></td><td>求平均值</td><td><code>double</code>（自动转浮点）</td></tr><tr><td><code>Array.Sort(scores)</code></td><td>原地排序</td><td><code>void</code>（直接改数组）</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383465408',this)">复制</button></div>
-<pre id="c_4383465408"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378660800',this)">复制</button></div>
+<pre id="c_4378660800"><code class="language-csharp">using System;
 
-int max = scores.Max();       // 92
-int min = scores.Min();       // 78
-int sum = scores.Sum();       // 433
-double avg = scores.Average();// 86.6
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92 };
 
-Array.Sort(scores);           // 78, 85, 88, 90, 92</code></pre>
+            int max = scores.Max();       // 92
+            int min = scores.Min();       // 78
+            int sum = scores.Sum();       // 433
+            double avg = scores.Average();// 86.6
+
+            Array.Sort(scores);           // 78, 85, 88, 90, 92
+        }
+    }
+}</code></pre>
 </div><div class="ok-box">💡 考试建议手写循环，日常写代码优先用现成方法。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
@@ -570,63 +683,107 @@ Array.Sort(scores);           // 78, 85, 88, 90, 92</code></pre>
 90 &gt; 88? ❌ 交换  →  85, 78, 88, 90, 92
 90 &lt; 92? ✅ 不动  →  85, 78, 88, 90, [92] ← 92 沉底！</code></pre><div class="card"><p><strong>第2轮</strong> — 只比较前4个（92已就位）：</p></div><pre class="plain-box"><code>85 &gt; 78? ❌ 交换  →  78, 85, 88, 90
 85 &lt; 88? ✅ 不动
-88 &lt; 90? ✅ 不动  →  78, 85, 88, [90, 92] ← 90 沉底！</code></pre><div class="card"><p><strong>第3轮</strong> — 只比较前3个：</p></div><pre class="plain-box"><code>78, 85, 88 ← 已经有序，无需交换！→ [78, 85, 88, 90, 92]</code></pre><div class="card"><ul><li>规律：n 个元素需要 <strong>n-1 轮</strong>，每轮比较次数递减</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么叫&quot;冒泡&quot;？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">每一轮都要把当前还没排好序的元素中的最大值&quot;冒&quot;到最右边——就像水里的气泡，大的总会浮到水面。第 1 轮把最大数沉到最右，第 2 轮把次大数沉到倒数第二……每完成一轮，就有一个数永久就位，后面的轮次不用再管它。</div></div><div class="card"><h3>代码实现：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383464064',this)">复制</button></div>
-<pre id="c_4383464064"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92 };
+88 &lt; 90? ✅ 不动  →  78, 85, 88, [90, 92] ← 90 沉底！</code></pre><div class="card"><p><strong>第3轮</strong> — 只比较前3个：</p></div><pre class="plain-box"><code>78, 85, 88 ← 已经有序，无需交换！→ [78, 85, 88, 90, 92]</code></pre><div class="card"><ul><li>规律：n 个元素需要 <strong>n-1 轮</strong>，每轮比较次数递减</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么叫&quot;冒泡&quot;？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">每一轮都要把当前还没排好序的元素中的最大值&quot;冒&quot;到最右边——就像水里的气泡，大的总会浮到水面。第 1 轮把最大数沉到最右，第 2 轮把次大数沉到倒数第二……每完成一轮，就有一个数永久就位，后面的轮次不用再管它。</div></div><div class="card"><h3>代码实现：</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378659008',this)">复制</button></div>
+<pre id="c_4378659008"><code class="language-csharp">using System;
 
-// 冒泡排序（从小到大）
-for (int i = 0; i &lt; scores.Length - 1; i++)          // 外层：第几轮
+namespace HelloWorld
 {
-    // 内层：每轮比较 (长度-1-i) 次
-    // i=0时比较4次，i=1时比较3次...因为后面已排序的不再比较
-    for (int j = 0; j &lt; scores.Length - 1 - i; j++)
+    class Program
     {
-        if (scores[j] &gt; scores[j + 1])                 // 前 &gt; 后？交换
+        static void Main()
         {
-            int temp = scores[j];                       // 三变量交换法
-            scores[j] = scores[j + 1];
-            scores[j + 1] = temp;
+            int[] scores = { 85, 90, 78, 88, 92 };
+
+            // 冒泡排序（从小到大）
+            for (int i = 0; i &lt; scores.Length - 1; i++)          // 外层：第几轮
+            {
+                // 内层：每轮比较 (长度-1-i) 次
+                // i=0时比较4次，i=1时比较3次...因为后面已排序的不再比较
+                for (int j = 0; j &lt; scores.Length - 1 - i; j++)
+                {
+                    if (scores[j] &gt; scores[j + 1])                 // 前 &gt; 后？交换
+                    {
+                        int temp = scores[j];                       // 三变量交换法
+                        scores[j] = scores[j + 1];
+                        scores[j + 1] = temp;
+                    }
+                }
+            }
+            // 结果：78, 85, 88, 90, 92
         }
     }
-}
-// 结果：78, 85, 88, 90, 92</code></pre>
+}</code></pre>
 </div><div class="card"><p>捷径（但不要求手写）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383463936',this)">复制</button></div>
-<pre id="c_4383463936"><code class="language-csharp">Array.Sort(scores);            // 从小到大
-Array.Reverse(scores);         // 翻转顺序</code></pre>
-</div><div class="card"><ul><li><code>Array.Sort(scores)</code> — 原地排序，直接修改数组，从小到大排列</li><li><code>Array.Reverse(scores)</code> — 原地翻转，把数组元素首尾颠倒</li><li>两者都无返回值（<code>void</code>），排序结果直接体现在原数组上</li></ul></div><div class="card"><h3>排序后怎么用？</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383463552',this)">复制</button></div>
-<pre id="c_4383463552"><code class="language-csharp">// ① 正序输出（从小到大）
-foreach (int s in scores)
-    Console.Write(s + &quot; &quot;);
-// 输出：78 85 88 90 92
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378658880',this)">复制</button></div>
+<pre id="c_4378658880"><code class="language-csharp">using System;
 
-// ② 逆序输出（从大到小）
-Console.WriteLine();
-for (int i = scores.Length - 1; i &gt;= 0; i--)
-    Console.Write(scores[i] + &quot; &quot;);
-// 输出：92 90 88 85 78
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Array.Sort(scores);            // 从小到大
+            Array.Reverse(scores);         // 翻转顺序
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>Array.Sort(scores)</code> — 原地排序，直接修改数组，从小到大排列</li><li><code>Array.Reverse(scores)</code> — 原地翻转，把数组元素首尾颠倒</li><li>两者都无返回值（<code>void</code>），排序结果直接体现在原数组上</li></ul></div><div class="card"><h3>排序后怎么用？</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378658496',this)">复制</button></div>
+<pre id="c_4378658496"><code class="language-csharp">using System;
 
-// ③ 输出前3名
-Console.WriteLine(&quot;\n前三名：&quot;);
-for (int i = scores.Length - 1; i &gt;= scores.Length - 3; i--)
-    Console.WriteLine($&quot;第{scores.Length - i}名：{scores[i]}分&quot;);</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // ① 正序输出（从小到大）
+            foreach (int s in scores)
+            Console.Write(s + &quot; &quot;);
+            // 输出：78 85 88 90 92
+
+            // ② 逆序输出（从大到小）
+            Console.WriteLine();
+            for (int i = scores.Length - 1; i &gt;= 0; i--)
+            Console.Write(scores[i] + &quot; &quot;);
+            // 输出：92 90 88 85 78
+
+            // ③ 输出前3名
+            Console.WriteLine(&quot;\n前三名：&quot;);
+            for (int i = scores.Length - 1; i &gt;= scores.Length - 3; i--)
+            Console.WriteLine($&quot;第{scores.Length - i}名：{scores[i]}分&quot;);
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>动手：输出去掉最高分和最低分后的平均分</li></ul></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>值类型与引用类型</h1>
 <div class="card"><h3>用生活比喻理解&quot;值&quot;和&quot;引用&quot;</h3></div><div class="card"><ul><li><strong>值类型</strong> = 复印一张纸给你。你在你的纸上改，不影响我的原件</li><li><strong>引用类型</strong> = 给你我家的门牌号。你按门牌号找到我家，改了东西，我也受影响</li></ul></div><div class="card"><h3>用代码验证：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383463296',this)">复制</button></div>
-<pre id="c_4383463296"><code class="language-csharp">// 值类型：各有一份副本，互不影响
-int a = 10;
-int b = a;     // b 拿到了 a 的复印件
-b = 20;        // 改复印件，a 还是 10 ✅
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378665536',this)">复制</button></div>
+<pre id="c_4378665536"><code class="language-csharp">using System;
 
-// 引用类型：指向同一个地方
-int[] arr1 = { 1, 2, 3 };
-int[] arr2 = arr1;    // arr2 拿到的是门牌号，指向同一个数组
-arr2[0] = 99;         // 通过门牌号改了数组
-Console.WriteLine(arr1[0]);  // 99！arr1 也变了 ⚠️</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 值类型：各有一份副本，互不影响
+            int a = 10;
+            int b = a;     // b 拿到了 a 的复印件
+            b = 20;        // 改复印件，a 还是 10 ✅
+
+            // 引用类型：指向同一个地方
+            int[] arr1 = { 1, 2, 3 };
+            int[] arr2 = arr1;    // arr2 拿到的是门牌号，指向同一个数组
+            arr2[0] = 99;         // 通过门牌号改了数组
+            Console.WriteLine(arr1[0]);  // 99！arr1 也变了 ⚠️
+        }
+    }
+}</code></pre>
 </div><div class="ok-box">📌 <strong>数组是引用类型</strong>。arr1 和 arr2 存的是同一个地址，改 arr2 就是在改 arr1。</div><div class="card"><h3>&quot;引用&quot;到底是什么？</h3></div><div class="card"><p>数组变量本身存的不是数据，而是一个<strong>地址</strong>（门牌号）。真正的数据存在内存的另一块区域里：</p></div><pre class="plain-box"><code>arr1 →  [地址0x100] →  {1, 2, 3}  ← 真正的数据
 arr2 →  [地址0x100] ↗              ← 复制的也是同一个地址
 
@@ -635,27 +792,60 @@ arr2[0] = 99 → 改了数据 → arr1[0] = 99  ← 同一个地方，一起变�
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>多维数组</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383462272',this)">复制</button></div>
-<pre id="c_4383462272"><code class="language-csharp">// 一维数组：一行
-int[] row = { 1, 2, 3 };
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378657472',this)">复制</button></div>
+<pre id="c_4378657472"><code class="language-csharp">using System;
 
-// 二维数组：行列矩阵
-int[,] matrix = new int[2, 3];               // 2行3列
-int[,] grid = { { 1, 2, 3 }, { 4, 5, 6 } }; // 直接初始化</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 一维数组：一行
+            int[] row = { 1, 2, 3 };
+
+            // 二维数组：行列矩阵
+            int[,] matrix = new int[2, 3];               // 2行3列
+            int[,] grid = { { 1, 2, 3 }, { 4, 5, 6 } }; // 直接初始化
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>访问二维数组：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383462336',this)">复制</button></div>
-<pre id="c_4383462336"><code class="language-csharp">int[,] grid = { { 1, 2, 3 }, { 4, 5, 6 } };
-Console.WriteLine(grid[0, 1]);    // 第0行第1列 → 2
-Console.WriteLine(grid[1, 2]);    // 第1行第2列 → 6</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378657344',this)">复制</button></div>
+<pre id="c_4378657344"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int[,] grid = { { 1, 2, 3 }, { 4, 5, 6 } };
+            Console.WriteLine(grid[0, 1]);    // 第0行第1列 → 2
+            Console.WriteLine(grid[1, 2]);    // 第1行第2列 → 6
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>应用：存储多个班级成绩</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383462016',this)">复制</button></div>
-<pre id="c_4383462016"><code class="language-csharp">// 3个班，每班5个学生
-int[,] classScores = {
-    { 85, 90, 78, 88, 92 },   // 1班
-    { 76, 82, 91, 85, 79 },   // 2班
-    { 88, 93, 86, 90, 85 }    // 3班
-};
-Console.WriteLine($&quot;2班第3个学生：{classScores[1, 2]}&quot;);  // 91</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378657216',this)">复制</button></div>
+<pre id="c_4378657216"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 3个班，每班5个学生
+            int[,] classScores = {
+                { 85, 90, 78, 88, 92 },   // 1班
+                { 76, 82, 91, 85, 79 },   // 2班
+                { 88, 93, 86, 90, 85 }    // 3班
+            };
+            Console.WriteLine($&quot;2班第3个学生：{classScores[1, 2]}&quot;);  // 91
+        }
+    }
+}</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
@@ -667,83 +857,121 @@ Console.WriteLine($&quot;2班第3个学生：{classScores[1, 2]}&quot;);  // 91<
 <div class="ok-box">10个学生的成绩数组，一个 foreach 遍历一次性完成五项操作：输出列表、算平均分、找最高最低、统计各等级人数。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>成绩列表：85 90 78 88 92 65 73 95 81 87
 平均分：83.4
 最高分：95，最低分：65
-A:2 B:3 C:2 D:2 F:1</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>所有计算放在<strong>同一个 foreach</strong> 里，一次遍历全部搞定</li><li>同时找最大和最小：两个 if 放在循环体里</li><li>等级统计：用 5 个计数器 + if-else if 阶梯判断</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383460224',this)">复制</button></div>
-<pre id="c_4383460224"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92, 65, 73, 95, 81, 87 };
+A:2 B:3 C:2 D:2 F:1</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>所有计算放在<strong>同一个 foreach</strong> 里，一次遍历全部搞定</li><li>同时找最大和最小：两个 if 放在循环体里</li><li>等级统计：用 5 个计数器 + if-else if 阶梯判断</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378622400',this)">复制</button></div>
+<pre id="c_4378622400"><code class="language-csharp">using System;
 
-Console.Write(&quot;成绩列表：&quot;);
-int sum = 0, max = scores[0], min = scores[0];
-int a = 0, b = 0, c = 0, d = 0, f = 0;
-
-<span class="code-blank">___</span> (int s in scores)
+namespace HelloWorld
 {
-    Console.Write(s + &quot; &quot;);        // ① 打印
-    sum += <span class="code-blank">___</span>;                     // ② 累加
-    if (s &gt; <span class="code-blank">___</span>) max = s;          // ③ 最大值
-    if (s &lt; <span class="code-blank">___</span>) min = s;          // ④ 最小值
-    if (s &gt;= 90) <span class="code-blank">___</span>;              // ⑤ 等级
-    else if (s &gt;= 80) b++;
-    else if (s &gt;= 70) <span class="code-blank">___</span>;
-    else if (s &gt;= 60) d++;
-    <span class="code-blank">___</span> f++;
-}
-Console.WriteLine($&quot;\n平均分：{(<span class="code-blank">___</span> )sum / scores.Length:F1}&quot;);
-Console.WriteLine($&quot;最高分：{max}，最低分：{min}&quot;);
-Console.WriteLine($&quot;A:{a} B:{b} C:{c} D:{d} F:{f}&quot;);</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383460480',this)">复制</button></div>
-<pre id="c_4383460480"><code class="language-csharp">int[] scores = { 85, 90, 78, 88, 92, 65, 73, 95, 81, 87 };
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92, 65, 73, 95, 81, 87 };
 
-Console.Write(&quot;成绩列表：&quot;);
-int sum = 0, max = scores[0], min = scores[0];
-int a = 0, b = 0, c = 0, d = 0, f = 0;
+            Console.Write(&quot;成绩列表：&quot;);
+            int sum = 0, max = scores[0], min = scores[0];
+            int a = 0, b = 0, c = 0, d = 0, f = 0;
 
-foreach (int s in scores)
+            <span class="code-blank">___</span> (int s in scores)
+            {
+                Console.Write(s + &quot; &quot;);        // ① 打印
+                sum += <span class="code-blank">___</span>;                     // ② 累加
+                if (s &gt; <span class="code-blank">___</span>) max = s;          // ③ 最大值
+                if (s &lt; <span class="code-blank">___</span>) min = s;          // ④ 最小值
+                if (s &gt;= 90) <span class="code-blank">___</span>;              // ⑤ 等级
+                else if (s &gt;= 80) b++;
+                else if (s &gt;= 70) <span class="code-blank">___</span>;
+                else if (s &gt;= 60) d++;
+                <span class="code-blank">___</span> f++;
+            }
+            Console.WriteLine($&quot;\n平均分：{(<span class="code-blank">___</span> )sum / scores.Length:F1}&quot;);
+            Console.WriteLine($&quot;最高分：{max}，最低分：{min}&quot;);
+            Console.WriteLine($&quot;A:{a} B:{b} C:{c} D:{d} F:{f}&quot;);
+        }
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378622656',this)">复制</button></div>
+<pre id="c_4378622656"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    Console.Write(s + &quot; &quot;);        // ① 打印
-    sum += s;                       // ② 累加
-    if (s &gt; max) max = s;          // ③ 最大值
-    if (s &lt; min) min = s;          // ④ 最小值
-    if (s &gt;= 90) a++;              // ⑤ 等级
-    else if (s &gt;= 80) b++;
-    else if (s &gt;= 70) c++;
-    else if (s &gt;= 60) d++;
-    else f++;
-}
-Console.WriteLine($&quot;\n平均分：{(double)sum / scores.Length:F1}&quot;);
-Console.WriteLine($&quot;最高分：{max}，最低分：{min}&quot;);
-Console.WriteLine($&quot;A:{a} B:{b} C:{c} D:{d} F:{f}&quot;);</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] scores = { 85, 90, 78, 88, 92, 65, 73, 95, 81, 87 };
+
+            Console.Write(&quot;成绩列表：&quot;);
+            int sum = 0, max = scores[0], min = scores[0];
+            int a = 0, b = 0, c = 0, d = 0, f = 0;
+
+            foreach (int s in scores)
+            {
+                Console.Write(s + &quot; &quot;);        // ① 打印
+                sum += s;                       // ② 累加
+                if (s &gt; max) max = s;          // ③ 最大值
+                if (s &lt; min) min = s;          // ④ 最小值
+                if (s &gt;= 90) a++;              // ⑤ 等级
+                else if (s &gt;= 80) b++;
+                else if (s &gt;= 70) c++;
+                else if (s &gt;= 60) d++;
+                else f++;
+            }
+            Console.WriteLine($&quot;\n平均分：{(double)sum / scores.Length:F1}&quot;);
+            Console.WriteLine($&quot;最高分：{max}，最低分：{min}&quot;);
+            Console.WriteLine($&quot;A:{a} B:{b} C:{c} D:{d} F:{f}&quot;);
+        }
+    }
+}</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义一个含 5 个整数的数组，把数组<strong>反转</strong>（首尾互换）后输出。<br>要求：自己写循环用临时变量交换元素，不能用 <code>Array.Reverse</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383459904',this)">复制</button></div>
-<pre id="c_4383459904"><code class="language-csharp">int[] arr = { 1, 2, 3, 4, 5 };
-for (int i = 0; i &lt; arr.Length / 2; i++)
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378622144',this)">复制</button></div>
+<pre id="c_4378622144"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    int t = arr[i];
-    arr[i] = arr[arr.Length - 1 - i];
-    arr[arr.Length - 1 - i] = t;
-}
-foreach (int x in arr) Console.Write(x + &quot; &quot;);</code></pre>
+    class Program
+    {
+        static void Main()
+        {
+            int[] arr = { 1, 2, 3, 4, 5 };
+            for (int i = 0; i &lt; arr.Length / 2; i++)
+            {
+                int t = arr[i];
+                arr[i] = arr[arr.Length - 1 - i];
+                arr[arr.Length - 1 - i] = t;
+            }
+            foreach (int x in arr) Console.Write(x + &quot; &quot;);
+        }
+    }
+}</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>创建数组存储10个整数，统计其中偶数的个数和偶数的平均值。</p><ul><li>提示：<code>if (nums[i] % 2 == 0)</code> 判断偶数</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>数组 = { 20, 13, 8, 41, 14, 7, 26, 5, 2, 9 }</code></li></ul><ul><li>输出：<code>偶数个数：5，偶数平均值：14.0</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用冒泡排序对成绩数组从小到大排序，输出去掉最高分和最低分后的平均分。</p><ul><li>提示：先排序，再用 <code>for (i=1; i&lt;Length-1; i++)</code> 跳过首尾</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 85, 70, 96, 83, 80, 75, 98 }</code></li></ul><ul><li>输出：<code>去掉最高和最低后平均分：83.8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>创建两个数组：<code>names</code> 存5个学生姓名，<code>scores</code> 存对应成绩。按成绩从高到低输出排名。</p><ul><li>提示：排序时两个数组的元素要同步交换</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>姓名 = { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot;, &quot;赵六&quot;, &quot;陈七&quot; }，成绩 = { 82, 88, 95, 68, 78 }</code></li></ul><ul><li>输出：<code>第1名：王五（95分）</code></li></ul><ul><li>输出：<code>第2名：李四（88分）</code></li></ul><ul><li>输出：<code>第3名：张三（82分）</code></li></ul><ul><li>输出：<code>第4名：陈七（78分）</code></li></ul><ul><li>输出：<code>第5名：赵六（68分）</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>给定一个成绩数组，先计算平均分，再统计有多少人高于平均分。</p><ul><li>提示：先 foreach 算 sum 和 avg，再 foreach 统计人数</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 70, 72, 84, 86, 88, 90, 94 }</code></li></ul><ul><li>输出：<code>平均分：83.4，高于平均分：5 人</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383458368',this)">复制</button></div>
-<pre id="c_4383458368"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378621440',this)">复制</button></div>
+<pre id="c_4378621440"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        // ==================== 第1题 ====================
+        static void Main()
+        {
+            // ==================== 第1题 ====================
 
 
-        // ==================== 第2题 ====================
+            // ==================== 第2题 ====================
 
 
-        // ==================== 第3题 ====================
+            // ==================== 第3题 ====================
 
 
-        // ==================== 第4题 ====================
+            // ==================== 第4题 ====================
 
+        }
     }
 }</code></pre>
 </div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>

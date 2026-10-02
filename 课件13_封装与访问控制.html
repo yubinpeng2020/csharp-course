@@ -107,7 +107,10 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
+.flat-mode .contest-row{display:block}
+.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 .card:hover{border-color:rgba(0,212,170,0.5);box-shadow:0 4px 20px rgba(0,212,170,0.12);transform:translateY(-1px)}
 .card h3{margin-top:0}
 
@@ -332,6 +335,9 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
 .img-bottom .card table .card-img{width:auto;max-width:100%;margin:4px auto}
 .img-bottom .card .card-img-sm{width:auto;max-width:120px;max-height:none}
+/* 特定大图在"图下"模式下缩小（按文件名匹配，仅作用于对应课件；不限 card/conest-row 包裹） */
+.img-bottom img[src*="wzry.png"],.img-bottom img[src*="yuanshen.png"],.img-bottom img[src*="yjwj.png"]{flex:0 0 auto!important;width:33.33%!important;max-width:33.33%!important}
+.img-bottom img[src*="step04-open-cmd.png"]{flex:0 0 auto!important;width:50%!important;max-width:50%!important}
 
 /* ===== 打印样式（浏览器打印 / 另存为 PDF） ===== */
 @media print{
@@ -348,9 +354,6 @@ pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
 }
-/* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
-.flat-mode .contest-row{display:block}
-.flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
 </style>
 </head>
 <body>
@@ -448,66 +451,114 @@ pre,pre code{page-break-inside:avoid}
 │  ⚙️ SayHello()                 │
 └────────────────────────────────┘
       ↑ 外部只能走 SetAge()，里面可以检查&quot;年龄不能为负&quot;</code></pre><div class="card"><p>类比：<strong>遥控器</strong>——你按&quot;音量+&quot;就行，不需要知道里面的电路怎么走的。外壳把元件封装在内部，按钮是唯一可以碰的地方。</p></div><div class="card"><p><strong>不封装会出什么问题？</strong> 课件11-12我们写的类，字段全是 <code>public</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303287168',this)">复制</button></div>
-<pre id="c_4303287168"><code class="language-csharp">Student s = new Student();
-s.age = -5;        // 年龄-5？没人拦
-s.score = 9999;    // 9999分？一样通过</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313949504',this)">复制</button></div>
+<pre id="c_4313949504"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Student s = new Student();
+            s.age = -5;        // 年龄-5？没人拦
+            s.score = 9999;    // 9999分？一样通过
+        }
+    }
+}</code></pre>
 </div><div class="card"><p>本课件的目标：<strong>给数据装上安检门</strong>。</p></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>public（公开）vs private（私有）</h1>
 <div class="card"><p>上页说&quot;贴权限标签&quot;，这个标签在 C# 里叫<strong>访问修饰符</strong>——它决定了谁能碰这个字段或方法。C# 有多个访问级别，本节课先掌握最核心的两个。后面课件还会讲 <code>protected</code>（子类可用），但 <code>public</code> 和 <code>private</code> 覆盖了 90% 的场景。</p></div><div class="card"><table><tr><th>修饰符</th><th>含义</th><th>比喻</th></tr><tr><td><code>public</code></td><td>公开的，谁都能用</td><td>门牌号</td></tr><tr><td><code>private</code></td><td>私有的，仅类内部可用</td><td>日记本</td></tr></table></div><div class="card"><p>来看代码——同一个类，名字公开、年龄和成绩私有：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303285184',this)">复制</button></div>
-<pre id="c_4303285184"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313946688',this)">复制</button></div>
+<pre id="c_4313946688"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string name;         // public：谁都能访问
-    private int age;            // private：只有类内部能访问
-    private double score;
+    class Student
+    {
+        public string name;         // public：谁都能访问
+        private int age;            // private：只有类内部能访问
+        private double score;
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303285696',this)">复制</button></div>
-<pre id="c_4303285696"><code class="language-csharp">Student s = new Student();
-s.name = &quot;张三&quot;;       // ✅ public，外部可以
-// s.age = 18;         // ❌ private，外部不能直接碰！
-// s.score = 85;       // ❌ 同上</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313947200',this)">复制</button></div>
+<pre id="c_4313947200"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Student s = new Student();
+            s.name = &quot;张三&quot;;       // ✅ public，外部可以
+            // s.age = 18;         // ❌ private，外部不能直接碰！
+            // s.score = 85;       // ❌ 同上
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>private 了就不能碰了？——通过公开的方法安全访问</h3></div><div class="card"><p>把字段设为 private 之后，外部不能直接 <code>s.age = 18</code>，但可以通过类自己提供的 public 方法来操作——方法内部可以做检查，拒绝不合理的值。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303284928',this)">复制</button></div>
-<pre id="c_4303284928"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313946432',this)">复制</button></div>
+<pre id="c_4313946432"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    private int age;
-
-    // Set 方法：设置值，带检查
-    public void SetAge(int value)
+    class Student
     {
-        if (value &gt;= 0 &amp;&amp; value &lt;= 150)
+        private int age;
+
+        // Set 方法：设置值，带检查
+        public void SetAge(int value)
+        {
+            if (value &gt;= 0 &amp;&amp; value &lt;= 150)
             age = value;
-        else
+            else
             Console.WriteLine($&quot;年龄 {value} 不合法，已拒绝&quot;);
-    }
+        }
 
-    // Get 方法：读取值
-    public int GetAge()
-    {
-        return age;
+        // Get 方法：读取值
+        public int GetAge()
+        {
+            return age;
+        }
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303284864',this)">复制</button></div>
-<pre id="c_4303284864"><code class="language-csharp">Student s = new Student();
-s.SetAge(18);     // ✅ 合法
-s.SetAge(-5);     // ❌ 输出：年龄 -5 不合法，已拒绝
-// s.age = -5;    // ❌ 编译也不通过，因为 age 是 private</code></pre>
-</div><div class="ok-box">💬 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303284800',this)">复制</button></div>
-<pre id="c_4303284800"><code class="language-csharp">class Student
-{
-    private int age;
-    public bool IsAdult { get; private set; }  // 外部只能读，不能改
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313946368',this)">复制</button></div>
+<pre id="c_4313946368"><code class="language-csharp">using System;
 
-    public void SetAge(int value)
+namespace HelloWorld
+{
+    class Program
     {
-        age = value;
-        IsAdult = value &gt;= 18;   // 🎯 联动：年龄一改，&quot;成年&quot;状态自动刷新
+        static void Main()
+        {
+            Student s = new Student();
+            s.SetAge(18);     // ✅ 合法
+            s.SetAge(-5);     // ❌ 输出：年龄 -5 不合法，已拒绝
+            // s.age = -5;    // ❌ 编译也不通过，因为 age 是 private
+        }
+    }
+}</code></pre>
+</div><div class="ok-box">💬 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313946304',this)">复制</button></div>
+<pre id="c_4313946304"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Student
+    {
+        private int age;
+        public bool IsAdult { get; private set; }  // 外部只能读，不能改
+
+        public void SetAge(int value)
+        {
+            age = value;
+            IsAdult = value &gt;= 18;   // 🎯 联动：年龄一改，&quot;成年&quot;状态自动刷新
+        }
     }
 }</code></pre>
 </div><div class="card"><p>如果 <code>age</code> 是 public，别人直接 <code>s.age = 15</code> 绕过 SetAge，<code>IsAdult</code> 还是 <code>true</code>——数据就乱了。<strong>封装不是脱裤子放屁，是把&quot;改数据&quot;和&quot;相关联反应&quot;锁在一条通道里，缺一不可。</strong></p></div>
@@ -515,144 +566,229 @@ s.SetAge(-5);     // ❌ 输出：年龄 -5 不合法，已拒绝
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>属性（Property）— 更优雅的 Set/Get</h1>
 <div class="card"><p>Set/Get 方法好用，但每次写两个方法太啰嗦。C# 提供了<strong>属性</strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303286464',this)">复制</button></div>
-<pre id="c_4303286464"><code class="language-csharp">class Student
-{
-    private int age;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313948288',this)">复制</button></div>
+<pre id="c_4313948288"><code class="language-csharp">using System;
 
-    public int Age        // 属性名用 Pascal 命名
+namespace HelloWorld
+{
+    class Student
     {
-        get { return age; }               // 读的时候执行
-        set                                 // 写的时候执行
+        private int age;
+
+        public int Age        // 属性名用 Pascal 命名
         {
-            if (value &gt;= 0 &amp;&amp; value &lt;= 150)
+            get { return age; }               // 读的时候执行
+            set                                 // 写的时候执行
+            {
+                if (value &gt;= 0 &amp;&amp; value &lt;= 150)
                 age = value;
-            else
+                else
                 Console.WriteLine($&quot;年龄 {value} 不合法，已拒绝&quot;);
-            // ↑ 不合法的值被拦截，age 保持不变
+                // ↑ 不合法的值被拦截，age 保持不变
+            }
         }
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303286400',this)">复制</button></div>
-<pre id="c_4303286400"><code class="language-csharp">Student s = new Student();
-s.Age = 18;              // 看起来像字段赋值 → 实际调用了 set
-s.Age = -5;              // 输出：年龄 -5 不合法，已拒绝
-Console.WriteLine(s.Age); // 18，读到的是旧值（-5被拒了）</code></pre>
-</div><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303284224',this)">复制</button></div>
-<pre id="c_4303284224"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313948224',this)">复制</button></div>
+<pre id="c_4313948224"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Name { get; set; }          // 读+写都公开
-    public int Age { get; private set; }       // 读公开，写仅内部
-    public double Score { get; set; }
+    class Program
+    {
+        static void Main()
+        {
+            Student s = new Student();
+            s.Age = 18;              // 看起来像字段赋值 → 实际调用了 set
+            s.Age = -5;              // 输出：年龄 -5 不合法，已拒绝
+            Console.WriteLine(s.Age); // 18，读到的是旧值（-5被拒了）
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313945728',this)">复制</button></div>
+<pre id="c_4313945728"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Student
+    {
+        public string Name { get; set; }          // 读+写都公开
+        public int Age { get; private set; }       // 读公开，写仅内部
+        public double Score { get; set; }
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303284288',this)">复制</button></div>
-<pre id="c_4303284288"><code class="language-csharp">Student s = new Student();
-s.Name = &quot;张三&quot;;       // ✅ set 公开
-s.Age = 18;            // ❌ private set，外部不能赋值！
-// Age 只能在构造方法等类内部代码中赋值</code></pre>
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313945664',this)">复制</button></div>
+<pre id="c_4313945664"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            Student s = new Student();
+            s.Name = &quot;张三&quot;;       // ✅ set 公开
+            s.Age = 18;            // ❌ private set，外部不能赋值！
+            // Age 只能在构造方法等类内部代码中赋值
+        }
+    }
+}</code></pre>
 </div><div class="card"><ul><li>自动属性 = 编译器帮你生成隐藏的 private 字段，不用手写</li><li><code>{ get; private set; }</code> 的经典场景：余额、密码——<strong>外部谁都能看，但只有类内部能改</strong></li></ul></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>表达式体成员（=&gt;）— 一行搞定</h1>
 <div class="card"><p><code>{ return ...; }</code> 写多了手酸？C# 提供了 <code>=&gt;</code> 简写——方法、属性、甚至构造方法都能缩成一行。</p></div><div class="card"><p><code>=&gt;</code> 读作<strong>&quot;结果是&quot;</strong>，语法：<code>成员 =&gt; 表达式</code>。</p></div><div class="card"><h3>方法：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303283840',this)">复制</button></div>
-<pre id="c_4303283840"><code class="language-csharp">// 传统
-public double GetAverage()
-{
-    return GetTotal() / 3;
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313945408',this)">复制</button></div>
+<pre id="c_4313945408"><code class="language-csharp">using System;
 
-// =&gt; 简写
-public double GetAverage() =&gt; GetTotal() / 3;</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 传统
+            public double GetAverage()
+            {
+                return GetTotal() / 3;
+            }
+
+            // =&gt; 简写
+            public double GetAverage() =&gt; GetTotal() / 3;
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>只读属性：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303283648',this)">复制</button></div>
-<pre id="c_4303283648"><code class="language-csharp">// 传统
-public double Total
-{
-    get { return chinese + math + english; }
-}
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313945216',this)">复制</button></div>
+<pre id="c_4313945216"><code class="language-csharp">using System;
 
-// =&gt; 简写（连 get { } 都省了）
-public double Total =&gt; chinese + math + english;</code></pre>
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            // 传统
+            public double Total
+            {
+                get { return chinese + math + english; }
+            }
+
+            // =&gt; 简写（连 get { } 都省了）
+            public double Total =&gt; chinese + math + english;
+        }
+    }
+}</code></pre>
 </div><div class="card"><h3>属性简写 + 方法简写一起上：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303283904',this)">复制</button></div>
-<pre id="c_4303283904"><code class="language-csharp">class Student
-{
-    public double Chinese;
-    public double Math;
-    public double English;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313945088',this)">复制</button></div>
+<pre id="c_4313945088"><code class="language-csharp">using System;
 
-    public double Total =&gt; Chinese + Math + English;       // 只读属性
-    public double GetAverage() =&gt; Total / 3;                // 方法
-    public bool IsPassed() =&gt; GetAverage() &gt;= 60;           // 方法
+namespace HelloWorld
+{
+    class Student
+    {
+        public double Chinese;
+        public double Math;
+        public double English;
+
+        public double Total =&gt; Chinese + Math + English;       // 只读属性
+        public double GetAverage() =&gt; Total / 3;                // 方法
+        public bool IsPassed() =&gt; GetAverage() &gt;= 60;           // 方法
+    }
 }</code></pre>
 </div><div class="card"><p><strong>适用条件：</strong> 方法体<strong>只有一行</strong> <code>return</code> 或一行语句时才能用。多行逻辑、if-else 绕弯的还是老老实实用 <code>{ }</code>。</p></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 密码强度校验</h1>
 <div class="ok-box">用属性封装密码，要求长度 ≥ 6 位才接受，太短直接拒绝。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303282112',this)">复制</button></div>
-<pre id="c_4303282112"><code class="language-csharp">class User
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313943808',this)">复制</button></div>
+<pre id="c_4313943808"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    private string password;
-    public string Username { get; set; }
-
-    public string Password
+    class User
     {
-        get =&gt; password;
-        set
-        {
-            if (value.Length &gt;= 6)
-                password = value;
-            else
-                Console.WriteLine($&quot;密码太短（{value.Length}位），至少需要6位&quot;);
-        }
-    }
+        private string password;
+        public string Username { get; set; }
 
-    public string Info =&gt; $&quot;{Username}，密码已设置：{(password != null ? &quot;是&quot; : &quot;否&quot;)}&quot;;
+        public string Password
+        {
+            get =&gt; password;
+            set
+            {
+                if (value.Length &gt;= 6)
+                password = value;
+                else
+                Console.WriteLine($&quot;密码太短（{value.Length}位），至少需要6位&quot;);
+            }
+        }
+
+        public string Info =&gt; $&quot;{Username}，密码已设置：{(password != null ? &quot;是&quot; : &quot;否&quot;)}&quot;;
+    }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303282048',this)">复制</button></div>
-<pre id="c_4303282048"><code class="language-csharp">User u = new User { Username = &quot;admin&quot;, Password = &quot;123456&quot; };
-Console.WriteLine(u.Info);   // admin，密码已设置：是
-u.Password = &quot;123&quot;;          // 密码太短（3位），至少需要6位
-Console.WriteLine(u.Info);   // admin，密码已设置：是（123被拒，仍是123456）</code></pre>
-</div><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303281536',this)">复制</button></div>
-<pre id="c_4303281536"><code class="language-csharp">class Temperature
-{
-    <span class="code-blank">___</span> double celsius;     // private 字段
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313943744',this)">复制</button></div>
+<pre id="c_4313943744"><code class="language-csharp">using System;
 
-    public double Celsius
+namespace HelloWorld
+{
+    class Program
     {
-        <span class="code-blank">___</span> =&gt; celsius;     // get
-        <span class="code-blank">___</span>
+        static void Main()
         {
-            if (value &gt;= <span class="code-blank">___</span> &amp;&amp; <span class="code-blank">___</span> &lt;= 1000)
+            User u = new User { Username = &quot;admin&quot;, Password = &quot;123456&quot; };
+            Console.WriteLine(u.Info);   // admin，密码已设置：是
+            u.Password = &quot;123&quot;;          // 密码太短（3位），至少需要6位
+            Console.WriteLine(u.Info);   // admin，密码已设置：是（123被拒，仍是123456）
+        }
+    }
+}</code></pre>
+</div><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313943232',this)">复制</button></div>
+<pre id="c_4313943232"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Temperature
+    {
+        <span class="code-blank">___</span> double celsius;     // private 字段
+
+        public double Celsius
+        {
+            <span class="code-blank">___</span> =&gt; celsius;     // get
+            <span class="code-blank">___</span>
+            {
+                if (value &gt;= <span class="code-blank">___</span> &amp;&amp; <span class="code-blank">___</span> &lt;= 1000)
                 celsius = <span class="code-blank">___</span>;
-            else
+                else
                 Console.WriteLine(&quot;温度不合法&quot;);
+            }
         }
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303281856',this)">复制</button></div>
-<pre id="c_4303281856"><code class="language-csharp">class Temperature
-{
-    private double celsius;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313943552',this)">复制</button></div>
+<pre id="c_4313943552"><code class="language-csharp">using System;
 
-    public double Celsius
+namespace HelloWorld
+{
+    class Temperature
     {
-        get =&gt; celsius;
-        set
+        private double celsius;
+
+        public double Celsius
         {
-            if (value &gt;= -273 &amp;&amp; value &lt;= 1000)
+            get =&gt; celsius;
+            set
+            {
+                if (value &gt;= -273 &amp;&amp; value &lt;= 1000)
                 celsius = value;
-            else
+                else
                 Console.WriteLine(&quot;温度不合法&quot;);
+            }
         }
     }
 }</code></pre>
@@ -666,102 +802,117 @@ Console.WriteLine(u.Info);   // admin，密码已设置：是（123被拒，仍�
 <h1>综合练习 — 学生成绩管理器</h1>
 <div class="ok-box">三门成绩封装为属性（0-100），总分/平均分/等级用 <code>=&gt;</code> 写为只读属性。</div><div class="card"><h3>期望输入：</h3></div><pre class="plain-box"><code>张三 语文85 数学90 英语78
 （尝试设置 Chinese = 120 —— 应被拦截）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三: 总分253 平均84.3 等级B
-成绩120无效（被拦截）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303279232',this)">复制</button></div>
-<pre id="c_4303279232"><code class="language-csharp">class Student
+成绩120无效（被拦截）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313941376',this)">复制</button></div>
+<pre id="c_4313941376"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Name { get; set; }
-    <span class="code-blank">___</span> double chinese, math, english;
-
-    public double Chinese
+    class Student
     {
-        <span class="code-blank">___</span> =&gt; chinese;
-        set
-        {
-            if (<span class="code-blank">___</span> &gt;= 0 &amp;&amp; value &lt;= <span class="code-blank">___</span>)
-                chinese = value;
-            else
-                Console.WriteLine($&quot;成绩{value}无效&quot;);
-        }
-    }
-    // Math 和 English 同理（自己补全）
+        public string Name { get; set; }
+        <span class="code-blank">___</span> double chinese, math, english;
 
-    public double Total =&gt; <span class="code-blank">___</span> + Math + English;
-    public double Average =&gt; <span class="code-blank">___</span> / 3;
-    public string Grade =&gt;
+        public double Chinese
+        {
+            <span class="code-blank">___</span> =&gt; chinese;
+            set
+            {
+                if (<span class="code-blank">___</span> &gt;= 0 &amp;&amp; value &lt;= <span class="code-blank">___</span>)
+                chinese = value;
+                else
+                Console.WriteLine($&quot;成绩{value}无效&quot;);
+            }
+        }
+        // Math 和 English 同理（自己补全）
+
+        public double Total =&gt; <span class="code-blank">___</span> + Math + English;
+        public double Average =&gt; <span class="code-blank">___</span> / 3;
+        public string Grade =&gt;
         Average &gt;= 90 ? &quot;<span class="code-blank">___</span>&quot; : Average &gt;= 80 ? &quot;<span class="code-blank">___</span>&quot; :
         Average &gt;= 70 ? &quot;C&quot; : Average &gt;= <span class="code-blank">___</span> ? &quot;D&quot; : &quot;F&quot;;
+    }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303279168',this)">复制</button></div>
-<pre id="c_4303279168"><code class="language-csharp">class Student
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313941312',this)">复制</button></div>
+<pre id="c_4313941312"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public string Name { get; set; }
-    private double chinese, math, english;
-
-    public double Chinese
+    class Student
     {
-        get =&gt; chinese;
-        set
+        public string Name { get; set; }
+        private double chinese, math, english;
+
+        public double Chinese
         {
-            if (value &gt;= 0 &amp;&amp; value &lt;= 100)
+            get =&gt; chinese;
+            set
+            {
+                if (value &gt;= 0 &amp;&amp; value &lt;= 100)
                 chinese = value;
-            else
+                else
                 Console.WriteLine($&quot;成绩{value}无效&quot;);
+            }
         }
-    }
-    public double Math
-    {
-        get =&gt; math;
-        set
+        public double Math
         {
-            if (value &gt;= 0 &amp;&amp; value &lt;= 100)
+            get =&gt; math;
+            set
+            {
+                if (value &gt;= 0 &amp;&amp; value &lt;= 100)
                 math = value;
-            else
+                else
                 Console.WriteLine($&quot;成绩{value}无效&quot;);
+            }
         }
-    }
-    public double English
-    {
-        get =&gt; english;
-        set
+        public double English
         {
-            if (value &gt;= 0 &amp;&amp; value &lt;= 100)
+            get =&gt; english;
+            set
+            {
+                if (value &gt;= 0 &amp;&amp; value &lt;= 100)
                 english = value;
-            else
+                else
                 Console.WriteLine($&quot;成绩{value}无效&quot;);
+            }
         }
-    }
 
-    public double Total =&gt; Chinese + Math + English;
-    public double Average =&gt; Total / 3;
-    public string Grade =&gt;
+        public double Total =&gt; Chinese + Math + English;
+        public double Average =&gt; Total / 3;
+        public string Grade =&gt;
         Average &gt;= 90 ? &quot;A&quot; : Average &gt;= 80 ? &quot;B&quot; :
         Average &gt;= 70 ? &quot;C&quot; :         Average &gt;= 60 ? &quot;D&quot; : &quot;F&quot;;
+    }
 }</code></pre>
-</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303278912',this)">复制</button></div>
-<pre id="c_4303278912"><code class="language-csharp">class Thermometer
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313941056',this)">复制</button></div>
+<pre id="c_4313941056"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    private double t;
-    public double Temp
+    class Thermometer
     {
-        get =&gt; t;
-        set
+        private double t;
+        public double Temp
         {
-            if (value &gt;= 0 &amp;&amp; value &lt;= 50) t = value;
-            else Console.WriteLine(&quot;温度异常，已忽略&quot;);
+            get =&gt; t;
+            set
+            {
+                if (value &gt;= 0 &amp;&amp; value &lt;= 50) t = value;
+                else Console.WriteLine(&quot;温度异常，已忽略&quot;);
+            }
         }
     }
-}
-class Program
-{
-    static void Main()
+    class Program
     {
-        Thermometer th = new Thermometer();
-        th.Temp = 25;
-        th.Temp = 99;   // 越界，保持原值
-        Console.WriteLine($&quot;当前温度：{th.Temp}&quot;);
+        static void Main()
+        {
+            Thermometer th = new Thermometer();
+            th.Temp = 25;
+            th.Temp = 99;   // 越界，保持原值
+            Console.WriteLine($&quot;当前温度：{th.Temp}&quot;);
+        }
     }
 }</code></pre>
 </div></div></div>
@@ -769,26 +920,31 @@ class Program
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Product</code> 类，包含名称、价格字段。价格用属性封装，不能为负数。</p><ul><li>提示：<code>public double Price { get { ... } set { ... } }</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>Price = 19.9 → ✅ 设置成功</code></li></ul><ul><li>输出：<code>Price = -10 → ❌ 价格不能为负</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>SpeedLimit</code> 类：封装车速（0-300），添加只读属性 <code>Penalty</code> 返回处罚——≤120 &quot;正常&quot;，≤150 &quot;扣3分&quot;，≤180 &quot;扣6分&quot;，&gt;180 &quot;吊销驾照&quot;。</p><ul><li>提示：<code>Penalty</code> 用 <code>=&gt;</code> + 三元嵌套，或 <code>get { }</code> 用 if-else</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>Speed = 100 → 正常</code></li></ul><ul><li>输出：<code>Speed = 140 → 扣3分</code></li></ul><ul><li>输出：<code>Speed = 200 → 吊销驾照</code></li></ul><ul><li>输出：<code>Speed = -10 → ❌ 被拦截</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>改造课件11的 <code>Book</code> 类：将 <code>price</code> 改为属性（不能为负），添加只读属性 <code>Level</code>——价格 ≥ 50 返回&quot;贵&quot;，否则返回&quot;便宜&quot;。</p><ul><li>提示：<code>Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;</code>，用 <code>=&gt;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》¥45 → 便宜</code></li></ul><ul><li>输出：<code>《算法导论》¥89 → 贵</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Rectangle</code> 类：宽高用属性封装（0-10000），添加只读属性 <code>Area</code>（面积）和 <code>Perimeter</code>（周长）自动计算。</p><ul><li>提示：<code>Area =&gt; Width * Height</code>，<code>Perimeter =&gt; 2 * (Width + Height)</code>，宽和高改一个，面积周长自动更新</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303280896',this)">复制</button></div>
-<pre id="c_4303280896"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313944960',this)">复制</button></div>
+<pre id="c_4313944960"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    static void Main()
+    class Program
     {
-        // ==================== 第1题 ====================
+        static void Main()
+        {
+            // ==================== 第1题 ====================
 
 
-        // ==================== 第2题 ====================
+            // ==================== 第2题 ====================
 
 
-        // ==================== 第3题 ====================
+            // ==================== 第3题 ====================
 
 
-        // ==================== 第4题 ====================
+            // ==================== 第4题 ====================
 
+        }
     }
-}
 
-        // ===== 各类定义写在这里 =====</code></pre>
+    // ===== 各类定义写在这里 =====
+}</code></pre>
 </div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
