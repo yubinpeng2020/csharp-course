@@ -107,7 +107,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
-.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:cover;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
+.contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
 /* 平铺/PDF导出：并排多图改为单独一行放大显示（保持可点击放大） */
 .flat-mode .contest-row{display:block}
 .flat-mode .contest-row img{display:block;width:100%;max-width:100%;max-height:none;object-fit:contain;margin:16px auto 4px}
@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -330,11 +332,6 @@ html.flat-mode,body.flat-mode{height:auto;overflow:visible}
 .flat-mode .nav-buttons{display:none}
 .flat-mode .progress-dots{display:none}
 .flat-mode .header-bar{position:sticky;top:0}
-.teacher-id{display:flex;align-items:center;gap:18px;margin:-2px 0 22px;padding:14px 18px;background:var(--accent-dim);border:1px solid rgba(0,212,170,0.25);border-radius:12px}
-.teacher-avatar{width:64px;height:64px;flex-shrink:0;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--bg-card);border:2px solid var(--accent)}
-.teacher-avatar img{width:100%;height:100%;object-fit:cover}
-.teacher-name{font-size:22px;font-weight:700;color:var(--text)}
-.teacher-info{font-size:13px;color:var(--text-muted);margin-top:3px}
 
 /* ===== 图片显示模式切换（card 内图片放下方大图显示） ===== */
 .img-bottom .card .card-img{float:none;display:block;width:100%;max-width:100%;max-height:none;margin:16px auto 4px}
@@ -425,13 +422,6 @@ pre,pre code{page-break-inside:avoid}
 </div>
 <div class="slide" data-page="2"><div class="slide-inner markable">
 <h1>教师介绍</h1>
-<div class="teacher-id">
-  <div class="teacher-avatar"><img src="images/课件1/头像.png" alt="彭堉斌" onerror="this.style.display='none'"></div>
-  <div>
-    <div class="teacher-name">彭堉斌</div>
-    <div class="teacher-info">汕头职业技术学院 · 电子信息学院 · 数字媒体技术教研室　|　专任教师</div>
-  </div>
-</div>
 <div class="card"><h3>🎓 教育背景</h3><ul><li><strong>本科</strong>：南方科技大学 · 通信工程</li><li><strong>硕士</strong>：哈尔滨工业大学 · 计算机技术</li></ul></div><div class="card"><h3>💼 工作经历</h3><ul><li><strong>腾讯科技</strong>（深圳）有限公司 — 客户端开发</li><li><strong>英特尔</strong>（中国）有限公司 — 技术实习</li><li><strong>南方科技大学</strong> — 教学研助理</li><li><strong>汕头职业技术学院</strong> — 专任教师（现任）</li></ul></div><div class="card"><h3>📬 联系方式</h3><ul><li>邮箱：<code>ybpeng1286@stpt.edu.cn</code></li><li>办公室：电子信息学院 · 数字媒体技术教研室</li></ul></div><div class="ok-box">教学理念：编程不是&quot;背&quot;出来的，是&quot;写&quot;出来的。有问题随时问，不要怕犯错。</div>
 </div></div>
 <div class="slide" data-page="3"><div class="slide-inner">
@@ -449,7 +439,7 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课程考核与要求</h1>
-<div class="card"><table><tr><th>项目</th><th>方式</th><th>说明</th></tr><tr><td>📋 考勤</td><td>学习通签到打卡</td><td>按时到课，不迟到早退</td></tr><tr><td>✍️ 课堂作业</td><td>课件上发布题目，当堂完成</td><td>当堂演示验收，或通过学习通提交（暂定），累计计分</td></tr><tr><td>🏗️ 期末大作业</td><td>学期末 2~3 周独立完成</td><td>最后一周现场答辩</td></tr></table></div><div class="ok-box">三项分数合计为课程最终成绩（占比另行通知）</div><div class="card"><h3>📏 课堂纪律</h3><ul><li>练习当堂完成，不懂当场问</li><li>作业当堂完成，可当场演示验收或通过学习通提交（暂定）</li></ul></div><div class="card"><h3>🤖 AI 使用边界</h3><ul><li>允许参考 AI，但遵循四步法（下次课详述）</li><li>能向老师讲清楚 = 合格</li><li>讲不清楚 = 没学会，不算完成</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ AI 写出来的代码算不算我的作业？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">算&quot;参考材料&quot;，必须能讲清楚每一行才算通过。只复制不理解的代码 = 无效。</div></div>
+<div class="card"><table><tr><th>项目</th><th>方式</th><th>说明</th></tr><tr><td>📋 考勤</td><td>学习通签到打卡</td><td>按时到课，不迟到早退</td></tr><tr><td>✍️ 课堂作业</td><td>课件上发布题目，当堂完成</td><td>当堂演示验收，或通过 WPS 问卷提交，累计计分</td></tr><tr><td>🏗️ 期末大作业</td><td>学期末 2~3 周独立完成</td><td>最后一周现场答辩</td></tr></table></div><div class="ok-box">三项分数合计为课程最终成绩（占比另行通知）</div><div class="card"><h3>📏 课堂纪律</h3><ul><li>练习当堂完成，不懂当场问</li><li>作业当堂完成，可当场演示验收或通过 WPS 问卷提交</li></ul></div><div class="card"><h3>🤖 AI 使用边界</h3><ul><li>允许参考 AI，但遵循四步法（下次课详述）</li><li>能向老师讲清楚 = 合格</li><li>讲不清楚 = 没学会，不算完成</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ AI 写出来的代码算不算我的作业？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">算&quot;参考材料&quot;，必须能讲清楚每一行才算通过。只复制不理解的代码 = 无效。</div></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>教材与编程思维</h1>
@@ -477,9 +467,18 @@ pre,pre code{page-break-inside:avoid}
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 <a href="课件2_开发环境与AI辅助编程.html" class="end-next-link">📖 下一节：课件2 · 开发环境与AI辅助编程 →</a>

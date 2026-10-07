@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -431,8 +433,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>算术运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th><th>结果</th></tr><tr><td><code>+</code></td><td>加</td><td><code>5 + 2</code></td><td>7</td></tr><tr><td><code>-</code></td><td>减</td><td><code>5 - 2</code></td><td>3</td></tr><tr><td><code>*</code></td><td>乘</td><td><code>5 * 2</code></td><td>10</td></tr><tr><td><code>/</code></td><td>除</td><td><code>5 / 2</code></td><td>2</td></tr><tr><td><code>%</code></td><td>取余（模）</td><td><code>5 % 2</code></td><td>1</td></tr></table></div><div class="card"><ul><li>取余运算：求除法后的余数，如 <code>10 % 3 = 1</code></li></ul></div><div class="card"><h3>整数除法的陷阱</h3><ul><li>⚠️ 整数 ÷ 整数 = 整数（截断小数部分）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383269568',this)">复制</button></div>
-<pre id="c_4383269568"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313604992',this)">复制</button></div>
+<pre id="c_4313604992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -446,8 +448,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>想要小数结果 → 至少有一个操作数是小数：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383269056',this)">复制</button></div>
-<pre id="c_4383269056"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313604480',this)">复制</button></div>
+<pre id="c_4313604480"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -466,8 +468,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>自增自减</h1>
 <div class="card"><table><tr><th>运算符</th><th>名称</th><th>等价于</th></tr><tr><td><code>x++</code></td><td>后置自增</td><td>先用x，再加1</td></tr><tr><td><code>++x</code></td><td>前置自增</td><td>先加1，再用x</td></tr><tr><td><code>x--</code></td><td>后置自减</td><td>先用x，再减1</td></tr><tr><td><code>--x</code></td><td>前置自减</td><td>先减1，再用x</td></tr></table></div><div class="card"><ul><li>前置 vs 后置的区别：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383268672',this)">复制</button></div>
-<pre id="c_4383268672"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313604096',this)">复制</button></div>
+<pre id="c_4313604096"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -490,8 +492,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 算术运算</h1>
 <div class="ok-box">动手算几道算术题，同时观察整数除法和自增自减的效果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383266560',this)">复制</button></div>
-<pre id="c_4383266560"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313602048',this)">复制</button></div>
+<pre id="c_4313602048"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -514,8 +516,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：修改a和b的值，观察输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>整数除法 <code>10 / 3 = 3</code>，小数部分被截断，不会四舍五入</li><li><code>x++</code> 先用后加，<code>++x</code> 先加后用</li><li>取余 <code>%</code> 是求余数，不是百分比</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：将摄氏度转为华氏度（公式：F = C × 9 / 5 + 32）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383266048',this)">复制</button></div>
-<pre id="c_4383266048"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313601536',this)">复制</button></div>
+<pre id="c_4313601536"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -530,8 +532,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题2</strong>：用复合赋值运算符让分数变化，填写运算符</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383265984',this)">复制</button></div>
-<pre id="c_4383265984"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313601472',this)">复制</button></div>
+<pre id="c_4313601472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -547,8 +549,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题3</strong>：观察 <code>n++</code> 的&quot;先用后加&quot;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383265856',this)">复制</button></div>
-<pre id="c_4383265856"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313601344',this)">复制</button></div>
+<pre id="c_4313601344"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -562,8 +564,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383265728',this)">复制</button></div>
-<pre id="c_4383265728"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313601216',this)">复制</button></div>
+<pre id="c_4313601216"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -590,8 +592,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>赋值运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>示例</th><th>等价于</th></tr><tr><td><code>=</code></td><td><code>x = 5;</code></td><td>—</td></tr><tr><td><code>+=</code></td><td><code>x += 3;</code></td><td><code>x = x + 3;</code></td></tr><tr><td><code>-=</code></td><td><code>x -= 3;</code></td><td><code>x = x - 3;</code></td></tr><tr><td><code>*=</code></td><td><code>x *= 3;</code></td><td><code>x = x * 3;</code></td></tr><tr><td><code>/=</code></td><td><code>x /= 3;</code></td><td><code>x = x / 3;</code></td></tr><tr><td><code>%=</code></td><td><code>x %= 3;</code></td><td><code>x = x % 3;</code></td></tr></table></div><div class="card"><ul><li>复合赋值运算符 = 先运算再赋值，写法更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383267776',this)">复制</button></div>
-<pre id="c_4383267776"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313603200',this)">复制</button></div>
+<pre id="c_4313603200"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -610,8 +612,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>关系运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例（结果）</th></tr><tr><td><code>==</code></td><td>等于</td><td><code>5 == 5</code> → true</td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>5 != 3</code> → true</td></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>5 &gt; 3</code> → true</td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>5 &lt; 3</code> → false</td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>5 &gt;= 5</code> → true</td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>5 &lt;= 3</code> → false</td></tr></table></div><div class="card"><ul><li>比较结果一定是 <code>bool</code> 类型（true/false）</li><li>⚠️ 等于用 <code>==</code>（两个等号），一个 <code>=</code> 是赋值</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383265152',this)">复制</button></div>
-<pre id="c_4383265152"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313600640',this)">复制</button></div>
+<pre id="c_4313600640"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -630,8 +632,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>逻辑运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（两个条件都满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个即可）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="card"><ul><li>真值表：</li></ul></div><div class="card"><table><tr><th>A</th><th>B</th><th>A <code>&amp;&amp;</code> B</th><th>A <code>||</code> B</th><th><code>!</code>A</th></tr><tr><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr><tr><td>true</td><td>false</td><td>false</td><td>true</td><td>false</td></tr><tr><td>false</td><td>true</td><td>false</td><td>true</td><td>true</td></tr><tr><td>false</td><td>false</td><td>false</td><td>false</td><td>true</td></tr></table></div><div class="card"><h3>短路特性</h3><ul><li><code>&amp;&amp;</code>：如果左边为 false，右边不再计算（因为结果一定是 false）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383263232',this)">复制</button></div>
-<pre id="c_4383263232"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313598720',this)">复制</button></div>
+<pre id="c_4313598720"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -645,8 +647,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>||</code>：如果左边为 true，右边不再计算（因为结果一定是 true）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383263040',this)">复制</button></div>
-<pre id="c_4383263040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313598528',this)">复制</button></div>
+<pre id="c_4313598528"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -668,8 +670,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习2 — 条件判断</h1>
 <div class="ok-box">用关系运算符判断分数是否及格，再用逻辑运算符组合多个条件判断天气。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383244160',this)">复制</button></div>
-<pre id="c_4383244160"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313596096',this)">复制</button></div>
+<pre id="c_4313596096"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -696,8 +698,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：把 score 改成 95、55、-10，观察每个 bool 值的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>&amp;&amp;</code> 两边都 true 才为 true，<code>||</code> 一边 true 就为 true</li><li><code>!</code> 取反：<code>!true</code> → false</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全下面代码，判断一个数是否在 1~100 之间：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383243584',this)">复制</button></div>
-<pre id="c_4383243584"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313562688',this)">复制</button></div>
+<pre id="c_4313562688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -712,8 +714,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383243776',this)">复制</button></div>
-<pre id="c_4383243776"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313562880',this)">复制</button></div>
+<pre id="c_4313562880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -732,8 +734,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>三元运算符（?:）</h1>
 <div class="card"><ul><li>格式：<code>条件 ? 结果1 : 结果2</code></li><li>如果条件为 <code>true</code> → 返回<code>结果1</code>；否则 → 返回<code>结果2</code></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383261888',this)">复制</button></div>
-<pre id="c_4383261888"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313597376',this)">复制</button></div>
+<pre id="c_4313597376"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -756,8 +758,8 @@ namespace HelloWorld
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>运算符优先级</h1>
 <div class="card"><ul><li>当多个运算符同时出现，计算顺序按优先级：</li></ul></div><div class="card"><table><tr><th>优先级</th><th>运算符</th></tr><tr><td>高</td><td><code>()</code> 括号</td></tr><tr><td>↑</td><td><code>++</code> <code>--</code> <code>!</code>（一元）</td></tr><tr><td></td><td><code>*</code> <code>/</code> <code>%</code></td></tr><tr><td></td><td><code>+</code> <code>-</code></td></tr><tr><td></td><td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td></tr><tr><td></td><td><code>==</code> <code>!=</code></td></tr><tr><td></td><td><code>&amp;&amp;</code></td></tr><tr><td>↓</td><td><code>||</code></td></tr><tr><td>低</td><td><code>=</code> <code>+=</code> <code>-=</code> 等（赋值）</td></tr></table></div><div class="card"><ul><li>记不住就用<strong>括号</strong>，括号里优先计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383241536',this)">复制</button></div>
-<pre id="c_4383241536"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313560640',this)">复制</button></div>
+<pre id="c_4313560640"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -782,8 +784,8 @@ namespace HelloWorld
 请输入运算符（+、-、*、/）：*
 请输入第二个数字：3
 10 * 3 = 30</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>用 <code>if (op == &quot;+&quot;)</code> / <code>else if (op == &quot;-&quot;)</code> 等判断运算符</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238912',this)">复制</button></div>
-<pre id="c_4383238912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313558016',this)">复制</button></div>
+<pre id="c_4313558016"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -817,8 +819,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383239168',this)">复制</button></div>
-<pre id="c_4383239168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313558272',this)">复制</button></div>
+<pre id="c_4313558272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -852,8 +854,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个<strong>年份</strong>，判断是否为<strong>闰年</strong>并输出结果。<br>闰年规则：能被 4 整除且不能被 100 整除，<strong>或者</strong>能被 400 整除。<br>要求：用逻辑运算符 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 和取余 <code>%</code> 自己写判断，不能用现成模板。<br>提示：<code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code></div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238592',this)">复制</button></div>
-<pre id="c_4383238592"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313557696',this)">复制</button></div>
+<pre id="c_4313557696"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -871,9 +873,9 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383237440',this)">复制</button></div>
-<pre id="c_4383237440"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313556480',this)">复制</button></div>
+<pre id="c_4313556480"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -907,9 +909,18 @@ namespace HelloWorld
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 <a href="课件5_类型转换.html" class="end-next-link">📖 下一节：课件5 · 类型转换 →</a>

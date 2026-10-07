@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -475,8 +477,8 @@ pre,pre code{page-break-inside:avoid}
 </svg></div>
 <div class="ok-box">代码中长这样（语法后面页面详讲）：<br><span style="display:block;margin-left:20px">（盒子的类型 → <strong>类型</strong>）  （标签 → <strong>标识符</strong>）  =  （东西 → <strong>值</strong>）</span></div>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304577920',this)">复制</button></div>
-<pre id="c_4304577920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310328960',this)">复制</button></div>
+<pre id="c_4310328960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -495,8 +497,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>标识符</h1>
 <div class="card"><p><strong>标识符</strong>：程序中给变量、方法、类等起的<strong>名字</strong>，就像给每个人起名字一样</p></div><div class="card"><ul><li>✅ 规则：字母或下划线开头，由字母、数字、下划线组成</li><li>❌ 不能：数字开头、含空格</li><li>区分大小写：<code>age</code>和<code>Age</code>是两个不同变量</li><li>用有意义的英文单词：<code>studentName</code> ✅ 不用 <code>a</code>、<code>x</code> ❌</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304577344',this)">复制</button></div>
-<pre id="c_4304577344"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310328384',this)">复制</button></div>
+<pre id="c_4310328384"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -522,8 +524,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>整数类型详解</h1>
 <div class="card"><table><tr><th>类型</th><th>范围</th><th>字节数</th><th>说明</th></tr><tr><td><code>byte</code></td><td>0~255</td><td>1</td><td>无符号8位</td></tr><tr><td><code>sbyte</code></td><td>-128~127</td><td>1</td><td>有符号8位</td></tr><tr><td><code>short</code></td><td>-32768~32767</td><td>2</td><td>有符号16位</td></tr><tr><td><code>int</code></td><td>-21亿~21亿</td><td>4</td><td><strong>最常用</strong></td></tr><tr><td><code>long</code></td><td>±9×10¹⁸</td><td>8</td><td>超大整数</td></tr></table></div><div class="card"><ul><li>日常编程99%用<code>int</code>就够了</li><li>需要超大数字时用<code>long</code>：<code>long bigNum = 10000000000L;</code></li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 byte 能表示 0~255？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">1 字节 = 8 位，每位的 0/1 有 2 种可能，8 位共有 2⁸ = 256 种组合。从 0 开始编号，就是 0~255。（<code>sbyte</code> 用最高位表示符号：0 表示正数，1 表示负数，所以也是 256 种组合，拆分为 -128~127）</div></div><div class="card"><h3>整数的不同写法（进制）</h3><ul><li>同一数值可以用不同进制表示：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304571520',this)">复制</button></div>
-<pre id="c_4304571520"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310322560',this)">复制</button></div>
+<pre id="c_4310322560"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -554,8 +556,8 @@ namespace HelloWorld
    =13     =10
    =D      =A
 ∴ 0b11011010 = 0xDA</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304570368',this)">复制</button></div>
-<pre id="c_4304570368"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310321408',this)">复制</button></div>
+<pre id="c_4310321408"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -578,8 +580,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>bool类型</h1>
 <div class="card"><ul><li>只有两个值：<code>true</code>（真）或<code>false</code>（假）</li><li>⚠️ C#中不能用1和0代替true/false</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304568576',this)">复制</button></div>
-<pre id="c_4304568576"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310319616',this)">复制</button></div>
+<pre id="c_4310319616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -598,8 +600,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>char类型</h1>
 <div class="card"><ul><li>表示<strong>单个</strong>字符，用<strong>单引号</strong>括起来</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304535296',this)">复制</button></div>
-<pre id="c_4304535296"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310319168',this)">复制</button></div>
+<pre id="c_4310319168"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -618,8 +620,8 @@ namespace HelloWorld
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>string类型</h1>
 <div class="card"><ul><li>表示一串字符（0个或多个），用<strong>双引号</strong>括起来</li><li><code>string</code> 本质上是 <code>char</code> 组成的序列：<code>&quot;ABC&quot;</code> = <code>'A'</code> + <code>'B'</code> + <code>'C'</code></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304533568',this)">复制</button></div>
-<pre id="c_4304533568"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310284608',this)">复制</button></div>
+<pre id="c_4310284608"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -635,8 +637,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>字符串拼接用<code>+</code>：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304533248',this)">复制</button></div>
-<pre id="c_4304533248"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310284288',this)">复制</button></div>
+<pre id="c_4310284288"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -650,8 +652,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>$</code> 插值写法（推荐，更简洁）：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304532928',this)">复制</button></div>
-<pre id="c_4304532928"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310283968',this)">复制</button></div>
+<pre id="c_4310283968"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -671,8 +673,8 @@ namespace HelloWorld
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>变量的声明与赋值</h1>
 <div class="card"><ul><li>声明格式：<code>数据类型 变量名;</code></li><li>赋值：把值放进变量</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304535040',this)">复制</button></div>
-<pre id="c_4304535040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310284864',this)">复制</button></div>
+<pre id="c_4310284864"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -694,8 +696,8 @@ namespace HelloWorld
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>var 类型推断</h1>
 <div class="card"><ul><li>让编译器自动判断类型：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304532224',this)">复制</button></div>
-<pre id="c_4304532224"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310283264',this)">复制</button></div>
+<pre id="c_4310283264"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -711,8 +713,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>规则：</li><li style="margin-left:24px;list-style-type:circle">✅ 声明时必须初始化（不给值没法推断）</li><li style="margin-left:24px;list-style-type:circle">✅ 类型一旦确定就不能更改</li><li style="margin-left:24px;list-style-type:circle">❌ 不能用于类的字段（只能局部变量）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304531648',this)">复制</button></div>
-<pre id="c_4304531648"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310282688',this)">复制</button></div>
+<pre id="c_4310282688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -735,8 +737,8 @@ namespace HelloWorld
 <div class="slide" data-page="16"><div class="slide-inner markable">
 <h1>常量</h1>
 <div class="card"><ul><li>值在运行期间<strong>不可改变</strong></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304530304',this)">复制</button></div>
-<pre id="c_4304530304"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310281344',this)">复制</button></div>
+<pre id="c_4310281344"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -750,8 +752,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>命名规范：全大写 + 下划线分隔（回顾命名规范）</li><li>为什么用常量？看一个场景：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304529920',this)">复制</button></div>
-<pre id="c_4304529920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310280960',this)">复制</button></div>
+<pre id="c_4310280960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -774,8 +776,8 @@ namespace HelloWorld
 <div class="slide" data-page="17"><div class="slide-inner markable">
 <h1>变量的作用域</h1>
 <div class="card"><p>先快速认识程序的基本骨架：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304529408',this)">复制</button></div>
-<pre id="c_4304529408"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310280448',this)">复制</button></div>
+<pre id="c_4310280448"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -788,8 +790,8 @@ namespace HelloWorld
 }
 }</code></pre>
 </div><div class="card"><ul><li>变量只在定义它的 <code>{ }</code> 范围内有效——这就是<strong>作用域</strong></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304529024',this)">复制</button></div>
-<pre id="c_4304529024"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310280064',this)">复制</button></div>
+<pre id="c_4310280064"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -810,8 +812,8 @@ namespace HelloWorld
 <div class="slide" data-page="18"><div class="slide-inner markable">
 <h1>基础输入输出 — Console</h1>
 <div class="card"><ul><li><code>Console</code> 是 C# 提供的<strong>控制台类</strong>，负责程序和屏幕/键盘之间的交互</li><li>回顾：<code>Console.Write()</code> / <code>Console.WriteLine()</code> 向屏幕<strong>输出</strong></li><li>新知识：<code>Console.ReadLine()</code> 从键盘<strong>读入</strong>用户输入：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304528640',this)">复制</button></div>
-<pre id="c_4304528640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310279680',this)">复制</button></div>
+<pre id="c_4310279680"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -831,8 +833,8 @@ namespace HelloWorld
 <div class="slide" data-page="19"><div class="slide-inner markable">
 <h1>课堂练习1 — 变量与输入输出</h1>
 <div class="ok-box">动手试：声明变量、读入用户输入、做简单运算并输出。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304524736',this)">复制</button></div>
-<pre id="c_4304524736"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310278080',this)">复制</button></div>
+<pre id="c_4310278080"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -852,8 +854,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：把 <code>double</code> 改成 <code>int</code> 再运行一次，观察整数除法差异</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Console.ReadLine()</code> 返回 <code>string</code>，要当数字用必须 <code>double.Parse()</code> 转换</li><li>变量先声明、后赋值、再使用，类型要和存的值一致</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：让用户输入姓名和年龄，打印一句欢迎语（类型已声明好）。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304526336',this)">复制</button></div>
-<pre id="c_4304526336"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310277568',this)">复制</button></div>
+<pre id="c_4310277568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -872,8 +874,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304526528',this)">复制</button></div>
-<pre id="c_4304526528"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310277888',this)">复制</button></div>
+<pre id="c_4310277888"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -906,8 +908,8 @@ namespace HelloWorld
 姓名：张三
 年龄：18
 身高：1.75米</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>年龄和身高输入后是 <code>string</code> 类型，要用 <code>int.Parse()</code> 和 <code>double.Parse()</code> 转换</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4300416384',this)">复制</button></div>
-<pre id="c_4300416384"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306167424',this)">复制</button></div>
+<pre id="c_4306167424"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -932,8 +934,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4300202432',this)">复制</button></div>
-<pre id="c_4300202432"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311087936',this)">复制</button></div>
+<pre id="c_4311087936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -954,8 +956,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入 <strong>3 个整数</strong>，程序输出其中<strong>最大的一个</strong>。<br>要求：自己写读入、比较和输出的完整代码，不能用现成模板。<br>提示：先读入三个数，再用 <code>if</code> 两两比较找出最大值。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305336768',this)">复制</button></div>
-<pre id="c_4305336768"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311088448',this)">复制</button></div>
+<pre id="c_4311088448"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -977,9 +979,9 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="22"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>编写程序，声明变量存储你的姓名、学号、班级，然后输出。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>姓名：张三，学号：2630509101，班级：数媒1班</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序，让用户输入圆的半径，计算周长和面积并输出（π用const定义，值为3.14）。</p><ul><li>周长 = 2 × π × r</li><li>面积 = π × r × r</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>周长=31.4，面积=78.5</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序，让用户输入年龄，用 <code>bool</code> 变量存储是否成年（≥18）的判断结果，输出 <code>True</code> 或 <code>False</code>。</p><ul><li>提示：<code>bool isAdult = age &gt;= 18;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>是否成年：True</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>让用户输入两个整数，交换它们的值并输出。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 5</code></li></ul><ul><li>输出：<code>a=5, b=3</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305337920',this)">复制</button></div>
-<pre id="c_4305337920"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序，声明变量存储你的姓名、学号、班级，然后输出。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>姓名：张三，学号：2630509101，班级：数媒1班</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序，让用户输入圆的半径，计算周长和面积并输出（π用const定义，值为3.14）。</p><ul><li>周长 = 2 × π × r</li><li>面积 = π × r × r</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>周长=31.4，面积=78.5</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序，让用户输入年龄，用 <code>bool</code> 变量存储是否成年（≥18）的判断结果，输出 <code>True</code> 或 <code>False</code>。</p><ul><li>提示：<code>bool isAdult = age &gt;= 18;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>是否成年：True</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>让用户输入两个整数，交换它们的值并输出。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 5</code></li></ul><ul><li>输出：<code>a=5, b=3</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310695424',this)">复制</button></div>
+<pre id="c_4310695424"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1013,9 +1015,18 @@ namespace HelloWorld
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 <a href="课件4_运算符与表达式.html" class="end-next-link">📖 下一节：课件4 · 运算符与表达式 →</a>

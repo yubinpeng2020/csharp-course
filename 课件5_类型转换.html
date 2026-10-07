@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -426,8 +428,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>什么是类型转换？</h1>
 <div class="card"><p>类型转换就是把一种数据类型变成另一种，让不同类型的数据可以互相配合。</p></div><div class="card"><h3>什么时候需要：</h3></div><div class="card"><ul><li>计算时类型不匹配：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4304012672',this)">复制</button></div>
-<pre id="c_4304012672"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317349696',this)">复制</button></div>
+<pre id="c_4317349696"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -442,8 +444,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>用户输入都是 string，必须转成数字才能计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303725568',this)">复制</button></div>
-<pre id="c_4303725568"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317062592',this)">复制</button></div>
+<pre id="c_4317062592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -461,8 +463,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>隐式转换 — 自动类型转换</h1>
 <div class="card"><ul><li>小范围 → 大范围，编译器自动完成，安全</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303726784',this)">复制</button></div>
-<pre id="c_4303726784"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317063808',this)">复制</button></div>
+<pre id="c_4317063808"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -482,8 +484,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>显式转换 — 强制类型转换</h1>
 <div class="card"><ul><li>大范围 → 小范围，需要手动指定，可能丢失精度</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303723520',this)">复制</button></div>
-<pre id="c_4303723520"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317060544',this)">复制</button></div>
+<pre id="c_4317060544"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -500,8 +502,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>语法：<code>(目标类型)表达式</code></li><li>⚠️ 强制转换是<strong>截断</strong>，不是四舍五入</li></ul></div><div class="card"><h3>精度丢失示例</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303723200',this)">复制</button></div>
-<pre id="c_4303723200"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317060224',this)">复制</button></div>
+<pre id="c_4317060224"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -522,8 +524,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — 类型转换</h1>
 <div class="ok-box">练习自动转换和强制转换，理解 int↔double 互转的规则和精度问题。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303721152',this)">复制</button></div>
-<pre id="c_4303721152"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317058176',this)">复制</button></div>
+<pre id="c_4317058176"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -548,8 +550,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(int)</code> 强制转换是截断小数，不是四舍五入</li><li>四舍五入技巧：<code>(int)(数 + 0.5)</code> — 先加0.5再截断</li><li>小→大自动转，大→小必须手动加 <code>(int)</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：用 double 计算两个整数的平均值（注意先转成 double 再除）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303720640',this)">复制</button></div>
-<pre id="c_4303720640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057664',this)">复制</button></div>
+<pre id="c_4317057664"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -565,8 +567,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303720576',this)">复制</button></div>
-<pre id="c_4303720576"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057600',this)">复制</button></div>
+<pre id="c_4317057600"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -581,8 +583,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题3</strong>：用四舍五入技巧保留整数</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303720448',this)">复制</button></div>
-<pre id="c_4303720448"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057472',this)">复制</button></div>
+<pre id="c_4317057472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -597,8 +599,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303720320',this)">复制</button></div>
-<pre id="c_4303720320"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057344',this)">复制</button></div>
+<pre id="c_4317057344"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -626,8 +628,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>string ↔ 数值互转</h1>
 <div class="card"><h3>string → 数值：Parse</h3><p>用户输入都是 string，计算前必须转换：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303722240',this)">复制</button></div>
-<pre id="c_4303722240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317059264',this)">复制</button></div>
+<pre id="c_4317059264"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -642,8 +644,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><table><tr><th>目标类型</th><th>方法</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>int.Parse()</code></td><td><code>int n = int.Parse(&quot;123&quot;);</code></td></tr><tr><td><code>double</code></td><td><code>double.Parse()</code></td><td><code>double d = double.Parse(&quot;3.14&quot;);</code></td></tr><tr><td><code>float</code></td><td><code>float.Parse()</code></td><td><code>float f = float.Parse(&quot;9.9&quot;);</code></td></tr><tr><td><code>bool</code></td><td><code>bool.Parse()</code></td><td><code>bool b = bool.Parse(&quot;true&quot;);</code></td></tr></table></div><div class="card"><h3>数值 → string：ToString</h3><p>反过来，把数字变成文字显示：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303719936',this)">复制</button></div>
-<pre id="c_4303719936"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317056960',this)">复制</button></div>
+<pre id="c_4317056960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -660,8 +662,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303719808',this)">复制</button></div>
-<pre id="c_4303719808"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317056832',this)">复制</button></div>
+<pre id="c_4317056832"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -685,8 +687,8 @@ namespace HelloWorld
 <div class="ok-box">输入摄氏度，自动转换成华氏度并输出，同时展示整数截断的效果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入摄氏度：25
 25°C = 77°F
 华氏度（整数）= 77</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303718656',this)">复制</button></div>
-<pre id="c_4303718656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055680',this)">复制</button></div>
+<pre id="c_4317055680"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -711,8 +713,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303718912',this)">复制</button></div>
-<pre id="c_4303718912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055936',this)">复制</button></div>
+<pre id="c_4317055936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -733,8 +735,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303718400',this)">复制</button></div>
-<pre id="c_4303718400"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055424',this)">复制</button></div>
+<pre id="c_4317055424"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -755,9 +757,9 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写 .cs 文件</li><li>文件名：<strong>「学号_姓名_课件N.cs」</strong>（如 2630509101_某某_课件3.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成「X 小时 Y 分 Z 秒」格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 59.5</code></li></ul><ul><li>输出：<code>原始成绩59.5 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303717568',this)">复制</button></div>
-<pre id="c_4303717568"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成「X 小时 Y 分 Z 秒」格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 59.5</code></li></ul><ul><li>输出：<code>原始成绩59.5 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317054592',this)">复制</button></div>
+<pre id="c_4317054592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -792,9 +794,18 @@ namespace HelloWorld
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 <a href="课件6_流程控制_分支语句.html" class="end-next-link">📖 下一节：课件6 · 流程控制 - 分支语句 →</a>

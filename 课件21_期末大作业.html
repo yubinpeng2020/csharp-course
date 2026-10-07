@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -470,8 +472,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>参考案例框架 — 以&quot;图书管理&quot;为例</h1>
 <div class="ok-box">下面是一套可直接套用的骨架，把 <code>Book</code> 换成你的主题类即可。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342749760',this)">复制</button></div>
-<pre id="c_4342749760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4377664512',this)">复制</button></div>
+<pre id="c_4377664512"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -512,8 +514,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4342749632',this)">复制</button></div>
-<pre id="c_4342749632"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4377664384',this)">复制</button></div>
+<pre id="c_4377664384"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
     &lt;TextBox x:Name=&quot;authorBox&quot; Watermark=&quot;作者&quot; /&gt;
@@ -529,7 +531,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>提交要求</h1>
-<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整的 Avalonia 项目（能打开、能运行）</li><li><strong>设计文档</strong>（Word/PDF）：含①类图/字段说明 ②功能列表 ③使用说明 ④运行截图</li><li><strong>答辩演示</strong>：最后一周上台，5~8 分钟讲思路 + 现场演示</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>项目文件夹命名：<strong>「学号_姓名_期末大作业」</strong>（如 2630509101_某某_期末大作业）</li><li>提交到 <strong>超星平台</strong></li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ul></div><div class="ok-box">⚠️ 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
+<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整的 Avalonia 项目（能打开、能运行）</li><li><strong>设计文档</strong>（Word/PDF）：含①类图/字段说明 ②功能列表 ③使用说明 ④运行截图</li><li><strong>答辩演示</strong>：最后一周上台，5~8 分钟讲思路 + 现场演示</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>提交到 <strong>WPS 问卷</strong>：扫描结束页「扫码提交课后作业」二维码进入，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>把项目整理到一个文件夹，<strong>建议命名「学号_姓名_期末大作业」</strong></li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页另一张二维码查看）</li></ul></div><div class="ok-box">⚠️ 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>评分标准（满分 100）</h1>
@@ -549,9 +551,18 @@ namespace HelloWorld
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 

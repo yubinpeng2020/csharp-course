@@ -253,6 +253,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-thanks{display:flex;align-items:center;justify-content:center;gap:60px;flex-wrap:wrap;padding:60px 56px;border:2px solid rgba(0,212,170,0.3);border-radius:16px;background:linear-gradient(135deg,rgba(0,212,170,0.06),rgba(17,24,39,0.95))}
 .end-left{flex:1;min-width:200px;text-align:center}
 .end-right{flex:0 0 auto;text-align:center;padding-left:24px;border-left:1px solid rgba(0,212,170,0.2)}
+.end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
+.end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
 .end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
 .end-sub{font-size:18px;color:var(--text-muted)}
@@ -544,8 +546,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>常用控件 — TextBlock / TextBox / Button</h1>
 <div class="ok-box">⚠️ <strong>和 WinForms 的三个大不同（务必先看）</strong><br>1. 显示文字用 <strong><code>TextBlock</code></strong>，不是 <code>Label</code>（<code>Label</code> 在 Avalonia 是给别的控件加快捷键的，不用来显示文字）<br>2. 修改属性名变了：<code>BackColor</code> → <code>Background</code>、<code>Enabled</code> → <code>IsEnabled</code>、<code>ReadOnly</code> → <code>IsReadOnly</code><br>3. <strong>没有 <code>MessageBox.Show</code></strong>！要提示用户，用窗口上的 <code>TextBlock</code> 显示文字。本课都用 <code>TextBlock</code> 显示提示</div><div class="card"><h3>XAML 快速看懂</h3><p>XAML 是用&quot;标签&quot;描述界面的语言。Avalonia 的文件后缀是 <strong><code>.axaml</code></strong>（不是 <code>.xaml</code>，特意和 WPF 区分开）：</p><ul><li><strong>标签名 = 控件类名</strong>：<code>&lt;Button&gt;</code> 就是按钮，<code>&lt;TextBox&gt;</code> 就是输入框</li><li><strong>标签里的属性 = 控件属性</strong>：<code>Background=&quot;Blue&quot;</code>、<code>Content=&quot;确定&quot;</code> 都是在设属性</li><li><strong>标签之间的内容 = 控件的&quot;内容&quot;</strong>：<code>&lt;Button&gt;确定&lt;/Button&gt;</code> 等价于 <code>Content=&quot;确定&quot;</code></li><li>文件开头通常有三个命名空间（<code>xmlns</code>、<code>xmlns:x</code>、<code>x:Class</code>），照模板写即可，不用背</li></ul></div><div class="ok-box">💡 XAML 看着像网页 HTML，但它描述的是一棵&quot;对象树&quot;：每个标签对应一个 C# 对象，属性就是对象的字段。看懂这点，后面换控件只是换标签名。</div><div class="card"><p>界面写在 <code>MainWindow.axaml</code> 里，用 <strong><code>StackPanel</code></strong>（竖直排列容器）把控件一个个摞起来：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303067264',this)">复制</button></div>
-<pre id="c_4303067264"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339210432',this)">复制</button></div>
+<pre id="c_4339210432"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock x:Name=&quot;tip&quot; Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -556,20 +558,20 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>布局基础 — 控件摆在哪里</h1>
 <div class="ok-box">控件不能随便乱飘，得放进&quot;布局容器&quot;里，由容器决定它们怎么排列。Avalonia 常用 5 种布局容器：</div><div class="card"><h3>1. StackPanel —— 摞起来 / 排成行</h3><p>控件一个接一个竖直（默认）或水平排列，<code>Spacing</code> 控制间距：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303066432',this)">复制</button></div>
-<pre id="c_4303066432"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339209600',this)">复制</button></div>
+<pre id="c_4339209600"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
     &lt;Button Content=&quot;按钮1&quot; /&gt;
     &lt;Button Content=&quot;按钮2&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><h3>2. Grid —— 表格（最灵活）</h3><p>用 <code>ColumnDefinitions</code> / <code>RowDefinitions</code> 划分行列，<code>*</code> 表示按比例、<code>Auto</code> 表示按内容；再用 <code>Grid.Row</code> / <code>Grid.Column</code> 把控件放进指定格：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303066176',this)">复制</button></div>
-<pre id="c_4303066176"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339209344',this)">复制</button></div>
+<pre id="c_4339209344"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Content=&quot;左上&quot; /&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Content=&quot;右上&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
 </div><div class="ok-box">💡 <code>*</code> 和 <code>Auto</code> 是 Grid 的灵魂：前者按比例分剩余空间，后者刚好包住内容。</div><div class="card"><h3>3. DockPanel —— 靠边停靠</h3><p>子控件用 <code>DockPanel.Dock=&quot;Top/Left/Right/Bottom&quot;</code> 贴边；<code>LastChildFill=&quot;True&quot;</code> 让最后一个填满剩余区：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303065920',this)">复制</button></div>
-<pre id="c_4303065920"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339209088',this)">复制</button></div>
+<pre id="c_4339209088"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
     &lt;Button DockPanel.Dock=&quot;Top&quot; Content=&quot;顶栏&quot; /&gt;
     &lt;Button DockPanel.Dock=&quot;Left&quot; Content=&quot;侧栏&quot; /&gt;
     &lt;TextBlock Text=&quot;中间填充区&quot; /&gt;
@@ -579,8 +581,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>事件 — 按钮点击做什么</h1>
 <div class="card"><p>在 XAML 里用 <code>Click=&quot;方法名&quot;</code> 把按钮和代码关联，再到 <code>MainWindow.axaml.cs</code> 里写这个方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303064576',this)">复制</button></div>
-<pre id="c_4303064576"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339207744',this)">复制</button></div>
+<pre id="c_4339207744"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -598,8 +600,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303064512',this)">复制</button></div>
-<pre id="c_4303064512"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339207680',this)">复制</button></div>
+<pre id="c_4339207680"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -621,8 +623,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>修改控件属性</h1>
 <div class="card"><p>可以在代码里动态修改属性（注意属性名和 WinForms 不同）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303065472',this)">复制</button></div>
-<pre id="c_4303065472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339208640',this)">复制</button></div>
+<pre id="c_4339208640"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -652,8 +654,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 姓名问候器</h1>
 <div class="ok-box">用 TextBox 输入姓名，点击按钮后在 TextBlock 显示问候语——掌握 XAML 的 <code>x:Name</code> 和 C# 事件处理。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303062976',this)">复制</button></div>
-<pre id="c_4303062976"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339206144',this)">复制</button></div>
+<pre id="c_4339206144"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -661,8 +663,8 @@ namespace HelloWorld
     &lt;TextBlock x:Name=&quot;result&quot; Text=&quot;结果会显示在这里&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303063040',this)">复制</button></div>
-<pre id="c_4303063040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339206208',this)">复制</button></div>
+<pre id="c_4339206208"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -690,8 +692,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：试试空输入直接点&quot;确定&quot;，再看输入&quot;张三&quot;后的结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>x:Name=&quot;nameBox&quot;</code> —— 给 XAML 里的控件起名，C# 代码就能用这个名字访问它</li><li>Avalonia <strong>没有 MessageBox</strong>！要用窗口上的 <code>TextBlock</code> 显示提示文字</li><li><code>string.IsNullOrWhiteSpace(name)</code> —— 检查是否为空或全空格，比 <code>name == &quot;&quot;</code> 更安全</li><li>事件方法签名固定为 <code>(object? sender, RoutedEventArgs e)</code>，<code>Click=&quot;方法名&quot;</code> 会自动关联</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，加上&quot;清空&quot;按钮的功能（点击后清空 TextBox 和结果 TextBlock）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303062464',this)">复制</button></div>
-<pre id="c_4303062464"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339205632',this)">复制</button></div>
+<pre id="c_4339205632"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -708,8 +710,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303062784',this)">复制</button></div>
-<pre id="c_4303062784"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339205952',this)">复制</button></div>
+<pre id="c_4339205952"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -737,16 +739,16 @@ namespace HelloWorld
 密码：123456
 （尝试错误的密码如 111111 —— 应提示错误并清空密码框）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>（正确时）✅ 登录成功！（文字变绿）
 （错误时）❌ 用户名或密码错误（文字变红，密码框自动清空）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>PasswordChar=&quot;*&quot;</code> —— 让密码框显示为星号，但 <code>Text</code> 属性仍是真实密码</li><li>颜色用 <code>Foreground = Brushes.Green</code>，<strong>不是 ForeColor</strong></li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303028160',this)">复制</button></div>
-<pre id="c_4303028160"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339204160',this)">复制</button></div>
+<pre id="c_4339204160"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;<span class="code-blank">___</span>&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303061056',this)">复制</button></div>
-<pre id="c_4303061056"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339204224',this)">复制</button></div>
+<pre id="c_4339204224"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -776,16 +778,16 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303028032',this)">复制</button></div>
-<pre id="c_4303028032"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339171200',this)">复制</button></div>
+<pre id="c_4339171200"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;*&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303028096',this)">复制</button></div>
-<pre id="c_4303028096"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339171264',this)">复制</button></div>
+<pre id="c_4339171264"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -818,7 +820,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交步骤：</em></p></div><div class="card"><ol><li>按<strong>验收示范格式</strong>编写窗体程序</li><li>文件名：<strong>「学号_姓名_课件19.cs」</strong>（如 2630509101_某某_课件19.cs）</li><li>提交到<strong>学习通（超星平台）</strong></li><li>教师判分后，成绩同步至<strong>腾讯文档</strong>（扫描结束页二维码查看）</li></ol></div><div class="ok-box">⚠️ <strong>提交要求</strong>：本课件为 Avalonia 窗体程序（GUI），无命令行输出，所有题目均为 ⚠️ 手动验收——运行程序演示效果，或提交运行截图 / 录屏。</div><div class="card"><h3>题1（3分）⚠️ 手动验收</h3><p>完成&quot;姓名问候器&quot;：一个 TextBlock（提示）、一个 TextBox（输姓名）、一个 Button（确定）、一个 TextBlock（显示结果），点击确定后显示问候语；并加上&quot;清空&quot;按钮。</p><ul><li>提示：空输入时用结果 TextBlock 显示提示（Avalonia 无 MessageBox，改用 TextBlock）</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入「张三」→ 点击「确定」→ 结果 Label 显示「你好，张三！」</li><li>运行效果：点击「清空」→ TextBox 和结果 Label 清空</li></ul></div><div class="card"><h3>题2（3分）⚠️ 手动验收</h3><p>完成&quot;登录窗口&quot;：用户名、密码输入框、登录按钮、结果 TextBlock，硬编码账号密码验证；改为三个不同账号都能登录。</p><ul><li>提示：用 <code>if ((user==&quot;a&quot;&amp;&amp;pass==&quot;1&quot;) || (user==&quot;b&quot;&amp;&amp;pass==&quot;2&quot;) || ...)</code> 或数组 / 字典存多组账号</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入正确账号密码 → 显示「✅ 登录成功」</li><li>运行效果：输入错误 → 显示「❌ 用户名或密码错误」，密码框清空</li></ul></div><div class="card"><h3>题3（3分）⚠️ 手动验收</h3><p>做一个简易计算器：两个 TextBox 输入数字，点&quot;+&quot;按钮自动算和并显示。</p><ul><li>提示：用 <code>double.TryParse</code> 防止非数字输入崩溃</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入 <code>3</code> 和 <code>5</code> → 点「+」→ 结果显示 <code>8</code></li></ul></div><div class="card"><h3>题4（4分）⚠️ 手动验收</h3><p>挑战题：给登录窗口加&quot;剩余尝试次数&quot;（3 次错误就禁用登录按钮）。</p><ul><li>提示：用 <code>int tries = 3;</code> 计数，错误时 <code>--</code>，归零则 <code>loginBtn.IsEnabled = false;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：连续输错 3 次 → 第 3 次后登录按钮变灰禁用；中途输对一次则次数重置</li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="ok-box">⚠️ 本课件题目为 <strong>手动验收</strong>——运行程序演示效果，或提交运行截图 / 录屏即可。</div><div class="card"><h3>题1（3分）⚠️ 手动验收</h3><p>完成&quot;姓名问候器&quot;：一个 TextBlock（提示）、一个 TextBox（输姓名）、一个 Button（确定）、一个 TextBlock（显示结果），点击确定后显示问候语；并加上&quot;清空&quot;按钮。</p><ul><li>提示：空输入时用结果 TextBlock 显示提示（Avalonia 无 MessageBox，改用 TextBlock）</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入「张三」→ 点击「确定」→ 结果 Label 显示「你好，张三！」</li><li>运行效果：点击「清空」→ TextBox 和结果 Label 清空</li></ul></div><div class="card"><h3>题2（3分）⚠️ 手动验收</h3><p>完成&quot;登录窗口&quot;：用户名、密码输入框、登录按钮、结果 TextBlock，硬编码账号密码验证；改为三个不同账号都能登录。</p><ul><li>提示：用 <code>if ((user==&quot;a&quot;&amp;&amp;pass==&quot;1&quot;) || (user==&quot;b&quot;&amp;&amp;pass==&quot;2&quot;) || ...)</code> 或数组 / 字典存多组账号</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入正确账号密码 → 显示「✅ 登录成功」</li><li>运行效果：输入错误 → 显示「❌ 用户名或密码错误」，密码框清空</li></ul></div><div class="card"><h3>题3（3分）⚠️ 手动验收</h3><p>做一个简易计算器：两个 TextBox 输入数字，点&quot;+&quot;按钮自动算和并显示。</p><ul><li>提示：用 <code>double.TryParse</code> 防止非数字输入崩溃</li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：输入 <code>3</code> 和 <code>5</code> → 点「+」→ 结果显示 <code>8</code></li></ul></div><div class="card"><h3>题4（4分）⚠️ 手动验收</h3><p>挑战题：给登录窗口加&quot;剩余尝试次数&quot;（3 次错误就禁用登录按钮）。</p><ul><li>提示：用 <code>int tries = 3;</code> 计数，错误时 <code>--</code>，归零则 <code>loginBtn.IsEnabled = false;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>运行效果：连续输错 3 次 → 第 3 次后登录按钮变灰禁用；中途输对一次则次数重置</li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner end-page">
 
@@ -830,9 +832,18 @@ namespace HelloWorld
         <div class="end-contact">有问题可联系授课教师<br>📧 <code>ybpeng1286@stpt.edu.cn</code></div>
     </div>
     <div class="end-right">
-        <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-        <p>扫码查看作业完成情况</p>
-        <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+        <div class="end-qr-row">
+            <div class="end-qr-card">
+                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交课后作业</p>
+                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+            </div>
+            <div class="end-qr-card">
+                <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码查看作业完成情况</p>
+                <a href="https://docs.qq.com/sheet/DV0xOTEFNU0FheVNO?tab=bo2p4o" target="_blank" class="end-link">📊 查看作业完成情况文档</a>
+            </div>
+        </div>
     </div>
 </div>
 <a href="课件20_Avalonia跨平台窗体控件进阶.html" class="end-next-link">📖 下一节：课件20 · Avalonia跨平台窗体控件进阶 →</a>
