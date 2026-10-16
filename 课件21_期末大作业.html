@@ -472,9 +472,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>参考案例框架 — 以&quot;图书管理&quot;为例</h1>
 <div class="ok-box">下面是一套可直接套用的骨架，把 <code>Book</code> 换成你的主题类即可。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4377664512',this)">复制</button></div>
-<pre id="c_4377664512"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374903808',this)">复制</button></div>
+<pre id="c_4374903808"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     // 1) 模型类：一条记录
@@ -485,16 +484,14 @@ namespace HelloWorld
         public string Author { get; set; } = &quot;&quot;;
         public bool IsBorrowed { get; set; }
     }
-
     // 2) 数据集合 + 文件读写（放在 MainWindow.axaml.cs 或单独类）
     List&lt;Book&gt; books = new();
     string file = &quot;books.txt&quot;;
-
     void Load()
     {
         books.Clear();
         if (File.Exists(file))
-        foreach (var line in File.ReadAllLines(file))
+            foreach (var line in File.ReadAllLines(file))
         {
             var p = line.Split('|');
             books.Add(new Book
@@ -506,24 +503,22 @@ namespace HelloWorld
             });
         }
     }
-
     void Save()
     {
         var lines = books.Select(b =&gt; $&quot;{b.Id}|{b.Title}|{b.Author}|{b.IsBorrowed}&quot;);
         File.WriteAllLines(file, lines);
     }
 }</code></pre>
-</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4377664384',this)">复制</button></div>
-<pre id="c_4377664384"><code class="language-xml">&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;
-&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
-    &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
+</div><pre class="plain-box"><code></code></pre><div class="card"><p>&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;</p></div><div class="card"><p>&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4374903616',this)">复制</button></div>
+<pre id="c_4374903616"><code class="language-csharp">    &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
     &lt;TextBox x:Name=&quot;authorBox&quot; Watermark=&quot;作者&quot; /&gt;
     &lt;Button x:Name=&quot;addBtn&quot; Content=&quot;新增&quot; Click=&quot;AddBtn_Click&quot; /&gt;
     &lt;ListBox x:Name=&quot;listBox&quot; /&gt;
-    &lt;TextBlock x:Name=&quot;hint&quot; /&gt;
-&lt;/StackPanel&gt;</code></pre>
-</div><div class="card"><ul><li>绑定列表：简单场景用 <code>listBox.Items.Add(...)</code> 即可；数据多变也可用 <code>listBox.ItemsSource = books</code></li><li>提示信息一律用 <code>hint.Text = &quot;...&quot;</code>，<strong>Avalonia 没有 MessageBox</strong></li></ul></div>
+    &lt;TextBlock x:Name=&quot;hint&quot; /&gt;</code></pre>
+</div><div class="card"><p>&lt;/StackPanel&gt;</p></div><pre class="plain-box"><code>
+- 绑定列表：简单场景用 `listBox.Items.Add(...)` 即可；数据多变也可用 `listBox.ItemsSource = books`
+- 提示信息一律用 `hint.Text = &quot;...&quot;`，**Avalonia 没有 MessageBox**</code></pre>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>开发步骤与时间安排</h1>

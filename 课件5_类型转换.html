@@ -428,9 +428,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>什么是类型转换？</h1>
 <div class="card"><p>类型转换就是把一种数据类型变成另一种，让不同类型的数据可以互相配合。</p></div><div class="card"><h3>什么时候需要：</h3></div><div class="card"><ul><li>计算时类型不匹配：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317349696',this)">复制</button></div>
-<pre id="c_4317349696"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351233280',this)">复制</button></div>
+<pre id="c_4351233280"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -443,9 +442,8 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li>用户输入都是 string，必须转成数字才能计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317062592',this)">复制</button></div>
-<pre id="c_4317062592"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>- 用户输入都是 string，必须转成数字才能计算：
+using System;
 
 namespace HelloWorld
 {
@@ -457,15 +455,13 @@ namespace HelloWorld
             int age = int.Parse(input);         // string → int
         }
     }
-}</code></pre>
-</div><div class="card"><h3>两种方式：</h3></div><div class="card"><table><tr><th>方式</th><th>谁来干</th><th>什么时候</th></tr><tr><td><strong>隐式转换</strong>（自动）</td><td>编译器自动完成</td><td>小 → 大，不会丢数据</td></tr><tr><td><strong>显式转换</strong>（手动）</td><td>你自己写代码</td><td>大 → 小，或 string → 数字</td></tr></table></div><div class="ok-box"><strong>&quot;范围&quot;就是能装多少东西</strong>：<code>int</code> 装整数（±21亿），<code>double</code> 能装带小数点的更大数字。<code>int</code> → <code>double</code> = 小杯子倒进大桶，安全。</div>
+}</code></pre><div class="card"><h3>两种方式：</h3></div><div class="card"><table><tr><th>方式</th><th>谁来干</th><th>什么时候</th></tr><tr><td><strong>隐式转换</strong>（自动）</td><td>编译器自动完成</td><td>小 → 大，不会丢数据</td></tr><tr><td><strong>显式转换</strong>（手动）</td><td>你自己写代码</td><td>大 → 小，或 string → 数字</td></tr></table></div><div class="ok-box"><strong>&quot;范围&quot;就是能装多少东西</strong>：<code>int</code> 装整数（±21亿），<code>double</code> 能装带小数点的更大数字。<code>int</code> → <code>double</code> = 小杯子倒进大桶，安全。</div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>隐式转换 — 自动类型转换</h1>
 <div class="card"><ul><li>小范围 → 大范围，编译器自动完成，安全</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317063808',this)">复制</button></div>
-<pre id="c_4317063808"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351234752',this)">复制</button></div>
+<pre id="c_4351234752"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -479,14 +475,27 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li>转换路线：<code>int</code> → <code>long</code> → <code>float</code> → <code>double</code></li><li>反向不行！大转小必须手动</li></ul></div><div class="card"><table><tr><th>原类型</th><th>可自动转为</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>double</code>、<code>float</code>、<code>long</code></td><td><code>double x = 5;</code> ✅</td></tr><tr><td><code>float</code></td><td><code>double</code></td><td><code>double x = 3.14f;</code> ✅</td></tr><tr><td><code>char</code></td><td><code>int</code>、<code>long</code>、<code>float</code>、<code>double</code></td><td><code>int x = 'A';</code> ✅ (x=65)</td></tr><tr><td><code>double</code></td><td>❌ 不能自动转 <code>int</code></td><td><code>int x = 3.14;</code> ❌ 编译报错</td></tr></table></div><div class="card"><ul><li>记住：<strong>整数可以自动变小数，小数不能自动变整数</strong></li><li><code>char</code> 可以自动转 <code>int</code>，因为每个字符在计算机里都有一个数字编号（'A' = 65），这就是 Unicode 编码</li><li>⚠️ <code>bool</code> 不能和任何数值类型互转：<code>int x = (int)true;</code> ❌，<code>bool b = 1;</code> ❌</li><li style="margin-left:24px;list-style-type:circle">需要转换时用：<code>int n = flag ? 1 : 0;</code> 或 <code>bool ok = (score &gt;= 60);</code></li></ul></div>
+</div><pre class="plain-box"><code>- 转换路线：`int` → `long` → `float` → `double`
+- 反向不行！大转小必须手动
+
+
+| 原类型 | 可自动转为 | 示例 |
+|----------|-----------|------|
+| `int` | `double`、`float`、`long` | `double x = 5;` ✅ |
+| `float` | `double` | `double x = 3.14f;` ✅ |
+| `char` | `int`、`long`、`float`、`double` | `int x = 'A';` ✅ (x=65) |
+| `double` | ❌ 不能自动转 `int` | `int x = 3.14;` ❌ 编译报错 |
+
+- 记住：**整数可以自动变小数，小数不能自动变整数**
+- `char` 可以自动转 `int`，因为每个字符在计算机里都有一个数字编号（'A' = 65），这就是 Unicode 编码
+- ⚠️ `bool` 不能和任何数值类型互转：`int x = (int)true;` ❌，`bool b = 1;` ❌
+  - 需要转换时用：`int n = flag ? 1 : 0;` 或 `bool ok = (score &gt;= 60);`</code></pre>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>显式转换 — 强制类型转换</h1>
 <div class="card"><ul><li>大范围 → 小范围，需要手动指定，可能丢失精度</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317060544',this)">复制</button></div>
-<pre id="c_4317060544"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351232512',this)">复制</button></div>
+<pre id="c_4351232512"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -495,15 +504,17 @@ namespace HelloWorld
         {
             double pi = 3.14159;
             int x = (int)pi;       // 强制转换，x = 3，小数被截断！
-
             double price = 9.99;
             int yuan = (int)price; // yuan = 9，不是四舍五入
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li>语法：<code>(目标类型)表达式</code></li><li>⚠️ 强制转换是<strong>截断</strong>，不是四舍五入</li></ul></div><div class="card"><h3>精度丢失示例</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317060224',this)">复制</button></div>
-<pre id="c_4317060224"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>- 语法：`(目标类型)表达式`
+- ⚠️ 强制转换是**截断**，不是四舍五入
+
+
+### 精度丢失示例
+using System;
 
 namespace HelloWorld
 {
@@ -518,15 +529,13 @@ namespace HelloWorld
             // a = 42  （byte只取最低1字节，高位数据丢失！）
         }
     }
-}</code></pre>
-</div><div class="card"><ul><li>298 的二进制：<code>00000000 00000000 00000001 00101010</code></li><li>截取最低字节：<code>00101010</code> = 42</li><li>⚠️ 强制转换前要确保目标类型装得下，否则结果不可信</li></ul></div><div class="ok-box">💡 回顾课件3：<code>byte</code> 只有 8 位二进制（上限 255），298 超出范围，高位被丢弃</div>
+}</code></pre><div class="card"><ul><li>298 的二进制：<code>00000000 00000000 00000001 00101010</code></li><li>截取最低字节：<code>00101010</code> = 42</li><li>⚠️ 强制转换前要确保目标类型装得下，否则结果不可信</li></ul></div><div class="ok-box">💡 回顾课件3：<code>byte</code> 只有 8 位二进制（上限 255），298 超出范围，高位被丢弃</div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — 类型转换</h1>
 <div class="ok-box">练习自动转换和强制转换，理解 int↔double 互转的规则和精度问题。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317058176',this)">复制</button></div>
-<pre id="c_4317058176"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351211456',this)">复制</button></div>
+<pre id="c_4351211456"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -537,21 +546,29 @@ namespace HelloWorld
             int count = 10;
             double total = count;     // int → double，安全
             Console.WriteLine($&quot;total = {total}&quot;);   // 输出：10
-
             // 强制转换
             double price = 9.99;
             int yuan = (int)price;    // double → int，截断小数
             Console.WriteLine($&quot;yuan = {yuan}&quot;);      // 输出：9
-
             // 四舍五入技巧
             int rounded = (int)(price + 0.5);  // 9.99+0.5=10.49 → 10
             Console.WriteLine($&quot;四舍五入 = {rounded}&quot;);  // 输出：10
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li>动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(int)</code> 强制转换是截断小数，不是四舍五入</li><li>四舍五入技巧：<code>(int)(数 + 0.5)</code> — 先加0.5再截断</li><li>小→大自动转，大→小必须手动加 <code>(int)</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p><strong>小题1</strong>：用 double 计算两个整数的平均值（注意先转成 double 再除）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057664',this)">复制</button></div>
-<pre id="c_4317057664"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>- 动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化
+
+&gt; 💬 解释说明
+&gt; - `(int)` 强制转换是截断小数，不是四舍五入
+&gt; - 四舍五入技巧：`(int)(数 + 0.5)` — 先加0.5再截断
+&gt; - 小→大自动转，大→小必须手动加 `(int)`
+
+### 练习（动手写）
+补全代码，完成下面三道小题：
+
+**小题1**：用 double 计算两个整数的平均值（注意先转成 double 再除）
+
+using System;
 
 namespace HelloWorld
 {
@@ -565,11 +582,9 @@ namespace HelloWorld
             Console.WriteLine($&quot;平均值 = {<span class="code-blank">___</span>}&quot;);
         }
     }
-}</code></pre>
-</div><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057600',this)">复制</button></div>
-<pre id="c_4317057600"><code class="language-csharp">using System;
-
+}</code></pre><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351211328',this)">复制</button></div>
+<pre id="c_4351211328"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -582,9 +597,10 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><p><strong>小题3</strong>：用四舍五入技巧保留整数</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057472',this)">复制</button></div>
-<pre id="c_4317057472"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>
+**小题3**：用四舍五入技巧保留整数
+
+using System;
 
 namespace HelloWorld
 {
@@ -597,11 +613,9 @@ namespace HelloWorld
             Console.WriteLine($&quot;四舍五入后 = {r}&quot;);
         }
     }
-}</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317057344',this)">复制</button></div>
-<pre id="c_4317057344"><code class="language-csharp">using System;
-
+}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351211264',this)">复制</button></div>
+<pre id="c_4351211264"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -612,25 +626,22 @@ namespace HelloWorld
             int b = int.Parse(Console.ReadLine());
             double avg = (double)(a + b) / 2.0;
             Console.WriteLine($&quot;平均值 = {avg}&quot;);
-
             double price = 9.99;
             int yuan = (int)price;     // 截断小数，结果是9
             Console.WriteLine($&quot;整数部分是 {yuan}&quot;);
-
             double x = 7.8;
             int r = (int)(x + 0.5);   // 先加0.5再截断，结果是8
             Console.WriteLine($&quot;四舍五入后 = {r}&quot;);
         }
     }
 }</code></pre>
-</div></div></div>
+</div><pre class="plain-box"><code></code></pre></div></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>string ↔ 数值互转</h1>
 <div class="card"><h3>string → 数值：Parse</h3><p>用户输入都是 string，计算前必须转换：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317059264',this)">复制</button></div>
-<pre id="c_4317059264"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351213376',this)">复制</button></div>
+<pre id="c_4351213376"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -643,9 +654,17 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><table><tr><th>目标类型</th><th>方法</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>int.Parse()</code></td><td><code>int n = int.Parse(&quot;123&quot;);</code></td></tr><tr><td><code>double</code></td><td><code>double.Parse()</code></td><td><code>double d = double.Parse(&quot;3.14&quot;);</code></td></tr><tr><td><code>float</code></td><td><code>float.Parse()</code></td><td><code>float f = float.Parse(&quot;9.9&quot;);</code></td></tr><tr><td><code>bool</code></td><td><code>bool.Parse()</code></td><td><code>bool b = bool.Parse(&quot;true&quot;);</code></td></tr></table></div><div class="card"><h3>数值 → string：ToString</h3><p>反过来，把数字变成文字显示：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317056960',this)">复制</button></div>
-<pre id="c_4317056960"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>
+| 目标类型 | 方法 | 示例 |
+|----------|------|------|
+| `int` | `int.Parse()` | `int n = int.Parse(&quot;123&quot;);` |
+| `double` | `double.Parse()` | `double d = double.Parse(&quot;3.14&quot;);` |
+| `float` | `float.Parse()` | `float f = float.Parse(&quot;9.9&quot;);` |
+| `bool` | `bool.Parse()` | `bool b = bool.Parse(&quot;true&quot;);` |
+
+### 数值 → string：ToString
+反过来，把数字变成文字显示：
+using System;
 
 namespace HelloWorld
 {
@@ -660,11 +679,9 @@ namespace HelloWorld
             string s2 = pi.ToString();     // &quot;3.14&quot;
         }
     }
-}</code></pre>
-</div><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317056832',this)">复制</button></div>
-<pre id="c_4317056832"><code class="language-csharp">using System;
-
+}</code></pre><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351213312',this)">复制</button></div>
+<pre id="c_4351213312"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -676,7 +693,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div>
+</div><pre class="plain-box"><code></code></pre>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
@@ -687,9 +704,8 @@ namespace HelloWorld
 <div class="ok-box">输入摄氏度，自动转换成华氏度并输出，同时展示整数截断的效果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入摄氏度：25
 25°C = 77°F
 华氏度（整数）= 77</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055680',this)">复制</button></div>
-<pre id="c_4317055680"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351212224',this)">复制</button></div>
+<pre id="c_4351212224"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -699,22 +715,20 @@ namespace HelloWorld
             Console.Write(&quot;请输入摄氏度：&quot;);
             string input = Console.ReadLine();
             double celsius = double.Parse(<span class="code-blank">___</span>);
-
             // 华氏度 = 摄氏度 × 9 / 5 + 32
             double fahrenheit = <span class="code-blank">___</span> * 9 / 5 + 32;
-
             // 输出结果
             Console.WriteLine($&quot;{celsius}°C = {<span class="code-blank">___</span>}°F&quot;);
-
             // int 转换：只取整数部分
             int f1 = (<span class="code-blank">___</span>)fahrenheit;
             Console.WriteLine($&quot;华氏度（整数）= {<span class="code-blank">___</span>}&quot;);
         }
     }
 }</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055936',this)">复制</button></div>
-<pre id="c_4317055936"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>
+&gt; 📝 参考代码（做完再对照，不要提前看哦）
+
+using System;
 
 namespace HelloWorld
 {
@@ -733,11 +747,9 @@ namespace HelloWorld
             Console.WriteLine($&quot;华氏度（整数）= {f1}&quot;);
         }
     }
-}</code></pre>
-</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317055424',this)">复制</button></div>
-<pre id="c_4317055424"><code class="language-csharp">using System;
-
+}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351212672',this)">复制</button></div>
+<pre id="c_4351212672"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -748,19 +760,18 @@ namespace HelloWorld
             string[] parts = input.Split(',');
             double sum = 0;
             foreach (string p in parts)
-            sum += double.Parse(p.Trim());
+                sum += double.Parse(p.Trim());
             Console.WriteLine($&quot;共 {parts.Length} 个数，总和 = {sum}&quot;);
         }
     }
 }</code></pre>
-</div></div></div>
+</div><pre class="plain-box"><code></code></pre></div></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成「X 小时 Y 分 Z 秒」格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 59.5</code></li></ul><ul><li>输出：<code>原始成绩59.5 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317054592',this)">复制</button></div>
-<pre id="c_4317054592"><code class="language-csharp">using System;
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4351233344',this)">复制</button></div>
+<pre id="c_4351233344"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -768,21 +779,15 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
-
-
             // ==================== 第2题 ====================
-
-
             // ==================== 第3题 ====================
-
-
             // ==================== 第4题 ====================
-
-
         }
     }
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><pre class="plain-box"><code>
+
+&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
 

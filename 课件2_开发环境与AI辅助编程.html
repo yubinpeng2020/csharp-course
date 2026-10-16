@@ -437,8 +437,8 @@ pre,pre code{page-break-inside:avoid}
 <img src="images/课件2/step13-lang-3.png" alt="命令面板 Configure Display Language" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
 <img src="images/课件2/step13-lang-4.png" alt="选择中文（简体）" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
 </div><div class="card"><h3>⑭ 安装 C# 扩展</h3><img src="images/课件2/step13-csharp-ext.png" alt="step13" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>打开 <strong>VS Code</strong>，按 <strong>Ctrl+Shift+X</strong> 打开扩展栏</li><li>搜索 <strong>C# Dev Kit</strong>，点击 <strong>Install</strong> 安装</li><li>⚠️ 安装完成后<strong>关闭 VS Code 并重新打开</strong>，让扩展完全加载；否则下一步运行程序时容易报 &quot;Unable to execute C# Dev Kit command.&quot; 等错误</li></ul></div><div class="card"><h3>⑮ 打开项目文件夹</h3><img src="images/课件2/step14-open-folder.png" alt="step14" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>在E盘新建一个文件夹（如 <code>code</code>）</li><li>重启 <strong>VS Code</strong> → <strong>File</strong> → <strong>Open Folder</strong> 打开该文件夹</li></ul></div><div class="card"><h3>⑯ 新建文件</h3><img src="images/课件2/step15-new-file.png" alt="step15" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>在左侧文件目录右键 → <strong>New File</strong></li></ul></div><div class="card"><h3>⑰ 命名文件</h3><img src="images/课件2/step16-name-file.png" alt="step16" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>命名为 <code>test.cs</code></li></ul></div><div class="card"><h3>⑱ 编写代码</h3><img src="images/课件2/step17-copy-code.png" alt="step17" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>复制以下示例代码粘贴到编辑区</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302295936',this)">复制</button></div>
-<pre id="c_4302295936"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308726208',this)">复制</button></div>
+<pre id="c_4308726208"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -450,61 +450,18 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><h3>⑲ 运行程序</h3><img src="images/课件2/step18-run.png" alt="step18" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ul><li>点击右上角 ▶ <strong>运行</strong> 按钮，查看终端输出结果</li></ul></div><div class="card"><h3>⑳ 首次运行报错：工作区信任（两步处理）</h3><p><strong>首次运行若弹出 &quot;Unable to execute C# Dev Kit command.&quot; 提示</strong>，说明工作区尚未被信任，按下面两步处理：</p><p><strong>步骤 1</strong>：点击提示中的 <strong>Manage Workspace Trust</strong>（工作区信任管理）。</p><p><strong>步骤 2</strong>：在弹出的窗口中点击 <strong>Trust</strong>（信任），关闭窗口后<strong>重新点击运行</strong>即可。</p></div><div class="contest-row">
-<img src="images/课件2/step19-workspace-trust.png" alt="点击 Manage Workspace Trust" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step20-trust-confirm.png" alt="点击 Trust 确认" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-</div><div class="card">
-<h3>㉑ .NET 版本不兼容：降级到 8.0 并新建项目</h3>
-<p>运行后发现弹窗报错：<strong>Unknown Hard Error</strong>（如下图所示）。</p>
-<img src="images/课件2/err-unknown-hard-error.png" alt="Unknown Hard Error 弹窗" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)">
-<p><strong>这通常是系统不接受刚安装的高版本 .NET（如 10.0），可降级到 .NET 8.0，并改用「终端命令」方式新建/运行项目。</strong>后续按下面步骤操作：</p>
+</div><pre class="plain-box"><code>
+### ⑲ 运行程序
+![step18](images/课件2/step18-run.png)
+- 点击右上角 ▶ **运行** 按钮，查看终端输出结果
 
-<p><strong>步骤 1｜卸载高版本 .NET</strong>：打开「设置 → 应用」，搜索 <code>net</code>，对 .NET 10 点击卸载并等待完成。</p>
-<div class="contest-row">
-<img src="images/课件2/step21-uninstall-1.png" alt="打开设置窗口" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-2.png" alt="点击应用" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-3.png" alt="搜索 net 应用" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-4.png" alt="对 .NET 10 点击卸载" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-5.png" alt="卸载 .NET 10" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-6.png" alt="等待卸载完成" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step21-uninstall-7.png" alt="卸载完毕点击关闭" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-</div>
+### ⑳ 首次运行报错：工作区信任（两步处理）
+**首次运行若弹出 &quot;Unable to execute C# Dev Kit command.&quot; 提示**，说明工作区尚未被信任，按下面两步处理：
 
-<p><strong>步骤 2｜重新下载 .NET 8.0</strong>：访问官网 <code>https://dotnet.microsoft.com/download</code>，依次点击「所有的 .NET 版本」→「.NET 8.0」，选择 8.0.31 版本并根据 CPU 类型（如 x64）下载安装包。</p>
-<div class="contest-row">
-<img src="images/课件2/step22-download-1.png" alt="点击所有的 .NET 版本" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step22-download-2.png" alt="点击 .NET 8.0" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step22-download-3.png" alt="选择 8.0.31 并下载 x64" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-</div>
-
-<p><strong>步骤 3｜重新安装 .NET 8.0</strong>：运行安装包完成安装。</p>
-
-<p><strong>步骤 4｜VS Code 设置勾选</strong>：打开设置，搜索 <code>dotnet.preferCSharpExtension</code> 并勾选该选项。</p>
-<div class="contest-row">
-<img src="images/课件2/step26-setting-1.png" alt="打开设置" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step27-setting-2.png" alt="勾选 preferCSharpExtension" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-</div>
-
-<p><strong>步骤 5｜打开集成终端</strong>。</p>
-<img src="images/课件2/step28-terminal.png" alt="集成终端" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)">
-
-<p><strong>步骤 6｜新建控制台项目</strong>：在终端输入 <code>dotnet new console</code>，自动生成 <code>csproj</code> 与 <code>Program.cs</code>。</p>
-<div class="contest-row">
-<img src="images/课件2/step29-new-console.png" alt="dotnet new console" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-<img src="images/课件2/step30-files.png" alt="生成的文件" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-</div>
-<p><strong>📌 认识这两个文件：</strong></p>
-<ul>
-<li><code>csproj</code>：项目配置文件（XML 格式），记录项目名、目标框架（.NET 版本）等"项目身份证"信息；想改 .NET 版本就改这里（见步骤 7）。</li>
-<li><code>Program.cs</code>：程序入口文件，包含 <code>Main</code> 方法，程序从这里开始运行，你写的代码都放这里。</li>
-</ul>
-
-<p><strong>步骤 7｜（可选）修正目标框架</strong>：若报错，把 <code>csproj</code> 里的 <code>TargetFramework</code> 改为 <code>net8.0</code>。</p>
-<img src="images/课件2/step31-csproj.png" alt="修改 TargetFramework" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)">
-
-<p><strong>步骤 8｜运行项目</strong>：在终端输入 <code>dotnet run</code> 运行该项目。</p>
-<img src="images/课件2/step32-run.png" alt="dotnet run 输出" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)">
-</div><div class="ok-box">💡 以后写代码都在这套环境里：新建 <code>.cs</code> 文件 → 写代码 → 点运行。VS Code + C# Dev Kit 已包含智能提示和调试功能。</div>
+**步骤 1**：点击提示中的 **Manage Workspace Trust**（工作区信任管理）。
+**步骤 2**：在弹出的窗口中点击 **Trust**（信任），关闭窗口后**重新点击运行**即可。
+</code></pre><div class="card"><p>&lt;div class=&quot;contest-row&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step19-workspace-trust.png&quot; alt=&quot;点击 Manage Workspace Trust&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step20-trust-confirm.png&quot; alt=&quot;点击 Trust 确认&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><pre class="plain-box"><code></code></pre><div class="card"><p>&lt;div class=&quot;card&quot;&gt;</p></div><div class="card"><p>&lt;h3&gt;㉑ .NET 版本不兼容：降级到 8.0 并新建项目&lt;/h3&gt;</p></div><div class="card"><p>&lt;p&gt;运行后发现弹窗报错：&lt;strong&gt;Unknown Hard Error&lt;/strong&gt;（如下图所示）。&lt;/p&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/err-unknown-hard-error.png&quot; alt=&quot;Unknown Hard Error 弹窗&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)&quot;&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;这通常是系统不接受刚安装的高版本 .NET（如 10.0），可降级到 .NET 8.0，并改用「终端命令」方式新建/运行项目。&lt;/strong&gt;后续按下面步骤操作：&lt;/p&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 1｜卸载高版本 .NET&lt;/strong&gt;：打开「设置 → 应用」，搜索 &lt;code&gt;net&lt;/code&gt;，对 .NET 10 点击卸载并等待完成。&lt;/p&gt;</p></div><div class="card"><p>&lt;div class=&quot;contest-row&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-1.png&quot; alt=&quot;打开设置窗口&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-2.png&quot; alt=&quot;点击应用&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-3.png&quot; alt=&quot;搜索 net 应用&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-4.png&quot; alt=&quot;对 .NET 10 点击卸载&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-5.png&quot; alt=&quot;卸载 .NET 10&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-6.png&quot; alt=&quot;等待卸载完成&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step21-uninstall-7.png&quot; alt=&quot;卸载完毕点击关闭&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 2｜重新下载 .NET 8.0&lt;/strong&gt;：访问官网 &lt;code&gt;<a href="https://dotnet.microsoft.com/download&lt;/code&gt;，依次点击「所有的" target="_blank" rel="noopener">https://dotnet.microsoft.com/download&lt;/code&gt;，依次点击「所有的</a> .NET 版本」→「.NET 8.0」，选择 8.0.31 版本并根据 CPU 类型（如 x64）下载安装包。&lt;/p&gt;</p></div><div class="card"><p>&lt;div class=&quot;contest-row&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step22-download-1.png&quot; alt=&quot;点击所有的 .NET 版本&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step22-download-2.png&quot; alt=&quot;点击 .NET 8.0&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step22-download-3.png&quot; alt=&quot;选择 8.0.31 并下载 x64&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 3｜重新安装 .NET 8.0&lt;/strong&gt;：运行安装包完成安装。&lt;/p&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 4｜VS Code 设置勾选&lt;/strong&gt;：打开设置，搜索 &lt;code&gt;dotnet.preferCSharpExtension&lt;/code&gt; 并勾选该选项。&lt;/p&gt;</p></div><div class="card"><p>&lt;div class=&quot;contest-row&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step26-setting-1.png&quot; alt=&quot;打开设置&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step27-setting-2.png&quot; alt=&quot;勾选 preferCSharpExtension&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 5｜打开集成终端&lt;/strong&gt;。&lt;/p&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step28-terminal.png&quot; alt=&quot;集成终端&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)&quot;&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 6｜新建控制台项目&lt;/strong&gt;：在终端输入 &lt;code&gt;dotnet new console&lt;/code&gt;，自动生成 &lt;code&gt;csproj&lt;/code&gt; 与 &lt;code&gt;Program.cs&lt;/code&gt;。&lt;/p&gt;</p></div><div class="card"><p>&lt;div class=&quot;contest-row&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step29-new-console.png&quot; alt=&quot;dotnet new console&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step30-files.png&quot; alt=&quot;生成的文件&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;📌 认识这两个文件：&lt;/strong&gt;&lt;/p&gt;</p></div><div class="card"><p>&lt;ul&gt;</p></div><div class="card"><p>&lt;li&gt;&lt;code&gt;csproj&lt;/code&gt;：项目配置文件（XML 格式），记录项目名、目标框架（.NET 版本）等&quot;项目身份证&quot;信息；想改 .NET 版本就改这里（见步骤 7）。&lt;/li&gt;</p></div><div class="card"><p>&lt;li&gt;&lt;code&gt;Program.cs&lt;/code&gt;：程序入口文件，包含 &lt;code&gt;Main&lt;/code&gt; 方法，程序从这里开始运行，你写的代码都放这里。&lt;/li&gt;</p></div><div class="card"><p>&lt;/ul&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 7｜（可选）修正目标框架&lt;/strong&gt;：若报错，把 &lt;code&gt;csproj&lt;/code&gt; 里的 &lt;code&gt;TargetFramework&lt;/code&gt; 改为 &lt;code&gt;net8.0&lt;/code&gt;。&lt;/p&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step31-csproj.png&quot; alt=&quot;修改 TargetFramework&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)&quot;&gt;</p></div><div class="card"><p>&lt;p&gt;&lt;strong&gt;步骤 8｜运行项目&lt;/strong&gt;：在终端输入 &lt;code&gt;dotnet run&lt;/code&gt; 运行该项目。&lt;/p&gt;</p></div><div class="card"><p>&lt;img src=&quot;images/课件2/step32-run.png&quot; alt=&quot;dotnet run 输出&quot; onerror=&quot;this.style.display='none'&quot; onclick=&quot;zoomQR(this)&quot; style=&quot;cursor:pointer;max-width:100%;height:auto;display:block;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)&quot;&gt;</p></div><div class="card"><p>&lt;/div&gt;</p></div><pre class="plain-box"><code>
+&gt; 💡 以后写代码都在这套环境里：新建 `.cs` 文件 → 写代码 → 点运行。VS Code + C# Dev Kit 已包含智能提示和调试功能。</code></pre>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>运行程序与常见问题</h1>
@@ -513,8 +470,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>在线编译器</h1>
 <div class="ok-box">环境没装好？别急，网页也能写 C#。</div><div class="ok-box">💡 <strong>课堂推荐：Tutorialspoint</strong>——三个在线编辑器里<strong>唯一支持键盘输入</strong>（<code>Console.ReadLine</code> 可用），练习需要输入的程序优先用它；菜鸟教程 / DotNetFiddle 适合纯输出练习。</div><div class="card"><h3>① 菜鸟教程</h3><p>网址：<a href="https://www.runoob.com/try/runcode.php?filename=helloworld&amp;type=csharp" target="_blank" rel="noopener">https://www.runoob.com/try/runcode.php?filename=helloworld&amp;type=csharp</a></p><ol><li>打开浏览器，访问上述网址</li><li>页面中间找到代码编辑器（已预填示例代码）</li><li>点击编辑器右上角&quot;点击运行&quot;按钮</li><li>右侧窗口显示运行结果</li></ol><p>预填的就是下面这样的代码（无需修改，直接点运行）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302292992',this)">复制</button></div>
-<pre id="c_4302292992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308722944',this)">复制</button></div>
+<pre id="c_4308722944"><code class="language-csharp">using System;
 class Program
 {
     static void Main()
@@ -524,9 +481,19 @@ class Program
         // 若从别处粘贴了含 ReadLine / ReadKey 的代码，删除最后一行即可
     }
 }</code></pre>
-</div><div class="ok-box">✅ 优点：中文界面，无需安装，打开即用</div><div class="card"><h3>② Tutorialspoint（推荐）</h3><p>网址：<a href="https://www.tutorialspoint.com/compile_csharp_online.php" target="_blank" rel="noopener">https://www.tutorialspoint.com/compile_csharp_online.php</a></p><ol><li>打开浏览器，访问上述网址</li><li>左上角代码编辑区已预填示例代码</li><li>点击左上角&quot;Execute&quot;按钮</li><li>右侧窗口显示运行结果</li></ol><p>预填代码含暂停行，注意这里要用 <code>ReadLine</code> 而不是 <code>ReadKey</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302292416',this)">复制</button></div>
-<pre id="c_4302292416"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>
+&gt; ✅ 优点：中文界面，无需安装，打开即用
+
+### ② Tutorialspoint（推荐）
+网址：https://www.tutorialspoint.com/compile_csharp_online.php
+1. 打开浏览器，访问上述网址
+2. 左上角代码编辑区已预填示例代码
+3. 点击左上角&quot;Execute&quot;按钮
+4. 右侧窗口显示运行结果
+
+预填代码含暂停行，注意这里要用 `ReadLine` 而不是 `ReadKey`：
+
+using System;
 class Program
 {
     static void Main()
@@ -534,10 +501,9 @@ class Program
         Console.WriteLine(&quot;你好，C#！&quot;);
         Console.ReadLine(); // 本平台 ReadKey 会报 &quot;Cannot read keys&quot; 错误
     }
-}</code></pre>
-</div><div class="ok-box">⭐ 特点：支持键盘输入（Console.ReadLine 可用），其他在线编译器大多不支持</div><div class="card"><h3>③ DotNetFiddle</h3><p>网址：<a href="https://dotnetfiddle.net/" target="_blank" rel="noopener">https://dotnetfiddle.net/</a></p><ol><li>打开浏览器，访问上述网址</li><li>中间代码编辑区已预填示例代码</li><li>点击顶部&quot;Run&quot;按钮</li><li>底部窗口显示运行结果</li></ol><p>预填的就是下面这样的代码（无需修改，直接点运行）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302291776',this)">复制</button></div>
-<pre id="c_4302291776"><code class="language-csharp">using System;
+}</code></pre><div class="ok-box">⭐ 特点：支持键盘输入（Console.ReadLine 可用），其他在线编译器大多不支持</div><div class="card"><h3>③ DotNetFiddle</h3><p>网址：<a href="https://dotnetfiddle.net/" target="_blank" rel="noopener">https://dotnetfiddle.net/</a></p><ol><li>打开浏览器，访问上述网址</li><li>中间代码编辑区已预填示例代码</li><li>点击顶部&quot;Run&quot;按钮</li><li>底部窗口显示运行结果</li></ol><p>预填的就是下面这样的代码（无需修改，直接点运行）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308723008',this)">复制</button></div>
+<pre id="c_4308723008"><code class="language-csharp">using System;
 class Program
 {
     static void Main()
@@ -547,7 +513,19 @@ class Program
         // 若从别处粘贴了含 ReadLine / ReadKey 的代码，删除最后一行即可
     }
 }</code></pre>
-</div><div class="ok-box">💡 特点：界面简洁、支持多种.NET版本切换、可分享代码链接</div><div class="card"><h3>对比总结</h3></div><div class="card"><table><tr><th>编译器</th><th>中文界面</th><th>键盘输入</th><th>分享代码</th><th>适合场景</th></tr><tr><td>菜鸟教程</td><td>✅</td><td>❌</td><td>❌</td><td>新手入门</td></tr><tr><td>Tutorialspoint</td><td>❌</td><td>✅</td><td>❌</td><td>需要交互的程序</td></tr><tr><td>DotNetFiddle</td><td>❌</td><td>❌</td><td>✅</td><td>代码分享、多版本测试</td></tr></table></div><div class="ok-box">💡 课件网页顶部导航栏已内置跳转按钮，上课时直接点击即可打开。<br>建议：课堂统一以 VS Code 为主，在线编译器作为备用方案；在线练习需要键盘输入时，首选 Tutorialspoint。</div>
+</div><pre class="plain-box"><code>
+&gt; 💡 特点：界面简洁、支持多种.NET版本切换、可分享代码链接
+
+### 对比总结
+
+| 编译器 | 中文界面 | 键盘输入 | 分享代码 | 适合场景 |
+|--------|:--:|:--:|:--:|------|
+| 菜鸟教程 | ✅ | ❌ | ❌ | 新手入门 |
+| Tutorialspoint | ❌ | ✅ | ❌ | 需要交互的程序 |
+| DotNetFiddle | ❌ | ❌ | ✅ | 代码分享、多版本测试 |
+
+&gt; 💡 课件网页顶部导航栏已内置跳转按钮，上课时直接点击即可打开。
+&gt; 建议：课堂统一以 VS Code 为主，在线编译器作为备用方案；在线练习需要键盘输入时，首选 Tutorialspoint。</code></pre>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>云端编辑器 — Cloud Studio</h1>
@@ -556,9 +534,8 @@ class Program
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>理解程序代码与结构</h1>
 <div class="ok-box">⚠️ 先记住这件事：<strong>现阶段，你的代码就写在这个骨架的 Main() 里。</strong></div><div class="card"><h3>C# 程序的基本骨架（记住它！）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302255296',this)">复制</button></div>
-<pre id="c_4302255296"><code class="language-csharp">using System;                   // 工具箱
-
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308719040',this)">复制</button></div>
+<pre id="c_4308719040"><code class="language-csharp">using System;                   // 工具箱
 namespace HelloWorld            // 命名空间
 {
     class Program               // 程序类
@@ -569,9 +546,10 @@ namespace HelloWorld            // 命名空间
         }
     }
 }</code></pre>
-</div><div class="card"><p>然后加上两行功能代码，就成了刚才运行的完整程序：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302255168',this)">复制</button></div>
-<pre id="c_4302255168"><code class="language-csharp">using System;
+</div><pre class="plain-box"><code>
+然后加上两行功能代码，就成了刚才运行的完整程序：
+
+using System;
 namespace HelloWorld
 {
     class Program
@@ -582,32 +560,44 @@ namespace HelloWorld
             Console.ReadLine();            // ⑥ 按回车结束（在线编译器也能用）
         }
     }
-}</code></pre>
-</div><div class="card"><table><tr><th>行</th><th>关键词</th><th>作用</th><th>必须？</th></tr><tr><td>①</td><td><code>using System</code></td><td>引入系统工具包</td><td>✅</td></tr><tr><td>②</td><td><code>namespace</code></td><td>组织代码，像文件夹</td><td>可省略</td></tr><tr><td>③</td><td><code>class</code></td><td>定义程序，<code>{ }</code> 包裹</td><td>✅</td></tr><tr><td>④</td><td><code>static void Main()</code></td><td>程序入口，首字母大写</td><td>✅</td></tr><tr><td>⑤</td><td><code>Console.WriteLine()</code></td><td>打印文字到屏幕</td><td>按需</td></tr><tr><td>⑥</td><td><code>Console.ReadKey()</code></td><td>等按键再关闭</td><td>初学建议加</td></tr></table></div><div class="card"><ul><li>语句以分号 <code>;</code> 结束，代码块用 <code>{ }</code> 包裹</li></ul></div><div class="card"><h3>常见问题：</h3></div><div class="card"><ul><li>窗口一闪而过？→ 末尾加 <code>Console.ReadKey();</code></li><li>中文乱码？→ 开头加 <code>Console.OutputEncoding = System.Text.Encoding.UTF8;</code></li></ul></div>
+}</code></pre><div class="card"><table><tr><th>行</th><th>关键词</th><th>作用</th><th>必须？</th></tr><tr><td>①</td><td><code>using System</code></td><td>引入系统工具包</td><td>✅</td></tr><tr><td>②</td><td><code>namespace</code></td><td>组织代码，像文件夹</td><td>可省略</td></tr><tr><td>③</td><td><code>class</code></td><td>定义程序，<code>{ }</code> 包裹</td><td>✅</td></tr><tr><td>④</td><td><code>static void Main()</code></td><td>程序入口，首字母大写</td><td>✅</td></tr><tr><td>⑤</td><td><code>Console.WriteLine()</code></td><td>打印文字到屏幕</td><td>按需</td></tr><tr><td>⑥</td><td><code>Console.ReadKey()</code></td><td>等按键再关闭</td><td>初学建议加</td></tr></table></div><div class="card"><ul><li>语句以分号 <code>;</code> 结束，代码块用 <code>{ }</code> 包裹</li></ul></div><div class="card"><h3>常见问题：</h3></div><div class="card"><ul><li>窗口一闪而过？→ 末尾加 <code>Console.ReadKey();</code></li><li>中文乱码？→ 开头加 <code>Console.OutputEncoding = System.Text.Encoding.UTF8;</code></li></ul></div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>注释</h1>
-<div class="card"><p>注释是对代码的<strong>解释说明</strong>，编译器会忽略它，不影响程序运行。</p></div><div class="card"><h3>① 单行注释 <code>//</code></h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302255808',this)">复制</button></div>
-<pre id="c_4302255808"><code class="language-csharp">// 从 // 开始到本行结束，都是注释
-int age = 18;   // 也可以写在代码后面</code></pre>
-</div><div class="card"><ul><li>最常用，对当前行或下一行做简短说明</li><li>写在自己的代码旁边，解释&quot;这行在干嘛&quot;</li></ul></div><div class="card"><h3>② 多行注释 <code>/* */</code></h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302252864',this)">复制</button></div>
-<pre id="c_4302252864"><code class="language-csharp">/*
+<div class="card"><p>注释是对代码的<strong>解释说明</strong>，编译器会忽略它，不影响程序运行。</p></div><div class="card"><h3>① 单行注释 <code>//</code></h3><p>// 从 // 开始到本行结束，都是注释</p><p>int age = 18;   // 也可以写在代码后面</p></div><pre class="plain-box"><code>
+- 最常用，对当前行或下一行做简短说明
+- 写在自己的代码旁边，解释&quot;这行在干嘛&quot;
+
+### ② 多行注释 `/* */`
+
+/*
    需要写很多行说明时用这个
    中间不管多少行，全都是注释
 */
-int score = 95;  // 这行不在注释里，会正常执行</code></pre>
-</div><div class="card"><ul><li>从 <code>/*</code> 开始，到 <code>*/</code> 结束，中间全是注释</li><li>适合写长段解释，或<strong>临时禁用一段代码</strong>（调试时常用）</li></ul></div><div class="card"><h3>③ 文档注释 <code>///</code></h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302252544',this)">复制</button></div>
-<pre id="c_4302252544"><code class="language-csharp">/// &lt;summary&gt;
+int score = 95;  // 这行不在注释里，会正常执行</code></pre><div class="card"><ul><li>从 <code>/*</code> 开始，到 <code>*/</code> 结束，中间全是注释</li><li>适合写长段解释，或<strong>临时禁用一段代码</strong>（调试时常用）</li></ul></div><div class="card"><h3>③ 文档注释 <code>///</code></h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308718656',this)">复制</button></div>
+<pre id="c_4308718656"><code class="language-csharp">/// &lt;summary&gt;
 /// 计算两个数的和
 /// &lt;/summary&gt;
 /// &lt;param name=&quot;a&quot;&gt;第一个数&lt;/param&gt;
 /// &lt;param name=&quot;b&quot;&gt;第二个数&lt;/param&gt;
 /// &lt;returns&gt;和&lt;/returns&gt;
 static int Add(int a, int b) { return a + b; }</code></pre>
-</div><div class="card"><ul><li>在类或方法前输入 <code>///</code> 自动生成模板</li><li>鼠标悬停时 VS Code 会<strong>显示这段说明</strong>（智能提示）</li></ul></div><img src="images/课件2/comment-doc.gif" alt="文档注释效果" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><div class="card"><table><tr><th>类型</th><th>写法</th><th>什么时候用</th></tr><tr><td>单行</td><td><code>//</code></td><td>简短说明，日常最常用</td></tr><tr><td>多行</td><td><code>/* */</code></td><td>长段解释 / 临时禁用代码</td></tr><tr><td>文档</td><td><code>///</code></td><td>给方法写&quot;使用说明书&quot;</td></tr></table></div><div class="ok-box">💡 养成写注释的习惯：别人能看懂，未来的自己也能看懂。</div><div class="ok-box">课堂上有老师教，但课后自己练的时候难免卡住。别急——让 <strong>AI</strong> 成为你的专属编程助教，随时问、随时学。</div>
+</div><pre class="plain-box"><code>
+- 在类或方法前输入 `///` 自动生成模板
+- 鼠标悬停时 VS Code 会**显示这段说明**（智能提示）
+
+![文档注释效果](images/课件2/comment-doc.gif)
+
+| 类型 | 写法 | 什么时候用 |
+|------|------|-----------|
+| 单行 | `//` | 简短说明，日常最常用 |
+| 多行 | `/* */` | 长段解释 / 临时禁用代码 |
+| 文档 | `///` | 给方法写&quot;使用说明书&quot; |
+
+&gt; 💡 养成写注释的习惯：别人能看懂，未来的自己也能看懂。
+
+&gt; 课堂上有老师教，但课后自己练的时候难免卡住。别急——让 **AI** 成为你的专属编程助教，随时问、随时学。</code></pre>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>AI时代，学编程还有意义吗？</h1>
@@ -627,16 +617,15 @@ static int Add(int a, int b) { return a + b; }</code></pre>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>AI辅助实操 — 获取与验证</h1>
-<div class="card"><h3>第1步：拿到代码并运行</h3><p>用上一页的提问公式问 AI，它会生成完整的冒泡排序程序。AI 通常返回类似这样的代码：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302585152',this)">复制</button></div>
-<pre id="c_4302585152"><code class="language-csharp">using System;
+<div class="card"><h3>第1步：拿到代码并运行</h3><p>用上一页的提问公式问 AI，它会生成完整的冒泡排序程序。AI 通常返回类似这样的代码：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308679232',this)">复制</button></div>
+<pre id="c_4308679232"><code class="language-csharp">using System;
 class Program
 {
     static void Main()
     {
         int[] arr = { 5, 2, 8, 1, 9 };      // 待排序的数组
         Console.WriteLine(&quot;排序前：&quot; + string.Join(&quot;, &quot;, arr));
-
         // 冒泡排序
         for (int i = 0; i &lt; arr.Length - 1; i++)
         {
@@ -651,32 +640,45 @@ class Program
             }
             Console.WriteLine($&quot;第{i + 1}轮：&quot; + string.Join(&quot;, &quot;, arr));  // 打印每轮结果
         }
-
         Console.WriteLine(&quot;排序后：&quot; + string.Join(&quot;, &quot;, arr));
     }
 }</code></pre>
-</div><div class="ok-box">先在 VS Code 里跑一遍，确认程序能运行、输出正确。再继续下一步。</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 运行成功就算完成了吗？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">不算——你还没真正理解代码。接下来追问 AI，直到能自己讲清楚。</div></div><div class="card"><h3>第2步：追问与消化</h3></div><div class="card"><h3>追问示例 ① — 问原理</h3></div><pre class="plain-box"><code>为什么需要两层 for 循环？能不能用一层循环实现？</code></pre><div class="card"><p>AI 会解释外层控制轮数、内层比较相邻元素，帮你理解算法逻辑。</p></div><div class="card"><h3>追问示例 ② — 问变通</h3></div><pre class="plain-box"><code>怎么改成从大到小（降序）排序？</code></pre><div class="card"><p>AI 把 <code>&gt;</code> 改成 <code>&lt;</code>，并解释为什么这样就能反过来排。</p></div><div class="ok-box"><strong>AI 不是问一次就结束的</strong>——不满意就让它重来，有疑问就接着追问。</div><div class="card"><h3>第3步：自己动手</h3><img src="images/课件2/ai-verify-result.png" alt="运行结果" class="card-img" onclick="zoomQR(this)" style="cursor:pointer"><ol><li><strong>修改数据</strong>：把数组改成 <code>{ 10, 3, 7, 1, 6 }</code>，观察输出变化</li><li><strong>关掉 AI，独立重写</strong>：不看 AI 的代码，自己从头写一遍</li><li><strong>对比差异</strong>：自己写的 vs AI 给的，逻辑一样吗？</li></ol></div>
+</div><pre class="plain-box"><code>
+&gt; 先在 VS Code 里跑一遍，确认程序能运行、输出正确。再继续下一步。
+
+&gt; ❓ 运行成功就算完成了吗？
+&gt; 不算——你还没真正理解代码。接下来追问 AI，直到能自己讲清楚。
+
+### 第2步：追问与消化
+
+**追问示例 ① — 问原理**</code></pre><div class="card"><p>为什么需要两层 for 循环？能不能用一层循环实现？</p></div><pre class="plain-box"><code>AI 会解释外层控制轮数、内层比较相邻元素，帮你理解算法逻辑。
+
+**追问示例 ② — 问变通**</code></pre><div class="card"><p>怎么改成从大到小（降序）排序？</p></div><pre class="plain-box"><code>AI 把 `&gt;` 改成 `&lt;`，并解释为什么这样就能反过来排。
+
+&gt; **AI 不是问一次就结束的**——不满意就让它重来，有疑问就接着追问。
+
+### 第3步：自己动手
+
+![运行结果](images/课件2/ai-verify-result.png)
+1. **修改数据**：把数组改成 `{ 10, 3, 7, 1, 6 }`，观察输出变化
+2. **关掉 AI，独立重写**：不看 AI 的代码，自己从头写一遍
+3. **对比差异**：自己写的 vs AI 给的，逻辑一样吗？</code></pre>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="ok-box">⚠️ 本课件题目为 <strong>手动验收</strong>——运行程序演示效果，或提交运行截图 / 录屏即可。</div><div class="card"><h3>题1（1分）</h3><p>修改「搭建开发环境」页面创建的 <code>test.cs</code>：把输出内容改成 <code>Hello, C#! 这是我的第一个程序。</code>，并在每行代码后加上注释。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>Hello, C#! 这是我的第一个程序。</code></li></ul></div><div class="card"><h3>题2（1分）⚠️ 手动验收</h3><p>用 AI 帮你预习下节课的内容：问「C# 中的变量是什么？有哪几种常用类型？」，拿到解释后用自己的话向老师讲清楚。（当场口头验收，或提交截图到 WPS 问卷）</p></div><div class="ok-box">💡 提示词参考：用上一页学到的 🎭角色 + 🎯任务 + 📋输出约束</div><div class="card"><h3>题3（2分）</h3><p>创建一个新控制台程序：用 <code>Console.ReadLine()</code> 让用户输入自己的姓名，然后用 <code>$</code> 字符串插值输出「你好，[姓名]！欢迎学习C#。」——要求至少用到<strong>两种注释方式</strong>（单行 <code>//</code> 和多行 <code>/* */</code>）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入你的姓名：→ 张三</code></li></ul><ul><li>输出：<code>你好，张三！欢迎学习C#。</code></li></ul></div><div class="card"><h3>题4（2分）</h3><p>在题3的基础上扩展：再让用户输入年龄（转成 <code>int</code>），输出「你今年 [年龄] 岁，明年你就 [年龄+1] 岁了。」——练习 <code>int.Parse()</code> 和字符串拼接。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入你的姓名：→ 张三</code></li></ul><ul><li>输入：<code>请输入你的年龄：→ 18</code></li></ul><ul><li>输出：<code>你好，张三！欢迎学习C#。</code></li></ul><ul><li>输出：<code>你今年 18 岁，明年你就 19 岁了。</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302582976',this)">复制</button></div>
-<pre id="c_4302582976"><code class="language-csharp">class Program
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308678976',this)">复制</button></div>
+<pre id="c_4308678976"><code class="language-csharp">class Program
 {
     static void Main()
     {
         // ==================== 第1题 ====================
-
-
         // ==================== 第3题 ====================
-
-
         // ==================== 第4题 ====================
-
-
     }
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><pre class="plain-box"><code>
+&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner end-page">
 
