@@ -73,8 +73,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
 
 /* 标题 */
-.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
-.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:calc(var(--font-size) * 1.25);margin:28px 0 14px;font-weight:600}
 .slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
 .slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
 .slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
@@ -239,13 +239,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
 .cover.active{display:flex!important}
 .cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
-.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
-.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
-.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
-.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-tag{display:inline-block;font-size:calc(var(--font-size) * 0.875);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:calc(var(--font-size) * 3.25);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:var(--font-size);color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:calc(var(--font-size) * 0.875);color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
 .cover-meta-row{display:flex;align-items:center;gap:8px}
-.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
-.cover-meta-text{font-size:16px;color:#CBD5E1}
+.cover-meta-label{font-size:calc(var(--font-size) * 0.8125);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:var(--font-size);color:#CBD5E1}
 
 /* ===== 结束页 ===== */
 .end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
@@ -256,8 +256,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
 .end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
-.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
-.end-sub{font-size:18px;color:var(--text-muted)}
+.end-title{font-size:calc(var(--font-size) * 1.5);color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:calc(var(--font-size) * 1.125);color:var(--text-muted)}
 .end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
 .end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
 .end-right img:hover{transform:scale(1.05)}
@@ -304,19 +304,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .sidebar{display:none}
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
-.cover h1{font-size:32px}
+.cover h1{font-size:calc(var(--font-size) * 2)}
 .nav-buttons{right:12px;bottom:12px}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
 .header-dropdown{display:none}
-.header-btn[onclick^="changeFont"]{display:none}
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
 .mi-page{display:none}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
+}
+
+/* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
+@media(max-width:420px){
+.header-bar{gap:4px;padding:6px 8px}
+.header-btn{padding:6px 7px;font-size:11px}
+.header-btn[onclick="toggleFlat()"],.header-btn[onclick="toggleImgBottom()"]{display:none}
 }
 
 /* ===== 平铺模式（连续显示全部页面，用于导出 PDF） ===== */
@@ -430,8 +436,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>数组的局限性</h1>
 <div class="card"><p>数组很好用，但有三个死穴：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310995392',this)">复制</button></div>
-<pre id="c_4310995392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376238592',this)">复制</button></div>
+<pre id="c_4376238592"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -455,8 +461,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>List&lt;T&gt; — 动态数组</h1>
 <div class="card"><p>List 就像一个<strong>会自动变长的数组</strong>。数组创建后大小就固定了，不能加人也不能删人；List 可以随时增删元素，长度自动跟着变。</p></div><div class="card"><table><tr><th></th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>大小</td><td>创建时固定</td><td>随时增删，自动扩容</td></tr><tr><td>增删</td><td>❌ 不支持</td><td>✅ Add / Remove</td></tr><tr><td>查找</td><td>❌ 手写循环</td><td>✅ Contains 直接查</td></tr><tr><td>遍历</td><td>for / foreach</td><td>for / foreach（完全一样）</td></tr></table></div><div class="ok-box">List 不是 C# 自带的，存放在<strong>集合库</strong>里，需要先引入：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310992448',this)">复制</button></div>
-<pre id="c_4310992448"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744960',this)">复制</button></div>
+<pre id="c_4376744960"><code class="language-csharp">namespace HelloWorld
 {
     class Program
     {
@@ -486,8 +492,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><ul><li><code>List&lt;T&gt;</code> 的 <code>T</code> 就是个占位符，用的时候换成具体类型：<code>List&lt;int&gt;</code>、<code>List&lt;string&gt;</code></li><li>不需要指定大小，会自动扩容</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310992320',this)">复制</button></div>
-<pre id="c_4310992320"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376750464',this)">复制</button></div>
+<pre id="c_4376750464"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -506,8 +512,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>List 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>获取数量</td><td><code>arr.Length</code></td><td><code>list.Count</code></td></tr><tr><td>访问元素</td><td><code>arr[0]</code></td><td><code>list[0]</code></td></tr><tr><td>添加</td><td>❌（长度固定，不能增）</td><td><code>Add(x)</code> 末尾追加一个元素</td></tr><tr><td>插入</td><td>❌</td><td><code>Insert(i, x)</code> 在第 i 位插入</td></tr><tr><td>按位置删</td><td>❌</td><td><code>RemoveAt(i)</code> 删第 i 个（从 0 数）</td></tr><tr><td>按值删</td><td>❌</td><td><code>Remove(x)</code> 删第一个等于 x 的</td></tr><tr><td>清空</td><td>❌（需重新 new）</td><td><code>Clear()</code> 删除全部</td></tr><tr><td>排序</td><td><code>Array.Sort(arr)</code> 升序</td><td><code>Sort()</code> 升序</td></tr><tr><td>查位置</td><td><code>Array.IndexOf(arr, x)</code> 找不到返回 -1</td><td><code>IndexOf(x)</code> 找不到返回 -1</td></tr></table></div><div class="ok-box">数组也能排序、查位置，但要用<strong>静态方法</strong> <code>Array.Sort</code> / <code>Array.IndexOf</code>（数组长度固定，所以没有 <code>Add</code> / <code>Remove</code> / <code>Clear</code> 这类动态增删）。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310993088',this)">复制</button></div>
-<pre id="c_4310993088"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743104',this)">复制</button></div>
+<pre id="c_4376743104"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -555,8 +561,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>List 创建与遍历</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310991808',this)">复制</button></div>
-<pre id="c_4310991808"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751488',this)">复制</button></div>
+<pre id="c_4376751488"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -596,8 +602,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — List 学生管理</h1>
 <div class="ok-box">用 List&lt;string&gt; 管理学生名单：新增、删除、查找，体会和数组的区别。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310972992',this)">复制</button></div>
-<pre id="c_4310972992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751104',this)">复制</button></div>
+<pre id="c_4376751104"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -652,8 +658,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310972864',this)">复制</button></div>
-<pre id="c_4310972864"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376754560',this)">复制</button></div>
+<pre id="c_4376754560"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -679,8 +685,8 @@ namespace HelloWorld
 [0] → &quot;张三&quot;                &quot;张三&quot; → 85 分
 [1] → &quot;李四&quot;                &quot;李四&quot; → 90 分
 [2] → &quot;王五&quot;                &quot;王五&quot; → 78 分</code></pre><div class="card"><h3><code>&lt;K,V&gt;</code> 里为什么有两个类型？</h3></div><div class="card"><p><code>List&lt;T&gt;</code> 只有一个占位符（装什么类型），<code>Dictionary&lt;K,V&gt;</code> 有两个——K 管键的类型，V 管值的类型：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310974208',this)">复制</button></div>
-<pre id="c_4310974208"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376235584',this)">复制</button></div>
+<pre id="c_4376235584"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -722,8 +728,8 @@ using System.Collections.Generic;
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>Dictionary 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>代码</th><th>说明</th></tr><tr><td>增/改</td><td><code>dict[&quot;键&quot;] = 值</code></td><td>键不存在→新增，键已存在→覆盖（同一个语法）</td></tr><tr><td>删</td><td><code>dict.Remove(&quot;键&quot;)</code></td><td>按键删除，键不存在也不会报错</td></tr><tr><td>查</td><td>先 <code>dict.ContainsKey(&quot;键&quot;)</code> 再 <code>dict[&quot;键&quot;]</code></td><td>先判断再取值，避免键不存在时报错</td></tr><tr><td>遍历</td><td><code>foreach (var kv in dict)</code></td><td><code>kv.Key</code> 取键，<code>kv.Value</code> 取值</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310973952',this)">复制</button></div>
-<pre id="c_4310973952"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755648',this)">复制</button></div>
+<pre id="c_4376755648"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -765,8 +771,8 @@ namespace HelloWorld
 已添加：苹果 ×3
 2
 苹果 ×3</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>cart[商品名] = 数量</code> — 增/改都用这个语法</li><li><code>cart.Remove(商品名)</code> 删除，<code>foreach (var kv in cart)</code> 查看</li><li>while 循环 + switch/if 实现菜单交互</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310967872',this)">复制</button></div>
-<pre id="c_4310967872"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376711488',this)">复制</button></div>
+<pre id="c_4376711488"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -838,8 +844,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入若干个整数（逗号分隔），用 <code>List</code> 存储并<strong>去掉重复</strong>，输出去重后的列表。<br>要求：自己写——拆分、转换、遍历判断是否已存在再添加，不能用 <code>Distinct()</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310967936',this)">复制</button></div>
-<pre id="c_4310967936"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376711616',this)">复制</button></div>
+<pre id="c_4376711616"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -862,8 +868,8 @@ namespace HelloWorld
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建 <code>List&lt;int&gt;</code> 存储10个随机数，计算总和与平均值，找出最大值。</p><ul><li>提示：<code>Random rand = new Random(42);</code> 固定种子保证验收输出一致，<code>rand.Next(1, 101)</code> 生成 1~100 的随机数</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>总和：512</code></li></ul><ul><li>输出：<code>平均值：51.2</code></li></ul><ul><li>输出：<code>最大值：98</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用 <code>Dictionary&lt;string, string&gt;</code> 做简易通讯录：姓名→手机号，支持增、删、查。</p><ul><li>数据：<code>张三:13800138000, 李四:13900139000, 王五:13700137000</code></li><li>提示：增/改用 <code>dict[&quot;姓名&quot;] = &quot;手机号&quot;</code>，删用 <code>Remove</code>，查用 <code>ContainsKey</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入姓名（exit退出）：→ 张三</code></li></ul><ul><li>输出：<code>张三：13800138000</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>用 <code>List&lt;int&gt;</code> 实现动态成绩录入：不断输入成绩直到输入 -1 结束，计算平均分和及格率。</p><ul><li>提示：<code>while (true)</code> + <code>Add()</code> + <code>break</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩（-1结束）：→ 85</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 90</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 78</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ 60</code></li></ul><ul><li>输入：<code>请输入成绩（-1结束）：→ -1</code></li></ul><ul><li>输出：<code>平均分：78.3，及格率：100%</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>统计一句话中每个单词出现的次数（用 <code>Dictionary&lt;string, int&gt;</code>）。</p><ul><li>数据：<code>string sentence = &quot;apple banana apple orange banana apple&quot;;</code></li><li>提示：用 <code>Split(' ')</code> 拆词，遍历每个词，<code>dict[词]</code> 累加</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310968320',this)">复制</button></div>
-<pre id="c_4310968320"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376712064',this)">复制</button></div>
+<pre id="c_4376712064"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program

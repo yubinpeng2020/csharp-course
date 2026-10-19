@@ -73,8 +73,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
 
 /* 标题 */
-.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
-.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:calc(var(--font-size) * 1.25);margin:28px 0 14px;font-weight:600}
 .slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
 .slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
 .slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
@@ -239,13 +239,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
 .cover.active{display:flex!important}
 .cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
-.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
-.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
-.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
-.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-tag{display:inline-block;font-size:calc(var(--font-size) * 0.875);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:calc(var(--font-size) * 3.25);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:var(--font-size);color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:calc(var(--font-size) * 0.875);color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
 .cover-meta-row{display:flex;align-items:center;gap:8px}
-.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
-.cover-meta-text{font-size:16px;color:#CBD5E1}
+.cover-meta-label{font-size:calc(var(--font-size) * 0.8125);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:var(--font-size);color:#CBD5E1}
 
 /* ===== 结束页 ===== */
 .end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
@@ -256,8 +256,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
 .end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
-.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
-.end-sub{font-size:18px;color:var(--text-muted)}
+.end-title{font-size:calc(var(--font-size) * 1.5);color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:calc(var(--font-size) * 1.125);color:var(--text-muted)}
 .end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
 .end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
 .end-right img:hover{transform:scale(1.05)}
@@ -304,19 +304,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .sidebar{display:none}
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
-.cover h1{font-size:32px}
+.cover h1{font-size:calc(var(--font-size) * 2)}
 .nav-buttons{right:12px;bottom:12px}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
 .header-dropdown{display:none}
-.header-btn[onclick^="changeFont"]{display:none}
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
 .mi-page{display:none}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
+}
+
+/* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
+@media(max-width:420px){
+.header-bar{gap:4px;padding:6px 8px}
+.header-btn{padding:6px 7px;font-size:11px}
+.header-btn[onclick="toggleFlat()"],.header-btn[onclick="toggleImgBottom()"]{display:none}
 }
 
 /* ===== 平铺模式（连续显示全部页面，用于导出 PDF） ===== */
@@ -429,15 +435,15 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>CheckBox — 多选框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339849664',this)">复制</button></div>
-<pre id="c_4339849664"><code class="language-xml">&lt;CheckBox x:Name=&quot;chkMusic&quot; Content=&quot;音乐&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376717696',this)">复制</button></div>
+<pre id="c_4376717696"><code class="language-xml">&lt;CheckBox x:Name=&quot;chkMusic&quot; Content=&quot;音乐&quot; /&gt;
 &lt;CheckBox x:Name=&quot;chkSport&quot; Content=&quot;运动&quot; /&gt;
 &lt;CheckBox x:Name=&quot;chkGame&quot; Content=&quot;游戏&quot; /&gt;
 &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339273856',this)">复制</button></div>
-<pre id="c_4339273856"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376712128',this)">复制</button></div>
+<pre id="c_4376712128"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -468,15 +474,15 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>RadioButton — 单选按钮</h1>
 <div class="card"><p>RadioButton 一组中只能选一个。<strong>关键：用 <code>GroupName</code> 属性分组——同 GroupName 的自动互斥，不同 GroupName 互不影响（不再需要 GroupBox 容器）。</strong></p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339849472',this)">复制</button></div>
-<pre id="c_4339849472"><code class="language-xml">&lt;RadioButton x:Name=&quot;rdoMale&quot; GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376153536',this)">复制</button></div>
+<pre id="c_4376153536"><code class="language-xml">&lt;RadioButton x:Name=&quot;rdoMale&quot; GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoFemale&quot; GroupName=&quot;gender&quot; Content=&quot;女&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoU18&quot; GroupName=&quot;age&quot; Content=&quot;18岁以下&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdo18to30&quot; GroupName=&quot;age&quot; Content=&quot;18-30岁&quot; /&gt;
 &lt;RadioButton x:Name=&quot;rdoO30&quot; GroupName=&quot;age&quot; Content=&quot;30岁以上&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339273728',this)">复制</button></div>
-<pre id="c_4339273728"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376716352',this)">复制</button></div>
+<pre id="c_4376716352"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -505,8 +511,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>ComboBox — 下拉选择框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339849216',this)">复制</button></div>
-<pre id="c_4339849216"><code class="language-xml">&lt;ComboBox x:Name=&quot;gradeBox&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376752576',this)">复制</button></div>
+<pre id="c_4376752576"><code class="language-xml">&lt;ComboBox x:Name=&quot;gradeBox&quot;&gt;
     &lt;ComboBoxItem Content=&quot;大一&quot; /&gt;
     &lt;ComboBoxItem Content=&quot;大二&quot; /&gt;
     &lt;ComboBoxItem Content=&quot;大三&quot; /&gt;
@@ -514,8 +520,8 @@ namespace HelloWorld
 &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339273472',this)">复制</button></div>
-<pre id="c_4339273472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376750016',this)">复制</button></div>
+<pre id="c_4376750016"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -542,8 +548,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>ListBox — 列表框</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339849088',this)">复制</button></div>
-<pre id="c_4339849088"><code class="language-xml">&lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376712896',this)">复制</button></div>
+<pre id="c_4376712896"><code class="language-xml">&lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
     &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;
     &lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
     &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;
@@ -551,8 +557,8 @@ namespace HelloWorld
 &lt;Button x:Name=&quot;showBtn&quot; Content=&quot;显示选中&quot; Click=&quot;ShowBtn_Click&quot; /&gt;
 &lt;TextBlock x:Name=&quot;result&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339273216',this)">复制</button></div>
-<pre id="c_4339273216"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376723200',this)">复制</button></div>
+<pre id="c_4376723200"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -583,11 +589,11 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>其他常用控件</h1>
 <div class="card"><p><strong>NumericUpDown — 数字输入框</strong>：</p></div><div class="card"><p>限制用户只能输入数字，有 ▲▼ 按钮调节。关键属性：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339274688',this)">复制</button></div>
-<pre id="c_4339274688"><code class="language-xml">&lt;NumericUpDown x:Name=&quot;scoreBox&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;5&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376150080',this)">复制</button></div>
+<pre id="c_4376150080"><code class="language-xml">&lt;NumericUpDown x:Name=&quot;scoreBox&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;5&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339252928',this)">复制</button></div>
-<pre id="c_4339252928"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376750528',this)">复制</button></div>
+<pre id="c_4376750528"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -611,8 +617,8 @@ namespace HelloWorld
 
 Avalonia 没有 `GroupBox` 容器。用 **布局容器 + 一个 `TextBlock` 标题** 来分组即可，例如用 `StackPanel` 包一组控件，上面放标题文字：
 </code></pre><div class="card"><p>&lt;StackPanel&gt;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339252736',this)">复制</button></div>
-<pre id="c_4339252736"><code class="language-csharp">    &lt;TextBlock Text=&quot;性别&quot; FontWeight=&quot;Bold&quot; /&gt;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376746048',this)">复制</button></div>
+<pre id="c_4376746048"><code class="language-csharp">    &lt;TextBlock Text=&quot;性别&quot; FontWeight=&quot;Bold&quot; /&gt;
     &lt;RadioButton GroupName=&quot;gender&quot; Content=&quot;男&quot; /&gt;
     &lt;RadioButton GroupName=&quot;gender&quot; Content=&quot;女&quot; /&gt;</code></pre>
 </div><div class="card"><p>&lt;/StackPanel&gt;</p></div><pre class="plain-box"><code>
@@ -632,11 +638,11 @@ using Avalonia.Media.Imaging;
         }
     }
 }</code></pre><div class="card"><ul><li>注意：Avalonia 没有 <code>PictureBox</code> 和 <code>Image.FromFile</code>，图片控件叫 <code>Image</code>，用 <code>Source</code> 设图片（<code>Bitmap</code>）</li></ul></div><div class="card"><p><strong>Slider — 滑块</strong>：</p></div><div class="card"><p>拖动选一个范围内的值，比 NumericUpDown 更直观：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339271232',this)">复制</button></div>
-<pre id="c_4339271232"><code class="language-xml">&lt;Slider x:Name=&quot;volSlider&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;50&quot; /&gt;</code></pre>
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376716928',this)">复制</button></div>
+<pre id="c_4376716928"><code class="language-xml">&lt;Slider x:Name=&quot;volSlider&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;50&quot; /&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339252800',this)">复制</button></div>
-<pre id="c_4339252800"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376752192',this)">复制</button></div>
+<pre id="c_4376752192"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -649,8 +655,8 @@ namespace HelloWorld
 }</code></pre>
 </div><pre class="plain-box"><code>
 **Border — 边框 / 底色**（给一组控件加框分组）：</code></pre><div class="card"><p>&lt;Border BorderBrush=&quot;Gray&quot; BorderThickness=&quot;1&quot; CornerRadius=&quot;6&quot; Padding=&quot;10&quot;&gt;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339252672',this)">复制</button></div>
-<pre id="c_4339252672"><code class="language-csharp">    &lt;StackPanel&gt;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376753920',this)">复制</button></div>
+<pre id="c_4376753920"><code class="language-csharp">    &lt;StackPanel&gt;
         &lt;TextBlock Text=&quot;一组内容&quot; /&gt;
     &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><p>&lt;/Border&gt;</p></div><pre class="plain-box"><code>
@@ -661,8 +667,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习1 — 学生信息登记表</h1>
 <div class="ok-box">用 RadioButton（单选）、CheckBox（多选）、ComboBox（下拉）、NumericUpDown（数字）收集信息，提交后汇总显示——综合运用多种输入控件。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339274496',this)">复制</button></div>
-<pre id="c_4339274496"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376712960',this)">复制</button></div>
+<pre id="c_4376712960"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;姓名&quot; /&gt;
     &lt;StackPanel&gt;
         &lt;TextBlock Text=&quot;性别&quot; FontWeight=&quot;Bold&quot; /&gt;
@@ -685,8 +691,8 @@ namespace HelloWorld
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339250496',this)">复制</button></div>
-<pre id="c_4339250496"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743232',this)">复制</button></div>
+<pre id="c_4376743232"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -756,8 +762,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339250368',this)">复制</button></div>
-<pre id="c_4339250368"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376233280',this)">复制</button></div>
+<pre id="c_4376233280"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -796,8 +802,8 @@ namespace HelloWorld
 操作：选&quot;汉堡&quot;→ 点&quot;添加&quot;→ 选&quot;可乐&quot;→ 点&quot;添加&quot;
 （点&quot;汉堡&quot;再点&quot;&lt;&lt;移除&quot;→ 汉堡从已选消失，总价减少15）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>已选列表：汉堡、可乐
 总计：¥23</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>菜品和价格用 <code>Dictionary&lt;string,int&gt;</code> 存储，<code>menu[&quot;汉堡&quot;]</code> 直接取值</li><li>ListBox 的选中项通过 <code>SelectedItem is ListBoxItem</code> 判断类型后取 <code>.Content</code></li><li>总价用 <code>int total</code> 字段累加；移除时 <code>total -= menu[...]</code> 减去</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4339271168',this)">复制</button></div>
-<pre id="c_4339271168"><code class="language-xml">&lt;DockPanel&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4376711680',this)">复制</button></div>
+<pre id="c_4376711680"><code class="language-xml">&lt;DockPanel&gt;
     &lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;<span class="code-blank">___</span>&quot;&gt;
         &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;&lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
         &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;&lt;ListBoxItem Content=&quot;鸡翅&quot; /&gt;
@@ -808,8 +814,8 @@ namespace HelloWorld
     &lt;Button x:Name=&quot;removeBtn&quot; Content=&quot;&lt;&lt;移除&quot; Click=&quot;RemoveBtn_Click&quot; /&gt;
 &lt;/DockPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339249344',this)">复制</button></div>
-<pre id="c_4339249344"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376234752',this)">复制</button></div>
+<pre id="c_4376234752"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -843,8 +849,8 @@ namespace HelloWorld
 </div><pre class="plain-box"><code>
 &gt; 📝 参考代码（做完再对照，不要提前看哦）
 </code></pre><div class="card"><p>&lt;DockPanel&gt;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339249216',this)">复制</button></div>
-<pre id="c_4339249216"><code class="language-csharp">    &lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376235264',this)">复制</button></div>
+<pre id="c_4376235264"><code class="language-csharp">    &lt;ListBox x:Name=&quot;listMenu&quot; SelectionMode=&quot;Multiple&quot;&gt;
         &lt;ListBoxItem Content=&quot;汉堡&quot; /&gt;&lt;ListBoxItem Content=&quot;薯条&quot; /&gt;
         &lt;ListBoxItem Content=&quot;可乐&quot; /&gt;&lt;ListBoxItem Content=&quot;鸡翅&quot; /&gt;
     &lt;/ListBox&gt;

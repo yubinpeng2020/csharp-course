@@ -73,8 +73,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
 
 /* 标题 */
-.slide-inner h1{color:#fff;font-size:26px;margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
-.slide-inner h2{color:var(--accent2);font-size:20px;margin:28px 0 14px;font-weight:600}
+.slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
+.slide-inner h2{color:var(--accent2);font-size:calc(var(--font-size) * 1.25);margin:28px 0 14px;font-weight:600}
 .slide-inner h3{color:var(--accent);font-size:calc(var(--font-size) * 1.06);margin:20px 0 10px;font-weight:600;padding-left:10px;border-left:3px solid var(--accent)}
 .slide-inner h3.h-example{color:var(--accent2);border-left-color:var(--accent2)}
 .slide-inner h3.h-practice{color:var(--orange);border-left-color:var(--orange)}
@@ -239,13 +239,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .cover{display:none;flex-direction:column;justify-content:center;align-items:center;text-align:center;height:100vh;box-sizing:border-box;background:radial-gradient(ellipse at 30% 20%,rgba(0,212,170,0.18) 0%,transparent 55%),radial-gradient(ellipse at 70% 80%,rgba(79,195,247,0.12) 0%,transparent 55%),linear-gradient(180deg,#0A0E27 0%,#0D1430 100%);position:relative;overflow:hidden}
 .cover.active{display:flex!important}
 .cover::after{content:'';position:absolute;top:-120px;right:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(0,212,170,0.08),transparent 70%);border-radius:50%;pointer-events:none}
-.cover-tag{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
-.cover h1{font-size:52px;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
-.cover-sub{font-size:16px;color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
-.cover-meta{font-size:14px;color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
+.cover-tag{display:inline-block;font-size:calc(var(--font-size) * 0.875);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);border-radius:20px;padding:8px 22px;margin-bottom:24px;letter-spacing:2px}
+.cover h1{font-size:calc(var(--font-size) * 3.25);font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:20px;letter-spacing:-1px;border:none;line-height:1.2;max-width:800px}
+.cover-sub{font-size:var(--font-size);color:var(--text-muted);margin-bottom:40px;max-width:650px;line-height:1.8}
+.cover-meta{font-size:calc(var(--font-size) * 0.875);color:#6B7280;line-height:2.2;display:flex;flex-direction:column;gap:8px;align-items:center}
 .cover-meta-row{display:flex;align-items:center;gap:8px}
-.cover-meta-label{font-size:13px;font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
-.cover-meta-text{font-size:16px;color:#CBD5E1}
+.cover-meta-label{font-size:calc(var(--font-size) * 0.8125);font-weight:600;color:var(--accent);background:rgba(0,212,170,0.12);border:1px solid rgba(0,212,170,0.3);border-radius:6px;padding:3px 12px}
+.cover-meta-text{font-size:var(--font-size);color:#CBD5E1}
 
 /* ===== 结束页 ===== */
 .end-page{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:100%;box-sizing:border-box;max-width:920px;margin:0 auto;padding:36px 48px}
@@ -256,8 +256,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .end-qr-row{display:flex;gap:36px;flex-wrap:wrap;justify-content:center}
 .end-qr-card{display:flex;flex-direction:column;align-items:center}
 .end-icon{font-size:48px;margin-bottom:16px}
-.end-title{font-size:24px;color:var(--accent);font-weight:700;margin-bottom:20px}
-.end-sub{font-size:18px;color:var(--text-muted)}
+.end-title{font-size:calc(var(--font-size) * 1.5);color:var(--accent);font-weight:700;margin-bottom:20px}
+.end-sub{font-size:calc(var(--font-size) * 1.125);color:var(--text-muted)}
 .end-contact{margin-top:16px;font-size:13px;color:var(--text-muted);line-height:1.7}
 .end-right img{width:120px;height:120px;border-radius:10px;margin-bottom:10px;border:2px solid var(--border);transition:transform .2s}
 .end-right img:hover{transform:scale(1.05)}
@@ -304,19 +304,25 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .sidebar{display:none}
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
-.cover h1{font-size:32px}
+.cover h1{font-size:calc(var(--font-size) * 2)}
 .nav-buttons{right:12px;bottom:12px}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
 .header-dropdown{display:none}
-.header-btn[onclick^="changeFont"]{display:none}
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
 .mi-page{display:none}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
+}
+
+/* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
+@media(max-width:420px){
+.header-bar{gap:4px;padding:6px 8px}
+.header-btn{padding:6px 7px;font-size:11px}
+.header-btn[onclick="toggleFlat()"],.header-btn[onclick="toggleImgBottom()"]{display:none}
 }
 
 /* ===== 平铺模式（连续显示全部页面，用于导出 PDF） ===== */
@@ -439,8 +445,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>单分支 if</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343433920',this)">复制</button></div>
-<pre id="c_4343433920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376236544',this)">复制</button></div>
+<pre id="c_4376236544"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -477,8 +483,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>快速回顾 — 关系运算符</h1>
 <div class="card"><p>if 的条件通常用关系运算符构成：</p></div><div class="card"><table><tr><th>运算符</th><th>含义</th><th>示例</th></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>a &gt; 10</code></td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>a &lt; 0</code></td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>score &gt;= 60</code></td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>age &lt;= 18</code></td></tr><tr><td><code>==</code></td><td>等于</td><td><code>level == 3</code></td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>name != &quot;&quot;</code></td></tr></table></div><div class="card"><ul><li>⚠️ <code>==</code> 是比较，<code>=</code> 是赋值，别搞混</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343432640',this)">复制</button></div>
-<pre id="c_4343432640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376235840',this)">复制</button></div>
+<pre id="c_4376235840"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -509,8 +515,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>逻辑运算符组合条件</h1>
 <div class="card"><table><tr><th>运算符</th><th>含义</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（都要满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343431488',this)">复制</button></div>
-<pre id="c_4343431488"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376742976',this)">复制</button></div>
+<pre id="c_4376742976"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -536,8 +542,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>双分支 if-else</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343414336',this)">复制</button></div>
-<pre id="c_4343414336"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743424',this)">复制</button></div>
+<pre id="c_4376743424"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -581,8 +587,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>多分支 if-else if</h1>
 <div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343412864',this)">复制</button></div>
-<pre id="c_4343412864"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751552',this)">复制</button></div>
+<pre id="c_4376751552"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -650,8 +656,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>嵌套 if</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343414720',this)">复制</button></div>
-<pre id="c_4343414720"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376748480',this)">复制</button></div>
+<pre id="c_4376748480"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -683,8 +689,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — if-else</h1>
 <div class="ok-box">输入一个整数，用 if-else 判断是奇数还是偶数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343410432',this)">复制</button></div>
-<pre id="c_4343410432"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376741184',this)">复制</button></div>
+<pre id="c_4376741184"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -740,8 +746,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343410304',this)">复制</button></div>
-<pre id="c_4343410304"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376741760',this)">复制</button></div>
+<pre id="c_4376741760"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -770,8 +776,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>switch 语句</h1>
 <div class="ok-box">当一个变量有多个固定取值，每个值对应一种操作，用 switch 比 if-else if 更清晰。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343410112',this)">复制</button></div>
-<pre id="c_4343410112"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376740032',this)">复制</button></div>
+<pre id="c_4376740032"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -826,8 +832,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><ul><li>💡 <strong>switch 表达式</strong>（简写版）：当 switch 只是用来选一个值时，可以更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343410048',this)">复制</button></div>
-<pre id="c_4343410048"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376742656',this)">复制</button></div>
+<pre id="c_4376742656"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -893,8 +899,8 @@ namespace HelloWorld
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂练习2 — switch 练习</h1>
 <div class="ok-box">用 switch 实现四则运算选择器：输入运算符和两个数，输出结果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343409664',this)">复制</button></div>
-<pre id="c_4343409664"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376742720',this)">复制</button></div>
+<pre id="c_4376742720"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -954,8 +960,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343409536',this)">复制</button></div>
-<pre id="c_4343409536"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376742464',this)">复制</button></div>
+<pre id="c_4376742464"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -994,8 +1000,8 @@ namespace HelloWorld
 请选择：2
 输入两个数：5 8
 5+8=13</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>switch (choice)</code> 处理菜单选择</li><li>每个 case 内部用 <code>Console.ReadLine()</code> 获取对应输入</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343407040',this)">复制</button></div>
-<pre id="c_4343407040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376390656',this)">复制</button></div>
+<pre id="c_4376390656"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -1074,8 +1080,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入 0~100 的<strong>成绩</strong>，输出对应<strong>等级</strong>：<br>90 及以上 → <code>A</code>，80~89 → <code>B</code>，70~79 → <code>C</code>，60~69 → <code>D</code>，60 以下 → <code>F</code>。<br>要求：自己写 <code>if - else if</code> 链判断，不能用现成模板。<br>提示：用 <code>&gt;=</code> 从高往低判断，命中一个就结束。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343407104',this)">复制</button></div>
-<pre id="c_4343407104"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376390848',this)">复制</button></div>
+<pre id="c_4376390848"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
@@ -1096,8 +1102,8 @@ namespace HelloWorld
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>课堂作业</h1>
 <div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入一个年份，判断是否为闰年。</p><ul><li>条件：能被 4 整除但不能被 100 整除，或者能被 400 整除</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年份：→ 2024</code></li></ul><ul><li>输出：<code>2024 是闰年</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入两个数和运算符（+、-、*、/），用 if-else if 实现计算器。</p><ul><li>注意：除法时判断除数是否为 0</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个数：→ 10</code></li></ul><ul><li>输入：<code>请输入运算符：→ /</code></li></ul><ul><li>输入：<code>请输入第二个数：→ 3</code></li></ul><ul><li>输出：<code>10 / 3 = 3.33</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入三个整数，输出其中最大的那个。</p><ul><li>提示：用 if-else if + <code>&amp;&amp;</code> 组合条件</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 7</code></li></ul><ul><li>输入：<code>请输入第三个整数：→ 5</code></li></ul><ul><li>输出：<code>最大值为 7</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>编写程序：输入月份（1-12），输出该月有多少天（非闰年，2月按28天）。</p><ul><li>提示：用 switch，1/3/5/7/8/10/12 月 31 天，4/6/9/11 月 30 天</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入月份：→ 3</code></li></ul><ul><li>输出：<code>31 天</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4343407744',this)">复制</button></div>
-<pre id="c_4343407744"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376391040',this)">复制</button></div>
+<pre id="c_4376391040"><code class="language-csharp">using System;
 namespace HelloWorld
 {
     class Program
