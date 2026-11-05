@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -439,8 +441,9 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>算术运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th><th>结果</th></tr><tr><td><code>+</code></td><td>加</td><td><code>5 + 2</code></td><td>7</td></tr><tr><td><code>-</code></td><td>减</td><td><code>5 - 2</code></td><td>3</td></tr><tr><td><code>*</code></td><td>乘</td><td><code>5 * 2</code></td><td>10</td></tr><tr><td><code>/</code></td><td>除</td><td><code>5 / 2</code></td><td>2</td></tr><tr><td><code>%</code></td><td>取余（模）</td><td><code>5 % 2</code></td><td>1</td></tr></table></div><div class="card"><ul><li>取余运算：求除法后的余数，如 <code>10 % 3 = 1</code></li></ul></div><div class="card"><h3>整数除法的陷阱</h3><ul><li>⚠️ 整数 ÷ 整数 = 整数（截断小数部分）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376160064',this)">复制</button></div>
-<pre id="c_4376160064"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309227392',this)">复制</button></div>
+<pre id="c_4309227392"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -452,8 +455,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 想要小数结果 → 至少有一个操作数是小数：
-using System;
+</div><div class="card"><ul><li>想要小数结果 → 至少有一个操作数是小数：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309227200',this)">复制</button></div>
+<pre id="c_4309227200"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -466,13 +470,15 @@ namespace HelloWorld
             double e = (double)5 / 2;  // e = 2.5 ✅ 先把5强制转为5.0，再除以2
         }
     }
-}</code></pre><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 5 / 2 = 2，小数部分被截断了？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">因为 <code>int</code> 类型只能存储整数。两个 <code>int</code> 做除法时，C# 按照整数除法规则，结果也是 <code>int</code>，小数部分直接被丢弃（不是四舍五入）。这和数学里的除法不一样，是编程语言的设计规则。</div></div>
+}</code></pre>
+</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 5 / 2 = 2，小数部分被截断了？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">因为 <code>int</code> 类型只能存储整数。两个 <code>int</code> 做除法时，C# 按照整数除法规则，结果也是 <code>int</code>，小数部分直接被丢弃（不是四舍五入）。这和数学里的除法不一样，是编程语言的设计规则。</div></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>自增自减</h1>
 <div class="card"><table><tr><th>运算符</th><th>名称</th><th>等价于</th></tr><tr><td><code>x++</code></td><td>后置自增</td><td>先用x，再加1</td></tr><tr><td><code>++x</code></td><td>前置自增</td><td>先加1，再用x</td></tr><tr><td><code>x--</code></td><td>后置自减</td><td>先用x，再减1</td></tr><tr><td><code>--x</code></td><td>前置自减</td><td>先减1，再用x</td></tr></table></div><div class="card"><ul><li>前置 vs 后置的区别：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376159872',this)">复制</button></div>
-<pre id="c_4376159872"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308650240',this)">复制</button></div>
+<pre id="c_4308650240"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -482,19 +488,21 @@ namespace HelloWorld
             int a = 5;
             int b = a++;   // b = 5, a = 6  (先把a的值5赋给b，a再加1)
             int c = ++a;   // c = 7, a = 7  (a先加1变成7，再把7赋给c)
+
             int d = 5;
             int e = d--;   // e = 5, d = 4  (先把d的值5赋给e，d再减1)
             int f = --d;   // f = 3, d = 3  (d先减1变成3，再把3赋给f)
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 算术运算</h1>
 <div class="ok-box">动手算几道算术题，同时观察整数除法和自增自减的效果。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751232',this)">复制</button></div>
-<pre id="c_4376751232"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308648384',this)">复制</button></div>
+<pre id="c_4308648384"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -502,31 +510,74 @@ namespace HelloWorld
         static void Main()
         {
             int a = 10, b = 3;
+
             Console.WriteLine($&quot;a + b = {a + b}&quot;);   // 13
             Console.WriteLine($&quot;a - b = {a - b}&quot;);   // 7
             Console.WriteLine($&quot;a * b = {a * b}&quot;);   // 30
             Console.WriteLine($&quot;a / b = {a / b}&quot;);   // 3（整数除！）
             Console.WriteLine($&quot;a % b = {a % b}&quot;);   // 1
+
             int x = 5;
             Console.WriteLine($&quot;x++ = {x++}&quot;);       // 输出5，x变成6
             Console.WriteLine($&quot;++x = {++x}&quot;);       // x从6变成7，输出7
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- 动手：修改a和b的值，观察输出变化
-
-&gt; 💬 解释说明
-&gt; - 整数除法 `10 / 3 = 3`，小数部分被截断，不会四舍五入
-&gt; - `x++` 先用后加，`++x` 先加后用
-&gt; - 取余 `%` 是求余数，不是百分比
-
-### 练习（动手写）
-补全代码，完成下面三道小题：
-
-**小题1**：将摄氏度转为华氏度（公式：F = C × 9 / 5 + 32）
-
-using System;
+</div><svg viewBox="0 0 680 308" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="a=10、b=3 的五种运算结果，以及 x++ 与 ++x 的区别">
+  <defs><marker id="p4d-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="60" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">a = 10，b = 3　→　五种运算各得什么</text>
+  <rect x="60" y="44" width="170" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="76" y="62" fill="#d7e0ee" font-size="11" font-family="monospace">10 + 3</text>
+  <line x1="234" y1="57" x2="262" y2="57" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4d-a)"/>
+  <rect x="266" y="44" width="70" height="26" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="301" y="62" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">13</text>
+  <rect x="60" y="72" width="170" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="76" y="90" fill="#d7e0ee" font-size="11" font-family="monospace">10 - 3</text>
+  <line x1="234" y1="85" x2="262" y2="85" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4d-a)"/>
+  <rect x="266" y="72" width="70" height="26" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="301" y="90" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">7</text>
+  <rect x="60" y="100" width="170" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="76" y="118" fill="#d7e0ee" font-size="11" font-family="monospace">10 * 3</text>
+  <line x1="234" y1="113" x2="262" y2="113" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4d-a)"/>
+  <rect x="266" y="100" width="70" height="26" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="301" y="118" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">30</text>
+  <rect x="60" y="128" width="170" height="26" rx="6" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="76" y="146" fill="#f59e0b" font-size="11" font-family="monospace">10 / 3</text>
+  <line x1="234" y1="141" x2="262" y2="141" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4d-a)"/>
+  <rect x="266" y="128" width="70" height="26" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="301" y="146" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">3</text>
+  <rect x="60" y="156" width="170" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="76" y="174" fill="#d7e0ee" font-size="11" font-family="monospace">10 % 3</text>
+  <line x1="234" y1="169" x2="262" y2="169" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4d-a)"/>
+  <rect x="266" y="156" width="70" height="26" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="301" y="174" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">1</text>
+  <text x="352" y="146" fill="#f59e0b" font-size="9.5" font-family="sans-serif">← 整数除法：小数被砍掉，不是 3.33</text>
+  <text x="60" y="196" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">自增：同一个 x，前后缀写法结果不同</text>
+  <rect x="60" y="212" width="130" height="30" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="125" y="232" text-anchor="middle" fill="#d7e0ee" font-size="10.5" font-family="monospace">x = 5</text>
+  <text x="206" y="232" fill="#38bdf8" font-size="10.5" font-family="monospace">x++</text>
+  <rect x="206" y="212" width="100" height="30" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="256" y="232" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">x++</text>
+  <text x="322" y="232" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">先输出 5，之后 x 才变成 6</text>
+  <rect x="60" y="258" width="130" height="30" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="125" y="278" text-anchor="middle" fill="#d7e0ee" font-size="10.5" font-family="monospace">x = 6</text>
+  <rect x="206" y="258" width="100" height="30" rx="6" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="256" y="278" text-anchor="middle" fill="#f59e0b" font-size="10.5" font-family="monospace">++x</text>
+  <text x="322" y="278" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">先 x 变成 7，再输出 7</text>
+</svg><div class="card"><ul><li>动手：修改a和b的值，观察输出变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>整数除法 <code>10 / 3 = 3</code>，小数部分被截断，不会四舍五入</li><li><code>x++</code> 先用后加，<code>++x</code> 先加后用</li><li>取余 <code>%</code> 是求余数，不是百分比</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p><p>三题做完，屏幕上应该是这样：</p></div><svg viewBox="0 0 680 286" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="练习：三道小题跑出来的样子的运行效果示意图">
+  <rect x="40" y="20" width="600" height="246" rx="12" fill="#21283a" stroke="#334155" stroke-width="1"/>
+  <circle cx="62" cy="40" r="4" fill="#ff5f57"/>
+  <circle cx="78" cy="40" r="4" fill="#febc2e"/>
+  <circle cx="94" cy="40" r="4" fill="#28c840"/>
+  <text x="340" y="44" text-anchor="middle" fill="#9fb0c9" font-size="11" font-family="sans-serif">练习：三道小题跑出来的样子</text>
+  <text x="60" y="74" fill="#8b9bb4" font-size="12" font-family="monospace">请输入摄氏度：<tspan fill="#38bdf8">100</tspan></text>
+  <text x="60" y="100" fill="#d7e0ee" font-size="12" font-family="monospace">华氏度：212</text>
+  <text x="60" y="152" fill="#d7e0ee" font-size="12" font-family="monospace">分数 80 → 加分 15 → 95</text>
+  <text x="60" y="204" fill="#6b7d97" font-size="11.5" font-family="monospace">int n = 5;  Console.WriteLine(n++) → 输出 5，之后 n 才是 6</text>
+  <text x="60" y="260" fill="#6b7d97" font-size="11" font-family="sans-serif">青色 = 你敲进去的　白色 = 程序打印的</text>
+</svg><div class="card"><p><strong>小题1</strong>：将摄氏度转为华氏度（公式：F = C × 9 / 5 + 32）</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308648064',this)">复制</button></div>
+<pre id="c_4308648064"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -539,9 +590,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77
         }
     }
-}</code></pre><div class="card"><p><strong>小题2</strong>：用复合赋值运算符让分数变化，填写运算符</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751424',this)">复制</button></div>
-<pre id="c_4376751424"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><p><strong>小题2</strong>：用复合赋值运算符让分数变化，填写运算符</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308631040',this)">复制</button></div>
+<pre id="c_4308631040"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -555,10 +608,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**小题3**：观察 `n++` 的&quot;先用后加&quot;
-
-using System;
+</div><div class="card"><p><strong>小题3</strong>：观察 <code>n++</code> 的&quot;先用后加&quot;</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308630848',this)">复制</button></div>
+<pre id="c_4308630848"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -570,9 +622,11 @@ namespace HelloWorld
             Console.WriteLine(n++);   // 输出<span class="code-blank">___</span>，之后 n 变成<span class="code-blank">___</span>
         }
     }
-}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376751616',this)">复制</button></div>
-<pre id="c_4376751616"><code class="language-csharp">using System;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308630656',this)">复制</button></div>
+<pre id="c_4308630656"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -582,22 +636,25 @@ namespace HelloWorld
             double c = 25;
             double f = c * 9 / 5 + 32;
             Console.WriteLine($&quot;摄氏度={c}，华氏度={f}&quot;);  // 华氏度=77
+
             int score = 80;
             score += 10;        // 加10，score变成90
             score /= 3;         // 除以3，score变成30
             Console.WriteLine($&quot;最终分数={score}&quot;);
+
             int n = 5;
             Console.WriteLine(n++);   // 输出5，之后 n 变成6
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>赋值运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>示例</th><th>等价于</th></tr><tr><td><code>=</code></td><td><code>x = 5;</code></td><td>—</td></tr><tr><td><code>+=</code></td><td><code>x += 3;</code></td><td><code>x = x + 3;</code></td></tr><tr><td><code>-=</code></td><td><code>x -= 3;</code></td><td><code>x = x - 3;</code></td></tr><tr><td><code>*=</code></td><td><code>x *= 3;</code></td><td><code>x = x * 3;</code></td></tr><tr><td><code>/=</code></td><td><code>x /= 3;</code></td><td><code>x = x / 3;</code></td></tr><tr><td><code>%=</code></td><td><code>x %= 3;</code></td><td><code>x = x % 3;</code></td></tr></table></div><div class="card"><ul><li>复合赋值运算符 = 先运算再赋值，写法更简洁</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376159360',this)">复制</button></div>
-<pre id="c_4376159360"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308649280',this)">复制</button></div>
+<pre id="c_4308649280"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -610,13 +667,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>关系运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例（结果）</th></tr><tr><td><code>==</code></td><td>等于</td><td><code>5 == 5</code> → true</td></tr><tr><td><code>!=</code></td><td>不等于</td><td><code>5 != 3</code> → true</td></tr><tr><td><code>&gt;</code></td><td>大于</td><td><code>5 &gt; 3</code> → true</td></tr><tr><td><code>&lt;</code></td><td>小于</td><td><code>5 &lt; 3</code> → false</td></tr><tr><td><code>&gt;=</code></td><td>大于等于</td><td><code>5 &gt;= 5</code> → true</td></tr><tr><td><code>&lt;=</code></td><td>小于等于</td><td><code>5 &lt;= 3</code> → false</td></tr></table></div><div class="card"><ul><li>比较结果一定是 <code>bool</code> 类型（true/false）</li><li>⚠️ 等于用 <code>==</code>（两个等号），一个 <code>=</code> 是赋值</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376158656',this)">复制</button></div>
-<pre id="c_4376158656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308629952',this)">复制</button></div>
+<pre id="c_4308629952"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -629,13 +687,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>逻辑运算符</h1>
 <div class="card"><table><tr><th>运算符</th><th>说明</th><th>示例</th></tr><tr><td><code>&amp;&amp;</code></td><td>与（两个条件都满足）</td><td><code>age &gt;= 18 &amp;&amp; age &lt;= 60</code></td></tr><tr><td><code>||</code></td><td>或（满足一个即可）</td><td><code>score &lt; 0 || score &gt; 100</code></td></tr><tr><td><code>!</code></td><td>非（取反）</td><td><code>!isPass</code></td></tr></table></div><div class="card"><ul><li>真值表：</li></ul></div><div class="card"><table><tr><th>A</th><th>B</th><th>A <code>&amp;&amp;</code> B</th><th>A <code>||</code> B</th><th><code>!</code>A</th></tr><tr><td>true</td><td>true</td><td>true</td><td>true</td><td>false</td></tr><tr><td>true</td><td>false</td><td>false</td><td>true</td><td>false</td></tr><tr><td>false</td><td>true</td><td>false</td><td>true</td><td>true</td></tr><tr><td>false</td><td>false</td><td>false</td><td>false</td><td>true</td></tr></table></div><div class="card"><h3>短路特性</h3><ul><li><code>&amp;&amp;</code>：如果左边为 false，右边不再计算（因为结果一定是 false）</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376096960',this)">复制</button></div>
-<pre id="c_4376096960"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308627968',this)">复制</button></div>
+<pre id="c_4308627968"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -647,8 +706,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- `||`：如果左边为 true，右边不再计算（因为结果一定是 true）
-using System;
+</div><div class="card"><ul><li><code>||</code>：如果左边为 true，右边不再计算（因为结果一定是 true）</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308627712',this)">复制</button></div>
+<pre id="c_4308627712"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -660,7 +720,8 @@ namespace HelloWorld
             bool r = (b &gt; 0) || (b++ &gt; 10);  // b++ 不会执行！b仍为5
         }
     }
-}</code></pre><div class="card"><ul><li>⚠️ 短路特性可能导致后面的表达式不执行，要注意</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 短路是什么意思？有什么用？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">&quot;短路&quot;像智能开关——<code>&amp;&amp;</code> 左边为 false 时，右边就不看了（反正结果一定是 false）；<code>||</code> 左边为 true 时，右边也不看了。好处是提升效率，但也可能让后面的 <code>a++</code>、<code>b++</code> 被跳过，写代码时要小心。</div></div>
+}</code></pre>
+</div><div class="card"><ul><li>⚠️ 短路特性可能导致后面的表达式不执行，要注意</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 短路是什么意思？有什么用？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">&quot;短路&quot;像智能开关——<code>&amp;&amp;</code> 左边为 false 时，右边就不看了（反正结果一定是 false）；<code>||</code> 左边为 true 时，右边也不看了。好处是提升效率，但也可能让后面的 <code>a++</code>、<code>b++</code> 被跳过，写代码时要小心。</div></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>位运算符</h1>
@@ -668,9 +729,10 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习2 — 条件判断</h1>
-<div class="ok-box">用关系运算符判断分数是否及格，再用逻辑运算符组合多个条件判断天气。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755904',this)">复制</button></div>
-<pre id="c_4376755904"><code class="language-csharp">using System;
+<div class="ok-box">用关系运算符判断分数是否及格，再用逻辑运算符组合多个条件判断天气。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308625088',this)">复制</button></div>
+<pre id="c_4308625088"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -678,30 +740,65 @@ namespace HelloWorld
         static void Main()
         {
             int score = 85;
+
             bool isPass = (score &gt;= 60);
             Console.WriteLine($&quot;及格：{isPass}&quot;);
+
             bool isExcellent = (score &gt;= 90);
             Console.WriteLine($&quot;优秀：{isExcellent}&quot;);
+
             // 组合条件：判断是否在有效范围
             bool isValid = (score &gt;= 0) &amp;&amp; (score &lt;= 100);
             Console.WriteLine($&quot;分数有效：{isValid}&quot;);
+
             // 判断是否不及格或超高分
             bool needCheck = (score &lt; 60) || (score &gt; 100);
             Console.WriteLine($&quot;需要关注：{needCheck}&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- 动手：把 score 改成 95、55、-10，观察每个 bool 值的变化
-
-&gt; 💬 解释说明
-&gt; - `&amp;&amp;` 两边都 true 才为 true，`||` 一边 true 就为 true
-&gt; - `!` 取反：`!true` → false
-
-### 练习（动手写）
-补全下面代码，判断一个数是否在 1~100 之间：
-
-using System;
+</div><svg viewBox="0 0 680 244" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="score=85 时四种布尔判断各得 true 还是 false">
+  <defs><marker id="p4d-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="40" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">score = 85　→　四种判断，四个 bool</text>
+  <rect x="40" y="44" width="290" height="36" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="67" fill="#d7e0ee" font-size="10.5" font-family="monospace">score >= 60</text>
+  <line x1="334" y1="62" x2="358" y2="62" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.5" marker-end="url(#p4d-b)"/>
+  <rect x="362" y="44" width="92" height="36" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="408" y="67" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">true</text>
+  <text x="468" y="67" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">及格</text>
+  <rect x="40" y="88" width="290" height="36" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="111" fill="#d7e0ee" font-size="10.5" font-family="monospace">score >= 90</text>
+  <line x1="334" y1="106" x2="358" y2="106" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.5" marker-end="url(#p4d-b)"/>
+  <rect x="362" y="88" width="92" height="36" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="408" y="111" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">false</text>
+  <text x="468" y="111" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">优秀</text>
+  <rect x="40" y="132" width="290" height="36" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="155" fill="#d7e0ee" font-size="10.5" font-family="monospace">score &gt;= 0 &amp;&amp; score &lt;= 100</text>
+  <line x1="334" y1="150" x2="358" y2="150" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.5" marker-end="url(#p4d-b)"/>
+  <rect x="362" y="132" width="92" height="36" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="408" y="155" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">true</text>
+  <text x="468" y="155" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">分数有效</text>
+  <rect x="40" y="176" width="290" height="36" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="199" fill="#d7e0ee" font-size="10.5" font-family="monospace">score &lt; 60 || score &gt; 100</text>
+  <line x1="334" y1="194" x2="358" y2="194" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.5" marker-end="url(#p4d-b)"/>
+  <rect x="362" y="176" width="92" height="36" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="408" y="199" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">false</text>
+  <text x="468" y="199" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">需要关注</text>
+  <text x="40" y="232" fill="#8b9bb4" font-size="10" font-family="sans-serif">&amp;&amp; 要两边都 true，|| 只要一边 true——同一个 score，四种问法四个答案。</text>
+</svg><div class="card"><ul><li>动手：把 score 改成 95、55、-10，观察每个 bool 值的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>&amp;&amp;</code> 两边都 true 才为 true，<code>||</code> 一边 true 就为 true</li><li><code>!</code> 取反：<code>!true</code> → false</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全下面代码，判断一个数是否在 1~100 之间：</p><p>两种情况都要能跑出来：</p></div><svg viewBox="0 0 680 234" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="练习：判断一个数是否在 1~100 之间的运行效果示意图">
+  <rect x="40" y="20" width="600" height="194" rx="12" fill="#21283a" stroke="#334155" stroke-width="1"/>
+  <circle cx="62" cy="40" r="4" fill="#ff5f57"/>
+  <circle cx="78" cy="40" r="4" fill="#febc2e"/>
+  <circle cx="94" cy="40" r="4" fill="#28c840"/>
+  <text x="340" y="44" text-anchor="middle" fill="#9fb0c9" font-size="11" font-family="sans-serif">练习：判断一个数是否在 1~100 之间</text>
+  <text x="60" y="74" fill="#8b9bb4" font-size="12" font-family="monospace">请输入一个整数：<tspan fill="#38bdf8">50</tspan></text>
+  <text x="60" y="100" fill="#d7e0ee" font-size="12" font-family="monospace">50 在 1~100 之间：True</text>
+  <text x="60" y="126" fill="#8b9bb4" font-size="12" font-family="monospace">请输入一个整数：<tspan fill="#38bdf8">120</tspan></text>
+  <text x="60" y="152" fill="#d7e0ee" font-size="12" font-family="monospace">120 在 1~100 之间：False</text>
+  <text x="60" y="208" fill="#6b7d97" font-size="11" font-family="sans-serif">青色 = 你敲进去的　白色 = 程序打印的</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308624768',this)">复制</button></div>
+<pre id="c_4308624768"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -714,9 +811,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;n在有效范围：{<span class="code-blank">___</span>}&quot;);
         }
     }
-}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376756032',this)">复制</button></div>
-<pre id="c_4376756032"><code class="language-csharp">using System;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308624192',this)">复制</button></div>
+<pre id="c_4308624192"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -729,13 +828,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>三元运算符（?:）</h1>
 <div class="card"><ul><li>格式：<code>条件 ? 结果1 : 结果2</code></li><li>如果条件为 <code>true</code> → 返回<code>结果1</code>；否则 → 返回<code>结果2</code></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376754880',this)">复制</button></div>
-<pre id="c_4376754880"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308626368',this)">复制</button></div>
+<pre id="c_4308626368"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -745,19 +845,21 @@ namespace HelloWorld
             int score = 75;
             string result = (score &gt;= 60) ? &quot;及格&quot; : &quot;不及格&quot;;
             // result = &quot;及格&quot;
+
             int a = 10, b = 20;
             int max = (a &gt; b) ? a : b;
             // max = 20
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 三元运算符是 if-else 的简写版（if-else 下个课件讲）</code></pre>
+</div><div class="card"><ul><li>三元运算符是 if-else 的简写版（if-else 下个课件讲）</li></ul></div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>运算符优先级</h1>
 <div class="card"><ul><li>当多个运算符同时出现，计算顺序按优先级：</li></ul></div><div class="card"><table><tr><th>优先级</th><th>运算符</th></tr><tr><td>高</td><td><code>()</code> 括号</td></tr><tr><td>↑</td><td><code>++</code> <code>--</code> <code>!</code>（一元）</td></tr><tr><td></td><td><code>*</code> <code>/</code> <code>%</code></td></tr><tr><td></td><td><code>+</code> <code>-</code></td></tr><tr><td></td><td><code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code></td></tr><tr><td></td><td><code>==</code> <code>!=</code></td></tr><tr><td></td><td><code>&amp;&amp;</code></td></tr><tr><td>↓</td><td><code>||</code></td></tr><tr><td>低</td><td><code>=</code> <code>+=</code> <code>-=</code> 等（赋值）</td></tr></table></div><div class="card"><ul><li>记不住就用<strong>括号</strong>，括号里优先计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755136',this)">复制</button></div>
-<pre id="c_4376755136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308622016',this)">复制</button></div>
+<pre id="c_4308622016"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -769,22 +871,59 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; ❓ 记不住优先级怎么办？
-&gt; **用括号！**括号内的永远先算，加了括号代码也更清晰。`2 + 3 × 4` 不如 `2 + (3 × 4)` 一眼看得懂。考试可能让你背，写代码时用括号就行。</code></pre>
+</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 记不住优先级怎么办？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))"><strong>用括号！</strong>括号内的永远先算，加了括号代码也更清晰。<code>2 + 3 × 4</code> 不如 <code>2 + (3 × 4)</code> 一眼看得懂。考试可能让你背，写代码时用括号就行。</div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>算术运算符</strong>：<code>+ - * / %</code>，<code>%</code> 取余数</li><li><strong>自增自减</strong>：<code>i++</code> / <code>i--</code>，用前用后取值不同</li><li><strong>赋值运算符</strong>：<code>=</code> 及其复合写法 <code>+= -= *= /=</code></li><li><strong>关系运算符</strong>：<code>&gt; &lt; &gt;= &lt;= == !=</code>，结果都是 bool</li><li><strong>逻辑运算符</strong>：<code>&amp;&amp;</code> 与、<code>||</code> 或、<code>!</code> 非，用来组合条件</li><li><strong>位运算符</strong>：<code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code>，直接对二进制位操作</li><li><strong>三元运算符（?:）</strong>：<code>条件 ? 真值 : 假值</code>，一行代替简单 if-else</li><li><strong>运算符优先级</strong>：先乘除后加减，有括号先算括号</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>算术运算符</strong>：<code>+ - * / %</code>，<code>%</code> 取余数</li><li><strong>自增自减</strong>：<code>i++</code> / <code>i--</code>，用前用后取值不同</li><li><strong>赋值运算符</strong>：<code>=</code> 及其复合写法 <code>+= -= *= /=</code></li><li><strong>关系运算符</strong>：<code>&gt; &lt; &gt;= &lt;= == !=</code>，结果都是 bool</li><li><strong>逻辑运算符</strong>：<code>&amp;&amp;</code> 与、<code>||</code> 或、<code>!</code> 非，用来组合条件</li><li><strong>位运算符</strong>：<code>&amp; | ^ ~ &lt;&lt; &gt;&gt;</code>，直接对二进制位操作</li><li><strong>三元运算符（?:）</strong>：<code>条件 ? 真值 : 假值</code>，一行代替简单 if-else</li><li><strong>运算符优先级</strong>：先乘除后加减，有括号先算括号</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>综合练习 — 简易计算器</h1>
 <div class="ok-box">实现一个简易计算器：输入两个数和运算符，输出计算结果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入第一个数字：10
 请输入运算符（+、-、*、/）：*
 请输入第二个数字：3
-10 * 3 = 30</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>用 <code>if (op == &quot;+&quot;)</code> / <code>else if (op == &quot;-&quot;)</code> 等判断运算符</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376233408',this)">复制</button></div>
-<pre id="c_4376233408"><code class="language-csharp">using System;
+10 * 3 = 30</code></pre><svg viewBox="0 0 680 248" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="计算器按运算符分成四条分支，只执行命中的一条">
+  <defs>
+    <marker id="p4-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+  <text x="30" y="58" fill="#8b9bb4" font-size="11" font-family="sans-serif">输入</text>
+
+  <rect x="30" y="76" width="130" height="26" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="42" y="94" fill="#d7e0ee" font-size="11.5" font-family="monospace">a = 10</text>
+  <rect x="30" y="106" width="130" height="26" rx="6" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="42" y="124" fill="#f59e0b" font-size="11.5" font-family="monospace">op = *</text>
+  <rect x="30" y="136" width="130" height="26" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="42" y="154" fill="#d7e0ee" font-size="11.5" font-family="monospace">b = 3</text>
+
+  <line x1="166" y1="120" x2="200" y2="120" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p4-a)"/>
+
+  <rect x="206" y="88" width="180" height="64" rx="10" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="296" y="115" text-anchor="middle" fill="#38bdf8" font-size="11.5" font-family="sans-serif">op 是哪一个？</text>
+  <text x="296" y="134" text-anchor="middle" fill="#6b7d97" font-size="10.5" font-family="sans-serif">四种情况只可能命中一种</text>
+
+  <line x1="388" y1="120" x2="406" y2="120" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="406" y1="64" x2="406" y2="184" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+  <line x1="406" y1="64" x2="426" y2="64" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+  <line x1="406" y1="104" x2="426" y2="104" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+  <line x1="406" y1="144" x2="426" y2="144" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+  <line x1="406" y1="184" x2="426" y2="184" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+
+  <rect x="428" y="48" width="222" height="32" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="442" y="68" fill="#8b9bb4" font-size="11.5" font-family="monospace">+   10 + 3 = 13</text>
+  <rect x="428" y="88" width="222" height="32" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="442" y="108" fill="#8b9bb4" font-size="11.5" font-family="monospace">-   10 - 3 = 7</text>
+  <rect x="428" y="128" width="222" height="32" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="442" y="148" fill="#22c55e" font-size="11.5" font-family="monospace">*   10 * 3 = 30</text>
+  <rect x="428" y="168" width="222" height="32" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="442" y="188" fill="#8b9bb4" font-size="11.5" font-family="monospace">/   10 / 3 = 3.33</text>
+
+  <text x="30" y="228" fill="#8b9bb4" font-size="11" font-family="sans-serif">只走命中的那一条，其余三条直接跳过——这就是 if / else if 的分支；op 用错，四条都不进。</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>用 <code>if (op == &quot;+&quot;)</code> / <code>else if (op == &quot;-&quot;)</code> 等判断运算符</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308619264',this)">复制</button></div>
+<pre id="c_4308619264"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -793,17 +932,22 @@ namespace HelloWorld
         {
             Console.Write(&quot;请输入第一个数字：&quot;);
             double num1 = <span class="code-blank">___</span>;
+
             Console.Write(&quot;请输入运算符（+、-、*、/）：&quot;);
             string op = Console.ReadLine();
+
             Console.Write(&quot;请输入第二个数字：&quot;);
             double num2 = <span class="code-blank">___</span>;
+
             double result = 0;
             bool valid = true;
+
             if (op <span class="code-blank">___</span> &quot;+&quot;) result = num1 + num2;
             else if (op == &quot;-&quot;) result = <span class="code-blank">___</span>;
             else if (op == &quot;*&quot;) result = num1 * num2;
             else if (op == &quot;/&quot;) result = <span class="code-blank">___</span>;
             else valid = false;
+
             if (<span class="code-blank">___</span>)
                 Console.WriteLine($&quot;{num1} {op} {num2} = {<span class="code-blank">___</span>}&quot;);
             else
@@ -811,10 +955,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308618688',this)">复制</button></div>
+<pre id="c_4308618688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -846,9 +989,11 @@ namespace HelloWorld
                 Console.WriteLine(&quot;运算符无效！&quot;);
         }
     }
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个<strong>年份</strong>，判断是否为<strong>闰年</strong>并输出结果。<br>闰年规则：能被 4 整除且不能被 100 整除，<strong>或者</strong>能被 400 整除。<br>要求：用逻辑运算符 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 和取余 <code>%</code> 自己写判断，不能用现成模板。<br>提示：<code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code></div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376232192',this)">复制</button></div>
-<pre id="c_4376232192"><code class="language-csharp">using System;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个<strong>年份</strong>，判断是否为<strong>闰年</strong>并输出结果。<br>闰年规则：能被 4 整除且不能被 100 整除，<strong>或者</strong>能被 400 整除。<br>要求：用逻辑运算符 <code>&amp;&amp;</code>、<code>||</code>、<code>!</code> 和取余 <code>%</code> 自己写判断，不能用现成模板。<br>提示：<code>(year % 4 == 0 &amp;&amp; year % 100 != 0) || year % 400 == 0</code></div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308618368',this)">复制</button></div>
+<pre id="c_4308618368"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -861,13 +1006,103 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376388352',this)">复制</button></div>
-<pre id="c_4376388352"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（3分）</h3><p>编写程序：输入一个三位整数，分别输出它的百位、十位、个位数字。</p><ul><li>提示：百位 = n / 100，十位 = n / 10 % 10，个位 = n % 10</li></ul></div><svg viewBox="0 0 680 206" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="同一个三位数用三种算法分别取出百位、十位和个位">
+  <defs><marker id="p4q-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="50" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">n = 357　→　三种算法各取一位</text>
+  <rect x="50" y="40" width="180" height="46" rx="7" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="140" y="69" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">n / 100</text>
+  <line x1="140" y1="90" x2="140" y2="108" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4q-a)"/>
+  <rect x="50" y="112" width="180" height="56" rx="7" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="140" y="148" text-anchor="middle" fill="#22c55e" font-size="18" font-family="monospace">3</text>
+  <text x="140" y="190" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">百位</text>
+  <rect x="250" y="40" width="180" height="46" rx="7" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="340" y="69" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">n / 10 % 10</text>
+  <line x1="340" y1="90" x2="340" y2="108" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4q-a)"/>
+  <rect x="250" y="112" width="180" height="56" rx="7" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="340" y="148" text-anchor="middle" fill="#22c55e" font-size="18" font-family="monospace">5</text>
+  <text x="340" y="190" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">十位</text>
+  <rect x="450" y="40" width="180" height="46" rx="7" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="540" y="69" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">n % 10</text>
+  <line x1="540" y1="90" x2="540" y2="108" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p4q-a)"/>
+  <rect x="450" y="112" width="180" height="56" rx="7" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="540" y="148" text-anchor="middle" fill="#22c55e" font-size="18" font-family="monospace">7</text>
+  <text x="540" y="190" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">个位</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个三位整数：→ 357</code></li></ul><ul><li>输出：<code>百位=3</code></li></ul><ul><li>输出：<code>十位=5</code></li></ul><ul><li>输出：<code>个位=7</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：定义一个变量 <code>x = 5</code>，依次执行 <code>x++</code>、<code>x += 3</code>、<code>--x</code>，输出每一步后 x 的值。</p><ul><li>提示：每一步写一行 <code>Console.WriteLine(x);</code></li></ul></div><svg viewBox="0 0 680 190" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="x 从 5 开始经过自增、复合赋值、自减三步后的值">
+  <defs><marker id="p4q-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <rect x="40" y="58" width="96" height="54" rx="7" fill="#1b2536" stroke="#64748b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="88" y="91" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">x = 5</text>
+  <text x="88" y="128" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">起点</text>
+  <line x1="140" y1="85" x2="192" y2="85" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p4q-b)"/>
+  <text x="166" y="50" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">x++</text>
+  <text x="166" y="108" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="sans-serif">输出 5</text>
+  <rect x="200" y="58" width="96" height="54" rx="7" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="248" y="91" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">x = 6</text>
+  <text x="248" y="128" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">x++ 之后</text>
+  <line x1="300" y1="85" x2="352" y2="85" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p4q-b)"/>
+  <text x="326" y="50" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">x += 3</text>
+  <text x="326" y="108" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="sans-serif">输出 9</text>
+  <rect x="360" y="58" width="96" height="54" rx="7" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="408" y="91" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">x = 9</text>
+  <text x="408" y="128" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">x += 3 之后</text>
+  <line x1="460" y1="85" x2="512" y2="85" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p4q-b)"/>
+  <text x="486" y="50" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">--x</text>
+  <text x="486" y="108" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="sans-serif">输出 8</text>
+  <rect x="520" y="58" width="96" height="54" rx="7" fill="#1b2536" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="568" y="91" text-anchor="middle" fill="#22c55e" font-size="13" font-family="monospace">x = 8</text>
+  <text x="568" y="128" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">--x 之后</text>
+  <text x="40" y="170" fill="#8b9bb4" font-size="10" font-family="sans-serif">x++ 先交值再加，所以第一步打印的是 5；--x 先减再交值，最后打印 8。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>5</code></li></ul><ul><li>输出：<code>9</code></li></ul><ul><li>输出：<code>8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入你的年龄，判断是否成年（≥18岁），输出&quot;你已成年&quot;或&quot;你还未成年&quot;。</p><ul><li>提示：用三元运算符</li></ul></div><svg viewBox="0 0 680 176" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三元运算符按年龄条件在两种输出中二选一">
+  <defs><marker id="p4q-c" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker></defs>
+  <text x="40" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三元运算符：条件 ? 成立的值 : 不成立的值</text>
+  <rect x="40" y="44" width="110" height="48" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="95" y="73" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="monospace">age = 20</text>
+  <line x1="154" y1="68" x2="174" y2="68" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.45" marker-end="url(#p4q-c)"/>
+  <rect x="178" y="44" width="316" height="48" rx="6" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="336" y="73" text-anchor="middle" fill="#38bdf8" font-size="8.8" font-family="monospace">age >= 18 ? "你已成年" : "你还未成年"</text>
+  <line x1="498" y1="68" x2="518" y2="68" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.45" marker-end="url(#p4q-c)"/>
+  <rect x="522" y="44" width="124" height="48" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="584" y="73" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif">你已成年</text>
+  <rect x="40" y="106" width="110" height="48" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="95" y="135" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="monospace">age = 15</text>
+  <line x1="154" y1="130" x2="174" y2="130" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.45" marker-end="url(#p4q-c)"/>
+  <rect x="178" y="106" width="316" height="48" rx="6" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="336" y="135" text-anchor="middle" fill="#38bdf8" font-size="8.8" font-family="monospace">age >= 18 ? "你已成年" : "你还未成年"</text>
+  <line x1="498" y1="130" x2="518" y2="130" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.45" marker-end="url(#p4q-c)"/>
+  <rect x="522" y="106" width="124" height="48" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="584" y="135" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="sans-serif">你还未成年</text>
+  <text x="40" y="168" fill="#8b9bb4" font-size="10" font-family="sans-serif">条件写一次、两个结果左右摆好，比写 if-else 短一半。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>你已成年</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>输入三角形的三条边，判断是否能构成三角形。</p><ul><li>条件：任意两边之和大于第三边</li></ul></div><svg viewBox="0 0 680 226" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三条边两两相加大于第三边，三个条件都成立才能构成三角形">
+  <defs><marker id="p4q-d" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker></defs>
+  <text x="40" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">a = 3，b = 4，c = 5　→　三个条件全都要成立</text>
+  <rect x="40" y="42" width="150" height="34" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="64" fill="#d7e0ee" font-size="10.5" font-family="monospace">a + b > c</text>
+  <text x="206" y="64" fill="#8b9bb4" font-size="9.5" font-family="monospace">3 + 4 > 5</text>
+  <text x="330" y="64" fill="#22c55e" font-size="10" font-family="monospace">true</text>
+  <text x="378" y="64" fill="#22c55e" font-size="11" font-family="monospace">✓</text>
+  <rect x="40" y="86" width="150" height="34" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="108" fill="#d7e0ee" font-size="10.5" font-family="monospace">a + c > b</text>
+  <text x="206" y="108" fill="#8b9bb4" font-size="9.5" font-family="monospace">3 + 5 > 4</text>
+  <text x="330" y="108" fill="#22c55e" font-size="10" font-family="monospace">true</text>
+  <text x="378" y="108" fill="#22c55e" font-size="11" font-family="monospace">✓</text>
+  <rect x="40" y="130" width="150" height="34" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="152" fill="#d7e0ee" font-size="10.5" font-family="monospace">b + c > a</text>
+  <text x="206" y="152" fill="#8b9bb4" font-size="9.5" font-family="monospace">4 + 5 > 3</text>
+  <text x="330" y="152" fill="#22c55e" font-size="10" font-family="monospace">true</text>
+  <text x="378" y="152" fill="#22c55e" font-size="11" font-family="monospace">✓</text>
+  <rect x="420" y="42" width="230" height="122" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="535" y="84" text-anchor="middle" fill="#22c55e" font-size="11" font-family="sans-serif">三个都成立</text>
+  <text x="535" y="108" text-anchor="middle" fill="#22c55e" font-size="11" font-family="sans-serif">→ 能构成三角形</text>
+  <text x="535" y="140" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">只要倒一个就输出</text>
+  <text x="535" y="156" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">「不能构成三角形」</text>
+  <text x="40" y="216" fill="#8b9bb4" font-size="10" font-family="sans-serif">用 &amp;&amp; 把三个不等式串起来——少写一个，3、4、8 这种假三角形就会被放过去。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一条边：→ 3</code></li></ul><ul><li>输入：<code>请输入第二条边：→ 4</code></li></ul><ul><li>输入：<code>请输入第三条边：→ 5</code></li></ul><ul><li>输出：<code>能构成三角形</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4308617152',this)">复制</button></div>
+<pre id="c_4308617152"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -875,15 +1110,20 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="16"><div class="slide-inner end-page">
 
@@ -987,8 +1227,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========

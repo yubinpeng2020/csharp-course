@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -441,8 +443,9 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>数组的定义与访问</h1>
 <div class="card"><h3>三种定义方式：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376237504',this)">复制</button></div>
-<pre id="c_4376237504"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337469760',this)">复制</button></div>
+<pre id="c_4337469760"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -450,19 +453,20 @@ namespace HelloWorld
         static void Main()
         {
             // 方式1：声明 + 分配空间
-            int[] scores = new int[5];          // 5个元素，默认值都是0
+            int[] scores1 = new int[5];          // 5个元素，默认值都是0
+
             // 方式2：声明 + 初始化（最常用）
-            int[] scores = { 85, 90, 78, 88, 92 };
+            int[] scores2 = { 85, 90, 78, 88, 92 };
+
             // 方式3：先分配，再逐个赋值
-            int[] scores = new int[3];
-            scores[0] = 85; scores[1] = 90; scores[2] = 78;
+            int[] scores3 = new int[3];
+            scores3[0] = 85; scores3[1] = 90; scores3[2] = 78;
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**访问元素：**
-
-using System;
+</div><div class="card"><h3>访问元素：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337469568',this)">复制</button></div>
+<pre id="c_4337469568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -480,9 +484,11 @@ namespace HelloWorld
             // scores[5] = 100;  // ❌ 只有 0~4 五个位置
         }
     }
-}</code></pre><div class="card"><h3>关于 <code>Length</code>：</h3></div><div class="card"><ul><li><code>Length</code> 不是方法（没有括号），是数组自带的<strong>属性</strong>，直接返回元素个数</li><li>索引从 0 开始，最后一个元素是 <code>Length - 1</code></li><li>写 <code>i &lt;= scores.Length</code> 是新手最常见错误——会导致索引越界</li></ul></div><div class="card"><h3>for 循环遍历：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376233728',this)">复制</button></div>
-<pre id="c_4376233728"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><h3>关于 <code>Length</code>：</h3></div><div class="card"><ul><li><code>Length</code> 不是方法（没有括号），是数组自带的<strong>属性</strong>，直接返回元素个数</li><li>索引从 0 开始，最后一个元素是 <code>Length - 1</code></li><li>写 <code>i &lt;= scores.Length</code> 是新手最常见错误——会导致索引越界</li></ul></div><div class="card"><h3>for 循环遍历：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337468992',this)">复制</button></div>
+<pre id="c_4337468992"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -494,13 +500,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1</h1>
 <div class="ok-box">用数组存储5个成绩，计算总分、平均分和及格人数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376745984',this)">复制</button></div>
-<pre id="c_4376745984"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337468288',this)">复制</button></div>
+<pre id="c_4337468288"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -508,11 +515,14 @@ namespace HelloWorld
         static void Main()
         {
             int[] scores = { 85, 90, 78, 88, 92 };
+
             int sum = 0;
             for (int i = 0; i &lt; scores.Length; i++)
                 sum += scores[i];
+
             double avg = (double)sum / scores.Length;
             Console.WriteLine($&quot;总分：{sum}，平均分：{avg:F1}&quot;);
+
             int passCount = 0;
             for (int i = 0; i &lt; scores.Length; i++)
                 if (scores[i] &gt;= 60)
@@ -521,17 +531,65 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 动手：把 scores 改成自己的数据，观察结果变化
-
-&gt; 💬 解释说明
-&gt; - `scores.Length` 获取数组长度，循环不用写死数字
-&gt; - `(double)sum / scores.Length` 强制转 double，否则整数除法会丢掉小数
-&gt; - 两个 for 循环各做一件事——遍历求和、遍历统计
-
-### 练习（动手写）
-补全代码——求一周的**最高温、最低温、平均温**，并**统计高温天数**（&gt;30）：
-
-using System;
+</div><svg viewBox="0 0 680 284" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="scores 五个元素的求和 433、平均 86.6、及格 5 人">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">scores 有 5 个元素，下标 0~4，scores.Length = 5</text>
+  <rect x="40" y="42" width="62" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="71" y="70" text-anchor="middle" fill="#38bdf8" font-size="14" font-family="monospace">85</text>
+  <text x="71" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">[0]</text>
+  <rect x="106" y="42" width="62" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="137" y="70" text-anchor="middle" fill="#38bdf8" font-size="14" font-family="monospace">90</text>
+  <text x="137" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">[1]</text>
+  <rect x="172" y="42" width="62" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="203" y="70" text-anchor="middle" fill="#38bdf8" font-size="14" font-family="monospace">78</text>
+  <text x="203" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">[2]</text>
+  <rect x="238" y="42" width="62" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="269" y="70" text-anchor="middle" fill="#38bdf8" font-size="14" font-family="monospace">88</text>
+  <text x="269" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">[3]</text>
+  <rect x="304" y="42" width="62" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="335" y="70" text-anchor="middle" fill="#38bdf8" font-size="14" font-family="monospace">92</text>
+  <text x="335" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">[4]</text>
+  <rect x="40" y="122" width="600" height="48" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="56" y="142" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">第一个 for：sum += scores[i]</text>
+  <text x="56" y="162" fill="#d7e0ee" font-size="11" font-family="monospace">85+90+78+88+92 = 433　→　avg = (double)433 / 5 = 86.6</text>
+  <rect x="40" y="184" width="600" height="48" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="56" y="204" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">第二个 for：if (scores[i] &gt;= 60) passCount++</text>
+  <text x="56" y="224" fill="#22c55e" font-size="11" font-family="monospace">五个都在 60 以上　→　及格人数 5 / 5</text>
+  <text x="24" y="262" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">两个循环各干一件事；循环条件写 i &lt; scores.Length，别写死 5。</text>
+</svg><div class="card"><ul><li>动手：把 scores 改成自己的数据，观察结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>scores.Length</code> 获取数组长度，循环不用写死数字</li><li><code>(double)sum / scores.Length</code> 强制转 double，否则整数除法会丢掉小数</li><li>两个 for 循环各做一件事——遍历求和、遍历统计</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——求一周的<strong>最高温、最低温、平均温</strong>，并<strong>统计高温天数</strong>（&gt;30）：</p></div><svg viewBox="0 0 680 252" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="七天温度数组，标出最高、最低和高温天，最后输出一行结果">
+  <defs>
+    <marker id="p9-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
+  </defs>
+  <text x="71" y="26" fill="#8b9bb4" font-size="11" font-family="sans-serif">int[] temps = { 28, 32, 25, 30, 35, 27, 31 };　← 七天的温度</text>
+  <text x="106" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[0]</text>
+  <rect x="71" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#64748b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="106" y="90" text-anchor="middle" fill="#d7e0ee" font-size="16" font-family="monospace">28</text>
+  <text x="184" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[1]</text>
+  <rect x="149" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="184" y="90" text-anchor="middle" fill="#22c55e" font-size="16" font-family="monospace">32</text>
+  <text x="262" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[2]</text>
+  <rect x="227" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="262" y="90" text-anchor="middle" fill="#38bdf8" font-size="16" font-family="monospace">25</text>
+  <text x="340" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[3]</text>
+  <rect x="305" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#64748b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="340" y="90" text-anchor="middle" fill="#d7e0ee" font-size="16" font-family="monospace">30</text>
+  <text x="418" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[4]</text>
+  <rect x="383" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="418" y="90" text-anchor="middle" fill="#f59e0b" font-size="16" font-family="monospace">35</text>
+  <text x="496" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[5]</text>
+  <rect x="461" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#64748b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="496" y="90" text-anchor="middle" fill="#d7e0ee" font-size="16" font-family="monospace">27</text>
+  <text x="574" y="48" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">[6]</text>
+  <rect x="539" y="56" width="70" height="54" rx="8" fill="#21283a" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="574" y="90" text-anchor="middle" fill="#22c55e" font-size="16" font-family="monospace">31</text>
+  <text x="71" y="130" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b">橙 = 最高</tspan>　<tspan fill="#38bdf8">青 = 最低</tspan>　<tspan fill="#22c55e">绿 = 高温（&gt; 30），一共 3 天</tspan></text>
+  <line x1="340" y1="140" x2="340" y2="164" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p9-a)"/>
+  <text x="352" y="158" fill="#6b7d97" font-size="10" font-family="sans-serif">一个 for 循环走完 7 个元素</text>
+  <rect x="60" y="172" width="560" height="46" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="340" y="200" text-anchor="middle" fill="#22c55e" font-size="12.5" font-family="monospace">最高：35，最低：25，平均：29.7，高温天：3</text>
+  <text x="60" y="240" fill="#6b7d97" font-size="10.5" font-family="sans-serif">同一个循环里干四件事：比大小两次、累加一次、数一次 &gt;30——不要为了四个结果写四个循环。</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337467712',this)">复制</button></div>
+<pre id="c_4337467712"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -553,9 +611,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;最高：{max}，最低：{min}，平均：{avg:F1}，高温天：{hot}&quot;);
         }
     }
-}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743808',this)">复制</button></div>
-<pre id="c_4376743808"><code class="language-csharp">using System;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337467520',this)">复制</button></div>
+<pre id="c_4337467520"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -563,6 +623,7 @@ namespace HelloWorld
         static void Main()
         {
             int[] temps = { 28, 32, 25, 30, 35, 27, 31 };
+
             int max = temps[0], min = temps[0], sum = 0, hot = 0;
             for (int i = 0; i &lt; temps.Length; i++)
             {
@@ -576,15 +637,16 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>foreach 遍历</h1>
 <div class="card"><ul><li><code>foreach</code> 是专门遍历集合的循环，比 <code>for</code> 更简洁</li><li>语法拆解：</li></ul></div><pre class="plain-box"><code>  foreach ( int    s      in   scores  )
           ↑类型  ↑临时变量 ↑in ↑数组名
           每次循环，当前元素的值赋给 s</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376232896',this)">复制</button></div>
-<pre id="c_4376232896"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337470464',this)">复制</button></div>
+<pre id="c_4337470464"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -592,23 +654,20 @@ namespace HelloWorld
         static void Main()
         {
             int[] scores = { 85, 90, 78 };
+
             // for 版本
             for (int i = 0; i &lt; scores.Length; i++)
                 Console.WriteLine(scores[i]);
+
             // foreach 版本（不需要索引时推荐）
             foreach (int s in scores)
                 Console.WriteLine(s);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- ✅ 适合：求和、找最值、显示列表
-- ⚠️ foreach 中 `s` 是只读的，不能修改数组元素！要修改用 `for`
-- 不需要手动写 `i++` 和 `scores[i]`，更简洁安全
-
-**上页的成绩求和，用 foreach 重写：**
-
-using System;
+</div><div class="card"><ul><li>✅ 适合：求和、找最值、显示列表</li><li>⚠️ foreach 中 <code>s</code> 是只读的，不能修改数组元素！要修改用 <code>for</code></li><li>不需要手动写 <code>i++</code> 和 <code>scores[i]</code>，更简洁安全</li></ul></div><div class="card"><h3>上页的成绩求和，用 foreach 重写：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337450752',this)">复制</button></div>
+<pre id="c_4337450752"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -631,13 +690,15 @@ namespace HelloWorld
             Console.WriteLine($&quot;总分(foreach)：{sum2}&quot;); // 433
         }
     }
-}</code></pre><div class="ok-box">只要<strong>不关心索引、只遍历每个元素</strong>，foreach 就是首选。</div>
+}</code></pre>
+</div><div class="ok-box">只要<strong>不关心索引、只遍历每个元素</strong>，foreach 就是首选。</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>数组最值</h1>
 <div class="card"><p>手工找最大值的思路：<strong>先假设第一个是最大值，逐个比较，遇到更大的就替换</strong></p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376236096',this)">复制</button></div>
-<pre id="c_4376236096"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337450304',this)">复制</button></div>
+<pre id="c_4337450304"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -645,6 +706,7 @@ namespace HelloWorld
         static void Main()
         {
             int[] scores = { 85, 90, 78, 88, 92 };
+
             int max = scores[0];           // 假设第一个最大
             for (int i = 1; i &lt; scores.Length; i++)
             {
@@ -655,20 +717,10 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-找最小值把 `&gt;` 换成 `&lt;` 即可。
-
-快捷方式——C# 提供了现成方法（需 `using System.Linq;`）：
-
-| 方法 | 作用 | 返回值 |
-|------|------|--------|
-| `scores.Max()` | 找最大值 | 元素类型（int → int） |
-| `scores.Min()` | 找最小值 | 元素类型（int → int） |
-| `scores.Sum()` | 求总和 | 元素类型（int → int） |
-| `scores.Average()` | 求平均值 | `double`（自动转浮点） |
-| `Array.Sort(scores)` | 原地排序 | `void`（直接改数组） |
-
-using System;
+</div><div class="card"><p>找最小值把 <code>&gt;</code> 换成 <code>&lt;</code> 即可。</p></div><div class="card"><p>快捷方式——C# 提供了现成方法（需 <code>using System.Linq;</code>）：</p></div><div class="card"><table><tr><th>方法</th><th>作用</th><th>返回值</th></tr><tr><td><code>scores.Max()</code></td><td>找最大值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Min()</code></td><td>找最小值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Sum()</code></td><td>求总和</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Average()</code></td><td>求平均值</td><td><code>double</code>（自动转浮点）</td></tr><tr><td><code>Array.Sort(scores)</code></td><td>原地排序</td><td><code>void</code>（直接改数组）</td></tr></table></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337449216',this)">复制</button></div>
+<pre id="c_4337449216"><code class="language-csharp">using System;
+using System.Linq;      // Max / Min / Sum / Average 来自 LINQ
 
 namespace HelloWorld
 {
@@ -686,7 +738,8 @@ namespace HelloWorld
             Array.Sort(scores);           // 78, 85, 88, 90, 92
         }
     }
-}</code></pre><div class="ok-box">💡 考试建议手写循环，日常写代码优先用现成方法。</div>
+}</code></pre>
+</div><div class="ok-box">💡 考试建议手写循环，日常写代码优先用现成方法。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>冒泡排序</h1>
@@ -698,8 +751,9 @@ namespace HelloWorld
 90 &lt; 92? ✅ 不动  →  85, 78, 88, 90, [92] ← 92 沉底！</code></pre><div class="card"><p><strong>第2轮</strong> — 只比较前4个（92已就位）：</p></div><pre class="plain-box"><code>85 &gt; 78? ❌ 交换  →  78, 85, 88, 90
 85 &lt; 88? ✅ 不动
 88 &lt; 90? ✅ 不动  →  78, 85, 88, [90, 92] ← 90 沉底！</code></pre><div class="card"><p><strong>第3轮</strong> — 只比较前3个：</p></div><pre class="plain-box"><code>78, 85, 88 ← 已经有序，无需交换！→ [78, 85, 88, 90, 92]</code></pre><div class="card"><ul><li>规律：n 个元素需要 <strong>n-1 轮</strong>，每轮比较次数递减</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么叫&quot;冒泡&quot;？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">每一轮都要把当前还没排好序的元素中的最大值&quot;冒&quot;到最右边——就像水里的气泡，大的总会浮到水面。第 1 轮把最大数沉到最右，第 2 轮把次大数沉到倒数第二……每完成一轮，就有一个数永久就位，后面的轮次不用再管它。</div></div><div class="card"><h3>代码实现：</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376748288',this)">复制</button></div>
-<pre id="c_4376748288"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337447168',this)">复制</button></div>
+<pre id="c_4337447168"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -707,6 +761,7 @@ namespace HelloWorld
         static void Main()
         {
             int[] scores = { 85, 90, 78, 88, 92 };
+
             // 冒泡排序（从小到大）
             for (int i = 0; i &lt; scores.Length - 1; i++)          // 外层：第几轮
             {
@@ -726,9 +781,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-捷径（但不要求手写）：
-using System;
+</div><div class="card"><p>捷径（但不要求手写）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337446976',this)">复制</button></div>
+<pre id="c_4337446976"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -740,9 +795,11 @@ namespace HelloWorld
             Array.Reverse(scores);         // 翻转顺序
         }
     }
-}</code></pre><div class="card"><ul><li><code>Array.Sort(scores)</code> — 原地排序，直接修改数组，从小到大排列</li><li><code>Array.Reverse(scores)</code> — 原地翻转，把数组元素首尾颠倒</li><li>两者都无返回值（<code>void</code>），排序结果直接体现在原数组上</li></ul></div><div class="card"><h3>排序后怎么用？</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376747136',this)">复制</button></div>
-<pre id="c_4376747136"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><ul><li><code>Array.Sort(scores)</code> — 原地排序，直接修改数组，从小到大排列</li><li><code>Array.Reverse(scores)</code> — 原地翻转，把数组元素首尾颠倒</li><li>两者都无返回值（<code>void</code>），排序结果直接体现在原数组上</li></ul></div><div class="card"><h3>排序后怎么用？</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337446528',this)">复制</button></div>
+<pre id="c_4337446528"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -753,11 +810,13 @@ namespace HelloWorld
             foreach (int s in scores)
                 Console.Write(s + &quot; &quot;);
             // 输出：78 85 88 90 92
+
             // ② 逆序输出（从大到小）
             Console.WriteLine();
             for (int i = scores.Length - 1; i &gt;= 0; i--)
                 Console.Write(scores[i] + &quot; &quot;);
             // 输出：92 90 88 85 78
+
             // ③ 输出前3名
             Console.WriteLine(&quot;\n前三名：&quot;);
             for (int i = scores.Length - 1; i &gt;= scores.Length - 3; i--)
@@ -765,13 +824,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 动手：输出去掉最高分和最低分后的平均分</code></pre>
+</div><div class="card"><ul><li>动手：输出去掉最高分和最低分后的平均分</li></ul></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>值类型与引用类型</h1>
 <div class="card"><h3>用生活比喻理解&quot;值&quot;和&quot;引用&quot;</h3></div><div class="card"><ul><li><strong>值类型</strong> = 复印一张纸给你。你在你的纸上改，不影响我的原件</li><li><strong>引用类型</strong> = 给你我家的门牌号。你按门牌号找到我家，改了东西，我也受影响</li></ul></div><div class="card"><h3>用代码验证：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755136',this)">复制</button></div>
-<pre id="c_4376755136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337450112',this)">复制</button></div>
+<pre id="c_4337450112"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -782,6 +842,7 @@ namespace HelloWorld
             int a = 10;
             int b = a;     // b 拿到了 a 的复印件
             b = 20;        // 改复印件，a 还是 10 ✅
+
             // 引用类型：指向同一个地方
             int[] arr1 = { 1, 2, 3 };
             int[] arr2 = arr1;    // arr2 拿到的是门牌号，指向同一个数组
@@ -790,30 +851,17 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📌 **数组是引用类型**。arr1 和 arr2 存的是同一个地址，改 arr2 就是在改 arr1。
+</div><div class="ok-box">📌 <strong>数组是引用类型</strong>。arr1 和 arr2 存的是同一个地址，改 arr2 就是在改 arr1。</div><div class="card"><h3>&quot;引用&quot;到底是什么？</h3></div><div class="card"><p>数组变量本身存的不是数据，而是一个<strong>地址</strong>（门牌号）。真正的数据存在内存的另一块区域里：</p></div><pre class="plain-box"><code>arr1 →  [地址0x100] →  {1, 2, 3}  ← 真正的数据
+arr2 →  [地址0x100] ↗              ← 复制的也是同一个地址
 
-**&quot;引用&quot;到底是什么？**
-
-数组变量本身存的不是数据，而是一个**地址**（门牌号）。真正的数据存在内存的另一块区域里：
-</code></pre><div class="card"><p>arr1 →  [地址0x100] →  {1, 2, 3}  ← 真正的数据</p></div><div class="card"><p>arr2 →  [地址0x100] ↗              ← 复制的也是同一个地址</p></div><div class="card"><p>arr2[0] = 99 → 改了数据 → arr1[0] = 99  ← 同一个地方，一起变了</p></div><pre class="plain-box"><code>
-&gt; 引用 = 门牌号 = 内存地址。多个变量拿着同一个地址，改一处全变。
-
-**总结对比：**
-
-| | 值类型 | 引用类型 |
-|------|------|------|
-| 比喻 | 复印件 | 门牌号 |
-| 改了之后 | 互不影响 | 牵一发动全身 |
-| 代表类型 | int、double、bool | 数组、string、class |
-| 默认值 | 0、false | null |
-| 赋值行为 | 复制数据本身 | 复制地址（指向原数据） |</code></pre>
+arr2[0] = 99 → 改了数据 → arr1[0] = 99  ← 同一个地方，一起变了</code></pre><div class="ok-box">引用 = 门牌号 = 内存地址。多个变量拿着同一个地址，改一处全变。</div><div class="card"><h3>总结对比：</h3></div><div class="card"><table><tr><th></th><th>值类型</th><th>引用类型</th></tr><tr><td>比喻</td><td>复印件</td><td>门牌号</td></tr><tr><td>改了之后</td><td>互不影响</td><td>牵一发动全身</td></tr><tr><td>代表类型</td><td>int、double、bool</td><td>数组、string、class</td></tr><tr><td>默认值</td><td>0、false</td><td>null</td></tr><tr><td>赋值行为</td><td>复制数据本身</td><td>复制地址（指向原数据）</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>多维数组</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376747264',this)">复制</button></div>
-<pre id="c_4376747264"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337445312',this)">复制</button></div>
+<pre id="c_4337445312"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -822,15 +870,16 @@ namespace HelloWorld
         {
             // 一维数组：一行
             int[] row = { 1, 2, 3 };
+
             // 二维数组：行列矩阵
             int[,] matrix = new int[2, 3];               // 2行3列
             int[,] grid = { { 1, 2, 3 }, { 4, 5, 6 } }; // 直接初始化
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-访问二维数组：
-using System;
+</div><div class="card"><p>访问二维数组：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337445120',this)">复制</button></div>
+<pre id="c_4337445120"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -843,9 +892,11 @@ namespace HelloWorld
             Console.WriteLine(grid[1, 2]);    // 第1行第2列 → 6
         }
     }
-}</code></pre><div class="card"><p>应用：存储多个班级成绩</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376752704',this)">复制</button></div>
-<pre id="c_4376752704"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><p>应用：存储多个班级成绩</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337444928',this)">复制</button></div>
+<pre id="c_4337444928"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -862,20 +913,61 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是数组？</strong>：一组相同类型数据的集合，用下标访问</li><li><strong>数组的定义与访问</strong>：<code>类型[] 名 = new 类型[长度];</code> 下标从 0 开始</li><li><strong>foreach 遍历</strong>：逐个取出元素，不用管下标</li><li><strong>数组最值</strong>：先假设第 0 个是极值，逐个比较更新</li><li><strong>冒泡排序</strong>：相邻两两比，大的往后冒，外层控制轮数</li><li><strong>值类型与引用类型</strong>：int 等是值类型（复制值），数组/类是引用类型（复制地址）</li><li><strong>多维数组</strong>：<code>int[,]</code> 二维表，用两个下标定位</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是数组？</strong>：一组相同类型数据的集合，用下标访问</li><li><strong>数组的定义与访问</strong>：<code>类型[] 名 = new 类型[长度];</code> 下标从 0 开始</li><li><strong>foreach 遍历</strong>：逐个取出元素，不用管下标</li><li><strong>数组最值</strong>：先假设第 0 个是极值，逐个比较更新</li><li><strong>冒泡排序</strong>：相邻两两比，大的往后冒，外层控制轮数</li><li><strong>值类型与引用类型</strong>：int 等是值类型（复制值），数组/类是引用类型（复制地址）</li><li><strong>多维数组</strong>：<code>int[,]</code> 二维表，用两个下标定位</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>综合练习 — 学生成绩管理</h1>
 <div class="ok-box">10个学生的成绩数组，一个 foreach 遍历一次性完成五项操作：输出列表、算平均分、找最高最低、统计各等级人数。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>成绩列表：85 90 78 88 92 65 73 95 81 87
 平均分：83.4
 最高分：95，最低分：65
-A:2 B:3 C:2 D:2 F:1</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>所有计算放在<strong>同一个 foreach</strong> 里，一次遍历全部搞定</li><li>同时找最大和最小：两个 if 放在循环体里</li><li>等级统计：用 5 个计数器 + if-else if 阶梯判断</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376233344',this)">复制</button></div>
-<pre id="c_4376233344"><code class="language-csharp">using System;
+A:2 B:3 C:2 D:2 F:1</code></pre><svg viewBox="0 0 680 252" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="十个成绩一次遍历同时得到列表、平均分、最高最低和等级统计">
+  <defs>
+    <marker id="p9-b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect x="53" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="79" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">85</text>
+  <rect x="111" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="137" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">90</text>
+  <rect x="169" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="195" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">78</text>
+  <rect x="227" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="253" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">88</text>
+  <rect x="285" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="311" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">92</text>
+  <rect x="343" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="369" y="58" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">65</text>
+  <rect x="401" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="427" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">73</text>
+  <rect x="459" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="485" y="58" text-anchor="middle" fill="#f59e0b" font-size="13" font-family="monospace">95</text>
+  <rect x="517" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="543" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">81</text>
+  <rect x="575" y="30" width="52" height="44" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="601" y="58" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">87</text>
+  <text x="53" y="22" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">10 个学生的成绩</text>
+  <line x1="340" y1="78" x2="340" y2="146" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p9-b)"/>
+  <text x="352" y="116" fill="#f59e0b" font-size="10.5" font-family="sans-serif">foreach 只走一遍（10 次），五个结果同时算出来</text>
+  <rect x="32" y="152" width="160" height="56" rx="7" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="112" y="172" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">① 输出列表</text>
+  <text x="112" y="194" text-anchor="middle" fill="#8b9bb4" font-size="12.5" font-family="monospace">85 90 78 88 …</text>
+  <rect x="204" y="152" width="116" height="56" rx="7" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="262" y="172" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">② 平均分</text>
+  <text x="262" y="194" text-anchor="middle" fill="#38bdf8" font-size="12.5" font-family="monospace">83.4</text>
+  <rect x="332" y="152" width="116" height="56" rx="7" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="390" y="172" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">③ 最值</text>
+  <text x="390" y="194" text-anchor="middle" fill="#f59e0b" font-size="12.5" font-family="monospace">95 / 65</text>
+  <rect x="460" y="152" width="188" height="56" rx="7" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="554" y="172" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">④ 等级人数</text>
+  <text x="554" y="194" text-anchor="middle" fill="#22c55e" font-size="12.5" font-family="monospace">A2 B3 C2 D2 F1</text>
+  <text x="32" y="236" fill="#6b7d97" font-size="10.5" font-family="sans-serif">拆成四个循环也能做，但要多遍历三遍——所以能合并就合并，这就是「一次遍历搞定全部」的意义。</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>所有计算放在<strong>同一个 foreach</strong> 里，一次遍历全部搞定</li><li>同时找最大和最小：两个 if 放在循环体里</li><li>等级统计：用 5 个计数器 + if-else if 阶梯判断</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337443136',this)">复制</button></div>
+<pre id="c_4337443136"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -883,9 +975,11 @@ namespace HelloWorld
         static void Main()
         {
             int[] scores = { 85, 90, 78, 88, 92, 65, 73, 95, 81, 87 };
+
             Console.Write(&quot;成绩列表：&quot;);
             int sum = 0, max = scores[0], min = scores[0];
             int a = 0, b = 0, c = 0, d = 0, f = 0;
+
             <span class="code-blank">___</span> (int s in scores)
             {
                 Console.Write(s + &quot; &quot;);        // ① 打印
@@ -904,10 +998,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337442560',this)">复制</button></div>
+<pre id="c_4337442560"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -938,9 +1031,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;A:{a} B:{b} C:{c} D:{d} F:{f}&quot;);
         }
     }
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义一个含 5 个整数的数组，把数组<strong>反转</strong>（首尾互换）后输出。<br>要求：自己写循环用临时变量交换元素，不能用 <code>Array.Reverse</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376232640',this)">复制</button></div>
-<pre id="c_4376232640"><code class="language-csharp">using System;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义一个含 5 个整数的数组，把数组<strong>反转</strong>（首尾互换）后输出。<br>要求：自己写循环用临时变量交换元素，不能用 <code>Array.Reverse</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337442240',this)">复制</button></div>
+<pre id="c_4337442240"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -958,13 +1053,157 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建数组存储10个整数，统计其中偶数的个数和偶数的平均值。</p><ul><li>提示：<code>if (nums[i] % 2 == 0)</code> 判断偶数</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>数组 = { 20, 13, 8, 41, 14, 7, 26, 5, 2, 9 }</code></li></ul><ul><li>输出：<code>偶数个数：5，偶数平均值：14.0</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用冒泡排序对成绩数组从小到大排序，输出去掉最高分和最低分后的平均分。</p><ul><li>提示：先排序，再用 <code>for (i=1; i&lt;Length-1; i++)</code> 跳过首尾</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 85, 70, 96, 83, 80, 75, 98 }</code></li></ul><ul><li>输出：<code>去掉最高和最低后平均分：83.8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>创建两个数组：<code>names</code> 存5个学生姓名，<code>scores</code> 存对应成绩。按成绩从高到低输出排名。</p><ul><li>提示：排序时两个数组的元素要同步交换</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>姓名 = { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot;, &quot;赵六&quot;, &quot;陈七&quot; }，成绩 = { 82, 88, 95, 68, 78 }</code></li></ul><ul><li>输出：<code>第1名：王五（95分）</code></li></ul><ul><li>输出：<code>第2名：李四（88分）</code></li></ul><ul><li>输出：<code>第3名：张三（82分）</code></li></ul><ul><li>输出：<code>第4名：陈七（78分）</code></li></ul><ul><li>输出：<code>第5名：赵六（68分）</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>给定一个成绩数组，先计算平均分，再统计有多少人高于平均分。</p><ul><li>提示：先 foreach 算 sum 和 avg，再 foreach 统计人数</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 70, 72, 84, 86, 88, 90, 94 }</code></li></ul><ul><li>输出：<code>平均分：83.4，高于平均分：5 人</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376236032',this)">复制</button></div>
-<pre id="c_4376236032"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建数组存储10个整数，统计其中偶数的个数和偶数的平均值。</p><ul><li>提示：<code>if (nums[i] % 2 == 0)</code> 判断偶数</li></ul></div><svg viewBox="0 0 680 236" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：10 个数里挑出 5 个偶数，和 70，平均 14.0">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">10 个整数：偶数的挑出来，其余跳过</text>
+  <rect x="30" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="59" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">20</text>
+  <rect x="92" y="42" width="58" height="40" rx="5" fill="#1b2536" stroke="#334155" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="121" y="68" text-anchor="middle" fill="#8b9bb4" font-size="12" font-family="monospace">13</text>
+  <rect x="154" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="183" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">8</text>
+  <rect x="216" y="42" width="58" height="40" rx="5" fill="#1b2536" stroke="#334155" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="245" y="68" text-anchor="middle" fill="#8b9bb4" font-size="12" font-family="monospace">41</text>
+  <rect x="278" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="307" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">14</text>
+  <rect x="340" y="42" width="58" height="40" rx="5" fill="#1b2536" stroke="#334155" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="369" y="68" text-anchor="middle" fill="#8b9bb4" font-size="12" font-family="monospace">7</text>
+  <rect x="402" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="431" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">26</text>
+  <rect x="464" y="42" width="58" height="40" rx="5" fill="#1b2536" stroke="#334155" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="493" y="68" text-anchor="middle" fill="#8b9bb4" font-size="12" font-family="monospace">5</text>
+  <rect x="526" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="555" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">2</text>
+  <rect x="588" y="42" width="58" height="40" rx="5" fill="#1b2536" stroke="#334155" stroke-opacity="0.25" stroke-width="1"/>
+  <text x="617" y="68" text-anchor="middle" fill="#8b9bb4" font-size="12" font-family="monospace">9</text>
+  <text x="30" y="104" fill="#6b7d97" font-size="9.5" font-family="sans-serif">橙色 = 偶数（i % 2 == 0），灰色 = 跳过</text>
+  <rect x="30" y="118" width="190" height="52" rx="8" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="42" y="140" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">偶数之和</text>
+  <text x="42" y="162" fill="#f59e0b" font-size="15" font-family="monospace">70</text>
+  <rect x="236" y="118" width="190" height="52" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="248" y="140" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">偶数个数</text>
+  <text x="248" y="162" fill="#38bdf8" font-size="15" font-family="monospace">5</text>
+  <rect x="442" y="118" width="198" height="52" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="454" y="140" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">平均 = 70 / 5</text>
+  <text x="454" y="162" fill="#22c55e" font-size="15" font-family="monospace">14.0</text>
+  <text x="24" y="200" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">分母用 count（偶数的个数），不是 nums.Length ——用 10 去除就会算成 7.0。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>数组 = { 20, 13, 8, 41, 14, 7, 26, 5, 2, 9 }</code></li></ul><ul><li>输出：<code>偶数个数：5，偶数平均值：14.0</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用冒泡排序对成绩数组从小到大排序，输出去掉最高分和最低分后的平均分。</p><ul><li>提示：先排序，再用 <code>for (i=1; i&lt;Length-1; i++)</code> 跳过首尾</li></ul></div><svg viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：冒泡排序后去掉最低 70 和最高 98，剩下 5 个平均 83.8">
+  <defs><marker id="k9q2a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">先排好序，首尾就是最低分和最高分</text>
+  <rect x="30" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="59" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">85</text>
+  <rect x="92" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="121" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">70</text>
+  <rect x="154" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="183" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">96</text>
+  <rect x="216" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="245" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">83</text>
+  <rect x="278" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="307" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">80</text>
+  <rect x="340" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="369" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">75</text>
+  <rect x="402" y="42" width="58" height="38" rx="5" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="431" y="66" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">98</text>
+  <line x1="247" y1="82" x2="247" y2="112" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k9q2a)"/>
+  <text x="258" y="102" fill="#38bdf8" font-size="9.5" font-family="sans-serif">冒泡排序：相邻两个比较，大的往后换</text>
+  <rect x="30" y="120" width="58" height="38" rx="5" fill="#16202e" stroke="#6b7d97" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="59" y="144" text-anchor="middle" fill="#6b7d97" font-size="12" font-family="monospace">70</text>
+  <rect x="92" y="120" width="58" height="38" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="121" y="144" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">75</text>
+  <rect x="154" y="120" width="58" height="38" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="183" y="144" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">80</text>
+  <rect x="216" y="120" width="58" height="38" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="245" y="144" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">83</text>
+  <rect x="278" y="120" width="58" height="38" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="307" y="144" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">85</text>
+  <rect x="340" y="120" width="58" height="38" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="369" y="144" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">96</text>
+  <rect x="402" y="120" width="58" height="38" rx="5" fill="#16202e" stroke="#6b7d97" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="431" y="144" text-anchor="middle" fill="#6b7d97" font-size="12" font-family="monospace">98</text>
+  <text x="480" y="136" fill="#6b7d97" font-size="9.5" font-family="sans-serif">首尾两个</text>
+  <text x="480" y="152" fill="#6b7d97" font-size="9.5" font-family="sans-serif">不参与计算</text>
+  <line x1="247" y1="160" x2="247" y2="190" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k9q2a)"/>
+  <text x="258" y="180" fill="#38bdf8" font-size="9.5" font-family="sans-serif">循环从 i = 1 到 Length - 2</text>
+  <rect x="30" y="198" width="58" height="38" rx="5" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="59" y="222" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">75</text>
+  <rect x="92" y="198" width="58" height="38" rx="5" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="121" y="222" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">80</text>
+  <rect x="154" y="198" width="58" height="38" rx="5" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="183" y="222" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">83</text>
+  <rect x="216" y="198" width="58" height="38" rx="5" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="245" y="222" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">85</text>
+  <rect x="278" y="198" width="58" height="38" rx="5" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="307" y="222" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">96</text>
+  <rect x="360" y="198" width="280" height="38" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="374" y="223" fill="#22c55e" font-size="13" font-family="monospace">419 / 5 = 83.8</text>
+  <text x="24" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">排序后 70 在 arr[0]、98 在 arr[6]；不排序就得先求最值再排除，麻烦得多。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 85, 70, 96, 83, 80, 75, 98 }</code></li></ul><ul><li>输出：<code>去掉最高和最低后平均分：83.8</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>创建两个数组：<code>names</code> 存5个学生姓名，<code>scores</code> 存对应成绩。按成绩从高到低输出排名。</p><ul><li>提示：排序时两个数组的元素要同步交换</li></ul></div><svg viewBox="0 0 680 280" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：names 与 scores 两行对齐，排序时同一列的两个元素一起交换">
+  <defs><marker id="k9q3a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f59e0b"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">姓名和成绩分两个数组，靠下标一一对应</text>
+  <rect x="40" y="44" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="91" y="68" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">张三</text>
+  <rect x="40" y="86" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="91" y="110" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">82</text>
+  <rect x="150" y="44" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="201" y="68" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">李四</text>
+  <rect x="150" y="86" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="201" y="110" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">88</text>
+  <rect x="260" y="44" width="102" height="38" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="311" y="68" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">王五</text>
+  <rect x="260" y="86" width="102" height="38" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="311" y="110" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">95</text>
+  <rect x="370" y="44" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="421" y="68" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">赵六</text>
+  <rect x="370" y="86" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="421" y="110" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">68</text>
+  <rect x="480" y="44" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="531" y="68" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">陈七</text>
+  <rect x="480" y="86" width="102" height="38" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="531" y="110" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">78</text>
+  <text x="40" y="140" fill="#8b9bb4" font-size="9" font-family="sans-serif">names[]</text>
+  <line x1="311" y1="126" x2="311" y2="158" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k9q3a)"/>
+  <text x="310" y="158" fill="#f59e0b" font-size="9.5" font-family="sans-serif">最高分那一列：names[2] 与 scores[2] 必须同时换</text>
+  <rect x="40" y="174" width="600" height="44" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="56" y="194" fill="#8b9bb4" font-size="9.5" font-family="monospace">temp = names[j]; names[j] = names[j+1]; names[j+1] = temp;</text>
+  <text x="56" y="210" fill="#f59e0b" font-size="9.5" font-family="sans-serif">scores 那两行照抄一遍 —— 少换一个，姓名和成绩就错位</text>
+  <rect x="40" y="228" width="600" height="38" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="56" y="253" fill="#22c55e" font-size="11" font-family="monospace">第1名：王五（95分）　第2名：李四（88分）　…</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>姓名 = { &quot;张三&quot;, &quot;李四&quot;, &quot;王五&quot;, &quot;赵六&quot;, &quot;陈七&quot; }，成绩 = { 82, 88, 95, 68, 78 }</code></li></ul><ul><li>输出：<code>第1名：王五（95分）</code></li></ul><ul><li>输出：<code>第2名：李四（88分）</code></li></ul><ul><li>输出：<code>第3名：张三（82分）</code></li></ul><ul><li>输出：<code>第4名：陈七（78分）</code></li></ul><ul><li>输出：<code>第5名：赵六（68分）</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>给定一个成绩数组，先计算平均分，再统计有多少人高于平均分。</p><ul><li>提示：先 foreach 算 sum 和 avg，再 foreach 统计人数</li></ul></div><svg viewBox="0 0 680 356" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：7 个成绩的柱状图，平均分 83.4 处的虚线上方有 5 人">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">先算平均 83.4，再数有多少人站在平均线上面</text>
+  <rect x="60" y="110" width="50" height="140" rx="4" fill="#16202e" stroke="#6b7d97" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="85" y="102" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="monospace">70</text>
+  <text x="85" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[0]</text>
+  <rect x="136" y="106" width="50" height="144" rx="4" fill="#16202e" stroke="#6b7d97" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="161" y="98" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="monospace">72</text>
+  <text x="161" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[1]</text>
+  <rect x="212" y="82" width="50" height="168" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="237" y="74" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">84</text>
+  <text x="237" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[2]</text>
+  <rect x="288" y="78" width="50" height="172" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="313" y="70" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">86</text>
+  <text x="313" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[3]</text>
+  <rect x="364" y="74" width="50" height="176" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="389" y="66" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">88</text>
+  <text x="389" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[4]</text>
+  <rect x="440" y="70" width="50" height="180" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="465" y="62" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">90</text>
+  <text x="465" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[5]</text>
+  <rect x="516" y="62" width="50" height="188" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="541" y="54" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">94</text>
+  <text x="541" y="268" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">[6]</text>
+  <line x1="40" y1="83.2" x2="660" y2="83.2" stroke="#f59e0b" stroke-width="1.4" stroke-opacity="0.85" stroke-dasharray="4 3"/>
+  <text x="576" y="74" fill="#f59e0b" font-size="10" font-family="sans-serif">平均 83.4</text>
+  <line x1="40" y1="250" x2="660" y2="250" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.45"/>
+  <rect x="40" y="282" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="56" y="307" fill="#22c55e" font-size="11" font-family="monospace">高于平均分：84、86、88、90、94　共 5 人</text>
+  <text x="24" y="342" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">统计要用严格大于（v &gt; avg）；写 &gt;= 也不会错，因为没人正好等于 83.4。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 70, 72, 84, 86, 88, 90, 94 }</code></li></ul><ul><li>输出：<code>平均分：83.4，高于平均分：5 人</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4337441536',this)">复制</button></div>
+<pre id="c_4337441536"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -972,15 +1211,20 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner end-page">
 
@@ -1084,8 +1328,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========

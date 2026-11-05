@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -434,8 +436,9 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>什么是类型转换？</h1>
 <div class="card"><p>类型转换就是把一种数据类型变成另一种，让不同类型的数据可以互相配合。</p></div><div class="card"><h3>什么时候需要：</h3></div><div class="card"><ul><li>计算时类型不匹配：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376096768',this)">复制</button></div>
-<pre id="c_4376096768"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349696000',this)">复制</button></div>
+<pre id="c_4349696000"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -448,8 +451,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 用户输入都是 string，必须转成数字才能计算：
-using System;
+</div><div class="card"><ul><li>用户输入都是 string，必须转成数字才能计算：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349695616',this)">复制</button></div>
+<pre id="c_4349695616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -461,13 +465,15 @@ namespace HelloWorld
             int age = int.Parse(input);         // string → int
         }
     }
-}</code></pre><div class="card"><h3>两种方式：</h3></div><div class="card"><table><tr><th>方式</th><th>谁来干</th><th>什么时候</th></tr><tr><td><strong>隐式转换</strong>（自动）</td><td>编译器自动完成</td><td>小 → 大，不会丢数据</td></tr><tr><td><strong>显式转换</strong>（手动）</td><td>你自己写代码</td><td>大 → 小，或 string → 数字</td></tr></table></div><div class="ok-box"><strong>&quot;范围&quot;就是能装多少东西</strong>：<code>int</code> 装整数（±21亿），<code>double</code> 能装带小数点的更大数字。<code>int</code> → <code>double</code> = 小杯子倒进大桶，安全。</div>
+}</code></pre>
+</div><div class="card"><h3>两种方式：</h3></div><div class="card"><table><tr><th>方式</th><th>谁来干</th><th>什么时候</th></tr><tr><td><strong>隐式转换</strong>（自动）</td><td>编译器自动完成</td><td>小 → 大，不会丢数据</td></tr><tr><td><strong>显式转换</strong>（手动）</td><td>你自己写代码</td><td>大 → 小，或 string → 数字</td></tr></table></div><div class="ok-box"><strong>&quot;范围&quot;就是能装多少东西</strong>：<code>int</code> 装整数（±21亿），<code>double</code> 能装带小数点的更大数字。<code>int</code> → <code>double</code> = 小杯子倒进大桶，安全。</div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>隐式转换 — 自动类型转换</h1>
 <div class="card"><ul><li>小范围 → 大范围，编译器自动完成，安全</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376100096',this)">复制</button></div>
-<pre id="c_4376100096"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349121216',this)">复制</button></div>
+<pre id="c_4349121216"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -481,27 +487,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 转换路线：`int` → `long` → `float` → `double`
-- 反向不行！大转小必须手动
-
-
-| 原类型 | 可自动转为 | 示例 |
-|----------|-----------|------|
-| `int` | `double`、`float`、`long` | `double x = 5;` ✅ |
-| `float` | `double` | `double x = 3.14f;` ✅ |
-| `char` | `int`、`long`、`float`、`double` | `int x = 'A';` ✅ (x=65) |
-| `double` | ❌ 不能自动转 `int` | `int x = 3.14;` ❌ 编译报错 |
-
-- 记住：**整数可以自动变小数，小数不能自动变整数**
-- `char` 可以自动转 `int`，因为每个字符在计算机里都有一个数字编号（'A' = 65），这就是 Unicode 编码
-- ⚠️ `bool` 不能和任何数值类型互转：`int x = (int)true;` ❌，`bool b = 1;` ❌
-  - 需要转换时用：`int n = flag ? 1 : 0;` 或 `bool ok = (score &gt;= 60);`</code></pre>
+</div><div class="card"><ul><li>转换路线：<code>int</code> → <code>long</code> → <code>float</code> → <code>double</code></li><li>反向不行！大转小必须手动</li></ul></div><div class="card"><table><tr><th>原类型</th><th>可自动转为</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>double</code>、<code>float</code>、<code>long</code></td><td><code>double x = 5;</code> ✅</td></tr><tr><td><code>float</code></td><td><code>double</code></td><td><code>double x = 3.14f;</code> ✅</td></tr><tr><td><code>char</code></td><td><code>int</code>、<code>long</code>、<code>float</code>、<code>double</code></td><td><code>int x = 'A';</code> ✅ (x=65)</td></tr><tr><td><code>double</code></td><td>❌ 不能自动转 <code>int</code></td><td><code>int x = 3.14;</code> ❌ 编译报错</td></tr></table></div><div class="card"><ul><li>记住：<strong>整数可以自动变小数，小数不能自动变整数</strong></li><li><code>char</code> 可以自动转 <code>int</code>，因为每个字符在计算机里都有一个数字编号（'A' = 65），这就是 Unicode 编码</li><li>⚠️ <code>bool</code> 不能和任何数值类型互转：<code>int x = (int)true;</code> ❌，<code>bool b = 1;</code> ❌</li><li style="margin-left:24px;list-style-type:circle">需要转换时用：<code>int n = flag ? 1 : 0;</code> 或 <code>bool ok = (score &gt;= 60);</code></li></ul></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>显式转换 — 强制类型转换</h1>
 <div class="card"><ul><li>大范围 → 小范围，需要手动指定，可能丢失精度</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376098752',this)">复制</button></div>
-<pre id="c_4376098752"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349118144',this)">复制</button></div>
+<pre id="c_4349118144"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -510,17 +503,15 @@ namespace HelloWorld
         {
             double pi = 3.14159;
             int x = (int)pi;       // 强制转换，x = 3，小数被截断！
+
             double price = 9.99;
             int yuan = (int)price; // yuan = 9，不是四舍五入
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 语法：`(目标类型)表达式`
-- ⚠️ 强制转换是**截断**，不是四舍五入
-
-
-### 精度丢失示例
-using System;
+</div><div class="card"><ul><li>语法：<code>(目标类型)表达式</code></li><li>⚠️ 强制转换是<strong>截断</strong>，不是四舍五入</li></ul></div><div class="card"><h3>精度丢失示例</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349117760',this)">复制</button></div>
+<pre id="c_4349117760"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -535,13 +526,15 @@ namespace HelloWorld
             // a = 42  （byte只取最低1字节，高位数据丢失！）
         }
     }
-}</code></pre><div class="card"><ul><li>298 的二进制：<code>00000000 00000000 00000001 00101010</code></li><li>截取最低字节：<code>00101010</code> = 42</li><li>⚠️ 强制转换前要确保目标类型装得下，否则结果不可信</li></ul></div><div class="ok-box">💡 回顾课件3：<code>byte</code> 只有 8 位二进制（上限 255），298 超出范围，高位被丢弃</div>
+}</code></pre>
+</div><div class="card"><ul><li>298 的二进制：<code>00000000 00000000 00000001 00101010</code></li><li>截取最低字节：<code>00101010</code> = 42</li><li>⚠️ 强制转换前要确保目标类型装得下，否则结果不可信</li></ul></div><div class="ok-box">💡 回顾课件3：<code>byte</code> 只有 8 位二进制（上限 255），298 超出范围，高位被丢弃</div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — 类型转换</h1>
 <div class="ok-box">练习自动转换和强制转换，理解 int↔double 互转的规则和精度问题。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744832',this)">复制</button></div>
-<pre id="c_4376744832"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349099456',this)">复制</button></div>
+<pre id="c_4349099456"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -552,29 +545,69 @@ namespace HelloWorld
             int count = 10;
             double total = count;     // int → double，安全
             Console.WriteLine($&quot;total = {total}&quot;);   // 输出：10
+
             // 强制转换
             double price = 9.99;
             int yuan = (int)price;    // double → int，截断小数
             Console.WriteLine($&quot;yuan = {yuan}&quot;);      // 输出：9
+
             // 四舍五入技巧
             int rounded = (int)(price + 0.5);  // 9.99+0.5=10.49 → 10
             Console.WriteLine($&quot;四舍五入 = {rounded}&quot;);  // 输出：10
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化
-
-&gt; 💬 解释说明
-&gt; - `(int)` 强制转换是截断小数，不是四舍五入
-&gt; - 四舍五入技巧：`(int)(数 + 0.5)` — 先加0.5再截断
-&gt; - 小→大自动转，大→小必须手动加 `(int)`
-
-### 练习（动手写）
-补全代码，完成下面三道小题：
-
-**小题1**：用 double 计算两个整数的平均值（注意先转成 double 再除）
-
-using System;
+</div><svg viewBox="0 0 680 336" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="int 与 double 互转：自动转换、强制截断、四舍五入三种结果对照">
+  <defs><marker id="k5d" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="40" y="24" fill="#8b9bb4" font-size="11" font-family="sans-serif">三行代码，三种转换结果</text>
+  <rect x="40" y="44" width="180" height="62" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="52" y="66" fill="#8b9bb4" font-size="10" font-family="monospace">int count</text>
+  <text x="52" y="90" fill="#d7e0ee" font-size="15" font-family="monospace">10</text>
+  <line x1="224" y1="75" x2="330" y2="75" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5d)"/>
+  <text x="277" y="66" text-anchor="middle" fill="#22c55e" font-size="9.5" font-family="sans-serif">自动转换（安全）</text>
+  <rect x="336" y="44" width="180" height="62" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="348" y="66" fill="#8b9bb4" font-size="10" font-family="monospace">double total</text>
+  <text x="348" y="90" fill="#22c55e" font-size="15" font-family="monospace">10.0</text>
+  <text x="530" y="79" fill="#6b7d97" font-size="9.5" font-family="sans-serif">小 → 大：编译器自动补全</text>
+  <rect x="40" y="132" width="180" height="62" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="52" y="154" fill="#8b9bb4" font-size="10" font-family="monospace">double price</text>
+  <text x="52" y="178" fill="#d7e0ee" font-size="15" font-family="monospace">9.99</text>
+  <line x1="224" y1="163" x2="330" y2="163" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5d)"/>
+  <text x="277" y="154" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="sans-serif">(int) 强制 → 截断</text>
+  <rect x="336" y="132" width="180" height="62" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="348" y="154" fill="#8b9bb4" font-size="10" font-family="monospace">int yuan</text>
+  <text x="348" y="178" fill="#f59e0b" font-size="15" font-family="monospace">9</text>
+  <text x="530" y="167" fill="#6b7d97" font-size="9.5" font-family="sans-serif">小数直接丢掉，不进位</text>
+  <rect x="40" y="220" width="180" height="62" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="52" y="242" fill="#8b9bb4" font-size="10" font-family="monospace">double price + 0.5</text>
+  <text x="52" y="266" fill="#d7e0ee" font-size="15" font-family="monospace">10.49</text>
+  <line x1="224" y1="251" x2="330" y2="251" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5d)"/>
+  <text x="277" y="242" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="sans-serif">(int) 强制 → 四舍五入</text>
+  <rect x="336" y="220" width="180" height="62" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="348" y="242" fill="#8b9bb4" font-size="10" font-family="monospace">int rounded</text>
+  <text x="348" y="266" fill="#f59e0b" font-size="15" font-family="monospace">10</text>
+  <text x="530" y="255" fill="#6b7d97" font-size="9.5" font-family="sans-serif">先加 0.5 凑整，再截断</text>
+  <text x="40" y="320" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">规律：小类型 → 大类型自动转；大类型 → 小类型必须自己写 (int)</text>
+</svg><div class="card"><ul><li>动手：把 price 改成 3.14、7.8，观察 yuan 和 rounded 的变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(int)</code> 强制转换是截断小数，不是四舍五入</li><li>四舍五入技巧：<code>(int)(数 + 0.5)</code> — 先加0.5再截断</li><li>小→大自动转，大→小必须手动加 <code>(int)</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，完成下面三道小题：</p></div><svg viewBox="0 0 680 390" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="课堂练习1 — 三道小题的运行效果的运行效果示意图">
+  <rect x="40" y="20" width="600" height="350" rx="12" fill="#21283a" stroke="#334155" stroke-width="1"/>
+  <circle cx="62" cy="40" r="4" fill="#ff5f57"/>
+  <circle cx="78" cy="40" r="4" fill="#febc2e"/>
+  <circle cx="94" cy="40" r="4" fill="#28c840"/>
+  <text x="340" y="44" text-anchor="middle" fill="#9fb0c9" font-size="11" font-family="sans-serif">课堂练习1 — 三道小题的运行效果</text>
+  <text x="60" y="74" fill="#6b7d97" font-size="11.5" font-family="monospace">小题1 · 两道输入求平均值（输入 12 和 7）</text>
+  <text x="60" y="100" fill="#8b9bb4" font-size="12" font-family="monospace">请输入第一个数：<tspan fill="#38bdf8">12</tspan></text>
+  <text x="60" y="126" fill="#8b9bb4" font-size="12" font-family="monospace">请输入第二个数：<tspan fill="#38bdf8">7</tspan></text>
+  <text x="60" y="152" fill="#22c55e" font-size="12" font-family="monospace">平均值 = 9.5</text>
+  <text x="60" y="178" fill="#475569" font-size="12" font-family="monospace">──────────────────────────────────────────────</text>
+  <text x="60" y="204" fill="#6b7d97" font-size="11.5" font-family="monospace">小题2 · double 强制转 int，小数被截掉</text>
+  <text x="60" y="230" fill="#22c55e" font-size="12" font-family="monospace">整数部分是 9</text>
+  <text x="60" y="256" fill="#475569" font-size="12" font-family="monospace">──────────────────────────────────────────────</text>
+  <text x="60" y="282" fill="#6b7d97" font-size="11.5" font-family="monospace">小题3 · 先加 0.5 再截断 = 四舍五入</text>
+  <text x="60" y="308" fill="#22c55e" font-size="12" font-family="monospace">四舍五入后 = 8</text>
+  <text x="60" y="364" fill="#6b7d97" font-size="11" font-family="sans-serif">9.99 → 9（截断）　7.8 → 8（四舍五入）　同一个数，两种处理结果不同</text>
+</svg><div class="card"><p><strong>小题1</strong>：用 double 计算两个整数的平均值（注意先转成 double 再除）</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349098880',this)">复制</button></div>
+<pre id="c_4349098880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -588,9 +621,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;平均值 = {<span class="code-blank">___</span>}&quot;);
         }
     }
-}</code></pre><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744960',this)">复制</button></div>
-<pre id="c_4376744960"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349098624',this)">复制</button></div>
+<pre id="c_4349098624"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -603,10 +638,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**小题3**：用四舍五入技巧保留整数
-
-using System;
+</div><div class="card"><p><strong>小题3</strong>：用四舍五入技巧保留整数</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349098432',this)">复制</button></div>
+<pre id="c_4349098432"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -619,9 +653,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;四舍五入后 = {r}&quot;);
         }
     }
-}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376745408',this)">复制</button></div>
-<pre id="c_4376745408"><code class="language-csharp">using System;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349098240',this)">复制</button></div>
+<pre id="c_4349098240"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -632,22 +668,25 @@ namespace HelloWorld
             int b = int.Parse(Console.ReadLine());
             double avg = (double)(a + b) / 2.0;
             Console.WriteLine($&quot;平均值 = {avg}&quot;);
+
             double price = 9.99;
             int yuan = (int)price;     // 截断小数，结果是9
             Console.WriteLine($&quot;整数部分是 {yuan}&quot;);
+
             double x = 7.8;
             int r = (int)(x + 0.5);   // 先加0.5再截断，结果是8
             Console.WriteLine($&quot;四舍五入后 = {r}&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>string ↔ 数值互转</h1>
 <div class="card"><h3>string → 数值：Parse</h3><p>用户输入都是 string，计算前必须转换：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376232512',this)">复制</button></div>
-<pre id="c_4376232512"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349116672',this)">复制</button></div>
+<pre id="c_4349116672"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -660,17 +699,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-| 目标类型 | 方法 | 示例 |
-|----------|------|------|
-| `int` | `int.Parse()` | `int n = int.Parse(&quot;123&quot;);` |
-| `double` | `double.Parse()` | `double d = double.Parse(&quot;3.14&quot;);` |
-| `float` | `float.Parse()` | `float f = float.Parse(&quot;9.9&quot;);` |
-| `bool` | `bool.Parse()` | `bool b = bool.Parse(&quot;true&quot;);` |
-
-### 数值 → string：ToString
-反过来，把数字变成文字显示：
-using System;
+</div><div class="card"><table><tr><th>目标类型</th><th>方法</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>int.Parse()</code></td><td><code>int n = int.Parse(&quot;123&quot;);</code></td></tr><tr><td><code>double</code></td><td><code>double.Parse()</code></td><td><code>double d = double.Parse(&quot;3.14&quot;);</code></td></tr><tr><td><code>float</code></td><td><code>float.Parse()</code></td><td><code>float f = float.Parse(&quot;9.9&quot;);</code></td></tr><tr><td><code>bool</code></td><td><code>bool.Parse()</code></td><td><code>bool b = bool.Parse(&quot;true&quot;);</code></td></tr></table></div><div class="card"><h3>数值 → string：ToString</h3><p>反过来，把数字变成文字显示：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349097728',this)">复制</button></div>
+<pre id="c_4349097728"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -685,9 +716,11 @@ namespace HelloWorld
             string s2 = pi.ToString();     // &quot;3.14&quot;
         }
     }
-}</code></pre><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376232448',this)">复制</button></div>
-<pre id="c_4376232448"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349097536',this)">复制</button></div>
+<pre id="c_4349097536"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -699,19 +732,47 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是类型转换？</strong>：把一种类型的数据变成另一种类型</li><li><strong>隐式转换 — 自动类型转换</strong>：小范围转大范围（如 int→double）自动完成</li><li><strong>显式转换 — 强制类型转换</strong>：大范围转小范围需 <code>(类型)</code> 强转，可能丢精度</li><li><strong>string ↔ 数值互转</strong>：<code>int.Parse()</code> / <code>double.Parse()</code> 字符串转数，<code>ToString()</code> 数转字符串</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是类型转换？</strong>：把一种类型的数据变成另一种类型</li><li><strong>隐式转换 — 自动类型转换</strong>：小范围转大范围（如 int→double）自动完成</li><li><strong>显式转换 — 强制类型转换</strong>：大范围转小范围需 <code>(类型)</code> 强转，可能丢精度</li><li><strong>string ↔ 数值互转</strong>：<code>int.Parse()</code> / <code>double.Parse()</code> 字符串转数，<code>ToString()</code> 数转字符串</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>综合练习 — 温度转换器</h1>
 <div class="ok-box">输入摄氏度，自动转换成华氏度并输出，同时展示整数截断的效果。</div><div class="card"><p><strong>期望输入：</strong> 交互输入（见运行效果）</p></div><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>请输入摄氏度：25
 25°C = 77°F
-华氏度（整数）= 77</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376745280',this)">复制</button></div>
-<pre id="c_4376745280"><code class="language-csharp">using System;
+华氏度（整数）= 77</code></pre><svg viewBox="0 0 680 176" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="温度转换的四步数据流：读字符串、转 double、套公式、取整">
+  <defs>
+    <marker id="p5-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+  <text x="106" y="40" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">① 读一行</text>
+  <rect x="40" y="52" width="132" height="62" rx="9" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="106" y="79" text-anchor="middle" fill="#d7e0ee" font-size="15" font-family="monospace">"25"</text>
+  <text x="106" y="99" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">string（用户敲的）</text>
+  <line x1="174" y1="83" x2="190" y2="83" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p5-a)"/>
+  <text x="260" y="40" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">② 转成数字</text>
+  <rect x="194" y="52" width="132" height="62" rx="9" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="260" y="79" text-anchor="middle" fill="#38bdf8" font-size="15" font-family="monospace">25.0</text>
+  <text x="260" y="99" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">double</text>
+  <line x1="328" y1="83" x2="344" y2="83" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p5-a)"/>
+  <text x="414" y="40" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">③ 套公式</text>
+  <rect x="348" y="52" width="132" height="62" rx="9" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="414" y="79" text-anchor="middle" fill="#f59e0b" font-size="15" font-family="monospace">77.0</text>
+  <text x="414" y="99" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">25.0 * 9 / 5 + 32</text>
+  <line x1="482" y1="83" x2="498" y2="83" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p5-a)"/>
+  <text x="568" y="40" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">④ 取整数</text>
+  <rect x="502" y="52" width="132" height="62" rx="9" fill="#21283a" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="568" y="79" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">77</text>
+  <text x="568" y="99" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="monospace">(int) 截断小数</text>
+  <text x="40" y="146" fill="#8b9bb4" font-size="11" font-family="sans-serif">前两步把「文字」变成「能算的数」；第三步算出 77.0；第四步 (int) 把 .0 砍掉——所以要整数就靠这一步。</text>
+  <text x="40" y="164" fill="#6b7d97" font-size="10.5" font-family="sans-serif">试一试：输入 24 → 75.2 → 75　输入 30 → 86.0 → 86</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349096512',this)">复制</button></div>
+<pre id="c_4349096512"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -721,20 +782,22 @@ namespace HelloWorld
             Console.Write(&quot;请输入摄氏度：&quot;);
             string input = Console.ReadLine();
             double celsius = double.Parse(<span class="code-blank">___</span>);
+
             // 华氏度 = 摄氏度 × 9 / 5 + 32
             double fahrenheit = <span class="code-blank">___</span> * 9 / 5 + 32;
+
             // 输出结果
             Console.WriteLine($&quot;{celsius}°C = {<span class="code-blank">___</span>}°F&quot;);
+
             // int 转换：只取整数部分
             int f1 = (<span class="code-blank">___</span>)fahrenheit;
             Console.WriteLine($&quot;华氏度（整数）= {<span class="code-blank">___</span>}&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349095936',this)">复制</button></div>
+<pre id="c_4349095936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -753,9 +816,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;华氏度（整数）= {f1}&quot;);
         }
     }
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744064',this)">复制</button></div>
-<pre id="c_4376744064"><code class="language-csharp">using System;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349095616',this)">复制</button></div>
+<pre id="c_4349095616"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -771,13 +836,130 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成「X 小时 Y 分 Z 秒」格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 59.5</code></li></ul><ul><li>输出：<code>原始成绩59.5 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376741952',this)">复制</button></div>
-<pre id="c_4376741952"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入圆的半径（string → Parse → double），计算并输出面积（π × r × r，π 用 3.14）。</p></div><svg viewBox="0 0 680 176" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：半径 5 从字符串 Parse 成 double，再算面积 78.5">
+  <defs><marker id="k5q1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="115.0" y="58" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">string</text>
+  <rect x="40" y="68" width="150" height="56" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="115.0" y="94" text-anchor="middle" fill="#38bdf8" font-size="15" font-family="monospace">"5"</text>
+  <text x="115.0" y="114" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">键盘输入</text>
+  <text x="328.0" y="58" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">double</text>
+  <rect x="258" y="68" width="140" height="56" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="328.0" y="94" text-anchor="middle" fill="#38bdf8" font-size="15" font-family="monospace">5</text>
+  <text x="328.0" y="114" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">double r</text>
+  <text x="536.0" y="58" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">double</text>
+  <rect x="476" y="68" width="120" height="56" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="536.0" y="94" text-anchor="middle" fill="#38bdf8" font-size="15" font-family="monospace">78.5</text>
+  <text x="536.0" y="114" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">area → 输出</text>
+  <line x1="194" y1="96" x2="254" y2="96" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q1)"/>
+  <text x="224" y="86" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="sans-serif">Parse</text>
+  <line x1="402" y1="96" x2="472" y2="96" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q1)"/>
+  <text x="437" y="86" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="sans-serif">3.14 × r × r</text>
+  <text x="40" y="152" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">键盘读到的半径是字符串，必须先 Parse 成 double 才能参与乘法</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>圆的面积 = 78.5</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个 double 类型的金额（如 9.87），用强制转换输出&quot;元&quot;部分（int），用取余和减法输出&quot;角分&quot;部分。</p></div><svg viewBox="0 0 680 258" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：9.87 拆成元 9、角 8、分 7 的三条算式">
+  <defs><marker id="k5q2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <rect x="40" y="92" width="150" height="56" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="52" y="114" fill="#8b9bb4" font-size="10" font-family="monospace">double money</text>
+  <text x="52" y="138" fill="#d7e0ee" font-size="15" font-family="monospace">9.87</text>
+  <line x1="190" y1="120" x2="212" y2="120" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="212" y1="66" x2="212" y2="186" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7"/>
+  <line x1="212" y1="66" x2="236" y2="66" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q2)"/>
+  <rect x="240" y="44" width="280" height="44" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="252" y="65" fill="#d7e0ee" font-size="10.5" font-family="monospace">元 = (int)money</text>
+  <text x="252" y="81" fill="#6b7d97" font-size="9" font-family="sans-serif">整数部分，直接截断</text>
+  <line x1="524" y1="66" x2="552" y2="66" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#k5q2)"/>
+  <rect x="556" y="44" width="80" height="44" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="596" y="73" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">9</text>
+  <line x1="212" y1="126" x2="236" y2="126" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q2)"/>
+  <rect x="240" y="104" width="280" height="44" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="252" y="125" fill="#d7e0ee" font-size="10.5" font-family="monospace">角 = (int)((money - 元) * 10)</text>
+  <text x="252" y="141" fill="#6b7d97" font-size="9" font-family="sans-serif">小数部分 ×10 再截断</text>
+  <line x1="524" y1="126" x2="552" y2="126" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#k5q2)"/>
+  <rect x="556" y="104" width="80" height="44" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="596" y="133" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">8</text>
+  <line x1="212" y1="186" x2="236" y2="186" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q2)"/>
+  <rect x="240" y="164" width="280" height="44" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="252" y="185" fill="#d7e0ee" font-size="10.5" font-family="monospace">分 = (int)((money - 元) * 100) % 10</text>
+  <text x="252" y="201" fill="#6b7d97" font-size="9" font-family="sans-serif">×100 后取个位</text>
+  <line x1="524" y1="186" x2="552" y2="186" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#k5q2)"/>
+  <rect x="556" y="164" width="80" height="44" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="596" y="193" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">7</text>
+  <text x="40" y="232" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">先 (int) 取整数部分，再用 money - 元 拿到小数部分，乘 10 / 100 后取整</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入金额：→ 9.87</code></li></ul><ul><li>输出：<code>元：9</code></li></ul><ul><li>输出：<code>角：8</code></li></ul><ul><li>输出：<code>分：7</code></li></ul></div><div class="card"><h3>题3（2分）</h3><p>编写程序：输入一个总秒数（整数），转换成<span class="term">X 小时 Y 分 Z 秒</span>格式输出。</p><ul><li>提示：小时 = 秒数 / 3600，分钟 = 秒数 % 3600 / 60，秒 = 秒数 % 60</li></ul></div><svg viewBox="0 0 680 360" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：3661 秒依次除以 3600 和 60，商是时分、余数是下一级">
+  <defs><marker id="k5q3" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <rect x="40" y="40" width="160" height="54" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="52" y="60" fill="#8b9bb4" font-size="9.5" font-family="monospace">int total</text>
+  <text x="52" y="82" fill="#d7e0ee" font-size="15" font-family="monospace">3661</text>
+  <rect x="40" y="140" width="160" height="54" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="52" y="160" fill="#8b9bb4" font-size="9.5" font-family="monospace">total % 3600</text>
+  <text x="52" y="182" fill="#d7e0ee" font-size="15" font-family="monospace">61</text>
+  <rect x="40" y="240" width="160" height="54" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="52" y="260" fill="#8b9bb4" font-size="9.5" font-family="monospace">61 % 60</text>
+  <text x="52" y="282" fill="#d7e0ee" font-size="15" font-family="monospace">1</text>
+  <line x1="200" y1="67" x2="228" y2="67" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q3)"/>
+  <rect x="232" y="40" width="190" height="54" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="244" y="62" fill="#8b9bb4" font-size="10" font-family="sans-serif">小时</text>
+  <text x="244" y="84" fill="#22c55e" font-size="15" font-family="monospace">1</text>
+  <text x="440" y="72" fill="#6b7d97" font-size="9.5" font-family="monospace">小时 = total / 3600</text>
+  <line x1="200" y1="167" x2="228" y2="167" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q3)"/>
+  <rect x="232" y="140" width="190" height="54" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="244" y="162" fill="#8b9bb4" font-size="10" font-family="sans-serif">分</text>
+  <text x="244" y="184" fill="#38bdf8" font-size="15" font-family="monospace">1</text>
+  <text x="440" y="172" fill="#6b7d97" font-size="9.5" font-family="monospace">分 = total % 3600 / 60</text>
+  <line x1="200" y1="267" x2="228" y2="267" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k5q3)"/>
+  <rect x="232" y="240" width="190" height="54" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="244" y="262" fill="#8b9bb4" font-size="10" font-family="sans-serif">秒</text>
+  <text x="244" y="284" fill="#38bdf8" font-size="15" font-family="monospace">1</text>
+  <text x="440" y="272" fill="#6b7d97" font-size="9.5" font-family="monospace">秒 = total % 60</text>
+  <line x1="120" y1="94" x2="120" y2="134" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#k5q3)"/>
+  <text x="132" y="120" fill="#f59e0b" font-size="9.5" font-family="sans-serif">余数 = 3661 % 3600</text>
+  <line x1="120" y1="194" x2="120" y2="234" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#k5q3)"/>
+  <text x="132" y="220" fill="#f59e0b" font-size="9.5" font-family="sans-serif">余数 = 61 % 60</text>
+  <rect x="40" y="306" width="300" height="36" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="190" y="330" text-anchor="middle" fill="#22c55e" font-size="14" font-family="sans-serif">1小时1分1秒</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入秒数：→ 3661</code></li></ul><ul><li>输出：<code>1小时1分1秒</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>编写程序：输入一个 0~100 的数字成绩（double），先四舍五入取整，再转换为等级（A:90-100、B:80-89、C:70-79、D:60-69、F:0-59），最后输出&quot;原始成绩XX → 等级X&quot;。</p><ul><li>知识点：<code>(int)(x + 0.5)</code> 四舍五入、<code>int → string</code> 拼接、条件判断</li></ul></div><svg viewBox="0 0 680 258" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：87.6 加 0.5 得 88.1，截断成 88，落在 80-89 区间得 B">
+  <defs><marker id="k5q4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <rect x="40" y="44" width="120" height="50" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="100" y="70" text-anchor="middle" fill="#d7e0ee" font-size="15" font-family="monospace">87.6</text>
+  <text x="100" y="87" text-anchor="middle" fill="#8b9bb4" font-size="9" font-family="sans-serif">原始分数</text>
+  <line x1="164" y1="69" x2="192" y2="69" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k5q4)"/>
+  <rect x="196" y="44" width="120" height="50" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="256" y="70" text-anchor="middle" fill="#d7e0ee" font-size="15" font-family="monospace">88.1</text>
+  <text x="256" y="87" text-anchor="middle" fill="#8b9bb4" font-size="9" font-family="sans-serif">+ 0.5</text>
+  <line x1="320" y1="69" x2="348" y2="69" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k5q4)"/>
+  <rect x="352" y="44" width="120" height="50" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="412" y="70" text-anchor="middle" fill="#d7e0ee" font-size="15" font-family="monospace">88</text>
+  <text x="412" y="87" text-anchor="middle" fill="#8b9bb4" font-size="9" font-family="sans-serif">(int) 截断</text>
+  <line x1="476" y1="69" x2="504" y2="69" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k5q4)"/>
+  <rect x="508" y="44" width="120" height="50" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="568" y="70" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">B</text>
+  <text x="568" y="87" text-anchor="middle" fill="#8b9bb4" font-size="9" font-family="sans-serif">等级</text>
+  <rect x="40" y="150" width="118" height="48" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="99" y="172" text-anchor="middle" fill="#6b7d97" font-size="14" font-family="monospace">F</text>
+  <text x="99" y="190" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">0-59</text>
+  <rect x="160" y="150" width="118" height="48" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="219" y="172" text-anchor="middle" fill="#6b7d97" font-size="14" font-family="monospace">D</text>
+  <text x="219" y="190" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">60-69</text>
+  <rect x="280" y="150" width="118" height="48" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="339" y="172" text-anchor="middle" fill="#6b7d97" font-size="14" font-family="monospace">C</text>
+  <text x="339" y="190" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">70-79</text>
+  <rect x="400" y="150" width="118" height="48" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="459" y="172" text-anchor="middle" fill="#f59e0b" font-size="14" font-family="monospace">B</text>
+  <text x="459" y="190" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="monospace">80-89</text>
+  <rect x="520" y="150" width="118" height="48" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="579" y="172" text-anchor="middle" fill="#6b7d97" font-size="14" font-family="monospace">A</text>
+  <text x="579" y="190" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">90-100</text>
+  <text x="459" y="122" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="sans-serif">88 落在这里</text>
+  <line x1="459" y1="128" x2="459" y2="146" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.9" marker-end="url(#k5q4)"/>
+  <text x="40" y="224" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">顺序很重要：先 +0.5 取整，再拿取整后的分数判断区间</text>
+  <text x="40" y="246" fill="#6b7d97" font-size="10" font-family="sans-serif">58.4 → 58 → F　　59.6 → 60 → D　　边界上的 0.5 会改变等级</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 58.4</code></li></ul><ul><li>输出：<code>原始成绩58.4 → 等级F</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349094784',this)">复制</button></div>
+<pre id="c_4349094784"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -785,15 +967,21 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
+
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
 
@@ -897,8 +1085,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========

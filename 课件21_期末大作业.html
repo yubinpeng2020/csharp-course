@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -371,23 +373,34 @@ pre,pre code{page-break-inside:avoid}
     <a href="#" class="nav-link nav-special" data-page="1"><span class="nav-status"></span>封面</a>
 <a href="#" class="nav-link" data-page="2"><span class="nav-status"></span>1. 作业目标 </a>
 <a href="#" class="nav-link" data-page="3"><span class="nav-status"></span>2. 题目说明 — 自选主题管理系统 </a>
-<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 可选主题方向（灵感参考） </a>
-<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 功能要求（必须完成） </a>
-<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. 技术要求（评分硬指标） </a>
-<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 项目结构参考（三层） </a>
-<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 参考案例框架 — 以&quot;图书管理&quot;为例 </a>
-<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 开发步骤与时间安排 </a>
-<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 提交要求 </a>
-<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 评分标准（满分 100） </a>
-<a href="#" class="nav-link" data-page="12"><span class="nav-status"></span>11. 温馨提示与常见坑 </a>
-<a href="#" class="nav-link nav-special" data-page="13"><span class="nav-status"></span>结束页</a>
+<a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 两档怎么选 </a>
+<a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 可选主题方向（灵感参考） </a>
+<a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. 功能要求（基础清单） </a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 技术要求 </a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 项目结构参考（三层） </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 参考案例框架 ① 模型类 — 一条记录长什么样 </a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 参考案例框架 ② 管理器 — 一个集合 + 增删改查 </a>
+<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 参考案例框架 ③ 存盘与读盘 — 一行一条 </a>
+<a href="#" class="nav-link" data-page="12"><span class="nav-status"></span>11. 切换到界面档 — 只多一段 XAML </a>
+<a href="#" class="nav-link" data-page="13"><span class="nav-status"></span>12. 示例一 — 控制台档：交出来就是这个样子 </a>
+<a href="#" class="nav-link" data-page="14"><span class="nav-status"></span>13. 示例一 — 新增一条，其余三条照着改 </a>
+<a href="#" class="nav-link" data-page="15"><span class="nav-status"></span>14. 示例二 — 界面档：同一套逻辑换张脸 </a>
+<a href="#" class="nav-link" data-page="16"><span class="nav-status"></span>15. 示例二 — 按钮里其实就三件事 </a>
+<a href="#" class="nav-link" data-page="17"><span class="nav-status"></span>16. 从示例到你的主题 — 只改 4 个地方 </a>
+<a href="#" class="nav-link" data-page="18"><span class="nav-status"></span>17. 开发步骤与时间安排 </a>
+<a href="#" class="nav-link" data-page="19"><span class="nav-status"></span>18. 提交要求 </a>
+<a href="#" class="nav-link" data-page="20"><span class="nav-status"></span>19. 基础分 ① 功能实现（55 分） </a>
+<a href="#" class="nav-link" data-page="21"><span class="nav-status"></span>20. 基础分 ② 代码与规范（45 分） </a>
+<a href="#" class="nav-link" data-page="22"><span class="nav-status"></span>21. 界面分（满分 20，界面档） </a>
+<a href="#" class="nav-link" data-page="23"><span class="nav-status"></span>22. 温馨提示与常见坑 </a>
+<a href="#" class="nav-link nav-special" data-page="24"><span class="nav-status"></span>结束页</a>
 
 </nav>
 <div class="main-area" id="mainArea">
     <div class="header-bar">
         <div class="progress-wrap">
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <span class="progress-text" id="progressText">0 / 13</span>
+            <span class="progress-text" id="progressText">0 / 24</span>
         </div>
         <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
@@ -422,7 +435,7 @@ pre,pre code{page-break-inside:avoid}
     <div class="slides-container"><div class="cover" data-page="1">
     <div class="cover-tag">程序设计基础（C#）</div>
     <h1>期末大作业 — 综合管理系统设计与实现</h1>
-    <div class="cover-sub">本次期末大作业是本课程的综合实践环节，要求同学们独立完成一个基于 C# + Avalonia 的桌面管理系统，综合运用类与对象、集合、文件操作与窗体编程等知识，培养从需求分析到部署演示的完整开发能力。</div>
+    <div class="cover-sub">本次期末大作业是本课程的综合实践环节，要求独立完成一个 C# 管理系统。控制台档满分 100，界面档满分 120（100 + 界面 20），两档任选一档。综合运用类与对象、集合、文件操作，培养从需求分析到部署演示的完整开发能力。</div>
     <div class="cover-meta">
         <div class="cover-meta-row"><span class="cover-meta-label">授课教师</span><span class="cover-meta-text">彭堉斌</span></div>
         <div class="cover-meta-row"><span class="cover-meta-label">学校</span><span class="cover-meta-text">汕头职业技术学院</span></div>
@@ -430,119 +443,655 @@ pre,pre code{page-break-inside:avoid}
 </div>
 <div class="slide" data-page="2"><div class="slide-inner markable">
 <h1>作业目标</h1>
-<div class="card"><ul><li>综合运用本学期所学的 <strong>C# 语法、面向对象（类/属性/方法）、集合（List&amp;lt;T&amp;gt;）、文件操作</strong> 四大基础</li><li>掌握 <strong>Avalonia 跨平台窗体</strong> 的程序结构：XAML 描述界面 + code-behind 写事件</li><li>体验一次<strong>完整的小型软件项目</strong>：需求 → 类设计 → 界面 → 逻辑 → 持久化 → 测试 → 文档 → 答辩</li><li>训练<strong>独立调试、查资料（含 AI 助教）与表达讲解</strong>的能力</li></ul></div>
+<div class="card"><ul><li>综合运用本学期所学的 <strong>C# 语法、面向对象（类/属性/方法）、集合（<code>List&lt;T&gt;</code>）、文件操作</strong> 四大基础</li><li><strong>选一档交付</strong>：</li><li style="margin-left:24px;list-style-type:circle"><strong>控制台档 —— 基础线</strong>：用 <code>Console</code> 数字菜单操作，满分 <strong>100</strong></li><li style="margin-left:24px;list-style-type:circle"><strong>界面档 —— 进阶线</strong>：在逻辑之外加一层 Avalonia 窗体，界面另有 <strong>20 分</strong>，满分 <strong>120</strong></li><li>体验一次<strong>完整的小型软件项目</strong>：需求 → 类设计 → 交互 → 逻辑 → 持久化 → 测试 → 文档 → 答辩</li><li>训练<strong>独立调试、查资料（含 AI 助教）与表达讲解</strong>的能力</li></ul></div>
 </div></div>
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>题目说明 — 自选主题管理系统</h1>
-<div class="ok-box">本次大作业不指定单一题目，而是让你<strong>从下面的方向中任选一个（或自提一个相近主题）</strong>，做一个&quot;能增删改查、能保存数据&quot;的桌面管理系统。</div><div class="card"><p>核心共同点（无论选哪个主题，都必须满足）：</p></div><div class="card"><ul><li>管理<strong>一类事物</strong>的多条记录（如多本书、多个作品、多名成员…）</li><li>对这些记录能 <strong>新增、查看、修改、删除</strong>（即 CRUD 四大操作）</li><li>数据要<strong>保存到文件</strong>，关闭程序再打开还在</li><li>用 <strong>Avalonia 窗体</strong> 做交互界面，<strong>不是控制台</strong></li></ul></div>
+<div class="ok-box">本次大作业不指定单一题目，而是让你<strong>从下面的方向中任选一个（或自提一个相近主题）</strong>，做一个&quot;能增删改查、能保存数据&quot;的管理系统。</div><div class="card"><p><strong>形态自己选一档</strong>（先按控制台档起步，想加界面随时升上去）：</p></div><div class="card"><table><tr><th>档位</th><th>交互方式</th><th>满分</th></tr><tr><td><strong>控制台档</strong></td><td><code>Console</code> 数字菜单</td><td><strong>100</strong></td></tr><tr><td><strong>界面档</strong></td><td>Avalonia 窗体 + 按钮</td><td><strong>120</strong>（100 + 界面 20）</td></tr></table></div><div class="card"><p>不管选哪一档，这几条底线都必须满足：</p></div><div class="card"><ul><li>管理<strong>一类事物</strong>的多条记录（如多件药品、多个作品、多个房间…）</li><li>对这些记录能 <strong>新增、查看、修改、删除</strong>（CRUD 四大操作）</li><li>数据要<strong>保存到文件</strong>，关闭程序再打开还在</li><li>输入要有<strong>校验</strong>，填错不能让程序崩</li></ul></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
-<h1>可选主题方向（灵感参考）</h1>
-<div class="card"><table><tr><th>方向</th><th>管理对象</th><th>典型字段举例</th></tr><tr><td>个人媒体作品集</td><td>作品</td><td>名称、类型、完成日期、简介</td></tr><tr><td>图书 / 资料管理</td><td>书籍</td><td>书名、作者、ISBN、是否借出</td></tr><tr><td>宿舍信息管理</td><td>寝室 / 成员</td><td>楼栋、房号、姓名、电话</td></tr><tr><td>社团活动管理</td><td>活动 / 成员</td><td>活动名、时间、地点、负责人</td></tr><tr><td>个人记账本</td><td>收支记录</td><td>日期、类别、金额、备注</td></tr><tr><td>课程表管理</td><td>课程</td><td>星期、节次、课程名、教室</td></tr></table></div><div class="ok-box">💡 也可以自提主题（如&quot;宠物信息管理&quot;&quot;游戏收藏管理&quot;），只要满足页面3 的核心共同点即可；<strong>提前和教师确认一下</strong>更稳妥。</div>
+<h1>两档怎么选</h1>
+<div class="card"><table><tr><th></th><th>控制台档（基础线）</th><th>界面档（进阶线）</th></tr><tr><td>交互方式</td><td><code>Console</code> 数字菜单</td><td>Avalonia 窗体 + 按钮</td></tr><tr><td>用到知识</td><td>课件 3~18</td><td>课件 3~20</td></tr><tr><td>工作量</td><td>一套功能</td><td>一套功能 + 一层界面（多 2~3 天）</td></tr><tr><td>答辩重点</td><td>讲清业务逻辑与数据结构怎么设计</td><td>先讲清逻辑，再讲事件怎么把界面和逻辑串起来</td></tr><tr><td>满分</td><td><strong>100</strong></td><td><strong>120</strong>（100 + 界面 20）</td></tr><tr><td>适合谁</td><td>想把精力放在逻辑上</td><td>对界面有兴趣、愿意多花时间</td></tr></table></div><div class="ok-box">✅ <strong>控制台档做完想加界面，随时加</strong>：<code>Record.cs</code> / <code>RecordManager.cs</code> 不用改，只是多套一层窗体。动手前先把文件夹复制一份，界面在副本上做。</div><div class="card"><h3>还没想好？</h3></div><div class="card"><ul><li>想早点跑通、把心思放在业务逻辑上 → 控制台档</li><li>会一点 XAML，或者愿意花 2~3 天学 → 界面档</li><li>完全没主意 → 先做控制台档，做完再决定加不加界面</li></ul></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
-<h1>功能要求（必须完成）</h1>
-<div class="card"><p>一份合格的作业至少包含以下功能：</p></div><div class="card"><ul><li><strong>新增记录</strong>：填写信息后点按钮，把一条记录加进列表</li><li><strong>查看 / 列表</strong>：用 <code>ListBox</code> 或 <code>DataGrid</code> 显示所有记录</li><li><strong>修改记录</strong>：选中一条 → 编辑 → 保存</li><li><strong>删除记录</strong>：选中一条 → 删除（建议加确认提示，用 TextBlock 显示）</li><li><strong>查询 / 筛选</strong>：按关键字或条件下拉筛选（至少一种）</li><li><strong>保存与加载</strong>：退出前自动/手动保存到文件；启动时自动加载</li><li><strong>输入校验</strong>：空值、格式错误要有友好提示（用 TextBlock，不用 MessageBox）</li></ul></div><div class="ok-box">⚠️ 没有&quot;保存到文件&quot;功能的，最多只能拿功能分的一半——<strong>持久化是硬指标</strong>。</div>
+<h1>可选主题方向（灵感参考）</h1>
+<div class="card"><p>每个方向都配好了字段和能直接照做的功能模块，挑一个改改就是你的题目：</p></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 16px">
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="作品集：多张卡片">
+        <rect x="6" y="10" width="80" height="62" rx="8" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
+        <rect x="14" y="20" width="20" height="24" rx="3" fill="#38bdf8" fill-opacity="0.45"/>
+        <rect x="38" y="20" width="20" height="24" rx="3" fill="#38bdf8" fill-opacity="0.7"/>
+        <rect x="62" y="20" width="16" height="24" rx="3" fill="#38bdf8" fill-opacity="0.3"/>
+        <rect x="14" y="52" width="26" height="6" rx="3" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="46" y="52" width="32" height="6" rx="3" fill="#38bdf8" fill-opacity="0.25"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">个人媒体作品集<span style="color:var(--text-muted);font-weight:400;font-size:13px">　作品</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　名称、类型、日期、简介、评分</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按类型筛选 + 按评分 / 日期排序</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　卡片式列表、按年份统计</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="药箱：箱体与十字">
+        <rect x="12" y="28" width="68" height="48" rx="7" fill="#f59e0b" fill-opacity="0.14" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
+        <path d="M34 28 V21 a5 5 0 0 1 5 -5 h14 a5 5 0 0 1 5 5 v7" fill="none" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5"/>
+        <rect x="43" y="38" width="6" height="24" rx="1.5" fill="#22c55e" fill-opacity="0.8"/>
+        <rect x="34" y="47" width="24" height="6" rx="1.5" fill="#22c55e" fill-opacity="0.8"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">家庭药箱<span style="color:var(--text-muted);font-weight:400;font-size:13px">　药品 / 有效期</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　药名、用途、有效期、存放位置</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按用途筛选 + 有效期排序</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　30 天内到期提醒、按位置统计</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="宿舍：楼栋与窗户">
+        <rect x="24" y="12" width="44" height="68" rx="5" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
+        <rect x="32" y="24" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="44" y="24" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.3"/>
+        <rect x="56" y="24" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="32" y="40" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.3"/>
+        <rect x="44" y="40" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="56" y="40" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.3"/>
+        <rect x="32" y="56" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="56" y="56" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="40" y="68" width="12" height="12" rx="2" fill="#38bdf8" fill-opacity="0.4"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">宿舍房间管理<span style="color:var(--text-muted);font-weight:400;font-size:13px">　房间 / 床位</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　楼栋、房号、床位数、已住人数</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按楼栋筛选 + 入住率排序</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　空床位统计、满员提醒</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="社团：日历与成员">
+        <rect x="12" y="20" width="68" height="58" rx="7" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1.5"/>
+        <line x1="12" y1="36" x2="80" y2="36" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1.5"/>
+        <line x1="28" y1="13" x2="28" y2="26" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round"/>
+        <line x1="64" y1="13" x2="64" y2="26" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="30" cy="51" r="6" fill="#22c55e" fill-opacity="0.55"/>
+        <circle cx="46" cy="51" r="6" fill="#22c55e" fill-opacity="0.32"/>
+        <circle cx="62" cy="51" r="6" fill="#22c55e" fill-opacity="0.55"/>
+        <rect x="22" y="63" width="48" height="6" rx="3" fill="#22c55e" fill-opacity="0.28"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">社团活动管理<span style="color:var(--text-muted);font-weight:400;font-size:13px">　活动 / 成员</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　活动名、时间、地点、负责人、人数</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按时间筛选 + 报名人数增减</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　近期活动提醒、按负责人分组</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="记账：钱包与柱状统计">
+        <rect x="8" y="14" width="46" height="34" rx="7" fill="#f59e0b" fill-opacity="0.16" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
+        <rect x="42" y="24" width="20" height="13" rx="5" fill="#f59e0b" fill-opacity="0.3" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
+        <circle cx="53" cy="30" r="2.6" fill="#f59e0b" fill-opacity="0.8"/>
+        <rect x="58" y="74" width="6" height="16" rx="2" fill="#38bdf8" fill-opacity="0.35"/>
+        <rect x="67" y="66" width="6" height="24" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
+        <rect x="76" y="58" width="6" height="32" rx="2" fill="#38bdf8" fill-opacity="0.8"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">个人记账本<span style="color:var(--text-muted);font-weight:400;font-size:13px">　收支记录</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　日期、类别、金额、备注</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按类别查 + 合计 / 分类小计 + 按金额排序</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　月度结余、分类占比图</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
+    <div style="flex:0 0 88px">
+      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="课程表：周次与节次网格">
+        <rect x="10" y="14" width="72" height="64" rx="6" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
+        <line x1="28" y1="14" x2="28" y2="78" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="46" y1="14" x2="46" y2="78" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="64" y1="14" x2="64" y2="78" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="10" y1="28" x2="82" y2="28" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="10" y1="42" x2="82" y2="42" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="10" y1="56" x2="82" y2="56" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <line x1="10" y1="70" x2="82" y2="70" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
+        <rect x="30" y="30" width="14" height="10" rx="2" fill="#38bdf8" fill-opacity="0.65"/>
+        <rect x="48" y="44" width="14" height="10" rx="2" fill="#38bdf8" fill-opacity="0.45"/>
+        <rect x="66" y="58" width="14" height="10" rx="2" fill="#38bdf8" fill-opacity="0.65"/>
+      </svg>
+    </div>
+    <div style="flex:1;min-width:0;font-size:14px;line-height:1.75">
+      <div style="font-weight:700;font-size:15px;margin-bottom:4px">课程表管理<span style="color:var(--text-muted);font-weight:400;font-size:13px">　课程</span></div>
+      <div><span style="color:var(--text-muted)">字段</span>　星期、节次、课程名、教室、教师</div>
+      <div><span style="color:var(--text-muted)">功能</span>　增删改查 + 按星期筛选 + 按节次排序</div>
+      <div><span style="color:var(--text-muted)">亮点</span>　今日课程、每周课时统计</div>
+    </div>
+  </div>
+</div><div class="ok-box">💡 也可以自提主题（如&quot;绿植养护记录&quot;&quot;家庭菜谱收藏&quot;），照着上面的样子定字段、列功能就行；<strong>提前和教师确认一下</strong>更稳妥。</div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
-<h1>技术要求（评分硬指标）</h1>
-<div class="card"><table><tr><th>技术要求</th><th>说明</th></tr><tr><td>至少一个自定义类（Model）</td><td>含属性（get/set）、构造方法、必要业务方法</td></tr><tr><td>用 <code>List&lt;T&gt;</code> 集合存储</td><td>不直接用数组硬凑</td></tr><tr><td>文件读写持久化</td><td><code>System.IO</code> 读写 txt/csv，重启不丢数据</td></tr><tr><td>Avalonia 窗体界面</td><td>MainWindow.axaml + code-behind</td></tr><tr><td>至少 4 种控件</td><td>如 TextBox / Button / ListBox / ComboBox / CheckBox 等</td></tr><tr><td>事件驱动</td><td>按钮 Click 等事件关联 C# 方法（<code>RoutedEventArgs</code>）</td></tr><tr><td>输入校验</td><td>防止空输入 / 格式错误导致崩溃（<code>TryParse</code> 等）</td></tr></table></div><div class="ok-box">💡 提示：课件18「图书管理系统」就是标准范本——一个 <code>Book</code> 类 + <code>List&lt;Book&gt;</code> + 文件读写 + 界面事件。照着改主题就行。</div>
+<h1>功能要求（基础清单）</h1>
+<div class="card" style="margin:0;padding:17px 22px;background-image:linear-gradient(135deg,rgba(56,189,248,.10),rgba(56,189,248,0) 55%)">
+  <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:13px">
+    <span style="font-size:15.5px;font-weight:700;color:#38bdf8">必做 5 项</span>
+    <span style="font-size:15px;color:var(--text-muted)">这五件是<b style="color:#38bdf8">基础分的地基</b>，一件都不能少</span>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px 26px;font-size:16px;line-height:1.5">
+    <div><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">1</span><b>新增记录</b><span style="color:var(--text-muted);font-size:14.5px">　填信息 → 加进列表</span></div>
+    <div><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">2</span><b>查看 / 列表</b><span style="color:var(--text-muted);font-size:14.5px">　能看到全部记录</span></div>
+    <div><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">3</span><b>修改 / 删除</b><span style="color:var(--text-muted);font-size:14.5px">　改一条、删一条</span></div>
+    <div><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">4</span><b>查询 / 筛选</b><span style="color:var(--text-muted);font-size:14.5px">　按关键字或类别查</span></div>
+    <div style="grid-column:1/-1"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">5</span><b>保存 / 加载</b><span style="color:var(--text-muted);font-size:14.5px">　关掉重开还在</span></div>
+  </div>
+  <div style="margin-top:14px;padding:9px 13px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.55">
+    ⚠️ <span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">保存 / 加载</span>是硬指标 —— 少了它，功能分最多拿一半。
+  </div>
+</div><div style="font-size:15px;margin:0 0 5px">交互怎么写，按你选的档位：</div>
+<div style="font-size:13.5px;line-height:1.5;color:var(--text-muted);margin:0 0 11px">📌 图里用<span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">个人记账本</span>举例，你换成自己的主题就行 —— 照这个样子搭界面，不用跟着做记账本。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+  <div class="card" style="margin:0;padding:12px 14px 10px">
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px">控制台档<span style="color:var(--text-muted);font-weight:400;font-size:12.5px">　数字菜单 → 调方法</span></div>
+    <svg viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="控制台档：数字菜单界面">
+      <rect x="0" y="0" width="340" height="168" rx="9" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+      <circle cx="16" cy="15" r="3.8" fill="#ef4444" fill-opacity="0.85"/>
+      <circle cx="29" cy="15" r="3.8" fill="#f59e0b" fill-opacity="0.85"/>
+      <circle cx="42" cy="15" r="3.8" fill="#22c55e" fill-opacity="0.85"/>
+      <line x1="0" y1="28" x2="340" y2="28" stroke="#64748b" stroke-opacity="0.25" stroke-width="1"/>
+      <text x="14" y="54" fill="#38bdf8" font-size="17" font-family="monospace">==== 个人记账本 ====</text>
+      <text x="14" y="80" fill="#d7e0ee" font-size="17" font-family="monospace">1 查看全部   2 新增   3 修改</text>
+      <text x="14" y="104" fill="#d7e0ee" font-size="17" font-family="monospace">4 删除       5 查询   6 退出</text>
+      <text x="14" y="132" fill="#22c55e" font-size="17" font-family="monospace">请选择：</text>
+      <rect x="80" y="121" width="9" height="13" rx="1" fill="#22c55e" fill-opacity="0.75"/>
+      <text x="14" y="158" fill="#8b9bb4" font-size="15" font-family="monospace">已新增 1 条记录</text>
+    </svg>
+    <div style="margin-top:7px;min-height:40px;font-size:12.5px;line-height:1.6;color:var(--text-muted)">输入用 <span style="font-family:monospace;color:#38bdf8">int.TryParse</span>，格式不对就重新问；删除前再确认一次</div>
+  </div>
+  <div class="card" style="margin:0;padding:12px 14px 10px">
+    <div style="font-weight:700;font-size:14px;margin-bottom:8px">界面档<span style="color:var(--text-muted);font-weight:400;font-size:12.5px">　控件 + 事件 → 调方法</span></div>
+    <svg viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="界面档：窗体控件布局">
+      <rect x="0" y="0" width="340" height="168" rx="9" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.75" stroke-width="1"/>
+      <rect x="1" y="1" width="338" height="26" rx="8" fill="#e2e8f0"/>
+      <rect x="1" y="16" width="338" height="11" fill="#e2e8f0"/>
+      <text x="12" y="19" fill="#334155" font-size="15" font-family="sans-serif">个人记账本</text>
+      <rect x="12" y="36" width="122" height="21" rx="3" fill="#fff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="19" y="51" fill="#94a3b8" font-size="14.5" font-family="sans-serif">日期</text>
+      <rect x="12" y="63" width="122" height="21" rx="3" fill="#fff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="19" y="78" fill="#94a3b8" font-size="14.5" font-family="sans-serif">类别</text>
+      <path d="M118 70 L127 70 L122.5 76 Z" fill="#94a3b8"/>
+      <rect x="12" y="90" width="122" height="21" rx="3" fill="#fff" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="19" y="105" fill="#94a3b8" font-size="14.5" font-family="sans-serif">金额</text>
+      <rect x="12" y="120" width="58" height="23" rx="4" fill="#0ea5e9"/>
+      <text x="41" y="136" text-anchor="middle" fill="#fff" font-size="14.5" font-family="sans-serif">新增</text>
+      <rect x="77" y="120" width="57" height="23" rx="4" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="105" y="136" text-anchor="middle" fill="#0f172a" font-size="14.5" font-family="sans-serif">删除</text>
+      <rect x="146" y="36" width="182" height="107" rx="5" fill="#fff" stroke="#cbd5e1" stroke-width="1"/>
+      <rect x="152" y="42" width="170" height="19" rx="3" fill="#dbeafe"/>
+      <text x="158" y="55" fill="#1e40af" font-size="14" font-family="sans-serif">10-31　餐饮　32.5</text>
+      <rect x="152" y="66" width="170" height="19" rx="3" fill="#f1f5f9"/>
+      <text x="158" y="79" fill="#475569" font-size="14" font-family="sans-serif">10-30　交通　8</text>
+      <rect x="152" y="90" width="170" height="19" rx="3" fill="#f1f5f9"/>
+      <text x="158" y="103" fill="#475569" font-size="14" font-family="sans-serif">10-29　工资　5200</text>
+    </svg>
+    <div style="margin-top:7px;min-height:40px;font-size:12.5px;line-height:1.6;color:var(--text-muted)">按钮 Click 里调管理方法，列表跟着刷新；提示写进 <span style="font-family:monospace;color:#38bdf8">TextBlock</span>，删除点两次才真删</div>
+  </div>
+</div><div class="card" style="margin:0;padding:15px 20px;background-image:linear-gradient(135deg,rgba(34,197,94,.10),rgba(34,197,94,0) 62%)">
+  <div style="display:flex;align-items:baseline;gap:11px;margin-bottom:11px">
+    <span style="font-size:15.5px;font-weight:700;color:#22c55e">可选亮点</span>
+    <span style="font-size:13px;color:var(--text-muted)">做了更出彩 —— 任选一两条，也可以自己想</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:9px">
+    <span style="padding:5px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.30);font-size:14px;line-height:1.4">统计合计 / 分类小计</span>
+    <span style="padding:5px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.30);font-size:14px;line-height:1.4">按字段排序</span>
+    <span style="padding:5px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.30);font-size:14px;line-height:1.4">关键字即时过滤</span>
+    <span style="padding:5px 14px;border-radius:999px;background:rgba(34,197,94,.10);border:1px solid rgba(34,197,94,.30);font-size:14px;line-height:1.4">导出 CSV</span>
+  </div>
+</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
-<h1>项目结构参考（三层）</h1>
-<svg viewBox="0 0 680 230" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="管理系统三层结构：界面层、模型层、数据层">
-  <defs>
-    <marker id="arw21" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
-      <path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/>
-    </marker>
-  </defs>
-  <rect x="30" y="80" width="180" height="92" rx="12" fill="#e0f2fe" stroke="#38bdf8" stroke-width="2"/>
-  <text x="120" y="116" text-anchor="middle" fill="#0c4a6e" font-size="16" font-weight="bold" font-family="sans-serif">界面层</text>
-  <text x="120" y="140" text-anchor="middle" fill="#0369a1" font-size="12" font-family="sans-serif">Avalonia 窗体</text>
-  <text x="120" y="159" text-anchor="middle" fill="#0369a1" font-size="12" font-family="sans-serif">XAML + 事件</text>
-  <rect x="250" y="80" width="180" height="92" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="2"/>
-  <text x="340" y="116" text-anchor="middle" fill="#14532d" font-size="16" font-weight="bold" font-family="sans-serif">模型层</text>
-  <text x="340" y="140" text-anchor="middle" fill="#166534" font-size="12" font-family="sans-serif">自定义类</text>
-  <text x="340" y="159" text-anchor="middle" fill="#166534" font-size="12" font-family="sans-serif">List&lt;T&gt; 集合</text>
-  <rect x="470" y="80" width="180" height="92" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
-  <text x="560" y="116" text-anchor="middle" fill="#92400e" font-size="16" font-weight="bold" font-family="sans-serif">数据层</text>
-  <text x="560" y="140" text-anchor="middle" fill="#b45309" font-size="12" font-family="sans-serif">文件读写</text>
-  <text x="560" y="159" text-anchor="middle" fill="#b45309" font-size="12" font-family="sans-serif">txt / csv</text>
-  <g stroke="#38bdf8" stroke-width="2.5" fill="none" marker-end="url(#arw21)">
-    <line x1="210" y1="126" x2="248" y2="126"/>
-    <line x1="430" y1="126" x2="468" y2="126"/>
-  </g>
-  <text x="340" y="52" text-anchor="middle" fill="#0f172a" font-size="13" font-family="sans-serif">点按钮 → 改集合 → 刷新界面 → 存文件</text>
-</svg><div class="card"><ul><li><strong>界面层</strong>：MainWindow.axaml 负责长相，MainWindow.axaml.cs 负责按钮事件</li><li><strong>模型层</strong>：一个 <code>XxxItem</code> 类描述&quot;一条记录&quot;长什么样</li><li><strong>数据层</strong>：负责把集合存成文件、从文件读回集合</li><li>三者通过&quot;事件方法&quot;串起来：点按钮 → 改集合 → 刷新界面 → 存文件</li></ul></div>
+<h1>技术要求</h1>
+<div class="card"><p>上一页说<strong>做什么</strong>，这一页说<strong>用什么写</strong> —— 还是那五件事，换成代码里的零件。</p></div><div class="card" style="margin:0;padding:19px 22px">
+  <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+    <span style="font-size:15.5px;font-weight:700;color:#38bdf8">控制台档</span>
+    <span style="font-size:13.5px;color:var(--text-muted)">做到这 5 项</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:13px;font-size:15px;line-height:1.55">
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">1</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">模型类</span><span style="color:var(--text-muted)">属性 + 构造方法 + 业务方法，至少一个</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">2</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">集合存储</span><span style="color:var(--text-muted)"><span style="font-family:monospace;font-size:13.5px;color:#38bdf8">List&lt;T&gt;</span> 存多条记录，不拿数组硬凑</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">3</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">持久化</span><span style="color:var(--text-muted)"><span style="font-family:monospace;font-size:13.5px;color:#38bdf8">System.IO</span> 读写 txt / csv，开机自动加载</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">4</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">交互入口</span><span style="color:var(--text-muted)"><span style="font-family:monospace;font-size:13.5px;color:#38bdf8">Console</span> 菜单 + 方法调用</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">5</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">输入校验</span><span style="color:var(--text-muted)"><span style="font-family:monospace;font-size:13.5px;color:#38bdf8">int.TryParse</span> + 空值判断</span></div>
+  </div>
+</div><div class="card" style="margin:0;padding:19px 22px;background-image:linear-gradient(135deg,rgba(245,158,11,.09),rgba(245,158,11,0) 62%)">
+  <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:12px">
+    <span style="font-size:15.5px;font-weight:700;color:#f59e0b">界面档</span>
+    <span style="font-size:13.5px;color:var(--text-muted)">在这 5 项之上，再加 4 项</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:13px;font-size:15px;line-height:1.55">
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">1</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">界面文件</span><span style="color:var(--text-muted)"><span style="font-family:monospace;font-size:13.5px;color:#38bdf8">MainWindow.axaml</span> + code-behind</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">2</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">控件</span><span style="color:var(--text-muted)">至少 4 种：TextBox / Button / ListBox / ComboBox</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">3</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">事件</span><span style="color:var(--text-muted)">按钮 <span style="font-family:monospace;font-size:13.5px;color:#38bdf8">Click</span>（<span style="font-family:monospace;font-size:13.5px;color:#38bdf8">RoutedEventArgs</span>）</span></div>
+    <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">4</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">业务边界</span><span style="color:var(--text-muted)">事件里只调管理方法，业务写进管理类</span></div>
+  </div>
+</div><div class="ok-box">💡 课件18<span class="term">图书管理系统</span>是同一套三层结构：一个 <code>Book</code> 类 + <code>List&lt;Book&gt;</code> + 文件读写 —— 结构想不起来就回去翻那份代码，把类名换成你的就行。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
-<h1>参考案例框架 — 以&quot;图书管理&quot;为例</h1>
-<div class="ok-box">下面是一套可直接套用的骨架，把 <code>Book</code> 换成你的主题类即可。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376753536',this)">复制</button></div>
-<pre id="c_4376753536"><code class="language-csharp">using System;
-namespace HelloWorld
-{
-    // 1) 模型类：一条记录
-    public class Book
-    {
-        public int Id { get; set; }
-        public string Title { get; set; } = &quot;&quot;;
-        public string Author { get; set; } = &quot;&quot;;
-        public bool IsBorrowed { get; set; }
-    }
-    // 2) 数据集合 + 文件读写（放在 MainWindow.axaml.cs 或单独类）
-    List&lt;Book&gt; books = new();
-    string file = &quot;books.txt&quot;;
-    void Load()
-    {
-        books.Clear();
-        if (File.Exists(file))
-            foreach (var line in File.ReadAllLines(file))
-        {
-            var p = line.Split('|');
-            books.Add(new Book
-            {
-                Id = int.Parse(p[0]),
-                Title = p[1],
-                Author = p[2],
-                IsBorrowed = bool.Parse(p[3])
-            });
-        }
-    }
-    void Save()
-    {
-        var lines = books.Select(b =&gt; $&quot;{b.Id}|{b.Title}|{b.Author}|{b.IsBorrowed}&quot;);
-        File.WriteAllLines(file, lines);
-    }
-}</code></pre>
-</div><pre class="plain-box"><code></code></pre><div class="card"><p>&lt;!-- 3) 界面骨架：MainWindow.axaml --&gt;</p></div><div class="card"><p>&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376749952',this)">复制</button></div>
-<pre id="c_4376749952"><code class="language-csharp">    &lt;TextBox x:Name=&quot;titleBox&quot; Watermark=&quot;书名&quot; /&gt;
-    &lt;TextBox x:Name=&quot;authorBox&quot; Watermark=&quot;作者&quot; /&gt;
-    &lt;Button x:Name=&quot;addBtn&quot; Content=&quot;新增&quot; Click=&quot;AddBtn_Click&quot; /&gt;
-    &lt;ListBox x:Name=&quot;listBox&quot; /&gt;
-    &lt;TextBlock x:Name=&quot;hint&quot; /&gt;</code></pre>
-</div><div class="card"><p>&lt;/StackPanel&gt;</p></div><pre class="plain-box"><code>
-- 绑定列表：简单场景用 `listBox.Items.Add(...)` 即可；数据多变也可用 `listBox.ItemsSource = books`
-- 提示信息一律用 `hint.Text = &quot;...&quot;`，**Avalonia 没有 MessageBox**</code></pre>
+<h1>项目结构参考（三层）</h1>
+<div style="font-size:17.5px;line-height:1.5;margin:0 0 4px">三层两档都要写；只有最外面那层两档<b style="color:#f59e0b">写法不同</b>，里面两层<b style="color:#38bdf8">一模一样</b>。</div>
+<div style="font-size:17.5px;line-height:1.5;margin:0 0 12px">本页起全部以<b style="color:#f59e0b">记账本</b>为例 —— <b style="color:#38bdf8">Item 和 Manager 你自己设计</b>，字段换掉，方法照抄。</div>
+<div style="display:grid;grid-template-columns:1fr 26px 1fr 26px 1fr;row-gap:9px;align-items:stretch">
+  <div style="display:flex;align-items:baseline;gap:8px">
+    <span style="display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700">1</span>
+    <span style="font-size:16px;font-weight:700;color:#f59e0b">交互层</span>
+    <span style="font-size:12.5px;color:var(--text-muted)">两档写法不同</span>
+  </div>
+  <div></div>
+  <div style="display:flex;align-items:baseline;gap:8px">
+    <span style="display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">2</span>
+    <span style="font-size:16px;font-weight:700;color:#38bdf8">模型层</span>
+    <span style="font-size:12.5px;color:var(--text-muted)">两档通用</span>
+  </div>
+  <div></div>
+  <div style="display:flex;align-items:baseline;gap:8px">
+    <span style="display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">3</span>
+    <span style="font-size:16px;font-weight:700;color:#38bdf8">数据层</span>
+    <span style="font-size:12.5px;color:var(--text-muted)">两档通用</span>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px">
+    <div class="card" style="margin:0;flex:1;padding:11px 15px 10px;background-image:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,0) 62%)">
+      <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:7px">
+        <span style="font-size:14.5px;font-weight:700;color:#f59e0b">控制台档</span>
+        <span style="font-family:monospace;font-size:11.5px;color:var(--text-muted)">Program.cs</span>
+      </div>
+      <div style="font-size:13px;line-height:1.62">
+        <div>入口　<span style="font-family:monospace;font-size:12px;color:#38bdf8">Main()</span> 里的菜单循环</div>
+        <div>分派　<span style="font-family:monospace;font-size:12px;color:#38bdf8">switch</span> 按编号调方法</div>
+        <div>干活　读输入 → 调 Manager → 打印</div>
+      </div>
+      <div style="margin-top:9px;padding-top:8px;border-top:1px dashed rgba(245,158,11,.35);font-size:12.5px;color:#f59e0b">→ 读到的值变成一条 <span style="font-family:monospace">XxxItem</span></div>
+    </div>
+    <div class="card" style="margin:0;flex:1;padding:11px 15px 10px;background-image:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,0) 62%)">
+      <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:7px">
+        <span style="font-size:14.5px;font-weight:700;color:#f59e0b">界面档</span>
+        <span style="font-family:monospace;font-size:11.5px;color:var(--text-muted)">MainWindow.axaml</span>
+      </div>
+      <div style="font-size:13px;line-height:1.62">
+        <div>输入　4 个 TextBox + ComboBox</div>
+        <div>显示　ListBox 绑 ItemsSource</div>
+        <div>触发　Click → 取文本 → 调 Manager</div>
+      </div>
+      <div style="margin-top:9px;padding-top:8px;border-top:1px dashed rgba(245,158,11,.35);font-size:12.5px;color:#f59e0b">→ 取到的值变成一条 <span style="font-family:monospace">XxxItem</span></div>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;justify-content:space-around;align-items:center;color:#38bdf8;font-size:16px">
+    <span>→</span>
+    <span>→</span>
+  </div>
+  <div class="card" style="margin:0;padding:13px 15px 12px;display:flex;flex-direction:column;background-image:linear-gradient(135deg,rgba(56,189,248,.10),rgba(56,189,248,0) 62%)">
+    <div style="font-size:13.5px;color:var(--text-muted);line-height:1.5;margin-bottom:6px">一条记录长什么样</div>
+    <div style="margin:7px 0 0;border:1px solid rgba(56,189,248,.26);border-radius:8px;padding:9px 13px;background:rgba(56,189,248,.05)">
+      <div style="font-family:monospace;font-size:12.5px;color:#38bdf8;font-weight:700;margin-bottom:2px">XxxItem<span style="font-family:sans-serif;font-size:10.5px;color:var(--text-muted);font-weight:400">　以记账本为例</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace">Id　int<span style="color:var(--text-muted)">　编号（自动生成）</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace">Date　string<span style="color:var(--text-muted)">　日期</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace">Category　string<span style="color:var(--text-muted)">　类别</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace">Amount　double<span style="color:var(--text-muted)">　金额</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace">Note　string<span style="color:var(--text-muted)">　备注</span></div>
+    </div>
+    <div style="margin-top:8px;font-size:11.5px;color:var(--text-muted)">这五个字段装在一起，就是一条记录：</div>
+    <div style="margin-top:3px;font-family:monospace;font-size:11.5px;color:#cbd5e1;background:rgba(148,163,184,.10);border:1px solid rgba(148,163,184,.22);border-radius:5px;padding:5px 8px;line-height:1.5">1 | 10-01 | 餐饮 | 23.5 | 食堂午饭</div>
+    <div style="margin-top:auto;padding-top:7px;font-size:12.5px;color:var(--text-muted)">换主题就换这几个字段</div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;color:#38bdf8;font-size:16px">→</div>
+  <div class="card" style="margin:0;padding:13px 15px 12px;display:flex;flex-direction:column;background-image:linear-gradient(135deg,rgba(56,189,248,.10),rgba(56,189,248,0) 62%)">
+    <div style="font-size:13.5px;color:var(--text-muted);line-height:1.5;margin-bottom:6px">多条记录放哪、怎么存</div>
+    <div style="margin:7px 0 0;border:1px solid rgba(56,189,248,.26);border-radius:8px;padding:9px 13px;background:rgba(56,189,248,.05)">
+      <div style="font-family:monospace;font-size:12.5px;color:#38bdf8;font-weight:700;margin-bottom:4px">XxxManager<span style="font-family:sans-serif;font-size:10.5px;color:var(--text-muted);font-weight:400">　换主题不改结构</span></div>
+      <div style="font-size:12.5px;line-height:1.75;font-family:monospace"><span style="color:var(--text-muted)">records</span>　List&lt;XxxItem&gt;</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 6px;margin-top:6px;font-size:12.5px;line-height:1.78;font-family:monospace">
+        <div>Add<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　新增</span></div>
+        <div>Remove<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　删除</span></div>
+        <div>Find<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　查找</span></div>
+        <div>Load<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　读取</span></div>
+        <div>Save<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　保存</span></div>
+        <div>Update<span style="color:var(--text-muted);font-family:sans-serif;font-size:11.5px">　修改</span></div>
+      </div>
+    </div>
+    <div style="margin-top:8px;font-size:11.5px;color:var(--text-muted)">存盘后就是个 txt，一行一条：</div>
+    <div style="margin-top:3px;font-family:monospace;font-size:11.5px;color:#cbd5e1;background:rgba(148,163,184,.10);border:1px solid rgba(148,163,184,.22);border-radius:5px;padding:5px 8px;line-height:1.6">1 | 10-01 | 餐饮 | 23.5 | 食堂午饭<br>2 | 10-02 | 交通 | 3 | 公交</div>
+    <div style="margin-top:auto;padding-top:7px;font-size:12.5px;color:var(--text-muted)">读写这个文件也在这一个类里</div>
+  </div>
+</div><div style="font-size:14.5px;line-height:1.5;margin:10px 0 0">下面两张图分开看：<b style="color:#f59e0b">图 1</b> 讲一条记录怎么穿过三层，<b style="color:#38bdf8">图 2</b> 讲 Item 和 Manager 各管什么。</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
+  <div class="card" style="margin:0;padding:13px 16px 12px;background-image:linear-gradient(135deg,rgba(245,158,11,.09),rgba(245,158,11,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:2px">
+      <span style="display:inline-block;padding:1px 7px;border-radius:4px;background:rgba(245,158,11,.15);color:#f59e0b;font-size:11.5px;font-weight:600;margin-right:8px">图 1</span><span style="font-size:15px;font-weight:700;color:#f59e0b">三个层，一条记录走一遍</span>
+    </div>
+    <svg viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="新增一条记录穿过三层：交互层读到三个值、模型层装成一条、数据层存进文件">
+      <text x="0" y="12" font-size="11.5" font-family="sans-serif" fill="#94a3b8">场景：新增一条 —— 餐饮 · 23.5 元 · 10-01</text>
+      <rect x="0" y="22" width="97" height="54" rx="8" fill="rgba(245,158,11,.10)" stroke="#f59e0b" stroke-width="1.3"/>
+      <text x="48.5" y="42" text-anchor="middle" font-size="13.5" font-weight="bold" font-family="sans-serif" fill="#f59e0b">交互层</text>
+      <text x="48.5" y="61" text-anchor="middle" font-size="12.5" font-family="sans-serif" fill="#cbd5e1">读到 4 个值</text>
+      <path d="M99 49 L107 49" stroke="#94a3b8" stroke-width="1.4"/>
+      <path d="M107 45.5 L112 49 L107 52.5 Z" fill="#94a3b8"/>
+      <rect x="113" y="22" width="97" height="54" rx="8" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="1.3"/>
+      <text x="161.5" y="42" text-anchor="middle" font-size="13.5" font-weight="bold" font-family="sans-serif" fill="#38bdf8">模型层</text>
+      <text x="161.5" y="61" text-anchor="middle" font-size="12.5" font-family="sans-serif" fill="#cbd5e1">装成 1 条</text>
+      <path d="M212 49 L220 49" stroke="#94a3b8" stroke-width="1.4"/>
+      <path d="M220 45.5 L225 49 L220 52.5 Z" fill="#94a3b8"/>
+      <rect x="226" y="22" width="94" height="54" rx="8" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="1.3"/>
+      <text x="273" y="42" text-anchor="middle" font-size="13.5" font-weight="bold" font-family="sans-serif" fill="#38bdf8">数据层</text>
+      <text x="273" y="61" text-anchor="middle" font-size="12.5" font-family="sans-serif" fill="#cbd5e1">第 9 条进 txt</text>
+      <text x="0" y="99" font-size="11" font-family="sans-serif" fill="#94a3b8">换档位只换第一个盒子：菜单 → 窗体，后两个不动</text>
+    </svg>
+    <div style="font-size:13px;line-height:1.6;margin-top:2px">
+      <div><b style="color:#f59e0b">交互层</b>　跟人打交道：收输入、显示结果</div>
+      <div><b style="color:#38bdf8">模型层</b>　一条记录长什么样</div>
+      <div><b style="color:#38bdf8">数据层</b>　多条放哪、怎么存</div>
+    </div>
+  </div>
+  <div class="card" style="margin:0;padding:13px 16px 12px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:2px">
+      <span style="display:inline-block;padding:1px 7px;border-radius:4px;background:rgba(56,189,248,.15);color:#38bdf8;font-size:11.5px;font-weight:600;margin-right:8px">图 2</span><span style="font-size:15px;font-weight:700;color:#38bdf8">Item 是卡片，Manager 是卡盒</span>
+    </div>
+    <svg viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="Item 像一张记录卡，Manager 像装卡的盒子，负责增减与存盘">
+      <text x="0" y="12" font-size="11.5" font-family="sans-serif" fill="#94a3b8">场景：一条记录 = 一张卡，一叠卡 = 一个卡盒</text>
+      <rect x="0" y="22" width="96" height="58" rx="7" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="1.3"/>
+      <text x="48" y="41" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#e2e8f0">10-01</text>
+      <text x="48" y="58" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#e2e8f0">餐饮 23.5</text>
+      <text x="48" y="73" text-anchor="middle" font-size="11.5" font-family="monospace" fill="#94a3b8">食堂午饭</text>
+      <text x="48" y="97" text-anchor="middle" font-size="11.5" font-family="sans-serif" fill="#38bdf8">一条记录 Item</text>
+      <path d="M99 51 L109 51" stroke="#94a3b8" stroke-width="1.4"/>
+      <path d="M109 47.5 L114 51 L109 54.5 Z" fill="#94a3b8"/>
+      <rect x="117" y="22" width="203" height="58" rx="7" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="1.3"/>
+      <text x="125" y="37" font-size="12.5" font-weight="bold" font-family="sans-serif" fill="#38bdf8">Manager 管一叠</text>
+      <rect x="125" y="47" width="52" height="28" rx="3" fill="rgba(226,232,240,.10)" stroke="#94a3b8" stroke-width="0.9"/>
+      <rect x="131" y="54" width="38" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.75"/>
+      <rect x="131" y="61" width="28" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.55"/>
+      <rect x="185" y="47" width="52" height="28" rx="3" fill="rgba(226,232,240,.10)" stroke="#94a3b8" stroke-width="0.9"/>
+      <rect x="191" y="54" width="38" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.75"/>
+      <rect x="191" y="61" width="28" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.55"/>
+      <rect x="245" y="47" width="52" height="28" rx="3" fill="rgba(226,232,240,.10)" stroke="#94a3b8" stroke-width="0.9"/>
+      <rect x="251" y="54" width="38" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.75"/>
+      <rect x="251" y="61" width="28" height="2.4" rx="1" fill="#94a3b8" fill-opacity="0.55"/>
+      <text x="218" y="97" text-anchor="middle" font-size="11.5" font-family="sans-serif" fill="#38bdf8">增删改查 + 存进文件 Manager</text>
+    </svg>
+    <div style="font-size:13px;line-height:1.6;margin-top:2px">
+      <div><b style="color:#38bdf8">Item</b>　只管一条：字段 + 构造 + 少量行为</div>
+      <div><b style="color:#38bdf8">Manager</b>　管一叠：集合 + 增删改查 + 读写文件</div>
+    </div>
+  </div>
+</div><div style="margin-top:6px;padding:8px 14px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.62">
+  🔁 两档在第一层各写各的，装成同一个 <span style="font-family:monospace;font-size:13px;color:#38bdf8">XxxItem</span> 之后就汇合了 —— 模型层和数据层两档共用，通常写进同一个 <span style="font-family:monospace;font-size:13px;color:#38bdf8">XxxManager</span> 类，落到代码两个类就够。<br>
+  换界面只重写第一层，所以先把控制台版写通，再套界面最省力。
+</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
-<h1>开发步骤与时间安排</h1>
-<div class="card"><p>建议按下面的节奏推进（共 2~3 周）：</p></div><div class="card"><ol><li><strong>第1天：定主题 + 列字段</strong> — 确定管理什么、每条记录有哪些字段</li><li><strong>第2~3天：写模型类 + 集合</strong> — 先把 <code>XxxItem</code> 类和 <code>List&lt;XxxItem&gt;</code> 跑通</li><li><strong>第4~6天：搭界面 + 事件</strong> — XAML 摆控件，code-behind 写增删改查</li><li><strong>第7~8天：文件持久化</strong> — 加 Load/Save，确保重启不丢</li><li><strong>第9~10天：校验 + 美化</strong> — 输入校验、布局整理、提示友好</li><li><strong>答辩前：写文档 + 演练</strong> — 类图、功能说明、使用说明、截图</li></ol></div><div class="ok-box">💡 卡住先用 AI 助教（课件2 四步法），但<strong>最终代码必须自己写、自己讲得清</strong>。</div>
+<h1>参考案例框架 ① 模型类 — 一条记录长什么样</h1>
+<div class="ok-box">这三页都用<strong>记账本</strong>演示（就是示例一的 <code>Record</code> / <code>RecordManager</code>），字段跟上一页那张卡一模一样。先看一条记录怎么表示。</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305095104',this)">复制</button></div>
+<pre id="c_4305095104"><code class="language-csharp">public class Record
+{
+    public int Id { get; set; }                   // 编号（自动生成）
+    public string Date { get; set; } = &quot;&quot;;        // 日期
+    public string Category { get; set; } = &quot;&quot;;    // 类别
+    public double Amount { get; set; }            // 金额
+    public string Note { get; set; } = &quot;&quot;;        // 备注
+}</code></pre>
+</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
+  <div class="card" style="margin:0;padding:13px 15px 12px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="font-size:14.5px;font-weight:700;color:#38bdf8;margin-bottom:8px">这 5 个属性 = txt 里的一行</div>
+    <div style="font-family:monospace;font-size:12.5px;color:#cbd5e1;background:rgba(148,163,184,.10);border:1px solid rgba(148,163,184,.22);border-radius:6px;padding:6px 9px">1 | 10-01 | 餐饮 | 23.5 | 食堂午饭</div>
+    <div style="font-size:12.5px;color:var(--text-muted);line-height:1.6;margin-top:8px">5 段对应 5 个属性，顺序不能乱 —— 存盘、读盘都靠这个顺序对上。</div>
+  </div>
+  <div class="card" style="margin:0;padding:13px 15px 12px;background-image:linear-gradient(135deg,rgba(245,158,11,.09),rgba(245,158,11,0) 62%)">
+    <div style="font-size:14.5px;font-weight:700;color:#f59e0b;margin-bottom:2px">换成你的主题：改类名 + 4 个字段</div>
+    <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:6px">右列 = 换成你自己的主题（括号里是别的题的取法）</div>
+    <div style="display:grid;grid-template-columns:auto 1fr;gap:2px 12px;font-size:12.5px;line-height:1.5">
+      <div style="font-family:monospace;color:#38bdf8">Record</div><div>→ 你的类名（Book / Medicine / Room）</div>
+      <div style="font-family:monospace">Id</div><div>→ 编号，原样保留</div>
+      <div style="font-family:monospace">Date</div><div>→ 日期 / 时间类字段</div>
+      <div style="font-family:monospace">Category</div><div>→ 分类 / 类型（类别 / 用途 / 房型）</div>
+      <div style="font-family:monospace">Amount</div><div>→ 数值字段（金额 / 数量 / 价格）</div>
+      <div style="font-family:monospace">Note</div><div>→ 备注，多数主题都有</div>
+    </div>
+  </div>
+</div><div class="card"><ul><li><code>{ get; set; }</code>：外面能直接读、直接赋值，不用另外写 getter / setter 方法</li><li><code>string</code> 给 <code>= &quot;&quot;</code>：没填时也不会是 <code>null</code>，后面拼接不会崩</li><li>类名、字段名跟着主题换，<strong>结构和顺序别动</strong> —— 动了 <code>Load</code> / <code>Save</code> 就得跟着改</li></ul></div><div class="ok-box">🛠 现在就动手：把 <code>Record</code> 换成你的类名，<code>Date</code> / <code>Category</code> / <code>Amount</code> / <code>Note</code> 换成你主题的字段 —— 这几行写完，第一步就成了。</div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
-<h1>提交要求</h1>
-<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整的 Avalonia 项目（能打开、能运行）</li><li><strong>设计文档</strong>（Word/PDF）：含①类图/字段说明 ②功能列表 ③使用说明 ④运行截图</li><li><strong>答辩演示</strong>：最后一周上台，5~8 分钟讲思路 + 现场演示</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>提交到 <strong>WPS 问卷</strong>：扫描结束页「扫码提交课后作业」二维码进入，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>把项目整理到一个文件夹，<strong>建议命名「学号_姓名_期末大作业」</strong></li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页另一张二维码查看）</li></ul></div><div class="ok-box">⚠️ 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
+<h1>参考案例框架 ② 管理器 — 一个集合 + 增删改查</h1>
+<div class="ok-box">还是<strong>记账本</strong>：多条记录装进一个集合，再给它几个方法。外面的菜单、按钮只调方法，不直接碰 <code>List</code>。</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305095360',this)">复制</button></div>
+<pre id="c_4305095360"><code class="language-csharp">// ② 管理器（1）：一个集合 + 增删改查
+public class RecordManager
+{
+    List&lt;Record&gt; records = new List&lt;Record&gt;();   // 所有记录都在这
+    string file = &quot;records.txt&quot;;                 // 存在哪个文件
+
+    public void Add(Record r) { records.Add(r); Save(); }
+    public void Remove(int id) { records.RemoveAll(r =&gt; r.Id == id); Save(); }
+    public Record FindById(int id) { return records.Find(r =&gt; r.Id == id); }
+    public List&lt;Record&gt; All() { return records; }
+
+    public void Update(int id, string newNote)
+    {
+        Record r = FindById(id);   // 先按编号找到那条
+        if (r == null) return;     // 没找到就返回，别让它崩
+        r.Note = newNote;          // 改字段
+        Save();                    // 改完立刻存
+    }
+}</code></pre>
+</div><div class="card"><ul><li>四个方法正好是<span class="term">增删改查</span>：<code>Add</code> / <code>Remove</code> / <code>Update</code> / <code>FindById</code>，<code>All()</code> 给菜单列表用</li><li>每个方法改完都调 <code>Save()</code> —— 关掉程序数据还在，这就叫持久化</li><li><code>r =&gt; r.Id == id</code> 是 lambda：在集合里找&quot;编号等于 id&quot;的那条</li><li>编号不用用户填，<code>NextId()</code> 自动算 —— 见<span class="term">示例一</span>那页</li></ul></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
-<h1>评分标准（满分 100）</h1>
-<div class="card"><table><tr><th>评分项</th><th>分值</th><th>要点</th></tr><tr><td>功能完整性</td><td>35</td><td>增删改查 + 查询齐全、能正常使用</td></tr><tr><td>代码规范与结构</td><td>20</td><td>类设计合理、命名清晰、有注释、逻辑分层</td></tr><tr><td>界面与可用性</td><td>15</td><td>布局清晰、控件够用、提示友好</td></tr><tr><td>文件持久化</td><td>10</td><td>保存/加载正确，重启不丢数据</td></tr><tr><td>设计文档</td><td>10</td><td>类图/功能/使用说明完整、有截图</td></tr><tr><td>答辩表现</td><td>10</td><td>讲清思路、能回答教师提问</td></tr></table></div><div class="ok-box">🤖 <strong>AI 助教</strong>：写文档和答辩稿时也可以用 AI 帮忙润色，但<strong>核心代码和讲解必须自己来</strong>。</div>
+<h1>参考案例框架 ③ 存盘与读盘 — 一行一条</h1>
+<div class="ok-box">还是<strong>记账本</strong>：集合只在内存里，一关程序就没了 —— <code>Save()</code> 写进 txt，<code>Load()</code> 时读回来。</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305093312',this)">复制</button></div>
+<pre id="c_4305093312"><code class="language-csharp">public void Save()
+{
+    List&lt;string&gt; lines = new List&lt;string&gt;();
+    foreach (Record r in records)
+        lines.Add(r.Id + &quot;|&quot; + r.Date + &quot;|&quot; + r.Category + &quot;|&quot; + r.Amount + &quot;|&quot; + r.Note);
+    File.WriteAllLines(file, lines);
+}
+
+public void Load()
+{
+    records.Clear();
+    if (!File.Exists(file)) return;   // 第一次运行还没有这个文件
+    foreach (string line in File.ReadAllLines(file))
+    {
+        string[] p = line.Split('|');
+        Record r = new Record();
+        r.Id = int.Parse(p[0]);
+        r.Date = p[1];
+        r.Category = p[2];
+        r.Amount = double.Parse(p[3]);
+        r.Note = p[4];
+        records.Add(r);
+    }
+}</code></pre>
+</div><div class="card"><ul><li><code>Load()</code> 启动调一次、<code>Save()</code> 增删改后调；<code>File.Exists</code> 那行不能省</li><li>存 5 段 ↔ 读 <code>Split('|')</code> 5 段，<strong>顺序必须一致</strong>，改字段要两边一起改</li></ul></div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
-<h1>温馨提示与常见坑</h1>
-<div class="card"><ul><li>❌ 别等到最后两天才写——GUI + 文件 + 调试至少需要一周</li><li>❌ 别用 <code>MessageBox.Show</code>——Avalonia 没有，改用 <code>TextBlock</code> 提示</li><li>❌ 别把数据只放内存——没写文件，关掉就没了，持久化分直接丢</li><li>✅ 多用 <code>TryParse</code> / 空值判断，避免输入非法直接崩溃</li><li>✅ 每加一个功能就运行试一次，别攒到最后一起调</li><li>✅ 答辩重点讲&quot;你的类怎么设计、事件怎么串起来&quot;，比炫界面更得分</li></ul></div>
+<h1>切换到界面档 — 只多一段 XAML</h1>
+<div class="card"><p>选了界面档，模型层和数据层原样搬过去，只补一个窗口 —— <strong>换的只是外面那层壳，逻辑不动</strong>。</p></div><svg viewBox="0 0 680 116" width="100%" style="max-width:800px;margin:2px auto 0;display:block" role="img" aria-label="两档文件结构对比：控制台档只有 Program.cs，界面档换成 MainWindow 两个文件；模型层与数据层两档共用同一份">
+  <rect x="10" y="4" width="252" height="46" rx="7" fill="rgba(245,158,11,.10)" stroke="#f59e0b" stroke-opacity="0.75" stroke-width="1.2"/>
+  <text x="24" y="23" font-size="14" font-weight="bold" font-family="sans-serif" fill="#f59e0b">控制台档</text>
+  <text x="24" y="41" font-size="12.5" font-family="monospace" fill="#e2e8f0">Program.cs</text>
+  <text x="112" y="41" font-size="12.5" font-family="sans-serif" fill="#94a3b8">菜单 + Console</text>
+  <rect x="418" y="4" width="252" height="46" rx="7" fill="rgba(245,158,11,.10)" stroke="#f59e0b" stroke-opacity="0.75" stroke-width="1.2"/>
+  <text x="432" y="23" font-size="14" font-weight="bold" font-family="sans-serif" fill="#f59e0b">界面档</text>
+  <text x="432" y="41" font-size="12.5" font-family="monospace" fill="#e2e8f0">MainWindow.axaml</text>
+  <text x="560" y="41" font-size="12.5" font-family="monospace" fill="#e2e8f0">+ .axaml.cs</text>
+  <text x="340" y="28" text-anchor="middle" font-size="16" font-family="sans-serif" fill="#94a3b8">→</text>
+  <text x="340" y="45" text-anchor="middle" font-size="13" font-family="sans-serif" fill="#94a3b8">只换这层</text>
+  <path d="M136 52 L136 62" stroke="#94a3b8" stroke-width="1.3"/>
+  <path d="M132.5 61 L139.5 61 L136 68 Z" fill="#94a3b8"/>
+  <path d="M544 52 L544 62" stroke="#94a3b8" stroke-width="1.3"/>
+  <path d="M540.5 61 L547.5 61 L544 68 Z" fill="#94a3b8"/>
+  <rect x="10" y="66" width="660" height="44" rx="7" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1.2"/>
+  <text x="26" y="86" font-size="13.5" font-family="sans-serif" fill="#38bdf8">Record.cs（模型层）　+　RecordManager.cs（数据层）</text>
+  <text x="26" y="104" font-size="12.5" font-family="sans-serif" fill="#94a3b8">两档共用同一份 —— 一个字都不用改，直接搬过去</text>
+</svg><div class="card"><p>多出来的只有 <code>MainWindow</code> 两个文件：<code>.axaml</code> 写界面长什么样，<code>.axaml.cs</code> 写按钮被点时干什么：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4305093888',this)">复制</button></div>
+<pre id="c_4305093888"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
+&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+    &lt;TextBox x:Name=&quot;dateBox&quot; PlaceholderText=&quot;日期 2026-10-01&quot; /&gt;
+    &lt;TextBox x:Name=&quot;categoryBox&quot; PlaceholderText=&quot;类别 餐饮 / 交通&quot; /&gt;
+    &lt;TextBox x:Name=&quot;amountBox&quot; PlaceholderText=&quot;金额 23.5&quot; /&gt;
+    &lt;TextBox x:Name=&quot;noteBox&quot; PlaceholderText=&quot;备注&quot; /&gt;
+    &lt;Button x:Name=&quot;addBtn&quot; Content=&quot;新增&quot; Click=&quot;AddBtn_Click&quot; /&gt;
+    &lt;ListBox x:Name=&quot;listBox&quot; /&gt;
+    &lt;TextBlock x:Name=&quot;hint&quot; /&gt;
+&lt;/StackPanel&gt;</code></pre>
+</div><div class="card"><ul><li><code>Click=&quot;AddBtn_Click&quot;</code> 就是&quot;事件&quot;：按钮被点时，去跑 code-behind 里的 <code>AddBtn_Click</code> 方法</li><li>绑定列表：<code>listBox.Items.Add(...)</code>；数据多变就用 <code>ItemsSource = records</code></li><li>提示信息一律用 <code>hint.Text = &quot;...&quot;</code>，<strong>Avalonia 没有 MessageBox</strong></li><li>注意：Avalonia 12 里 <code>Watermark</code> 改名为 <code>PlaceholderText</code>（老写法还能跑）</li></ul></div>
 </div></div>
-<div class="slide" data-page="13"><div class="slide-inner end-page">
+<div class="slide" data-page="13"><div class="slide-inner markable">
+<h1>示例一 — 控制台档：交出来就是这个样子</h1>
+<div class="ok-box">📌 控制台档交出来就是这样。选界面档也建议先把这套逻辑跑通，后面再加窗体（见<span class="term">示例二 — 界面档</span>那页）。</div><div class="card"><p>示例主题：<strong>个人记账本</strong>（日期 / 类别 / 金额 / 备注）。工程里就这 4 个文件 —— 3 个代码 + 1 个数据：</p></div><pre class="plain-box"><code>你的项目名/
+├── Record.cs          一条记录长什么样（模型类，约 50 行）
+├── RecordManager.cs   管 List + 读写文件 / 统计 / 排序（约 230 行）
+├── Program.cs         菜单 + 各功能方法（约 300 行）
+└── records.txt        数据文件，一行一条：1|2026-10-01|餐饮|23.5|食堂午饭</code></pre><div class="card"><p><code>dotnet run</code> 跑起来是这样：</p></div><svg viewBox="0 0 680 308" width="100%" style="max-width:700px;margin:0 auto;display:block" role="img" aria-label="控制台版运行效果：菜单 + 记录列表 + 统计">
+  <rect x="0" y="0" width="680" height="308" rx="10" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <circle cx="23" cy="21" r="5" fill="#ef4444" fill-opacity="0.85"/>
+  <circle cx="42" cy="21" r="5" fill="#f59e0b" fill-opacity="0.85"/>
+  <circle cx="61" cy="21" r="5" fill="#22c55e" fill-opacity="0.85"/>
+  <text x="80" y="26" fill="#6b7d97" font-size="15" font-family="monospace">dotnet run</text>
+  <line x1="20" y1="38" x2="660" y2="38" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <text x="26" y="64" fill="#38bdf8" font-size="16" font-family="monospace">===== 个人记账本 =====</text>
+  <text x="26" y="90" fill="#d7e0ee" font-size="16" font-family="monospace">1 查看全部    2 新增    3 修改    4 删除</text>
+  <text x="26" y="116" fill="#d7e0ee" font-size="16" font-family="monospace">5 查询        6 统计    7 排序    0 退出</text>
+  <text x="26" y="142" fill="#22c55e" font-size="16" font-family="monospace">请选择：1</text>
+  <text x="26" y="170" fill="#38bdf8" font-size="16" font-family="monospace">--- 全部记录（8 条）---</text>
+  <text x="26" y="196" fill="#d7e0ee" font-size="16" font-family="monospace">[1] 2026-10-01  餐饮  支出 23.50 元   食堂午饭</text>
+  <text x="26" y="222" fill="#d7e0ee" font-size="16" font-family="monospace">[2] 2026-10-01  交通  支出  2.00 元   公交</text>
+  <text x="26" y="248" fill="#f59e0b" font-size="16" font-family="monospace">[7] 2026-10-04  其他  收入 200.00 元  家里给的生活费</text>
+  <text x="26" y="276" fill="#22c55e" font-size="16" font-family="monospace">共 8 条，合计 -4.50 元（支出为正 / 收入为负）</text>
+</svg><div class="ok-box">🔁 <strong>程序不会自己结束</strong>：<code>while</code> 大循环里做完一件回到菜单接着选，只有选 <strong>0（退出）</strong> 才 <code>break</code>。</div>
+</div></div>
+<div class="slide" data-page="14"><div class="slide-inner markable">
+<h1>示例一 — 新增一条，其余三条照着改</h1>
+<div class="card"><p>删除、修改、查询在 <code>RecordManager</code> 里几乎是同一段代码 —— 看懂<span class="term">新增</span>这一个，剩下三个换几行就行。</p></div><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:6px">
+  <div class="card" style="margin:0;padding:12px 13px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:5px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">1</span><span style="font-size:14px;font-weight:700;color:#38bdf8">新建一条</span></div>
+    <div style="font-size:12.5px;line-height:1.6;color:var(--text-muted)"><span style="font-family:monospace">new</span> 一个对象，把读到的值填进字段</div>
+  </div>
+  <div class="card" style="margin:0;padding:12px 13px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:5px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">2</span><span style="font-size:14px;font-weight:700;color:#38bdf8">编号自动算</span></div>
+    <div style="font-size:12.5px;line-height:1.6;color:var(--text-muted)"><span style="font-family:monospace">NextId()</span> 现有最大编号 + 1，不让用户填</div>
+  </div>
+  <div class="card" style="margin:0;padding:12px 13px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:5px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">3</span><span style="font-size:14px;font-weight:700;color:#38bdf8">加进集合</span></div>
+    <div style="font-size:12.5px;line-height:1.6;color:var(--text-muted)">放进 <span style="font-family:monospace">records</span> 这个 <span style="font-family:monospace">List</span></div>
+  </div>
+  <div class="card" style="margin:0;padding:12px 13px;background-image:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:5px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700">4</span><span style="font-size:14px;font-weight:700;color:#f59e0b">立刻存盘</span></div>
+    <div style="font-size:12.5px;line-height:1.6;color:var(--text-muted)">马上调 <span style="font-family:monospace">Save()</span>，关掉程序数据还在</div>
+  </div>
+</div><div class="card"><ul><li><strong><code>Save()</code> 紧跟在增删改之后</strong> —— 这就是&quot;持久化硬指标&quot;，别攒到退出才存</li><li><strong>输入一律 <code>TryParse</code></strong>，输错了给提示重填，而不是让程序崩掉</li></ul></div><div class="ok-box">💡 <code>Program.cs</code> 里那一堆方法（查全部、查询、统计、排序），每个都只是&quot;读菜单 → 调 Manager → <code>Console.WriteLine</code>&quot;三件事。</div>
+</div></div>
+<div class="slide" data-page="15"><div class="slide-inner markable">
+<h1>示例二 — 界面档：同一套逻辑换张脸</h1>
+<div class="ok-box">📌 界面档交出来就是这样 —— 界面照这个搭，逻辑还是同一套。</div><svg viewBox="0 0 680 336" width="100%" style="max-width:792px;margin:0 auto;display:block" role="img" aria-label="界面版窗口外观：左边表单、右边列表、底部提示">
+  <rect x="10" y="6" width="660" height="324" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.7" stroke-width="1.2"/>
+  <rect x="10" y="6" width="660" height="30" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-opacity="0.35" stroke-width="1"/>
+  <rect x="10" y="20" width="660" height="16" fill="#e2e8f0"/>
+  <text x="28" y="27" fill="#0f172a" font-size="15" font-family="sans-serif">个人记账本</text>
+  <line x1="10" y1="36" x2="670" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="30" y="56" fill="#334155" font-size="13" font-family="sans-serif">日期</text>
+  <rect x="30" y="62" width="186" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="39" y="80" fill="#0f172a" font-size="13.5" font-family="monospace">2026-10-01</text>
+  <text x="30" y="102" fill="#334155" font-size="13" font-family="sans-serif">类别</text>
+  <rect x="30" y="108" width="186" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="39" y="126" fill="#0f172a" font-size="14" font-family="sans-serif">餐饮</text>
+  <text x="200" y="127" fill="#94a3b8" font-size="12.5" font-family="sans-serif">▾</text>
+  <text x="30" y="148" fill="#334155" font-size="13" font-family="sans-serif">金额</text>
+  <rect x="30" y="154" width="186" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="39" y="172" fill="#0f172a" font-size="13.5" font-family="monospace">23.5</text>
+  <text x="30" y="194" fill="#334155" font-size="13" font-family="sans-serif">备注</text>
+  <rect x="30" y="200" width="186" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="39" y="218" fill="#0f172a" font-size="14" font-family="sans-serif">食堂午饭</text>
+  <rect x="30" y="234" width="58" height="30" rx="6" fill="#0ea5e9" stroke="#0284c7" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="59" y="253" text-anchor="middle" fill="#ffffff" font-size="14" font-family="sans-serif">新增</text>
+  <rect x="94" y="234" width="58" height="30" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="123" y="253" text-anchor="middle" fill="#0f172a" font-size="14" font-family="sans-serif">修改</text>
+  <rect x="158" y="234" width="58" height="30" rx="6" fill="#fee2e2" stroke="#fca5a5" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="187" y="253" text-anchor="middle" fill="#b91c1c" font-size="14" font-family="sans-serif">删除</text>
+  <text x="30" y="288" fill="#16a34a" font-size="13" font-family="sans-serif">✅ 先选中，再点修改 / 删除</text>
+  <rect x="240" y="62" width="296" height="26" rx="4" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="249" y="80" fill="#94a3b8" font-size="13" font-family="sans-serif">输入关键字（类别 / 备注 / 日期）</text>
+  <rect x="544" y="62" width="52" height="26" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="570" y="80" text-anchor="middle" fill="#0f172a" font-size="13" font-family="sans-serif">查询</text>
+  <rect x="600" y="62" width="70" height="26" rx="6" fill="#e2e8f0" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="635" y="80" text-anchor="middle" fill="#0f172a" font-size="13" font-family="sans-serif">显示全部</text>
+  <rect x="240" y="96" width="430" height="192" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-opacity="0.9" stroke-width="1"/>
+  <rect x="246" y="102" width="418" height="25" rx="4" fill="#dbeafe" stroke="#bfdbfe" stroke-opacity="0.9" stroke-width="1"/>
+  <text x="255" y="120" fill="#0f172a" font-size="13.5" font-family="monospace">[1] 2026-10-01 餐饮 支出 23.50 元 食堂午饭</text>
+  <text x="255" y="152" fill="#334155" font-size="13.5" font-family="monospace">[2] 2026-10-01 交通 支出  2.00 元 公交</text>
+  <text x="255" y="184" fill="#334155" font-size="13.5" font-family="monospace">[3] 2026-10-02 餐饮 支出 18.00 元 早餐加奶茶</text>
+  <text x="255" y="216" fill="#334155" font-size="13.5" font-family="monospace">[4] 2026-10-02 学习 支出 45.00 元 打印课件</text>
+  <text x="255" y="248" fill="#334155" font-size="13.5" font-family="monospace">[5] 2026-10-03 娱乐 支出 60.00 元 电影票</text>
+  <text x="255" y="280" fill="#b45309" font-size="13.5" font-family="monospace">[6] 2026-10-04 其他 收入 200.00 元 生活费</text>
+  <text x="240" y="312" fill="#0369a1" font-size="13" font-family="sans-serif">共 6 条，合计 -4.50 元（支出为正 / 收入为负）</text>
+</svg><div class="card"><p><code>Record.cs</code> 和 <code>RecordManager.cs</code> 挪进 <code>Models/</code> 和 <code>Services/</code> 两个文件夹就能用。变的只有<span class="term">怎么问</span>和<span class="term">怎么显示</span>：</p></div><div class="card"><table><tr><th>控制台里</th><th>界面里</th><th>差在哪</th></tr><tr><td><code>Console.ReadLine()</code></td><td><code>dateBox.Text</code></td><td>从输入框里读</td></tr><tr><td><code>Console.WriteLine(...)</code></td><td><code>listBox.Items.Add(...)</code></td><td>往列表里塞一行</td></tr><tr><td>数字菜单 + <code>if</code> 分支</td><td>按钮的 <code>Click</code> 事件</td><td>点哪个按钮就跑哪个方法</td></tr></table></div>
+</div></div>
+<div class="slide" data-page="16"><div class="slide-inner markable">
+<h1>示例二 — 按钮里其实就三件事</h1>
+<div class="card"><p>点<span class="term">新增</span>那一刻，代码只做三件事 —— 不管哪个按钮，都是这个顺序：</p></div><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:6px">
+  <div class="card" style="margin:0;padding:13px 15px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:6px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">1</span><span style="font-size:14px;font-weight:700;color:#38bdf8">读 + 校验</span></div>
+    <div style="font-size:12.5px;line-height:1.65;color:var(--text-muted)">把四个输入框的文本取出来：空没空、数字能不能转 —— 不合格就写提示，直接返回</div>
+  </div>
+  <div class="card" style="margin:0;padding:13px 15px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:6px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700">2</span><span style="font-size:14px;font-weight:700;color:#38bdf8">调 Manager</span></div>
+    <div style="font-size:12.5px;line-height:1.65;color:var(--text-muted)">一行 <span style="font-family:monospace">manager.Add(...)</span>，存盘、编号都在它里面做完</div>
+  </div>
+  <div class="card" style="margin:0;padding:13px 15px;background-image:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,0) 62%)">
+    <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:6px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700">3</span><span style="font-size:14px;font-weight:700;color:#f59e0b">刷新 + 提示</span></div>
+    <div style="font-size:12.5px;line-height:1.65;color:var(--text-muted)">列表重新灌一遍数据，底下 <span style="font-family:monospace">hint</span> 写一句"已新增，编号几"</div>
+  </div>
+</div><div class="card"><p>文件这么放 —— 模型层、数据层各一个文件夹，跟界面文件分开：</p></div><pre class="plain-box"><code>你的项目名/
+├── Models/Record.cs            一条记录长什么样（原样搬过来）
+├── Services/RecordManager.cs   管 List + 存盘读盘（原样搬过来）
+├── MainWindow.axaml            界面长什么样
+├── MainWindow.axaml.cs         按钮被点时干什么
+└── records.txt                 数据文件</code></pre><div class="ok-box">💡 第 2 步只是调一个方法。<code>Add()</code> 不关心调用它的是菜单还是按钮，它只管把数据存好——这就是&quot;分层&quot;最实际的好处。</div><div class="card"><ul><li>⚠️ 删除建议&quot;两次确认&quot;：第一次点只提示，第二次点才真删</li><li>⚠️ 列表刷新后会丢选中，所以另存一个 <code>selectedId</code> 记住它</li></ul></div>
+</div></div>
+<div class="slide" data-page="17"><div class="slide-inner markable">
+<h1>从示例到你的主题 — 只改 4 个地方</h1>
+<div class="card"><p>按这个改，改完就是你的作业：</p></div><div class="card"><table><tr><th>#</th><th>改什么</th><th>记账本里的样子</th><th>你改成</th></tr><tr><td>1</td><td>类名 + 字段</td><td><code>Record</code>：Id / Date / Category / Amount / Note</td><td>你的类名与字段</td></tr><tr><td>2</td><td>存盘 / 读盘</td><td>用 <code>\|</code> 把 5 段拼成一行</td><td>字段几段就拼几段，两头必须对上</td></tr><tr><td>3</td><td>交互层文字</td><td>菜单项 / 界面上的&quot;日期&quot;&quot;类别&quot;&quot;金额&quot;&quot;备注&quot;</td><td>你的字段名</td></tr><tr><td>4</td><td>数据文件名</td><td><code>records.txt</code></td><td><code>works.txt</code> / <code>members.txt</code> …</td></tr></table></div><div class="card"><p>字段还没定？回看<span class="term">可选主题方向</span>那张表里的<strong>典型字段举例</strong>一列，抄下来改一两个字就能用。</p></div><div class="ok-box">⚠️ 字段一改，<code>Save</code> / <code>Load</code>、菜单项、列表显示（或界面表单）<strong>全要跟着改</strong>——先把字段写成一张表贴在旁边，再动代码。</div><div class="card"><p>改完按顺序自检：① 增删改查各跑一遍 ② 打开 txt 看字段顺序 ③ 每个入口点一遍 ④ <strong>关掉重开</strong>看数据还在不在</p></div>
+</div></div>
+<div class="slide" data-page="18"><div class="slide-inner markable">
+<h1>开发步骤与时间安排</h1>
+<div class="card"><p>建议按下面的节奏推进（共 2~3 周）；档位不用第 1 天定死，控制台版跑通后再决定要不要加界面也行：</p></div><div class="card"><ol><li><strong>第1天：定主题 + 列字段</strong> — 确定管理什么、每条记录有哪些字段</li><li><strong>第2~3天：写模型类 + 集合</strong> — 先把 <code>XxxItem</code> 类和 <code>List&lt;XxxItem&gt;</code> 跑通</li><li><strong>第4~6天：做功能</strong> — 先把基础清单做通（增删改查 + 查询）；控制台档配一套菜单，界面档把同样的方法挂到按钮上（直接复用第 2~3 天的 Manager）。有余力再加统计、排序这类亮点</li><li><strong>第7~8天：文件持久化</strong> — 加 Load/Save，确保重启不丢</li><li><strong>第9~10天：校验 + 整理</strong> — 控制台档理顺菜单与提示语，界面档整理布局</li><li><strong>答辩前：写文档 + 演练</strong> — 类图、功能说明、使用说明、截图</li></ol></div><div class="ok-box">💡 卡住先用 AI 助教（课件2 四步法），但<strong>最终代码必须自己写、自己讲得清</strong>。</div>
+</div></div>
+<div class="slide" data-page="19"><div class="slide-inner markable">
+<h1>提交要求</h1>
+<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整项目，能打开、能运行（控制台档只需 .NET；界面档需还原 Avalonia 包）</li><li><strong>设计文档</strong>（Word/PDF）：①类图/字段说明 ②功能列表 ③使用说明 ④运行截图 ⑤<strong>写明所选档位</strong></li><li><strong>答辩演示</strong>：第十七和十八周，5~8 分钟讲思路 + 演示你的程序</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>提交到 <strong>WPS 问卷</strong>：扫描结束页的提交二维码进入，或直接访问 <a href="https://f.wps.cn/g/59fkZPWb/" target="_blank" rel="noopener">https://f.wps.cn/g/59fkZPWb/</a></li><li><strong>必须是 .zip 压缩包</strong>：把项目文件夹和设计文档压成一个包上传；<strong>不用自己命名</strong>，问卷会自动命名</li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页另一张二维码查看）</li></ul></div><div class="ok-box">⚠️ 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
+</div></div>
+<div class="slide" data-page="20"><div class="slide-inner markable">
+<h1>基础分 ① 功能实现（55 分）</h1>
+<div class="card"><p>逐项验收，<strong>做到才给分，没做到就是 0 分</strong>；图表 / 主题这类<strong>界面亮点算界面分</strong>，不重复给。</p></div><div class="card"><table><tr><th>必做六项（45 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>新增记录</td><td>7</td><td>填完能加进去、列表马上出现，编号不重复</td></tr><tr><td>查看 / 列表</td><td>4</td><td>全部记录列出来、字段看得清；空的给提示</td></tr><tr><td>修改记录</td><td>7</td><td>按编号改完，列表和 txt 同时更新</td></tr><tr><td>删除记录</td><td>7</td><td>删掉指定那条、列表立刻少一行，删前确认</td></tr><tr><td>查询 / 筛选</td><td>6</td><td>按关键字或类别筛出；查不到要提示</td></tr><tr><td>保存 / 加载</td><td>14</td><td>关掉重开还在；一行一条、字段顺序一致</td></tr></table></div><div class="card"><table><tr><th>亮点功能（10 分，任选累加，满 10 封顶）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>统计（合计 / 分类汇总）</td><td>4</td><td>菜单里有这一项，算出来的数对得上</td></tr><tr><td>排序（按金额 / 日期）</td><td>4</td><td>一点就重排，顺序对、能还原</td></tr><tr><td>导出 CSV / txt</td><td>3</td><td>导出的文件能用 Excel 打开</td></tr><tr><td>按类别分组显示</td><td>3</td><td>有分类标题，组内明细不错位</td></tr><tr><td>关键字即时筛选</td><td>3</td><td>边打边过滤，清空恢复全部</td></tr><tr><td>随机生成测试数据</td><td>2</td><td>一键塞 20 条，方便演示验收</td></tr></table></div>
+</div></div>
+<div class="slide" data-page="21"><div class="slide-inner markable">
+<h1>基础分 ② 代码与规范（45 分）</h1>
+<div class="card"><p>功能做出来了，还要看代码能不能看懂、能不能改、能不能讲 —— 同样逐条验收。</p></div><div class="card"><table><tr><th>代码与结构（20 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>模型类</td><td>5</td><td>一条记录一个类，字段齐全、类型对</td></tr><tr><td>管理类</td><td>7</td><td>List + 增删改查 + 读写文件都在这一个类</td></tr><tr><td>分层文件</td><td>4</td><td>模型 / 数据 / 交互分三个文件，各管一摊</td></tr><tr><td>命名与注释</td><td>4</td><td>名字看得懂，关键方法有注释，缩进统一</td></tr></table></div><div class="card"><table><tr><th>交互与健壮性（15 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>菜单循环</td><td>3</td><td>做完一件事回到菜单，选 0 才退出</td></tr><tr><td>输入校验</td><td>5</td><td><code>TryParse</code> + 判空，输错重填、程序不崩</td></tr><tr><td>提示信息</td><td>4</td><td>增删改查成功 / 失败都有提示</td></tr><tr><td>边界情况</td><td>3</td><td>空列表、查不到、删不存在都不崩</td></tr></table></div><div class="card"><p><strong>文档与答辩（10 分）</strong> —— 设计文档 5 分：类图、字段说明、功能列表、使用说明、运行截图，每样 1 分；答辩 5 分：讲得清类设计、调用关系、关键代码在哪。</p></div><div class="ok-box">📊 20 + 15 + 10 = 45，与上页 55 合计 <strong>100</strong>；控制台档做满就是 100。</div>
+</div></div>
+<div class="slide" data-page="22"><div class="slide-inner markable">
+<h1>界面分（满分 20，界面档）</h1>
+<div class="card"><p>界面档在这 20 分上看四件事 —— 也是逐项验收：</p></div><div class="card"><table><tr><th>评分点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>界面布局</td><td>4</td><td>表单、列表、提示分区清楚，不挤成一团</td></tr><tr><td>五个功能都接上</td><td>5</td><td>增删改查查各 1 分，点了有反应</td></tr><tr><td>事件只调方法</td><td>3</td><td>按钮里不写业务，只调 Manager</td></tr><tr><td><strong>特色发挥</strong></td><td><strong>8</strong></td><td>见下，做出 1 项给 4 分，2 项以上给满</td></tr></table></div><div class="card"><p><strong>&quot;特色发挥&quot;可以是什么</strong>（任选其一，做出效果就行）：</p></div><div class="card"><ul><li>列表做成卡片 / 带图标，或按类别分组显示</li><li>加一套配色主题（深色 / 浅色切换）</li><li>加统计图：分类占比、按月趋势</li><li>输入即时筛选，边打关键字边过滤</li><li>快捷键、导出 CSV / 复制到剪贴板</li></ul></div><div class="ok-box">⚠️ 界面分<strong>不白送</strong>：只摆两个控件、业务逻辑全写在按钮里、点一下就崩的，这 20 分拿不到几分。</div><div class="ok-box">📊 基础 100 + 界面 20 = <strong>满分 120</strong>。</div>
+</div></div>
+<div class="slide" data-page="23"><div class="slide-inner markable">
+<h1>温馨提示与常见坑</h1>
+<div class="card"><ul><li>❌ <strong>套界面前不备份</strong>——直接改原项目，界面没做完就交不出能跑的东西。动手前先把控制台版整个文件夹复制一份，界面在副本上做</li><li>❌ <strong>只做了增删查，漏了&quot;改&quot;或&quot;查询&quot;</strong>——基础清单少一件，功能分直接掉</li><li>❌ <strong>菜单只跑一次就退出了</strong>——主菜单要用 <code>while (true)</code> 包住，做完一件事回到菜单，只有选 0（退出）才 <code>break</code></li><li>❌ <strong>界面档用 <code>MessageBox.Show</code></strong>——Avalonia 没有，改用 <code>TextBlock</code></li><li>❌ <strong>数据只放内存</strong>——没写文件，关掉就没了，持久化分直接丢</li><li>✅ <strong>控制台档跑通后想加界面，放手加</strong>——<code>Record.cs</code> / <code>RecordManager.cs</code> 不用动，只多一层窗体</li><li>✅ 输入一律 <code>TryParse</code> / 判空，避免非法输入直接崩溃</li><li>✅ <strong>基础清单做齐之后，有余力就加亮点</strong>——统计、排序、导出，功能分里往高给，且花不了多少时间</li><li>✅ 每加一个功能就运行试一次，别攒到最后一起调</li><li>✅ 答辩重点讲&quot;你的类怎么设计、谁调用谁&quot;，比炫界面 / 炫菜单更得分</li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：写文档和答辩稿时可以让 AI 帮忙润色，但<strong>核心代码和讲解必须自己来</strong>。</div>
+</div></div>
+<div class="slide" data-page="24"><div class="slide-inner end-page">
 
 <div class="end-thanks">
     <div class="end-left">
@@ -554,9 +1103,9 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
-                <p>扫码提交课后作业</p>
-                <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
+                <img src="images/课件21/submit-final-project.png" alt="扫码提交期末大作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <p>扫码提交期末大作业</p>
+                <a href="https://f.wps.cn/g/59fkZPWb/" target="_blank" class="end-link">📤 打开期末大作业提交入口</a>
             </div>
             <div class="end-qr-card">
                 <img src="images/shared/tencent-docs-qrcode.png" alt="腾讯文档二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
@@ -644,8 +1193,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========
@@ -720,7 +1269,7 @@ function changeFont(d){
 // ========== 幻灯片 ==========
 let slides=document.querySelectorAll('.slide,.cover'),
     navLinks=document.querySelectorAll('.nav-link'),
-    curr=0,total=13,contentTotal=11;
+    curr=0,total=24,contentTotal=22;
 
 // 进度圆点
 // 侧边栏点击

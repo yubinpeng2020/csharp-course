@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -374,19 +376,18 @@ pre,pre code{page-break-inside:avoid}
 <a href="#" class="nav-link" data-page="4"><span class="nav-status"></span>3. 构造方法重载 </a>
 <a href="#" class="nav-link" data-page="5"><span class="nav-status"></span>4. 课堂练习1 — 方法重载 <span class="nav-badge practice">练习</span></a>
 <a href="#" class="nav-link" data-page="6"><span class="nav-status"></span>5. static — 属于类，不属于对象 </a>
-<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. static 示例 — 学生计数器 </a>
-<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 课堂练习2 — 最大公约数与质数判断 <span class="nav-badge practice">练习</span></a>
-<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 本节知识梳理 </a>
-<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 综合练习 — 商品库存管理 <span class="nav-badge comprehensive">综合</span></a>
-<a href="#" class="nav-link" data-page="11"><span class="nav-status"></span>10. 课堂作业 <span class="nav-badge homework">作业</span></a>
-<a href="#" class="nav-link nav-special" data-page="12"><span class="nav-status"></span>结束页</a>
+<a href="#" class="nav-link" data-page="7"><span class="nav-status"></span>6. 课堂练习2 — 最大公约数与质数判断 <span class="nav-badge practice">练习</span></a>
+<a href="#" class="nav-link" data-page="8"><span class="nav-status"></span>7. 本节知识梳理 </a>
+<a href="#" class="nav-link" data-page="9"><span class="nav-status"></span>8. 综合练习 — 商品库存管理 <span class="nav-badge comprehensive">综合</span></a>
+<a href="#" class="nav-link" data-page="10"><span class="nav-status"></span>9. 课堂作业 <span class="nav-badge homework">作业</span></a>
+<a href="#" class="nav-link nav-special" data-page="11"><span class="nav-status"></span>结束页</a>
 
 </nav>
 <div class="main-area" id="mainArea">
     <div class="header-bar">
         <div class="progress-wrap">
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <span class="progress-text" id="progressText">0 / 12</span>
+            <span class="progress-text" id="progressText">0 / 11</span>
         </div>
         <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
@@ -434,28 +435,96 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>方法重载</h1>
-<div class="card"><p>上节课写了 <code>Add(int a, int b)</code>，两个整数相加。现在需求来了：</p></div><div class="card"><ul><li>两个整数相加 → <code>Add(3, 5)</code> ✅ 已有</li><li>三个整数相加 → 怎么办？再写一个方法叫 <code>AddThree</code>？</li><li>两个小数相加 → 叫 <code>AddDouble</code>？</li></ul></div><div class="card"><p>名字会越来越乱，调用方得记一堆方法名。<strong>能不能都叫 Add？</strong></p></div><div class="ok-box">答案就是<strong>方法重载</strong>——同一个方法名，参数不同，各干各的。调用方只需写 <code>Add(...)</code>，系统根据传的参数自动选对的版本。</div><div class="card"><h3>现实类比：「洗」一个动词，洗什么配什么</h3></div><div class="card"><table><tr><th>场景</th><th>方法</th><th>参数</th></tr><tr><td>洗脸</td><td><code>洗(水)</code></td><td>只需要水</td></tr><tr><td>洗衣服</td><td><code>洗(衣服, 洗衣液)</code></td><td>需要衣服+洗衣液</td></tr><tr><td>洗碗</td><td><code>洗(碗, 洗洁精)</code></td><td>需要碗+洗洁精</td></tr></table></div><div class="card"><p>三种&quot;洗&quot;，名字一样参数不同——这就是重载。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376740864',this)">复制</button></div>
-<pre id="c_4376740864"><code class="language-csharp">using System;
+<div class="card"><p>上节课写了 <code>Add(int a, int b)</code>，两个整数相加。现在需求来了：</p></div><div class="card"><ul><li>两个整数相加 → <code>Add(3, 5)</code> ✅ 已有</li><li>三个整数相加 → 怎么办？再写一个方法叫 <code>AddThree</code>？</li><li>两个小数相加 → 叫 <code>AddDouble</code>？</li></ul></div><div class="card"><p>名字会越来越乱，调用方得记一堆方法名。<strong>能不能都叫 Add？</strong></p></div><div class="ok-box">答案就是<strong>方法重载</strong>——同一个方法名，参数不同，各干各的。调用方只需写 <code>Add(...)</code>，系统根据传的参数自动选对的版本。</div><div class="card"><h3>现实类比：<span class="term">洗</span>一个动词，洗什么配什么</h3></div><div class="card"><table><tr><th>场景</th><th>方法</th><th>参数</th></tr><tr><td>洗脸</td><td><code>洗(水)</code></td><td>只需要水</td></tr><tr><td>洗衣服</td><td><code>洗(衣服, 洗衣液)</code></td><td>需要衣服+洗衣液</td></tr><tr><td>洗碗</td><td><code>洗(碗, 洗洁精)</code></td><td>需要碗+洗洁精</td></tr></table></div><div class="card"><p>三种&quot;洗&quot;，名字一样参数不同——这就是重载。</p></div><svg viewBox="0 0 680 340" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="方法重载：三行同样的 Add 调用被编译器分派到三个不同的方法版本">
+  <defs>
+    <marker id="ovw-c" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+    <marker id="ovw-o" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/>
+    </marker>
+    <marker id="ovw-g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/>
+    </marker>
+  </defs>
+
+  <!-- 左：调用方 -->
+  <rect x="16" y="40" width="196" height="270" rx="12" fill="#21283a" stroke="#334155" stroke-width="1"/>
+  <circle cx="36" cy="60" r="4" fill="#ff5f57"/>
+  <circle cx="52" cy="60" r="4" fill="#febc2e"/>
+  <circle cx="68" cy="60" r="4" fill="#28c840"/>
+  <text x="192" y="64" text-anchor="end" fill="#9fb0c9" font-size="11" font-family="sans-serif">调用方</text>
+  <text x="30" y="86" fill="#6b7d97" font-size="10" font-family="monospace">// 只写 Add，不挑版本</text>
+  <text x="30" y="110" fill="#d7e0ee" font-size="11.5" font-family="monospace">calc.Add(<tspan fill="#38bdf8">3, 5</tspan>)</text>
+  <text x="30" y="186" fill="#d7e0ee" font-size="11.5" font-family="monospace">calc.Add(<tspan fill="#f59e0b">1, 2, 3</tspan>)</text>
+  <text x="30" y="262" fill="#d7e0ee" font-size="11.5" font-family="monospace">calc.Add(<tspan fill="#22c55e">1.5, 2.5</tspan>)</text>
+  <text x="114" y="296" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">同一个名字，三种参数</text>
+
+  <!-- 中：编译器分派 -->
+  <line x1="214" y1="106" x2="322" y2="106" stroke="#38bdf8" stroke-width="1.4" stroke-opacity="0.7" marker-end="url(#ovw-c)"/>
+  <line x1="214" y1="182" x2="322" y2="182" stroke="#f59e0b" stroke-width="1.4" stroke-opacity="0.7" marker-end="url(#ovw-o)"/>
+  <line x1="214" y1="258" x2="322" y2="258" stroke="#22c55e" stroke-width="1.4" stroke-opacity="0.7" marker-end="url(#ovw-g)"/>
+  <text x="269" y="99" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="sans-serif">2 个 int</text>
+  <text x="269" y="175" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="sans-serif">3 个 int</text>
+  <text x="269" y="251" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif">2 个 double</text>
+
+  <!-- 右：三个版本，同一个 Add -->
+  <rect x="330" y="75" width="334" height="62" rx="10" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <circle cx="350" cy="106" r="10" fill="#38bdf8" fill-opacity="0.18"/>
+  <text x="350" y="110" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="sans-serif">①</text>
+  <text x="368" y="102" fill="#d7e0ee" font-size="11" font-family="monospace">public int Add(int a, int b)</text>
+  <text x="368" y="120" fill="#8b9bb4" font-size="10" font-family="sans-serif">两个整数相加，返回 int</text>
+  <text x="656" y="102" text-anchor="end" fill="#e2e8f0" font-size="12" font-weight="600" font-family="monospace">→ 8</text>
+
+  <rect x="330" y="151" width="334" height="62" rx="10" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <circle cx="350" cy="182" r="10" fill="#f59e0b" fill-opacity="0.18"/>
+  <text x="350" y="186" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="sans-serif">②</text>
+  <text x="368" y="178" fill="#d7e0ee" font-size="11" font-family="monospace">public int Add(int a, int b, int c)</text>
+  <text x="368" y="196" fill="#8b9bb4" font-size="10" font-family="sans-serif">三个整数相加，返回 int</text>
+  <text x="656" y="178" text-anchor="end" fill="#e2e8f0" font-size="12" font-weight="600" font-family="monospace">→ 6</text>
+
+  <rect x="330" y="227" width="334" height="62" rx="10" fill="#1b2536" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <circle cx="350" cy="258" r="10" fill="#22c55e" fill-opacity="0.18"/>
+  <text x="350" y="262" text-anchor="middle" fill="#22c55e" font-size="11" font-family="sans-serif">③</text>
+  <text x="368" y="254" fill="#d7e0ee" font-size="11" font-family="monospace">public double Add(double a, double b)</text>
+  <text x="368" y="272" fill="#8b9bb4" font-size="10" font-family="sans-serif">两个小数相加，返回 double</text>
+  <text x="656" y="254" text-anchor="end" fill="#e2e8f0" font-size="12" font-weight="600" font-family="monospace">→ 4</text>
+
+  <text x="16" y="328" fill="#8b9bb4" font-size="11" font-family="sans-serif">同名方法靠「参数个数 / 参数类型」区分——这一步在编译期就确定，运行时不会再去猜。</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336601728',this)">复制</button></div>
+<pre id="c_4336601728"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Calculator
     {
-        public int Add(int a, int b) { ... }          // 两个整数
-        public int Add(int a, int b, int c) { ... }    // 三个整数
-        public double Add(double a, double b) { ... }  // 两个小数
+        public int Add(int a, int b) { return a + b; }              // ① 两个整数
+        public int Add(int a, int b, int c) { return a + b + c; }   // ② 三个整数
+        public double Add(double a, double b) { return a + b; }     // ③ 两个小数
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Calculator calc = new Calculator();
+
+            // 调用方只写 Add，编译器按「参数的个数 + 类型」自动挑版本
+            Console.WriteLine(calc.Add(3, 5));        // 8  → 版本①（两个 int）
+            Console.WriteLine(calc.Add(1, 2, 3));     // 6  → 版本②（三个 int）
+            Console.WriteLine(calc.Add(1.5, 2.5));    // 4  → 版本③（两个 double）
+        }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- 好处：调用方只需记住一个方法名，系统根据给的参数自动匹配
-- 条件：**方法名相同，参数列表不同**（个数或类型）
-- 只改返回值不算重载，编译器分不清</code></pre>
+</div><div class="card"><ul><li>三行调用写的是<strong>同一个方法名</strong>，实际执行的是三个不同的方法体</li><li>好处：调用方只需记住一个方法名，系统根据给的参数自动匹配</li><li>条件：<strong>方法名相同，参数列表不同</strong>（个数或类型）</li><li>只改返回值不算重载，编译器分不清</li></ul></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>构造方法重载</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376753664',this)">复制</button></div>
-<pre id="c_4376753664"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336599360',this)">复制</button></div>
+<pre id="c_4336599360"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
@@ -463,11 +532,13 @@ namespace HelloWorld
         public string name;
         public int age;
         public double score;
+
         // 重载1：完整构造——全部字段
         public Student(string name, int age, double score)
         {
             this.name = name; this.age = age; this.score = score;
         }
+
         // 重载2：简化构造——只有姓名
         public Student(string name)
         {
@@ -475,15 +546,11 @@ namespace HelloWorld
             this.age = 0;
             this.score = 0;
         }
+
         // 重载3：默认构造——什么都不给
         public Student() { }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -493,54 +560,96 @@ namespace HelloWorld
             Student s3 = new Student();                // 什么都不给
         }
     }
-}</code></pre><div class="card"><ul><li>同一个 <code>new Student( )</code>，参数不同就走不同的构造方法</li></ul></div><div class="ok-box">💡 既然有对象初始化器 <code>new Student { name=&quot;张三&quot; }</code>，还需要构造函数重载吗？<strong>需要！看三个场景——</strong></div><div class="card"><p><strong>场景一：强制传参。</strong> 初始化器可以不写 <code>age</code>（默认 0），但业务上学生必须有年龄。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755200',this)">复制</button></div>
-<pre id="c_4376755200"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><ul><li>同一个 <code>new Student( )</code>，参数不同就走不同的构造方法</li></ul></div><div class="ok-box">💡 既然有对象初始化器 <code>new Student { name=&quot;张三&quot; }</code>，还需要构造函数重载吗？<strong>需要！看三个场景——</strong></div><div class="card"><p><strong>场景一：强制传参。</strong> 初始化器可以不写 <code>age</code>（默认 0），但业务上学生必须有年龄。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336582528',this)">复制</button></div>
+<pre id="c_4336582528"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
+    class Student
+    {
+        public string name;
+        public int age;
+
+        // ✅ 有构造方法：创建时必须把参数传齐
+        public Student(string name, int age)
+        {
+            this.name = name;
+            this.age = age;
+        }
+    }
+
     class Program
     {
         static void Main()
         {
-            // ❌ 初始化器：漏了 age，没人提醒
-            var s = new Student { name = &quot;张三&quot; };  // age = 0，静默通过
-            // ✅ 构造函数：不传 age 直接编译报错
-            public Student(string name, int age) { ... }
-            var s = new Student(&quot;张三&quot;);  // ❌ 编译错误：缺少参数
+            // ❌ 初始化器写法：漏了 age 也没人提醒（默认 0，静默通过）
+            // ❌ 也不能再写 new Student { name = &quot;张三&quot; }——没有无参构造可用
+            // var s1 = new Student { name = &quot;张三&quot; };
+
+            // ❌ 少传参数，编译器当场报错：缺少参数
+            // var s2 = new Student(&quot;张三&quot;);
+
+            // ✅ 参数齐全才能创建
+            var s3 = new Student(&quot;张三&quot;, 18);
+            Console.WriteLine($&quot;{s3.name}，{s3.age} 岁&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**场景二：做校验。** 年龄不能为负，初始化器赋值完了才发现不了。
-
-using System;
+</div><div class="card"><p><strong>场景二：做校验。</strong> 年龄不能为负，初始化器赋值完了才发现不了。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336582272',this)">复制</button></div>
+<pre id="c_4336582272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
+    class Student
+    {
+        public string name;
+        public int age;
+
+        // ✅ 构造函数：创建对象时就校验，非法值根本进不来
+        public Student(string name, int age)
+        {
+            if (age &lt; 0) throw new Exception(&quot;年龄不能为负！&quot;);
+            this.name = name;
+            this.age = age;
+        }
+    }
+
     class Program
     {
         static void Main()
         {
-            // ❌ 初始化器：负数静默通过
-            var s = new Student { name = &quot;张三&quot;, age = -5 };  // 没人管
+            // ❌ 初始化器写法：age = -5 静默通过，没人管
+            // var s = new Student { name = &quot;张三&quot;, age = -5 };
 
-            // ✅ 构造函数：当场拦截
-            public Student(string name, int age)
+            // ✅ 构造函数：负数当场抛异常
+            try
             {
-                if (age &lt; 0) throw new Exception(&quot;年龄不能为负！&quot;);
-                this.name = name; this.age = age;
+                var bad = new Student(&quot;张三&quot;, -5);
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);   // 年龄不能为负！
+            }
+
+            var ok = new Student(&quot;张三&quot;, 18);
+            Console.WriteLine($&quot;{ok.name}，{ok.age} 岁&quot;);
         }
     }
-}</code></pre><div class="card"><p><strong>场景三：private 字段。</strong> 初始化器只能碰 <code>public</code> 的字段，<code>private</code> 的根本看不见。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743104',this)">复制</button></div>
-<pre id="c_4376743104"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><p><strong>场景三：private 字段。</strong> 初始化器只能碰 <code>public</code> 的字段，<code>private</code> 的根本看不见。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336582336',this)">复制</button></div>
+<pre id="c_4336582336"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         private string id;      // 学号，外部不能乱改
         public string name;
+
         public Student(string id, string name)
         {
             this.id = id;       // ✅ 构造函数可以访问 private
@@ -549,14 +658,14 @@ namespace HelloWorld
     }
     // var s = new Student { id = &quot;S001&quot;, name = &quot;张三&quot; };  // ❌ 编译错误！
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 💬 初始化器是&quot;简装版&quot;，构造函数是&quot;精装版&quot;——要强制、要校验、要保密就上构造函数。</code></pre>
+</div><div class="ok-box">💬 初始化器是&quot;简装版&quot;，构造函数是&quot;精装版&quot;——要强制、要校验、要保密就上构造函数。</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 方法重载</h1>
-<div class="ok-box">用方法重载改造一个打印工具——不管传什么类型的参数，都叫同一个方法名 <code>Print</code>。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376721152',this)">复制</button></div>
-<pre id="c_4376721152"><code class="language-csharp">using System;
+<div class="ok-box">用方法重载改造一个打印工具——不管传什么类型的参数，都叫同一个方法名 <code>Print</code>。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336600448',this)">复制</button></div>
+<pre id="c_4336600448"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Printer
@@ -565,21 +674,18 @@ namespace HelloWorld
         {
             Console.WriteLine($&quot;整数：{value}&quot;);
         }
+
         public void Print(double value)
         {
             Console.WriteLine($&quot;小数：{value:F2}&quot;);
         }
+
         public void Print(string value)
         {
             Console.WriteLine($&quot;字符串：「{value}」&quot;);
         }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -590,9 +696,52 @@ namespace HelloWorld
             p.Print(&quot;Hello&quot;);   // 字符串：「Hello」
         }
     }
-}</code></pre><div class="card"><ul><li>动手：给 <code>Printer</code> 再加一个 <code>Print(bool value)</code> 重载，输出「布尔值：True/False」</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>三个 <code>Print</code> 方法名完全一样，C# 靠参数类型自动区分——传 <code>int</code> 走第一个，传 <code>string</code> 走第三个</li><li>这就是重载的核心价值：调用方只管写 <code>p.Print(...)</code>，不用记 <code>PrintInt</code>、<code>PrintDouble</code>、<code>PrintString</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——下面的三个 <code>Multiply</code> 还没写完，请依次补全：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376754880',this)">复制</button></div>
-<pre id="c_4376754880"><code class="language-csharp">using System;
+}</code></pre>
+</div><svg viewBox="0 0 680 280" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个同名 Print 按参数类型分派：int 走整数版、double 走小数版、string 走字符串版">
+  <defs><marker id="k12d1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">调用方只写 p.Print(...)，编译器看参数类型挑方法</text>
+  <rect x="24" y="46" width="200" height="40" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="71" fill="#38bdf8" font-size="10.5" font-family="monospace">p.Print(100)</text>
+  <line x1="228" y1="66" x2="320" y2="66" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12d1)"/>
+  <rect x="324" y="46" width="332" height="52" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="338" y="66" fill="#d7e0ee" font-size="10" font-family="monospace">Print(int value)</text>
+  <text x="338" y="86" fill="#38bdf8" font-size="10.5" font-family="monospace">→ 整数：100</text>
+  <rect x="24" y="120" width="200" height="40" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="145" fill="#38bdf8" font-size="10.5" font-family="monospace">p.Print(3.14)</text>
+  <line x1="228" y1="140" x2="320" y2="140" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12d1)"/>
+  <rect x="324" y="120" width="332" height="52" rx="8" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="338" y="140" fill="#d7e0ee" font-size="10" font-family="monospace">Print(double value)</text>
+  <text x="338" y="160" fill="#f59e0b" font-size="10.5" font-family="monospace">→ 小数：3.14</text>
+  <rect x="24" y="194" width="200" height="40" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="219" fill="#38bdf8" font-size="10.5" font-family="monospace">p.Print("Hello")</text>
+  <line x1="228" y1="214" x2="320" y2="214" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12d1)"/>
+  <rect x="324" y="194" width="332" height="52" rx="8" fill="#16202e" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="338" y="214" fill="#d7e0ee" font-size="10" font-family="monospace">Print(string value)</text>
+  <text x="338" y="234" fill="#22c55e" font-size="10.5" font-family="monospace">→ 字符串：「Hello」</text>
+  <text x="24" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">名字一样、参数类型不同 = 重载；靠参数类型区分，不看返回值。</text>
+</svg><div class="card"><ul><li>动手：给 <code>Printer</code> 再加一个 <code>Print(bool value)</code> 重载，输出<span class="term-q">「布尔值：True/False」</span></li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>三个 <code>Print</code> 方法名完全一样，C# 靠参数类型自动区分——传 <code>int</code> 走第一个，传 <code>string</code> 走第三个</li><li>这就是重载的核心价值：调用方只管写 <code>p.Print(...)</code>，不用记 <code>PrintInt</code>、<code>PrintDouble</code>、<code>PrintString</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——下面的三个 <code>Multiply</code> 还没写完，请依次补全：</p></div><svg viewBox="0 0 680 224" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="按参数个数和参数类型两个维度，看三个 Multiply 各占哪一格">
+  <text x="240" y="30" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">2 个参数</text>
+  <text x="450" y="30" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">3 个参数</text>
+  <text x="116" y="76" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">int 参数</text>
+  <text x="116" y="146" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">double 参数</text>
+  <rect x="150" y="48" width="180" height="52" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="240" y="72" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">Multiply(int a, int b)</text>
+  <text x="240" y="90" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">返回 int</text>
+  <rect x="360" y="48" width="180" height="52" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="450" y="72" text-anchor="middle" fill="#22c55e" font-size="9.2" font-family="monospace">Multiply(int a, int b, int c)</text>
+  <text x="450" y="90" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">返回 int</text>
+  <rect x="150" y="118" width="180" height="52" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="240" y="142" text-anchor="middle" fill="#22c55e" font-size="9.2" font-family="monospace">Multiply(double a, double b)</text>
+  <text x="240" y="160" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">返回 double</text>
+  <rect x="360" y="118" width="180" height="52" rx="8" fill="none" stroke="#64748b" stroke-opacity="0.55" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="450" y="142" text-anchor="middle" fill="#6b7d97" font-size="10.5" font-family="monospace">不用写</text>
+  <text x="450" y="160" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">题目没要求这一格</text>
+  <text x="40" y="200" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">重载的判断标准只看「参数列表」：个数不同算重载，类型不同也算重载；只改返回类型不算。</text>
+  <text x="40" y="216" fill="#6b7d97" font-size="10" font-family="sans-serif">所以 ① 补返回类型和参数，② 加一个 c 变成三参数，③ 把类型换成 double——三格互不打架。</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336582144',this)">复制</button></div>
+<pre id="c_4336582144"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Calculator
@@ -602,14 +751,18 @@ namespace HelloWorld
         {
             <span class="code-blank">___</span> a * b;
         }
+
         // 2. 三个整数相乘：从零写出完整的方法（提示：方法名也是 Multiply）
+
+
         // 3. 两个小数相乘：从零写出完整的方法（返回类型和参数类型都变了）
+
+
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336581952',this)">复制</button></div>
+<pre id="c_4336581952"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -631,12 +784,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>static — 属于类，不属于对象</h1>
 <div class="card"><p>来看一段代码，注意 <code>static</code> 关键字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376236480',this)">复制</button></div>
-<pre id="c_4376236480"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336603776',this)">复制</button></div>
+<pre id="c_4336603776"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Classroom
@@ -644,12 +799,7 @@ namespace HelloWorld
         public string studentName;           // 普通字段：每人不同
         public static int temperature = 26;  // static 字段：全班共用
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -663,35 +813,79 @@ namespace HelloWorld
             Console.WriteLine(Classroom.temperature);  // 28
         }
     }
-}</code></pre><div class="card"><h3>为什么？类比理解：</h3></div><div class="card"><ul><li>每个学生都有自己的一支<strong>铅笔</strong>（普通字段）——你的铅笔和别人不一样</li><li>但教室的<strong>空调遥控器</strong>只有一个（static 字段）——全教室共用，谁拿起来都能调温度</li></ul></div><div class="card"><table><tr><th></th><th>普通成员</th><th>static 成员</th></tr><tr><td>归属于</td><td>每个对象各有一份</td><td>整个类共享一份</td></tr><tr><td>比喻</td><td>铅笔（自己的）</td><td>空调遥控器（共用的）</td></tr><tr><td>调用方式</td><td><code>对象.成员</code></td><td><code>类名.成员</code></td></tr><tr><td>需要 new？</td><td>必须先 new 对象</td><td>直接用，不需要 new</td></tr></table></div><div class="card"><ul><li>你之前就在用 static！<code>Console.WriteLine()</code>、<code>int.Parse()</code> 都是 static 方法——从来没有 <code>new Console()</code> 过，对吧？</li></ul></div>
-</div></div>
-<div class="slide" data-page="7"><div class="slide-inner markable">
-<h1>static 示例 — 学生计数器</h1>
-<div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376715136',this)">复制</button></div>
-<pre id="c_4376715136"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><h3>为什么？类比理解：</h3></div><div class="card"><ul><li>每个学生都有自己的一支<strong>铅笔</strong>（普通字段）——你的铅笔和别人不一样</li><li>但教室的<strong>空调遥控器</strong>只有一个（static 字段）——全教室共用，谁拿起来都能调温度</li></ul></div><svg viewBox="0 0 680 342" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="普通字段随每个对象各复制一份，static 字段只在类上存一份，所有对象共用">
+  <defs>
+    <marker id="sta-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/>
+    </marker>
+  </defs>
+
+  <!-- 类：字段真正存放的地方 -->
+  <rect x="40" y="28" width="600" height="112" rx="14" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="60" y="52" fill="#38bdf8" font-size="12.5" font-family="monospace">class Classroom</text>
+
+  <rect x="60" y="64" width="290" height="50" rx="8" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="74" y="84" fill="#f59e0b" font-size="11.5" font-family="monospace">static int temperature = 26;</text>
+  <text x="336" y="84" text-anchor="end" fill="#f59e0b" font-size="10.5" font-family="sans-serif">仅 1 份</text>
+  <text x="74" y="102" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">全班共用，永远是这一份</text>
+
+  <rect x="364" y="64" width="256" height="50" rx="8" fill="#21283a" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="378" y="84" fill="#22c55e" font-size="11.5" font-family="monospace">string studentName;</text>
+  <text x="606" y="84" text-anchor="end" fill="#22c55e" font-size="10.5" font-family="sans-serif">各存 1 份</text>
+  <text x="378" y="102" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">每 new 一次，各复制一份</text>
+
+  <!-- 共用总线 -->
+  <line x1="130" y1="170" x2="550" y2="170" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="130" y1="170" x2="130" y2="196" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="340" y1="170" x2="340" y2="196" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="550" y1="170" x2="550" y2="196" stroke="#f59e0b" stroke-opacity="0.35" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="205" y1="170" x2="205" y2="120" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#sta-a)"/>
+  <text x="214" y="160" fill="#f59e0b" font-size="10.5" font-family="sans-serif">三个对象读写的都是同一个它</text>
+
+  <!-- 对象：只带走普通字段 -->
+  <rect x="40" y="196" width="180" height="96" rx="10" fill="#16202e" stroke="#22c55e" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="56" y="220" fill="#d7e0ee" font-size="11.5" font-family="monospace">Classroom c1</text>
+  <rect x="54" y="230" width="152" height="32" rx="6" fill="#0f172a" stroke="#22c55e" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="66" y="251" fill="#d7e0ee" font-size="11" font-family="monospace">studentName="张三"</text>
+  <text x="56" y="282" fill="#6b7d97" font-size="10.5" font-family="sans-serif">自己的一份</text>
+
+  <rect x="250" y="196" width="180" height="96" rx="10" fill="#16202e" stroke="#22c55e" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="266" y="220" fill="#d7e0ee" font-size="11.5" font-family="monospace">Classroom c2</text>
+  <rect x="264" y="230" width="152" height="32" rx="6" fill="#0f172a" stroke="#22c55e" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="276" y="251" fill="#d7e0ee" font-size="11" font-family="monospace">studentName="李四"</text>
+  <text x="266" y="282" fill="#6b7d97" font-size="10.5" font-family="sans-serif">自己的一份</text>
+
+  <rect x="460" y="196" width="180" height="96" rx="10" fill="#16202e" stroke="#22c55e" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="476" y="220" fill="#d7e0ee" font-size="11.5" font-family="monospace">Classroom c3</text>
+  <rect x="474" y="230" width="152" height="32" rx="6" fill="#0f172a" stroke="#22c55e" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="486" y="251" fill="#d7e0ee" font-size="11" font-family="monospace">studentName="王五"</text>
+  <text x="476" y="282" fill="#6b7d97" font-size="10.5" font-family="sans-serif">自己的一份</text>
+
+  <text x="40" y="322" fill="#8b9bb4" font-size="11" font-family="sans-serif">普通字段随 new 复制到每个对象；static 字段只存在类上，c1、c2、c3 看到的温度是同一个变量。</text>
+</svg><div class="card"><table><tr><th></th><th>普通成员</th><th>static 成员</th></tr><tr><td>归属于</td><td>每个对象各有一份</td><td>整个类共享一份</td></tr><tr><td>比喻</td><td>铅笔（自己的）</td><td>空调遥控器（共用的）</td></tr><tr><td>调用方式</td><td><code>对象.成员</code></td><td><code>类名.成员</code></td></tr><tr><td>需要 new？</td><td>必须先 new 对象</td><td>直接用，不需要 new</td></tr></table></div><div class="card"><ul><li>你之前就在用 static！<code>Console.WriteLine()</code>、<code>int.Parse()</code> 都是 static 方法——从来没有 <code>new Console()</code> 过，对吧？</li></ul></div><div class="card"><h3>示例：学生计数器</h3><p>static 到底解决什么问题？看一个真实场景——<strong>统计一共创建过多少个学生</strong>。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336581888',this)">复制</button></div>
+<pre id="c_4336581888"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         public string name;
         public static int totalCount = 0;      // 全班共享一份
+
         public Student(string name)
         {
             this.name = name;
             totalCount++;                      // 每创建一个学生，计数+1
         }
+
         public static void ShowTotal()
         {
             Console.WriteLine($&quot;共有 {totalCount} 名学生&quot;);
         }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -703,12 +897,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
+</div><div class="card"><ul><li><code>totalCount</code> 在构造方法里 <code>++</code>：每 <code>new</code> 一个学生就累加一次，而它<strong>只有一份</strong>，所以算出来的是全班人数</li><li><code>ShowTotal()</code> 也是 static：直接 <code>Student.ShowTotal()</code>，不用先有对象——统计的对象是类，不是某一个学生</li><li>反过来，如果把 <code>totalCount</code> 写成普通字段，每个对象各存一份：<code>s1</code> 加完，<code>s2</code> 还是从 0 开始，永远只能数到 1</li></ul></div>
 </div></div>
-<div class="slide" data-page="8"><div class="slide-inner markable">
+<div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习2 — 最大公约数与质数判断</h1>
 <div class="ok-box">定义静态工具类，包含求最大公约数和判断质数的方法，直接用类名调用，体会 <code>static</code> 的便利。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376753472',this)">复制</button></div>
-<pre id="c_4376753472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336579648',this)">复制</button></div>
+<pre id="c_4336579648"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class MathTool
@@ -724,6 +920,7 @@ namespace HelloWorld
             }
             return a;
         }
+
         // 质数：只能被1和自己整除，如 2、3、5、7、11...
         public static bool IsPrime(int num)
         {
@@ -733,12 +930,7 @@ namespace HelloWorld
             return true;
         }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -749,9 +941,52 @@ namespace HelloWorld
             Console.WriteLine(MathTool.IsPrime(10));    // False
         }
     }
-}</code></pre><div class="card"><ul><li>动手：用 <code>MathTool.GCD()</code> 求 24 和 36 的最大公约数，看看结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>GCD</code> 和 <code>IsPrime</code> 都是 <code>static</code>——不需要创建对象，像使用 <code>Console.WriteLine()</code> 一样直接 <code>MathTool.GCD(...)</code> 就能调用</li><li><code>static</code> 方法的好处：像工具箱里的工具，随拿随用，不用先&quot;买一套新工具箱&quot;</li><li><code>IsPrime</code> 的循环条件 <code>i * i &lt;= num</code> 是质数判定的优化写法：如果 <code>num</code> 是合数，必有一个因子 ≤ √num</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>MathTool</code> 添加 <code>Square</code> 和 <code>Cube</code> 方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376755584',this)">复制</button></div>
-<pre id="c_4376755584"><code class="language-csharp">using System;
+}</code></pre>
+</div><svg viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="MathTool.GCD(48,18)=6、IsPrime(7)=True、IsPrime(10)=False，都不需要 new">
+  <defs><marker id="k12d2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <rect x="24" y="40" width="250" height="130" rx="10" fill="none" stroke="#6b7d97" stroke-opacity="0.5" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="38" y="62" fill="#6b7d97" font-size="9.5" font-family="sans-serif">实例调用（用不上）</text>
+  <text x="38" y="88" fill="#8b9bb4" font-size="9.5" font-family="monospace">MathTool m = new MathTool();</text>
+  <line x1="38" y1="84" x2="250" y2="84" stroke="#ef4444" stroke-width="1.6" stroke-opacity="0.9"/>
+  <text x="38" y="116" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">static 方法属于类，</text>
+  <text x="38" y="134" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">不属于某个对象</text>
+  <text x="38" y="160" fill="#ef4444" font-size="10" font-family="sans-serif">✗ 不用 new</text>
+  <rect x="300" y="40" width="250" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="314" y="64" fill="#d7e0ee" font-size="10" font-family="monospace">MathTool.GCD(48, 18)</text>
+  <text x="542" y="65" text-anchor="end" fill="#38bdf8" font-size="12" font-family="monospace">6</text>
+  <rect x="300" y="86" width="250" height="38" rx="6" fill="#1b2536" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="314" y="110" fill="#d7e0ee" font-size="10" font-family="monospace">MathTool.IsPrime(7)</text>
+  <text x="542" y="111" text-anchor="end" fill="#22c55e" font-size="12" font-family="monospace">True</text>
+  <rect x="300" y="132" width="250" height="38" rx="6" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="314" y="156" fill="#d7e0ee" font-size="10" font-family="monospace">MathTool.IsPrime(10)</text>
+  <text x="542" y="157" text-anchor="end" fill="#f59e0b" font-size="12" font-family="monospace">False</text>
+  <rect x="24" y="190" width="632" height="50" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="40" y="212" fill="#8b9bb4" font-size="9.5" font-family="monospace">GCD(48,18) 辗转相除：48 % 18 = 12　18 % 12 = 6　12 % 6 = 0</text>
+  <text x="40" y="230" fill="#22c55e" font-size="9.5" font-family="sans-serif">余数变成 0 时，除数 6 就是最大公约数</text>
+  <text x="24" y="274" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">工具类的方法都写成 static：像 Console.WriteLine 一样，类名点一下就能用。</text>
+</svg><div class="card"><ul><li>动手：用 <code>MathTool.GCD()</code> 求 24 和 36 的最大公约数，看看结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>GCD</code> 和 <code>IsPrime</code> 都是 <code>static</code>——不需要创建对象，像使用 <code>Console.WriteLine()</code> 一样直接 <code>MathTool.GCD(...)</code> 就能调用</li><li><code>static</code> 方法的好处：像工具箱里的工具，随拿随用，不用先&quot;买一套新工具箱&quot;</li><li><code>IsPrime</code> 的循环条件 <code>i * i &lt;= num</code> 是质数判定的优化写法：如果 <code>num</code> 是合数，必有一个因子 ≤ √num</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>MathTool</code> 添加 <code>Square</code> 和 <code>Cube</code> 方法：</p></div><svg viewBox="0 0 680 240" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="MathTool 是静态工具箱，四个方法都用类名直接调用，其中 Square 和 Cube 待补全">
+  <rect x="40" y="28" width="600" height="102" rx="10" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="56" y="50" fill="#38bdf8" font-size="11" font-family="monospace">class MathTool　（static 工具箱：不用 new，类名直接点）</text>
+  <rect x="56" y="62" width="132" height="52" rx="7" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="122" y="84" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">GCD(a, b)</text>
+  <text x="122" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">已有</text>
+  <rect x="202" y="62" width="132" height="52" rx="7" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="268" y="84" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">IsPrime(n)</text>
+  <text x="268" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">已有</text>
+  <rect x="348" y="62" width="132" height="52" rx="7" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="414" y="84" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">Square(x)</text>
+  <text x="414" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">待补全</text>
+  <rect x="494" y="62" width="132" height="52" rx="7" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1" stroke-dasharray="4 3"/>
+  <text x="560" y="84" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">Cube(x)</text>
+  <text x="560" y="102" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">待补全</text>
+  <rect x="40" y="148" width="600" height="56" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="60" y="172" fill="#6b7d97" font-size="9.5" font-family="sans-serif">在 Main 里直接调用：</text>
+  <text x="60" y="192" fill="#22c55e" font-size="11.5" font-family="monospace">MathTool.Square(5) → 25　　MathTool.Cube(3) → 27</text>
+  <text x="40" y="228" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">static 方法不用先造对象——写 <tspan font-family="monospace">MathTool.Square(5)</tspan> 就能用，跟 <tspan font-family="monospace">Console.WriteLine()</tspan> 一个套路。</text>
+</svg><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336579072',this)">复制</button></div>
+<pre id="c_4336579072"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class MathTool
@@ -761,20 +996,27 @@ namespace HelloWorld
         {
             <span class="code-blank">___</span> x * x;
         }
+
         // 求立方
         public static int <span class="code-blank">___</span>(int x)
         {
             return x * x * <span class="code-blank">___</span>;
         }
     }
-    // 调用
-    Console.WriteLine(MathTool.Square(5));   // 25
-    Console.WriteLine(MathTool.<span class="code-blank">___</span>(3));      // 27
-}</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
 
-using System;
+    // 调用
+    class Program
+    {
+        static void Main()
+        {
+        Console.WriteLine(MathTool.Square(5));   // 25
+        Console.WriteLine(MathTool.<span class="code-blank">___</span>(3));      // 27
+        }
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336578880',this)">复制</button></div>
+<pre id="c_4336578880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -791,15 +1033,22 @@ namespace HelloWorld
         }
     }
 
-    Console.WriteLine(MathTool.Square(5));   // 25
-    Console.WriteLine(MathTool.Cube(3));     // 27
+    class Program
+    {
+        static void Main()
+        {
+        Console.WriteLine(MathTool.Square(5));   // 25
+        Console.WriteLine(MathTool.Cube(3));     // 27
+        }
+    }
 }</code></pre>
+</div></div></div>
+</div></div>
+<div class="slide" data-page="8"><div class="slide-inner markable">
+<h1>本节知识梳理</h1>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>方法重载</strong>：同名不同参数（个数/类型），调用时按实参匹配</li><li><strong>构造方法重载</strong>：一个类写多个构造方法，方便用不同方式创建</li><li><strong>static — 属于类，不属于对象</strong>：<code>static</code> 成员直接用 <code>类名.</code> 访问，不依赖实例；学生计数器就是用它数<span class="term">一共创建了多少个对象</span></li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
-<h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>方法重载</strong>：同名不同参数（个数/类型），调用时按实参匹配</li><li><strong>构造方法重载</strong>：一个类写多个构造方法，方便用不同方式创建</li><li><strong>static — 属于类，不属于对象</strong>：<code>static</code> 成员直接用 <code>类名.</code> 访问，不依赖实例</li><li><strong>static 示例 — 学生计数器</strong>：用 <code>static</code> 字段统计一共创建了多少学生</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
-</div></div>
-<div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>综合练习 — 商品库存管理</h1>
 <div class="ok-box">设计 <code>Product</code> 类实现入库操作，用<strong>构造方法重载</strong>和<strong>方法重载</strong>灵活管理商品。</div><div class="card"><h3>期望输入：</h3></div><pre class="plain-box"><code>商品A：单价19.9，初始库存10
 商品B：单价5.0，初始库存50</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>--- 入库前 ---
@@ -816,9 +1065,35 @@ namespace HelloWorld
 --- 入库后 ---
 商品A：¥19.9 × 61件  总价：¥1213.9
 商品B：¥5.0 × 70件  总价：¥350.0
-当前共有 2 种商品</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>三个构造重载：完整（名称+价格+库存）、精简（名称+价格，库存默认0）、默认（空）</li><li>三个入库方法重载：<code>Restock(int qty)</code> 指定数量、<code>Restock()</code> 默认+1、<code>Restock(double rate)</code> 按比例补货</li><li><code>static int TotalTypes</code> 统计商品种类</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376715904',this)">复制</button></div>
-<pre id="c_4376715904"><code class="language-csharp">using System;
+当前共有 2 种商品</code></pre><svg viewBox="0 0 680 214" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="商品A的库存在三次不同重载的入库操作后从10变成61">
+  <defs>
+    <marker id="p12-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
+  </defs>
+  <text x="30" y="22" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">商品A：单价 19.9，初始库存 10 件</text>
+  <rect x="30" y="56" width="110" height="52" rx="8" fill="#21283a" stroke="#64748b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="85" y="88" text-anchor="middle" fill="#d7e0ee" font-size="17" font-family="monospace">10</text>
+  <rect x="200" y="56" width="110" height="52" rx="8" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="255" y="88" text-anchor="middle" fill="#38bdf8" font-size="17" font-family="monospace">40</text>
+  <rect x="370" y="56" width="110" height="52" rx="8" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="425" y="88" text-anchor="middle" fill="#f59e0b" font-size="17" font-family="monospace">41</text>
+  <rect x="540" y="56" width="110" height="52" rx="8" fill="#1b2536" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="595" y="88" text-anchor="middle" fill="#22c55e" font-size="17" font-family="monospace">61</text>
+  <line x1="156" y1="82" x2="196" y2="82" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p12-a)"/>
+  <text x="176" y="46" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">Restock(30)</text>
+  <text x="176" y="128" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">+30 → 40</text>
+  <line x1="326" y1="82" x2="366" y2="82" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p12-a)"/>
+  <text x="346" y="46" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">Restock()</text>
+  <text x="346" y="128" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">默认 +1 → 41</text>
+  <line x1="496" y1="82" x2="536" y2="82" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p12-a)"/>
+  <text x="516" y="46" text-anchor="middle" fill="#38bdf8" font-size="9.5" font-family="monospace">Restock(0.5)</text>
+  <text x="516" y="128" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">+int(41×0.5)=20</text>
+  <text x="30" y="164" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个 Restock 名字一样，靠参数区分：<tspan font-family="monospace">(int)</tspan> 指定数量、<tspan font-family="monospace">()</tspan> 默认加 1、<tspan font-family="monospace">(double)</tspan> 按比例；无参那个内部直接调 <tspan font-family="monospace">Restock(1)</tspan>。</text>
+  <text x="30" y="186" fill="#6b7d97" font-size="10" font-family="sans-serif">构造方法同理有三份：<tspan font-family="monospace">(name, price, stock)</tspan> 全给、<tspan font-family="monospace">(name, price)</tspan> 库存默认 0、<tspan font-family="monospace">()</tspan> 空对象稍后再填。</text>
+  <text x="30" y="204" fill="#6b7d97" font-size="10" font-family="sans-serif">比例补货那一步注意：<tspan font-family="monospace">(int)(41 * 0.5)</tspan> = 20，小数被截掉，所以是 41 + 20 = 61。</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>三个构造重载：完整（名称+价格+库存）、精简（名称+价格，库存默认0）、默认（空）</li><li>三个入库方法重载：<code>Restock(int qty)</code> 指定数量、<code>Restock()</code> 默认+1、<code>Restock(double rate)</code> 按比例补货</li><li><code>static int TotalTypes</code> 统计商品种类</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336576128',this)">复制</button></div>
+<pre id="c_4336576128"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Product
@@ -827,6 +1102,7 @@ namespace HelloWorld
         public double price;
         public int stock;
         public <span class="code-blank">___</span> int TotalTypes = 0;    // static：共有几类商品
+
         // 构造重载1：完整
         public Product(string name, double price, int stock)
         {
@@ -835,6 +1111,7 @@ namespace HelloWorld
             this.stock = <span class="code-blank">___</span>;
             <span class="code-blank">___</span>++;                       // 每 new 一个就 +1
         }
+
         // 构造重载2：精简——库存默认0
         <span class="code-blank">___</span> Product(string name, double price)
         {
@@ -843,51 +1120,65 @@ namespace HelloWorld
             this.stock = <span class="code-blank">___</span>;
             TotalTypes++;
         }
+
         // 构造重载3：默认
         <span class="code-blank">___</span> Product() { }
+
         // 入库重载1：指定数量
         public void Restock(int <span class="code-blank">___</span>)
         {
             stock += qty;
             Console.WriteLine($&quot;{name} 入库{qty}件 → 库存：{stock}&quot;);
         }
+
         // 入库重载2：默认 +1
         public void <span class="code-blank">___</span>()   // 方法名也是 Restock
         {
             Restock(<span class="code-blank">___</span>);                // 可以直接调用重载1
         }
+
         // 入库重载3：按比例补货
         public void Restock(<span class="code-blank">___</span> rate)   // 参数类型变了——小数
         {
             int qty = (int)(stock * <span class="code-blank">___</span>);
             Restock(qty);
         }
+
         public void Show()
         {
             Console.WriteLine($&quot;{name}：¥{price} × {stock}件  总价：¥{price * stock:F1}&quot;);
         }
     }
+
     // 使用
     Product p1 = <span class="code-blank">___</span> Product(&quot;商品A&quot;, 19.9, 10);
-    Product p2 = new Product(&quot;商品B&quot;, 5.0, <span class="code-blank">___</span>);
-    Console.WriteLine(&quot;--- 入库前 ---&quot;);
-    p1.Show();
-    p2.Show();
-    Console.WriteLine($&quot;共有 {Product.<span class="code-blank">___</span>} 种商品&quot;);
-    Console.WriteLine(&quot;\\n--- 操作 ---&quot;);
-    p1.Restock(30);
-    p1.<span class="code-blank">___</span>();           // 默认+1
-    p1.Restock(0.5);    // 按比例50%
-    p2.Restock(20);
-    Console.WriteLine(&quot;\\n--- 入库后 ---&quot;);
-    <span class="code-blank">___</span>.Show();
-    <span class="code-blank">___</span>.Show();
-    Console.WriteLine($&quot;当前共有 {Product.<span class="code-blank">___</span>} 种商品&quot;);
-}</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
+    class Program
+    {
+        static void Main()
+        {
+        Product p2 = new Product(&quot;商品B&quot;, 5.0, <span class="code-blank">___</span>);
 
-using System;
+        Console.WriteLine(&quot;--- 入库前 ---&quot;);
+        p1.Show();
+        p2.Show();
+        Console.WriteLine($&quot;共有 {Product.<span class="code-blank">___</span>} 种商品&quot;);
+
+        Console.WriteLine(&quot;\\n--- 操作 ---&quot;);
+        p1.Restock(30);
+        p1.<span class="code-blank">___</span>();           // 默认+1
+        p1.Restock(0.5);    // 按比例50%
+        p2.Restock(20);
+
+        Console.WriteLine(&quot;\\n--- 入库后 ---&quot;);
+        <span class="code-blank">___</span>.Show();
+        <span class="code-blank">___</span>.Show();
+        Console.WriteLine($&quot;当前共有 {Product.<span class="code-blank">___</span>} 种商品&quot;);
+        }
+    }
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336575616',this)">复制</button></div>
+<pre id="c_4336575616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -939,27 +1230,35 @@ namespace HelloWorld
         }
     }
 
-    Product p1 = new Product(&quot;商品A&quot;, 19.9, 10);
-    Product p2 = new Product(&quot;商品B&quot;, 5.0, 50);
+    class Program
+    {
+        static void Main()
+        {
+        Product p1 = new Product(&quot;商品A&quot;, 19.9, 10);
+        Product p2 = new Product(&quot;商品B&quot;, 5.0, 50);
 
-    Console.WriteLine(&quot;--- 入库前 ---&quot;);
-    p1.Show();
-    p2.Show();
-    Console.WriteLine($&quot;共有 {Product.TotalTypes} 种商品&quot;);
+        Console.WriteLine(&quot;--- 入库前 ---&quot;);
+        p1.Show();
+        p2.Show();
+        Console.WriteLine($&quot;共有 {Product.TotalTypes} 种商品&quot;);
 
-    Console.WriteLine(&quot;\n--- 操作 ---&quot;);
-    p1.Restock(30);
-    p1.Restock();
-    p1.Restock(0.5);
-    p2.Restock(20);
+        Console.WriteLine(&quot;\n--- 操作 ---&quot;);
+        p1.Restock(30);
+        p1.Restock();
+        p1.Restock(0.5);
+        p2.Restock(20);
 
-    Console.WriteLine(&quot;\n--- 入库后 ---&quot;);
-    p1.Show();
-    p2.Show();
-    Console.WriteLine($&quot;当前共有 {Product.TotalTypes} 种商品&quot;);
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：用<strong>递归</strong>写一个方法 <code>Factorial(n)</code>，返回 n 的阶乘（n! = n × (n-1) × … × 1，0! = 1）。<br>要求：自己写递归方法并在 <code>Main</code> 里调用，不能用循环代替。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376712576',this)">复制</button></div>
-<pre id="c_4376712576"><code class="language-csharp">using System;
+        Console.WriteLine(&quot;\n--- 入库后 ---&quot;);
+        p1.Show();
+        p2.Show();
+        Console.WriteLine($&quot;当前共有 {Product.TotalTypes} 种商品&quot;);
+        }
+    }
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：用<strong>递归</strong>写一个方法 <code>Factorial(n)</code>，返回 n 的阶乘（n! = n × (n-1) × … × 1，0! = 1）。<br>要求：自己写递归方法并在 <code>Main</code> 里调用，不能用循环代替。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336575296',this)">复制</button></div>
+<pre id="c_4336575296"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -977,13 +1276,99 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
-<div class="slide" data-page="11"><div class="slide-inner markable">
+<div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Rectangle</code> 类：构造方法初始化长宽，<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）、<code>IsSquare()</code>（判断正方形）。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>长5 宽3 矩形：面积=15，周长=16，正方形？False</code></li></ul><ul><li>输出：<code>长4 宽4 矩形：面积=16，周长=16，正方形？True</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Student</code> 类（字段+构造+方法），数组存3个学生，用 static 方法找出平均分最高的学生。</p><ul><li>提示：<code>public static Student GetBest(Student[] students)</code> 遍历比较</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>学生数据 = 张三(80,75,82)、李四(88,92,78)、王五(95,82,90)</code></li></ul><ul><li>输出：<code>最高分：王五（平均89.0）</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>设计 <code>Logger</code> 日志类，综合运用构造重载 + 方法重载 + static 计数：</p><ul><li><strong>构造重载</strong>：<code>Logger(string name)</code> 指定日志名称、<code>Logger()</code> 默认名称&quot;系统日志&quot;</li><li><strong>方法重载</strong>：<code>Log(string msg)</code> 普通日志、<code>Log(string msg, string level)</code> 带级别（如 INFO、ERROR）</li><li><strong>static</strong> <code>int TotalLogs</code>：所有实例共享，每次调用 Log 都 +1</li><li>提示：构造方法里也要能区分不同 Logger 实例的名字</li></ul></div><div class="ok-box">💬 日志级别是什么？<br>- <code>INFO</code>（信息）— 正常运行记录，如&quot;程序启动&quot;、&quot;用户登录&quot;<br>- <code>WARN</code>（警告）— 有点问题但不影响运行，如&quot;密码即将过期&quot;<br>- <code>ERROR</code>（错误）— 出问题了，如&quot;文件未找到&quot;<br>- 题中只需把级别当普通字符串传进去，<code>Log(&quot;程序启动&quot;, &quot;INFO&quot;)</code> 即可</div><div class="ok-box">验收示范：<ul><li>输入：<code>创建系统日志和安全日志两个 Logger</code></li></ul><ul><li>输出：<code>[系统日志] INFO: 程序启动</code></li></ul><ul><li>输出：<code>[系统日志] ERROR: 文件未找到</code></li></ul><ul><li>输出：<code>[安全日志] INFO: 用户登录</code></li></ul><ul><li>输出：<code>[安全日志] WARN: 密码即将过期</code></li></ul><ul><li>输出：<code>共记录 4 条日志</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>设计 <code>ScoreConverter</code> 分数转换类，综合运用构造 + 方法重载 + static：</p><ul><li><strong>构造方法</strong>：<code>ScoreConverter(double fullScore)</code> 指定满分（如 100、150）</li><li><strong>方法重载</strong>：</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score)</code> → 转换为百分制</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double[] scores)</code> → 批量转换，返回平均值</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score, string targetScale)</code> → 转到指定分制（如 &quot;120&quot;）</li><li><strong>static</strong> <code>int ConversionCount</code>：统计所有实例共执行了多少次转换</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>满分150的试卷，转百分制</code></li></ul><ul><li>输出：<code>135分 → 百分制：90.0</code></li></ul><ul><li>输出：<code>120分 → 百分制：80.0</code></li></ul><ul><li>输出：<code>[132, 120, 141] 平均 → 百分制：87.3</code></li></ul><ul><li>输出：<code>90分 → 120分制：72.0</code></li></ul><ul><li>输出：<code>共执行 4 次转换</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376715712',this)">复制</button></div>
-<pre id="c_4376715712"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Rectangle</code> 类：构造方法初始化长宽，<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）、<code>IsSquare()</code>（判断正方形）。</p></div><svg viewBox="0 0 680 330" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：5×3 与 4×4 两个矩形，面积周长与是否正方形">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">同一个类创建两个对象，各自算自己的面积、周长、是否正方形</text>
+  <rect x="24" y="40" width="300" height="160" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="38" y="64" fill="#8b9bb4" font-size="9.5" font-family="monospace">Rectangle r1 = new Rectangle(5, 3)</text>
+  <line x1="38" y1="74" x2="310" y2="74" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <text x="38" y="102" fill="#38bdf8" font-size="11" font-family="monospace">面积 = 15</text>
+  <text x="38" y="132" fill="#38bdf8" font-size="11" font-family="monospace">周长 = 16</text>
+  <text x="38" y="162" fill="#f59e0b" font-size="11" font-family="monospace">正方形？False</text>
+  <rect x="356" y="40" width="300" height="160" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="370" y="64" fill="#8b9bb4" font-size="9.5" font-family="monospace">Rectangle r2 = new Rectangle(4, 4)</text>
+  <line x1="370" y1="74" x2="642" y2="74" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <text x="370" y="102" fill="#38bdf8" font-size="11" font-family="monospace">面积 = 16</text>
+  <text x="370" y="132" fill="#38bdf8" font-size="11" font-family="monospace">周长 = 16</text>
+  <text x="370" y="162" fill="#22c55e" font-size="11" font-family="monospace">正方形？True</text>
+  <rect x="24" y="216" width="632" height="64" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="242" fill="#22c55e" font-size="11" font-family="monospace">长5 宽3 矩形：面积=15，周长=16，正方形？False</text>
+  <text x="40" y="266" fill="#22c55e" font-size="11" font-family="monospace">长4 宽4 矩形：面积=16，周长=16，正方形？True</text>
+  <text x="24" y="304" fill="#6b7d97" font-size="9.5" font-family="sans-serif">IsSquare() 就一句 return width == height;　—— 返回 bool，别写成字符串。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>长5 宽3 矩形：面积=15，周长=16，正方形？False</code></li></ul><ul><li>输出：<code>长4 宽4 矩形：面积=16，周长=16，正方形？True</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Student</code> 类（字段+构造+方法），数组存3个学生，用 static 方法找出平均分最高的学生。</p><ul><li>提示：<code>public static Student GetBest(Student[] students)</code> 遍历比较</li></ul></div><svg viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：三个学生的平均分 79.0、86.0、89.0，static GetBest 返回王五">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">Student[3] 数组交给 static 方法，遍历比平均分</text>
+  <rect x="24" y="40" width="196" height="92" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="38" y="64" fill="#d7e0ee" font-size="11" font-family="monospace">张三</text>
+  <text x="38" y="86" fill="#8b9bb4" font-size="9" font-family="monospace">80 / 75 / 82</text>
+  <text x="38" y="116" fill="#38bdf8" font-size="15" font-family="monospace">79.0</text>
+  <rect x="240" y="40" width="196" height="92" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="254" y="64" fill="#d7e0ee" font-size="11" font-family="monospace">李四</text>
+  <text x="254" y="86" fill="#8b9bb4" font-size="9" font-family="monospace">88 / 92 / 78</text>
+  <text x="254" y="116" fill="#38bdf8" font-size="15" font-family="monospace">86.0</text>
+  <rect x="456" y="40" width="196" height="92" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="470" y="64" fill="#22c55e" font-size="11" font-family="monospace">王五</text>
+  <text x="470" y="86" fill="#8b9bb4" font-size="9" font-family="monospace">95 / 82 / 90</text>
+  <text x="470" y="116" fill="#22c55e" font-size="15" font-family="monospace">89.0</text>
+  <rect x="24" y="148" width="632" height="44" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="40" y="175" fill="#38bdf8" font-size="10.5" font-family="monospace">Student best = Student.GetBest(students);   // static，类名直接调</text>
+  <rect x="24" y="200" width="632" height="44" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="40" y="227" fill="#d7e0ee" font-size="10.5" font-family="monospace">79.0 &lt; 86.0 &lt; 89.0　→　max 记住 89.0 那个对象 = 王五</text>
+  <rect x="24" y="252" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="277" fill="#22c55e" font-size="12" font-family="monospace">最高分：王五（平均89.0）</text>
+  <text x="24" y="308" fill="#6b7d97" font-size="9.5" font-family="sans-serif">GetBest 里先 max = students[0]，再 foreach 比平均分，返回的是整个对象。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>学生数据 = 张三(80,75,82)、李四(88,92,78)、王五(95,82,90)</code></li></ul><ul><li>输出：<code>最高分：王五（平均89.0）</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>设计 <code>Logger</code> 日志类，综合运用构造重载 + 方法重载 + static 计数：</p><ul><li><strong>构造重载</strong>：<code>Logger(string name)</code> 指定日志名称、<code>Logger()</code> 默认名称&quot;系统日志&quot;</li><li><strong>方法重载</strong>：<code>Log(string msg)</code> 普通日志、<code>Log(string msg, string level)</code> 带级别（如 INFO、ERROR）</li><li><strong>static</strong> <code>int TotalLogs</code>：所有实例共享，每次调用 Log 都 +1</li><li>提示：构造方法里也要能区分不同 Logger 实例的名字</li></ul></div><div class="ok-box">💬 日志级别是什么？<br>- <code>INFO</code>（信息）— 正常运行记录，如&quot;程序启动&quot;、&quot;用户登录&quot;<br>- <code>WARN</code>（警告）— 有点问题但不影响运行，如&quot;密码即将过期&quot;<br>- <code>ERROR</code>（错误）— 出问题了，如&quot;文件未找到&quot;<br>- 题中只需把级别当普通字符串传进去，<code>Log(&quot;程序启动&quot;, &quot;INFO&quot;)</code> 即可</div><svg viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：两个 Logger 各记两条日志，static TotalLogs 共享计数 4">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">构造重载决定日志名，方法重载决定带不带级别</text>
+  <rect x="24" y="40" width="300" height="118" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="38" y="62" fill="#8b9bb4" font-size="9" font-family="monospace">new Logger()　　默认名</text>
+  <text x="38" y="82" fill="#38bdf8" font-size="10.5" font-family="monospace">「系统日志」</text>
+  <text x="38" y="108" fill="#38bdf8" font-size="9.5" font-family="monospace">[系统日志] INFO: 程序启动</text>
+  <text x="38" y="130" fill="#f59e0b" font-size="9.5" font-family="monospace">[系统日志] ERROR: 文件未找到</text>
+  <rect x="356" y="40" width="300" height="118" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="370" y="62" fill="#8b9bb4" font-size="9" font-family="monospace">new Logger("安全日志")</text>
+  <text x="370" y="82" fill="#38bdf8" font-size="10.5" font-family="monospace">「安全日志」</text>
+  <text x="370" y="108" fill="#38bdf8" font-size="9.5" font-family="monospace">[安全日志] INFO: 用户登录</text>
+  <text x="370" y="130" fill="#f59e0b" font-size="9.5" font-family="monospace">[安全日志] WARN: 密码即将过期</text>
+  <rect x="24" y="170" width="632" height="52" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="194" fill="#f59e0b" font-size="10.5" font-family="sans-serif">static int TotalLogs：两个对象共用同一个计数器</text>
+  <text x="40" y="212" fill="#f59e0b" font-size="10.5" font-family="monospace">系统日志 2 条 + 安全日志 2 条 = 共记录 4 条日志</text>
+  <text x="24" y="250" fill="#8b9bb4" font-size="10" font-family="sans-serif">static 字段归类所有：在哪个对象里 ++，看到的都是同一个数。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>创建系统日志和安全日志两个 Logger</code></li></ul><ul><li>输出：<code>[系统日志] INFO: 程序启动</code></li></ul><ul><li>输出：<code>[系统日志] ERROR: 文件未找到</code></li></ul><ul><li>输出：<code>[安全日志] INFO: 用户登录</code></li></ul><ul><li>输出：<code>[安全日志] WARN: 密码即将过期</code></li></ul><ul><li>输出：<code>共记录 4 条日志</code></li></ul></div><div class="card"><h3>题4（5分）</h3><p>设计 <code>ScoreConverter</code> 分数转换类，综合运用构造 + 方法重载 + static：</p><ul><li><strong>构造方法</strong>：<code>ScoreConverter(double fullScore)</code> 指定满分（如 100、150）</li><li><strong>方法重载</strong>：</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score)</code> → 转换为百分制</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double[] scores)</code> → 批量转换，返回平均值</li><li style="margin-left:24px;list-style-type:circle"><code>Convert(double score, string targetScale)</code> → 转到指定分制（如 &quot;120&quot;）</li><li><strong>static</strong> <code>int ConversionCount</code>：统计所有实例共执行了多少次转换</li></ul></div><svg viewBox="0 0 680 320" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：满分150的四种转换调用，结果 90.0 80.0 87.3 72.0，共 4 次">
+  <defs><marker id="k12q4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">一个类、四个 Convert 重载，按参数形态自动挑</text>
+  <rect x="24" y="42" width="340" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="66" fill="#d7e0ee" font-size="9.5" font-family="monospace">Convert(135.0)</text>
+  <line x1="368" y1="61" x2="396" y2="61" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12q4)"/>
+  <rect x="400" y="42" width="130" height="38" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="465" y="66" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">百分制：90.0</text>
+  <text x="544" y="66" fill="#6b7d97" font-size="9" font-family="sans-serif">135 / 150 × 100</text>
+  <rect x="24" y="90" width="340" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="114" fill="#d7e0ee" font-size="9.5" font-family="monospace">Convert(120.0)</text>
+  <line x1="368" y1="109" x2="396" y2="109" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12q4)"/>
+  <rect x="400" y="90" width="130" height="38" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="465" y="114" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">百分制：80.0</text>
+  <text x="544" y="114" fill="#6b7d97" font-size="9" font-family="sans-serif">120 / 150 × 100</text>
+  <rect x="24" y="138" width="340" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="162" fill="#d7e0ee" font-size="9.5" font-family="monospace">Convert(new double[] {132,120,141})</text>
+  <line x1="368" y1="157" x2="396" y2="157" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12q4)"/>
+  <rect x="400" y="138" width="130" height="38" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="465" y="162" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">百分制：87.3</text>
+  <text x="544" y="162" fill="#6b7d97" font-size="9" font-family="sans-serif">平均 131 → ×100/150</text>
+  <rect x="24" y="186" width="340" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="210" fill="#d7e0ee" font-size="9.5" font-family="monospace">Convert(90.0, "120")</text>
+  <line x1="368" y1="205" x2="396" y2="205" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#k12q4)"/>
+  <rect x="400" y="186" width="130" height="38" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="465" y="210" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">120分制：72.0</text>
+  <text x="544" y="210" fill="#6b7d97" font-size="9" font-family="sans-serif">90 / 150 × 120</text>
+  <rect x="24" y="240" width="632" height="44" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="267" fill="#f59e0b" font-size="10.5" font-family="monospace">static int ConversionCount = 4 —— 每调一次 Convert 就 +1，四个重载都要加</text>
+  <text x="24" y="306" fill="#6b7d97" font-size="9.5" font-family="sans-serif">构造方法只定满分（150）；转到哪个分制由参数决定，别把 100 写死。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>满分150的试卷，转百分制</code></li></ul><ul><li>输出：<code>135分 → 百分制：90.0</code></li></ul><ul><li>输出：<code>120分 → 百分制：80.0</code></li></ul><ul><li>输出：<code>[132, 120, 141] 平均 → 百分制：87.3</code></li></ul><ul><li>输出：<code>90分 → 120分制：72.0</code></li></ul><ul><li>输出：<code>共执行 4 次转换</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4336578368',this)">复制</button></div>
+<pre id="c_4336578368"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -991,18 +1376,24 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
         }
     }
+
     // ===== 各类定义写在这里 =====
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
-<div class="slide" data-page="12"><div class="slide-inner end-page">
+<div class="slide" data-page="11"><div class="slide-inner end-page">
 
 <div class="end-thanks">
     <div class="end-left">
@@ -1104,8 +1495,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========
@@ -1180,7 +1571,7 @@ function changeFont(d){
 // ========== 幻灯片 ==========
 let slides=document.querySelectorAll('.slide,.cover'),
     navLinks=document.querySelectorAll('.nav-link'),
-    curr=0,total=12,contentTotal=10;
+    curr=0,total=11,contentTotal=9;
 
 // 进度圆点
 // 侧边栏点击

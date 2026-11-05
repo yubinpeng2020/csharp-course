@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -482,13 +484,30 @@ pre,pre code{page-break-inside:avoid}
   <text x="340" y="238" text-anchor="middle" fill="var(--text-muted)" font-size="12">类型决定盒子能装什么 · 标签是变量名 · 等号右边是装进去的值</text>
 </svg></div>
 <div class="ok-box">代码中长这样（语法后面页面详讲）：<br><span style="display:block;margin-left:20px">（盒子的类型 → <strong>类型</strong>）  （标签 → <strong>标识符</strong>）  =  （东西 → <strong>值</strong>）</span></div>
-<pre class="plain-box"><code></code></pre>
+<div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303869312',this)">复制</button></div>
+<pre id="c_4303869312"><code class="language-csharp">using System;
+
+namespace HelloWorld
+{
+    class Program
+    {
+        static void Main()
+        {
+            int    age    =    18;          // 类型  标识符  等号  值 → 整数盒子
+            string name   =    &quot;张三&quot;;       // 类型  标识符  等号  值 → 文字盒子
+            double score  =    95.5;        // 类型  标识符  等号  值 → 小数盒子
+        }
+    }
+}</code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>标识符</h1>
 <div class="card"><p><strong>标识符</strong>：程序中给变量、方法、类等起的<strong>名字</strong>，就像给每个人起名字一样</p></div><div class="card"><ul><li>✅ 规则：字母或下划线开头，由字母、数字、下划线组成</li><li>❌ 不能：数字开头、含空格</li><li>区分大小写：<code>age</code>和<code>Age</code>是两个不同变量</li><li>用有意义的英文单词：<code>studentName</code> ✅ 不用 <code>a</code>、<code>x</code> ❌</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744000',this)">复制</button></div>
-<pre id="c_4376744000"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303293824',this)">复制</button></div>
+<pre id="c_4303293824"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -500,12 +519,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 在编辑器中，标识符和关键字会显示**不同颜色**——一眼就能区分系统规定的词和你的自定义名称
-
-&gt; 💡 复制代码到 VS Code 后如果缩进乱了，右键选择 **Format Document**（或按 Shift + Alt + F）一键格式化
-
-![右键格式化代码](images/课件3/format-code.png)</code></pre>
+</div><div class="ok-box">在编辑器中，标识符和关键字会显示<strong>不同颜色</strong>——一眼就能区分系统规定的词和你的自定义名称</div><div class="ok-box">💡 复制代码到 VS Code 后如果缩进乱了，右键选择 <strong>Format Document</strong>（或按 Shift + Alt + F）一键格式化</div><img src="images/课件3/format-code.png" alt="右键格式化代码" class="card-img" onclick="zoomQR(this)" style="cursor:pointer">
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>关键字</h1>
@@ -518,8 +532,9 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>整数类型详解</h1>
 <div class="card"><table><tr><th>类型</th><th>范围</th><th>字节数</th><th>说明</th></tr><tr><td><code>byte</code></td><td>0~255</td><td>1</td><td>无符号8位</td></tr><tr><td><code>sbyte</code></td><td>-128~127</td><td>1</td><td>有符号8位</td></tr><tr><td><code>short</code></td><td>-32768~32767</td><td>2</td><td>有符号16位</td></tr><tr><td><code>int</code></td><td>-21亿~21亿</td><td>4</td><td><strong>最常用</strong></td></tr><tr><td><code>long</code></td><td>±9×10¹⁸</td><td>8</td><td>超大整数</td></tr></table></div><div class="card"><ul><li>日常编程99%用<code>int</code>就够了</li><li>需要超大数字时用<code>long</code>：<code>long bigNum = 10000000000L;</code></li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 byte 能表示 0~255？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">1 字节 = 8 位，每位的 0/1 有 2 种可能，8 位共有 2⁸ = 256 种组合。从 0 开始编号，就是 0~255。（<code>sbyte</code> 用最高位表示符号：0 表示正数，1 表示负数，所以也是 256 种组合，拆分为 -128~127）</div></div><div class="card"><h3>整数的不同写法（进制）</h3><ul><li>同一数值可以用不同进制表示：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376745600',this)">复制</button></div>
-<pre id="c_4376745600"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303271744',this)">复制</button></div>
+<pre id="c_4303271744"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -533,7 +548,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>进制快速转换</h1>
@@ -549,8 +564,9 @@ namespace HelloWorld
    =13     =10
    =D      =A
 ∴ 0b11011010 = 0xDA</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376160192',this)">复制</button></div>
-<pre id="c_4376160192"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303270144',this)">复制</button></div>
+<pre id="c_4303270144"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -563,11 +579,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 记不住没关系——编程时很少手算，C#会自动处理。关键是**认识写法**。
-
-&gt; ❓ 为什么 `byte` 范围是 0~255？
-&gt; 1 字节 = 8 位二进制，最大 `11111111` = 十进制 255 = 十六进制 `0xFF`。进制和字节是同一回事的不同写法。</code></pre>
+</div><div class="ok-box">记不住没关系——编程时很少手算，C#会自动处理。关键是<strong>认识写法</strong>。</div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么 <code>byte</code> 范围是 0~255？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">1 字节 = 8 位二进制，最大 <code>11111111</code> = 十进制 255 = 十六进制 <code>0xFF</code>。进制和字节是同一回事的不同写法。</div></div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>浮点类型详解</h1>
@@ -576,8 +588,9 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>bool类型</h1>
 <div class="card"><ul><li>只有两个值：<code>true</code>（真）或<code>false</code>（假）</li><li>⚠️ C#中不能用1和0代替true/false</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376156352',this)">复制</button></div>
-<pre id="c_4376156352"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303268544',this)">复制</button></div>
+<pre id="c_4303268544"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -590,13 +603,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 典型应用：标记状态、条件判断（后续讲）</code></pre>
+</div><div class="card"><ul><li>典型应用：标记状态、条件判断（后续讲）</li></ul></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>char类型</h1>
 <div class="card"><ul><li>表示<strong>单个</strong>字符，用<strong>单引号</strong>括起来</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376155456',this)">复制</button></div>
-<pre id="c_4376155456"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303268032',this)">复制</button></div>
+<pre id="c_4303268032"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -609,20 +623,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 特殊字符需要**转义**：
-  | 转义符 | 含义 |
-  |--------|------|
-  | `\n` | 换行 |
-  | `\t` | 制表符（Tab） |
-  | `\\` | 反斜杠自身 |
-  | `\&quot;` | 双引号 |
-  | `\'` | 单引号 |</code></pre>
+</div><div class="card"><ul><li>特殊字符需要<strong>转义</strong>：</li></ul></div><div class="card"><table><tr><th>转义符</th><th>含义</th></tr><tr><td><code>\n</code></td><td>换行</td></tr><tr><td><code>\t</code></td><td>制表符（Tab）</td></tr><tr><td><code>\\</code></td><td>反斜杠自身</td></tr><tr><td><code>\&quot;</code></td><td>双引号</td></tr><tr><td><code>\'</code></td><td>单引号</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>string类型</h1>
 <div class="card"><ul><li>表示一串字符（0个或多个），用<strong>双引号</strong>括起来</li><li><code>string</code> 本质上是 <code>char</code> 组成的序列：<code>&quot;ABC&quot;</code> = <code>'A'</code> + <code>'B'</code> + <code>'C'</code></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376153344',this)">复制</button></div>
-<pre id="c_4376153344"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303266112',this)">复制</button></div>
+<pre id="c_4303266112"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -636,8 +644,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 字符串拼接用`+`：
-using System;
+</div><div class="card"><ul><li>字符串拼接用<code>+</code>：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303265792',this)">复制</button></div>
+<pre id="c_4303265792"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -649,9 +658,11 @@ namespace HelloWorld
             string greeting = &quot;你好，&quot; + name;
         }
     }
-}</code></pre><div class="card"><ul><li><code>$</code> 插值写法（推荐，更简洁）：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376153280',this)">复制</button></div>
-<pre id="c_4376153280"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><ul><li><code>$</code> 插值写法（推荐，更简洁）：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303265408',this)">复制</button></div>
+<pre id="c_4303265408"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -665,13 +676,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>变量的声明与赋值</h1>
 <div class="card"><ul><li>声明格式：<code>数据类型 变量名;</code></li><li>赋值：把值放进变量</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376153984',this)">复制</button></div>
-<pre id="c_4376153984"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303268288',this)">复制</button></div>
+<pre id="c_4303268288"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -680,20 +692,21 @@ namespace HelloWorld
         {
             int age;           // 声明：告诉计算机&quot;我要一个装整数的盒子&quot;
             age = 18;          // 赋值：把18放进去
+
             string name = &quot;张三&quot;;  // 声明 + 赋值一步到位（推荐）
             double score = 95.5;
             bool isStudent = true;
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 多变量同时声明：`int a = 1, b = 2, c = 3;`
-- 变量必须**先声明后使用**</code></pre>
+</div><div class="card"><ul><li>多变量同时声明：<code>int a = 1, b = 2, c = 3;</code></li><li>变量必须<strong>先声明后使用</strong></li></ul></div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>var 类型推断</h1>
 <div class="card"><ul><li>让编译器自动判断类型：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376153664',this)">复制</button></div>
-<pre id="c_4376153664"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303264512',this)">复制</button></div>
+<pre id="c_4303264512"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -707,11 +720,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 规则：
-  - ✅ 声明时必须初始化（不给值没法推断）
-  - ✅ 类型一旦确定就不能更改
-  - ❌ 不能用于类的字段（只能局部变量）
-using System;
+</div><div class="card"><ul><li>规则：</li><li style="margin-left:24px;list-style-type:circle">✅ 声明时必须初始化（不给值没法推断）</li><li style="margin-left:24px;list-style-type:circle">✅ 类型一旦确定就不能更改</li><li style="margin-left:24px;list-style-type:circle">❌ 不能用于类的字段（只能局部变量）</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303263936',this)">复制</button></div>
+<pre id="c_4303263936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -725,6 +736,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
+</div>
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>命名规范</h1>
@@ -733,8 +745,9 @@ namespace HelloWorld
 <div class="slide" data-page="16"><div class="slide-inner markable">
 <h1>常量</h1>
 <div class="card"><ul><li>值在运行期间<strong>不可改变</strong></li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376152064',this)">复制</button></div>
-<pre id="c_4376152064"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303262208',this)">复制</button></div>
+<pre id="c_4303262208"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -746,9 +759,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- 命名规范：全大写 + 下划线分隔（回顾命名规范）
-- 为什么用常量？看一个场景：
-using System;
+</div><div class="card"><ul><li>命名规范：全大写 + 下划线分隔（回顾命名规范）</li><li>为什么用常量？看一个场景：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303261824',this)">复制</button></div>
+<pre id="c_4303261824"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -765,13 +778,15 @@ namespace HelloWorld
             // 所有地方都写 EXPRESS_FEE，改一处，全部生效 ✅
         }
     }
-}</code></pre><div class="card"><ul><li>核心好处：<strong>一改全改</strong> + <strong>含义直观</strong>（<code>PI</code> 比 <code>3.14159</code> 好懂）</li><li>⚠️ const变量必须在声明时赋值，之后不能修改</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 常量和变量到底有什么区别？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">变量用 <code>int x = 5;</code> 声明，值可以改（<code>x = 10;</code>）。常量用 <code>const int X = 5;</code> 声明，值一旦设定就不能改（<code>X = 10;</code> 会报错）。常量的好处是&quot;一改全改&quot;，适合不会变的值如税率、圆周率。</div></div>
+}</code></pre>
+</div><div class="card"><ul><li>核心好处：<strong>一改全改</strong> + <strong>含义直观</strong>（<code>PI</code> 比 <code>3.14159</code> 好懂）</li><li>⚠️ const变量必须在声明时赋值，之后不能修改</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 常量和变量到底有什么区别？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">变量用 <code>int x = 5;</code> 声明，值可以改（<code>x = 10;</code>）。常量用 <code>const int X = 5;</code> 声明，值一旦设定就不能改（<code>X = 10;</code> 会报错）。常量的好处是&quot;一改全改&quot;，适合不会变的值如税率、圆周率。</div></div>
 </div></div>
 <div class="slide" data-page="17"><div class="slide-inner markable">
 <h1>变量的作用域</h1>
 <div class="card"><p>先快速认识程序的基本骨架：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376151808',this)">复制</button></div>
-<pre id="c_4376151808"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303261184',this)">复制</button></div>
+<pre id="c_4303261184"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program                          // 类：程序的&quot;容器&quot;
@@ -782,9 +797,9 @@ namespace HelloWorld
     }
 }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- 变量只在定义它的 `{ }` 范围内有效——这就是**作用域**
-using System;
+</div><div class="card"><ul><li>变量只在定义它的 <code>{ }</code> 范围内有效——这就是<strong>作用域</strong></li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303260864',this)">复制</button></div>
+<pre id="c_4303260864"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -799,13 +814,15 @@ namespace HelloWorld
             //Console.WriteLine(a);     // ❌ 出了大括号，a 不存在了
         }
     }
-}</code></pre><div class="card"><ul><li>规则：<strong>变量只在包含它的最近一对 <code>{ }</code> 内有效</strong>。出了这个范围，变量就&quot;消失了&quot;。</li></ul></div>
+}</code></pre>
+</div><div class="card"><ul><li>规则：<strong>变量只在包含它的最近一对 <code>{ }</code> 内有效</strong>。出了这个范围，变量就&quot;消失了&quot;。</li></ul></div>
 </div></div>
 <div class="slide" data-page="18"><div class="slide-inner markable">
 <h1>基础输入输出 — Console</h1>
 <div class="card"><ul><li><code>Console</code> 是 C# 提供的<strong>控制台类</strong>，负责程序和屏幕/键盘之间的交互</li><li>回顾：<code>Console.Write()</code> / <code>Console.WriteLine()</code> 向屏幕<strong>输出</strong></li><li>新知识：<code>Console.ReadLine()</code> 从键盘<strong>读入</strong>用户输入：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376151040',this)">复制</button></div>
-<pre id="c_4376151040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303260352',this)">复制</button></div>
+<pre id="c_4303260352"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -818,15 +835,15 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>- `Console.ReadLine()`始终返回`string`类型
-- 需要数字时要转换（下个课件讲类型转换）
-- 运行效果：</code></pre><div class="card"><p>请输入你的名字：张三</p></div><div class="card"><p>你好，张三！</p></div><pre class="plain-box"><code></code></pre>
+</div><div class="card"><ul><li><code>Console.ReadLine()</code>始终返回<code>string</code>类型</li><li>需要数字时要转换（下个课件讲类型转换）</li><li>运行效果：</li></ul></div><pre class="plain-box"><code>  请输入你的名字：张三
+你好，张三！</code></pre>
 </div></div>
 <div class="slide" data-page="19"><div class="slide-inner markable">
 <h1>课堂练习1 — 变量与输入输出</h1>
 <div class="ok-box">动手试：声明变量、读入用户输入、做简单运算并输出。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376099392',this)">复制</button></div>
-<pre id="c_4376099392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303258560',this)">复制</button></div>
+<pre id="c_4303258560"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -835,24 +852,57 @@ namespace HelloWorld
         {
             Console.Write(&quot;请输入第一个数：&quot;);
             double x = double.Parse(Console.ReadLine());   // 读入并转成 double
+
             Console.Write(&quot;请输入第二个数：&quot;);
             double y = double.Parse(Console.ReadLine());
+
             double sum = x + y;          // 把两数加起来
             Console.WriteLine($&quot;两数之和 = {sum}&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-- 动手：把 `double` 改成 `int` 再运行一次，观察整数除法差异
-
-&gt; 💬 解释说明
-&gt; - `Console.ReadLine()` 返回 `string`，要当数字用必须 `double.Parse()` 转换
-&gt; - 变量先声明、后赋值、再使用，类型要和存的值一致
-
-### 练习（动手写）
-补全代码：让用户输入姓名和年龄，打印一句欢迎语（类型已声明好）。
-
-using System;
+</div><svg viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="示范代码的数据流：两行键盘输入先转成 double 变量，相加得到 sum 再输出">
+  <defs>
+    <marker id="p3d-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
+    <marker id="p3d-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker>
+  </defs>
+  <text x="140" y="28" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">键盘读进来（string）</text>
+  <text x="480" y="28" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">转成 double 变量</text>
+  <rect x="50" y="40" width="180" height="54" rx="8" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="140" y="73" text-anchor="middle" fill="#f59e0b" font-size="14" font-family="monospace">"12.5"</text>
+  <line x1="236" y1="67" x2="286" y2="67" stroke="#38bdf8" stroke-width="1.3" stroke-opacity="0.8" marker-end="url(#p3d-a)"/>
+  <text x="261" y="59" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="monospace">Parse</text>
+  <rect x="292" y="40" width="180" height="54" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="382" y="65" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">x = 12.5</text>
+  <text x="382" y="83" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">double</text>
+  <rect x="50" y="106" width="180" height="54" rx="8" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="140" y="139" text-anchor="middle" fill="#f59e0b" font-size="14" font-family="monospace">"3"</text>
+  <line x1="236" y1="133" x2="286" y2="133" stroke="#38bdf8" stroke-width="1.3" stroke-opacity="0.8" marker-end="url(#p3d-a)"/>
+  <text x="261" y="125" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="monospace">Parse</text>
+  <rect x="292" y="106" width="180" height="54" rx="8" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="382" y="131" text-anchor="middle" fill="#38bdf8" font-size="12" font-family="monospace">y = 3</text>
+  <text x="382" y="149" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">double</text>
+  <polyline points="476,67 510,67 510,182 384,182" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/>
+  <line x1="476" y1="131" x2="510" y2="131" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6"/>
+  <line x1="382" y1="182" x2="382" y2="196" stroke="#22c55e" stroke-width="1.3" stroke-opacity="0.85" marker-end="url(#p3d-b)"/>
+  <text x="140" y="186" fill="#8b9bb4" font-size="10" font-family="sans-serif">两个 string 先 Parse，才谈得上相加</text>
+  <rect x="222" y="200" width="320" height="46" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="382" y="229" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">sum = x + y = 15.5</text>
+  <line x1="382" y1="246" x2="382" y2="258" stroke="#22c55e" stroke-width="1.3" stroke-opacity="0.85" marker-end="url(#p3d-b)"/>
+  <text x="340" y="278" text-anchor="middle" fill="#d7e0ee" font-size="11" font-family="monospace">两数之和 = 15.5</text>
+</svg><div class="card"><ul><li>动手：把 <code>double</code> 改成 <code>int</code> 再运行一次，观察整数除法差异</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Console.ReadLine()</code> 返回 <code>string</code>，要当数字用必须 <code>double.Parse()</code> 转换</li><li>变量先声明、后赋值、再使用，类型要和存的值一致</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：让用户输入姓名和年龄，打印一句欢迎语（类型已声明好）。</p><p>做完应该是这样：</p></div><svg viewBox="0 0 680 208" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="练习：输入姓名和年龄，打印欢迎语的运行效果示意图">
+  <rect x="40" y="20" width="600" height="168" rx="12" fill="#21283a" stroke="#334155" stroke-width="1"/>
+  <circle cx="62" cy="40" r="4" fill="#ff5f57"/>
+  <circle cx="78" cy="40" r="4" fill="#febc2e"/>
+  <circle cx="94" cy="40" r="4" fill="#28c840"/>
+  <text x="340" y="44" text-anchor="middle" fill="#9fb0c9" font-size="11" font-family="sans-serif">练习：输入姓名和年龄，打印欢迎语</text>
+  <text x="60" y="74" fill="#8b9bb4" font-size="12" font-family="monospace">请输入姓名：<tspan fill="#38bdf8">张三</tspan></text>
+  <text x="60" y="100" fill="#8b9bb4" font-size="12" font-family="monospace">请输入年龄：<tspan fill="#38bdf8">18</tspan></text>
+  <text x="60" y="126" fill="#d7e0ee" font-size="12" font-family="monospace">你好，张三！你今年 18 岁。</text>
+  <text x="60" y="182" fill="#6b7d97" font-size="11" font-family="sans-serif">青色 = 你敲进去的　白色 = 程序打印的</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303258240',this)">复制</button></div>
+<pre id="c_4303258240"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -869,9 +919,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;你好，{<span class="code-blank">___</span>}！你今年 {<span class="code-blank">___</span>} 岁了。&quot;);
         }
     }
-}</code></pre><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376099264',this)">复制</button></div>
-<pre id="c_4376099264"><code class="language-csharp">using System;
+}</code></pre>
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303257664',this)">复制</button></div>
+<pre id="c_4303257664"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -880,17 +932,19 @@ namespace HelloWorld
         {
             Console.Write(&quot;请输入你的姓名：&quot;);
             string name = Console.ReadLine();
+
             Console.Write(&quot;请输入你的年龄：&quot;);
             int age = int.Parse(Console.ReadLine());
+
             Console.WriteLine($&quot;你好，{name}！你今年 {age} 岁了。&quot;);
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="20"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是变量？</strong>：变量是内存里一块带名字的盒子，用来存数据，取值可改</li><li><strong>常用数据类型（整数 / 浮点 / bool / char / string）</strong>：整数存整数、浮点存小数、bool 存真假、char 存单字符、string 存文本</li><li><strong>变量的声明与赋值</strong>：<code>类型 名字 = 值;</code> 先声明类型再给初值</li><li><strong>var 类型推断</strong>：<code>var x = 10;</code> 编译器自动推断类型，写起来更省事</li><li><strong>常量</strong>：<code>const double PI = 3.14;</code> 一旦赋值不能再改</li><li><strong>变量的作用域</strong>：变量在哪对 <code>{}</code> 里声明，就只能在哪用，出了范围访问不到</li><li><strong>基础输入输出 — Console</strong>：<code>Console.ReadLine()</code> 读输入、<code>Console.WriteLine()</code> 写输出</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是变量？</strong>：变量是内存里一块带名字的盒子，用来存数据，取值可改</li><li><strong>常用数据类型（整数 / 浮点 / bool / char / string）</strong>：整数存整数、浮点存小数、bool 存真假、char 存单字符、string 存文本</li><li><strong>变量的声明与赋值</strong>：<code>类型 名字 = 值;</code> 先声明类型再给初值</li><li><strong>var 类型推断</strong>：<code>var x = 10;</code> 编译器自动推断类型，写起来更省事</li><li><strong>常量</strong>：<code>const double PI = 3.14;</code> 一旦赋值不能再改</li><li><strong>变量的作用域</strong>：变量在哪对 <code>{}</code> 里声明，就只能在哪用，出了范围访问不到</li><li><strong>基础输入输出 — Console</strong>：<code>Console.ReadLine()</code> 读输入、<code>Console.WriteLine()</code> 写输出</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="21"><div class="slide-inner markable">
 <h1>综合练习 — 个人信息卡片</h1>
@@ -900,9 +954,39 @@ namespace HelloWorld
 ======== 个人信息 ========
 姓名：张三
 年龄：18
-身高：1.75米</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>年龄和身高输入后是 <code>string</code> 类型，要用 <code>int.Parse()</code> 和 <code>double.Parse()</code> 转换</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376096512',this)">复制</button></div>
-<pre id="c_4376096512"><code class="language-csharp">using System;
+身高：1.75米</code></pre><svg viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个字符串输入经 Parse 转换后填进个人信息卡片">
+  <defs>
+    <marker id="p3-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/>
+    </marker>
+  </defs>
+  <text x="30" y="78" fill="#8b9bb4" font-size="11" font-family="sans-serif">键盘输入（拿到手的都是 string）</text>
+
+  <rect x="30" y="97" width="140" height="30" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="44" y="117" fill="#d7e0ee" font-size="11.5" font-family="monospace">张三</text>
+  <rect x="30" y="145" width="140" height="30" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="44" y="165" fill="#d7e0ee" font-size="11.5" font-family="monospace">18</text>
+  <rect x="30" y="193" width="140" height="30" rx="6" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="44" y="213" fill="#d7e0ee" font-size="11.5" font-family="monospace">1.75</text>
+
+  <line x1="178" y1="112" x2="290" y2="112" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.65" marker-end="url(#p3-a)"/>
+  <line x1="178" y1="160" x2="290" y2="160" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.65" marker-end="url(#p3-a)"/>
+  <line x1="178" y1="208" x2="290" y2="208" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.65" marker-end="url(#p3-a)"/>
+  <text x="234" y="105" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">直接用</text>
+  <text x="234" y="153" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">int.Parse</text>
+  <text x="234" y="201" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">double.Parse</text>
+
+  <rect x="300" y="30" width="350" height="224" rx="12" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="475" y="64" text-anchor="middle" fill="#38bdf8" font-size="12.5" font-family="monospace">======== 个人信息 ========</text>
+  <text x="318" y="112" fill="#d7e0ee" font-size="12.5" font-family="monospace">姓名：张三</text>
+  <text x="318" y="160" fill="#d7e0ee" font-size="12.5" font-family="monospace">年龄：18</text>
+  <text x="318" y="208" fill="#d7e0ee" font-size="12.5" font-family="monospace">身高：1.75米</text>
+
+  <text x="30" y="282" fill="#8b9bb4" font-size="11" font-family="sans-serif">三个输入全是字符串，填进卡片前，年龄要 int.Parse、身高要 double.Parse——否则算不了也算不出米。</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>年龄和身高输入后是 <code>string</code> 类型，要用 <code>int.Parse()</code> 和 <code>double.Parse()</code> 转换</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303223616',this)">复制</button></div>
+<pre id="c_4303223616"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -911,10 +995,13 @@ namespace HelloWorld
         {
             Console.Write(&quot;请输入姓名：&quot;);
             string name = <span class="code-blank">___</span>;
+
             Console.Write(&quot;请输入年龄：&quot;);
             int age = <span class="code-blank">___</span>;
+
             Console.Write(&quot;请输入身高（米）：&quot;);
             double height = <span class="code-blank">___</span>;
+
             Console.WriteLine(&quot;======== 个人信息 ========&quot;);
             Console.WriteLine($&quot;姓名：{<span class="code-blank">___</span>}&quot;);
             Console.WriteLine($&quot;年龄：{<span class="code-blank">___</span>}&quot;);
@@ -922,10 +1009,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303222784',this)">复制</button></div>
+<pre id="c_4303222784"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -944,9 +1030,11 @@ namespace HelloWorld
             Console.WriteLine($&quot;身高：{height}米&quot;);
         }
     }
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入 <strong>3 个整数</strong>，程序输出其中<strong>最大的一个</strong>。<br>要求：自己写读入、比较和输出的完整代码，不能用现成模板。<br>提示：先读入三个数，再用 <code>if</code> 两两比较找出最大值。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376096704',this)">复制</button></div>
-<pre id="c_4376096704"><code class="language-csharp">using System;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入 <strong>3 个整数</strong>，程序输出其中<strong>最大的一个</strong>。<br>要求：自己写读入、比较和输出的完整代码，不能用现成模板。<br>提示：先读入三个数，再用 <code>if</code> 两两比较找出最大值。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303222464',this)">复制</button></div>
+<pre id="c_4303222464"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -963,13 +1051,121 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="22"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序，声明变量存储你的姓名、学号、班级，然后输出。</p></div><div class="ok-box">验收示范：<ul><li>输出：<code>姓名：张三，学号：2630509101，班级：数媒1班</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序，让用户输入圆的半径，计算周长和面积并输出（π用const定义，值为3.14）。</p><ul><li>周长 = 2 × π × r</li><li>面积 = π × r × r</li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>周长=31.4，面积=78.5</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序，让用户输入年龄，用 <code>bool</code> 变量存储是否成年（≥18）的判断结果，输出 <code>True</code> 或 <code>False</code>。</p><ul><li>提示：<code>bool isAdult = age &gt;= 18;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>是否成年：True</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>让用户输入两个整数，交换它们的值并输出。</p></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 5</code></li></ul><ul><li>输出：<code>a=5, b=3</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376100288',this)">复制</button></div>
-<pre id="c_4376100288"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序，声明变量存储你的姓名、学号、班级，然后输出。</p></div><svg viewBox="0 0 680 238" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个 string 变量各存一项信息，拼成一句话输出">
+  <defs>
+    <marker id="p3q-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker>
+  </defs>
+  <rect x="55" y="34" width="180" height="70" rx="8" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="145" y="54" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">string name</text>
+  <text x="145" y="82" text-anchor="middle" fill="#f59e0b" font-size="11.5" font-family="monospace">"张三"</text>
+  <line x1="145" y1="108" x2="145" y2="140" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.65"/>
+  <rect x="253" y="34" width="180" height="70" rx="8" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="343" y="54" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">string sid</text>
+  <text x="343" y="82" text-anchor="middle" fill="#f59e0b" font-size="11.5" font-family="monospace">"2630509101"</text>
+  <line x1="343" y1="108" x2="343" y2="140" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.65"/>
+  <rect x="451" y="34" width="180" height="70" rx="8" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="541" y="54" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">string cls</text>
+  <text x="541" y="82" text-anchor="middle" fill="#f59e0b" font-size="11.5" font-family="monospace">"数媒1班"</text>
+  <line x1="541" y1="108" x2="541" y2="140" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.65"/>
+  <line x1="145" y1="146" x2="541" y2="146" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.5"/>
+  <line x1="343" y1="146" x2="343" y2="158" stroke="#22c55e" stroke-width="1.3" stroke-opacity="0.85" marker-end="url(#p3q-a)"/>
+  <rect x="55" y="162" width="570" height="46" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="340" y="191" text-anchor="middle" fill="#22c55e" font-size="11.5" font-family="monospace">姓名：张三，学号：2630509101，班级：数媒1班</text>
+  <text x="40" y="226" fill="#8b9bb4" font-size="10" font-family="sans-serif">三个变量各存一项，用 <tspan font-family="monospace" fill="#f59e0b">$"…{name}…"</tspan> 插值拼成一句话——字符串变量不需要 Parse。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>姓名：张三，学号：2630509101，班级：数媒1班</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序，让用户输入圆的半径，计算周长和面积并输出（π用const定义，值为3.14）。</p><ul><li>周长 = 2 × π × r</li><li>面积 = π × r × r</li></ul></div><svg viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="圆周率常量与半径送进两个公式，分别算出周长和面积">
+  <defs>
+    <marker id="p3q-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect x="36" y="34" width="200" height="50" rx="7" fill="#21283a" stroke="#64748b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="136" y="56" text-anchor="middle" fill="#8b9bb4" font-size="8.5" font-family="sans-serif">常量，全程序只写一次</text>
+  <text x="136" y="74" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">const double PI = 3.14</text>
+  <rect x="36" y="102" width="200" height="50" rx="7" fill="#21283a" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="136" y="124" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="sans-serif">用户输入</text>
+  <text x="136" y="142" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">double r = 5</text>
+  <line x1="240" y1="60" x2="280" y2="60" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p3q-b)"/>
+  <line x1="240" y1="126" x2="280" y2="126" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7" marker-end="url(#p3q-b)"/>
+  <rect x="286" y="34" width="358" height="50" rx="7" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="300" y="56" fill="#38bdf8" font-size="10.5" font-family="monospace">周长 = 2 * PI * r</text>
+  <text x="300" y="74" fill="#8b9bb4" font-size="9.5" font-family="monospace">2 × 3.14 × 5 = 31.4</text>
+  <rect x="286" y="102" width="358" height="50" rx="7" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="300" y="124" fill="#38bdf8" font-size="10.5" font-family="monospace">面积 = PI * r * r</text>
+  <text x="300" y="142" fill="#8b9bb4" font-size="9.5" font-family="monospace">3.14 × 5 × 5 = 78.5</text>
+  <rect x="36" y="176" width="608" height="42" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="340" y="202" text-anchor="middle" fill="#22c55e" font-size="11.5" font-family="monospace">周长=31.4，面积=78.5</text>
+  <text x="36" y="240" fill="#8b9bb4" font-size="10" font-family="sans-serif">π 用 <tspan font-family="monospace" fill="#38bdf8">const</tspan> 存一次，两个公式都引用它；半径变了只需改 r，两行公式一行都不用动。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入半径：→ 5</code></li></ul><ul><li>输出：<code>周长=31.4，面积=78.5</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序，让用户输入年龄，用 <code>bool</code> 变量存储是否成年（≥18）的判断结果，输出 <code>True</code> 或 <code>False</code>。</p><ul><li>提示：<code>bool isAdult = age &gt;= 18;</code></li></ul></div><svg viewBox="0 0 680 190" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="同一个比较表达式对不同年龄分别得到 true 和 false">
+  <defs>
+    <marker id="p3q-c" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0,0 L5,3 L0,6 Z" fill="#64748b"/></marker>
+  </defs>
+  <text x="79" y="30" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">年龄</text>
+  <text x="227" y="30" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">比较</text>
+  <text x="385" y="30" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">bool 变量</text>
+  <text x="563" y="30" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">输出</text>
+  <rect x="24" y="40" width="110" height="44" rx="7" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="79" y="67" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">age = 20</text>
+  <line x1="136" y1="62" x2="150" y2="62" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="152" y="40" width="150" height="44" rx="7" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="227" y="67" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="monospace">age >= 18</text>
+  <line x1="304" y1="62" x2="318" y2="62" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="320" y="40" width="130" height="44" rx="7" fill="#1b2536" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="385" y="67" text-anchor="middle" fill="#22c55e" font-size="9.5" font-family="monospace">isAdult = true</text>
+  <line x1="452" y1="62" x2="466" y2="62" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="468" y="40" width="190" height="44" rx="7" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="563" y="67" text-anchor="middle" fill="#22c55e" font-size="9.5" font-family="monospace">是否成年：True</text>
+  <rect x="24" y="106" width="110" height="44" rx="7" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="79" y="133" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">age = 12</text>
+  <line x1="136" y1="128" x2="150" y2="128" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="152" y="106" width="150" height="44" rx="7" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="227" y="133" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="monospace">age >= 18</text>
+  <line x1="304" y1="128" x2="318" y2="128" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="320" y="106" width="130" height="44" rx="7" fill="#1b2536" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="385" y="133" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">isAdult = false</text>
+  <line x1="452" y1="128" x2="466" y2="128" stroke="#64748b" stroke-width="1" stroke-opacity="0.45" marker-end="url(#p3q-c)"/>
+  <rect x="468" y="106" width="190" height="44" rx="7" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="563" y="133" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">是否成年：False</text>
+  <text x="24" y="176" fill="#8b9bb4" font-size="10" font-family="sans-serif"><tspan font-family="monospace" fill="#f59e0b">age &gt;= 18</tspan> 的结果本身就是 bool，直接存进变量；打印时 True/False 首字母大写。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入年龄：→ 20</code></li></ul><ul><li>输出：<code>是否成年：True</code></li></ul></div><div class="card"><h3>题4（3分）</h3><p>让用户输入两个整数，交换它们的值并输出。</p></div><svg viewBox="0 0 680 252" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="借助临时变量 temp，用三步把 a 和 b 的值互换">
+  <text x="66" y="34" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">这一步</text>
+  <text x="190" y="34" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="monospace">a</text>
+  <text x="350" y="34" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="monospace">b</text>
+  <text x="510" y="34" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="monospace">temp</text>
+  <text x="66" y="73" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="monospace">初始</text>
+  <rect x="130" y="46" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="190" y="69" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">3</text>
+  <rect x="290" y="46" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="350" y="69" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">5</text>
+  <rect x="450" y="46" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="510" y="69" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">—</text>
+  <text x="66" y="117" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="monospace">temp = a</text>
+  <rect x="130" y="90" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="190" y="113" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">3</text>
+  <rect x="290" y="90" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="350" y="113" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">5</text>
+  <rect x="450" y="90" width="120" height="34" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="510" y="113" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">3</text>
+  <text x="66" y="161" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="monospace">a = b</text>
+  <rect x="130" y="134" width="120" height="34" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="190" y="157" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">5</text>
+  <rect x="290" y="134" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="350" y="157" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">5</text>
+  <rect x="450" y="134" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="510" y="157" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">3</text>
+  <text x="66" y="205" text-anchor="middle" fill="#8b9bb4" font-size="9.5" font-family="monospace">b = temp</text>
+  <rect x="130" y="178" width="120" height="34" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="190" y="201" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">5</text>
+  <rect x="290" y="178" width="120" height="34" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="350" y="201" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">3</text>
+  <rect x="450" y="178" width="120" height="34" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
+  <text x="510" y="201" text-anchor="middle" fill="#d7e0ee" font-size="12" font-family="monospace">3</text>
+  <text x="40" y="244" fill="#8b9bb4" font-size="10" font-family="sans-serif">不能直接 <tspan font-family="monospace">a = b; b = a;</tspan>——那样 a 的 3 先被覆盖丢了。必须借 temp 当中转，最后 a=5、b=3。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入第一个整数：→ 3</code></li></ul><ul><li>输入：<code>请输入第二个整数：→ 5</code></li></ul><ul><li>输出：<code>a=5, b=3</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303220864',this)">复制</button></div>
+<pre id="c_4303220864"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -977,15 +1173,20 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="23"><div class="slide-inner end-page">
 <div class="card"><p>：每道题的输入必须严格按 <code>验收示范</code> 括号里的格式写，否则自动判分工具无法识别，直接 0 分。</p></div>
@@ -1089,8 +1290,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========

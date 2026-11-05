@@ -84,6 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 
 /* 内联代码 */
 .slide-inner strong{color:var(--accent2);font-weight:700}
+.slide-inner .term{background:rgba(79,195,247,0.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,0.30);font-weight:500}
+.slide-inner .term-q{color:var(--accent2)}
 .slide-inner em{color:var(--orange);font-style:normal;font-weight:500}
 .slide-inner code{background:rgba(0,212,170,0.08);color:var(--accent);padding:2px 7px;border-radius:4px;font-family:'JetBrains Mono','SF Mono',monospace;font-size:90%;border:1px solid rgba(0,212,170,0.15);font-weight:600}
 
@@ -459,8 +461,9 @@ pre,pre code{page-break-inside:avoid}
 │  ⚙️ SayHello()                 │
 └────────────────────────────────┘
       ↑ 外部只能走 SetAge()，里面可以检查&quot;年龄不能为负&quot;</code></pre><div class="card"><p>类比：<strong>遥控器</strong>——你按&quot;音量+&quot;就行，不需要知道里面的电路怎么走的。外壳把元件封装在内部，按钮是唯一可以碰的地方。</p></div><div class="card"><p><strong>不封装会出什么问题？</strong> 课件11-12我们写的类，字段全是 <code>public</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376713152',this)">复制</button></div>
-<pre id="c_4376713152"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310521408',this)">复制</button></div>
+<pre id="c_4310521408"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -473,14 +476,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-本课件的目标：**给数据装上安检门**。</code></pre>
+</div><div class="card"><p>本课件的目标：<strong>给数据装上安检门</strong>。</p></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>public（公开）vs private（私有）</h1>
 <div class="card"><p>上页说&quot;贴权限标签&quot;，这个标签在 C# 里叫<strong>访问修饰符</strong>——它决定了谁能碰这个字段或方法。C# 有多个访问级别，本节课先掌握最核心的两个。后面课件还会讲 <code>protected</code>（子类可用），但 <code>public</code> 和 <code>private</code> 覆盖了 90% 的场景。</p></div><div class="card"><table><tr><th>修饰符</th><th>含义</th><th>比喻</th></tr><tr><td><code>public</code></td><td>公开的，谁都能用</td><td>门牌号</td></tr><tr><td><code>private</code></td><td>私有的，仅类内部可用</td><td>日记本</td></tr></table></div><div class="card"><p>来看代码——同一个类，名字公开、年龄和成绩私有：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376714688',this)">复制</button></div>
-<pre id="c_4376714688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309944512',this)">复制</button></div>
+<pre id="c_4309944512"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
@@ -489,12 +492,7 @@ namespace HelloWorld
         private int age;            // private：只有类内部能访问
         private double score;
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -505,14 +503,17 @@ namespace HelloWorld
             // s.score = 85;       // ❌ 同上
         }
     }
-}</code></pre><div class="card"><h3>private 了就不能碰了？——通过公开的方法安全访问</h3></div><div class="card"><p>把字段设为 private 之后，外部不能直接 <code>s.age = 18</code>，但可以通过类自己提供的 public 方法来操作——方法内部可以做检查，拒绝不合理的值。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376714752',this)">复制</button></div>
-<pre id="c_4376714752"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><h3>private 了就不能碰了？——通过公开的方法安全访问</h3></div><div class="card"><p>把字段设为 private 之后，外部不能直接 <code>s.age = 18</code>，但可以通过类自己提供的 public 方法来操作——方法内部可以做检查，拒绝不合理的值。</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943680',this)">复制</button></div>
+<pre id="c_4309943680"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         private int age;
+
         // Set 方法：设置值，带检查
         public void SetAge(int value)
         {
@@ -521,18 +522,14 @@ namespace HelloWorld
             else
                 Console.WriteLine($&quot;年龄 {value} 不合法，已拒绝&quot;);
         }
+
         // Get 方法：读取值
         public int GetAge()
         {
             return age;
         }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -543,15 +540,18 @@ namespace HelloWorld
             // s.age = -5;    // ❌ 编译也不通过，因为 age 是 private
         }
     }
-}</code></pre><div class="ok-box">💬 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376747008',this)">复制</button></div>
-<pre id="c_4376747008"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="ok-box">💬 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943488',this)">复制</button></div>
+<pre id="c_4309943488"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         private int age;
         public bool IsAdult { get; private set; }  // 外部只能读，不能改
+
         public void SetAge(int value)
         {
             age = value;
@@ -559,19 +559,20 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-如果 `age` 是 public，别人直接 `s.age = 15` 绕过 SetAge，`IsAdult` 还是 `true`——数据就乱了。**封装不是脱裤子放屁，是把&quot;改数据&quot;和&quot;相关联反应&quot;锁在一条通道里，缺一不可。**</code></pre>
+</div><div class="card"><p>如果 <code>age</code> 是 public，别人直接 <code>s.age = 15</code> 绕过 SetAge，<code>IsAdult</code> 还是 <code>true</code>——数据就乱了。<strong>封装不是脱裤子放屁，是把&quot;改数据&quot;和&quot;相关联反应&quot;锁在一条通道里，缺一不可。</strong></p></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>属性（Property）— 更优雅的 Set/Get</h1>
-<div class="card"><p>Set/Get 方法好用，但每次写两个方法太啰嗦。C# 提供了<strong>属性</strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376714368',this)">复制</button></div>
-<pre id="c_4376714368"><code class="language-csharp">using System;
+<div class="card"><p>Set/Get 方法好用，但每次写两个方法太啰嗦。C# 提供了<strong>属性</strong>：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309945472',this)">复制</button></div>
+<pre id="c_4309945472"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         private int age;
+
         public int Age        // 属性名用 Pascal 命名
         {
             get { return age; }               // 读的时候执行
@@ -585,12 +586,7 @@ namespace HelloWorld
             }
         }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -601,9 +597,11 @@ namespace HelloWorld
             Console.WriteLine(s.Age); // 18，读到的是旧值（-5被拒了）
         }
     }
-}</code></pre><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376714496',this)">复制</button></div>
-<pre id="c_4376714496"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943168',this)">复制</button></div>
+<pre id="c_4309943168"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
@@ -612,69 +610,68 @@ namespace HelloWorld
         public int Age { get; private set; }       // 读公开，写仅内部
         public double Score { get; set; }
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
         {
             Student s = new Student();
             s.Name = &quot;张三&quot;;       // ✅ set 公开
-            s.Age = 18;            // ❌ private set，外部不能赋值！
+            // s.Age = 18;         // ❌ private set，外部不能赋值！（取消注释即编译报错）
             // Age 只能在构造方法等类内部代码中赋值
         }
     }
-}</code></pre><div class="card"><ul><li>自动属性 = 编译器帮你生成隐藏的 private 字段，不用手写</li><li><code>{ get; private set; }</code> 的经典场景：余额、密码——<strong>外部谁都能看，但只有类内部能改</strong></li></ul></div>
+}</code></pre>
+</div><div class="card"><ul><li>自动属性 = 编译器帮你生成隐藏的 private 字段，不用手写</li><li><code>{ get; private set; }</code> 的经典场景：余额、密码——<strong>外部谁都能看，但只有类内部能改</strong></li></ul></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>表达式体成员（=&gt;）— 一行搞定</h1>
 <div class="card"><p><code>{ return ...; }</code> 写多了手酸？C# 提供了 <code>=&gt;</code> 简写——方法、属性、甚至构造方法都能缩成一行。</p></div><div class="card"><p><code>=&gt;</code> 读作<strong>&quot;结果是&quot;</strong>，语法：<code>成员 =&gt; 表达式</code>。</p></div><div class="card"><h3>方法：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376748416',this)">复制</button></div>
-<pre id="c_4376748416"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942656',this)">复制</button></div>
+<pre id="c_4309942656"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
-    class Program
+    class Student
     {
-        static void Main()
-        {
-            // 传统
-            public double GetAverage()
-            {
-                return GetTotal() / 3;
-            }
-            // =&gt; 简写
-            public double GetAverage() =&gt; GetTotal() / 3;
-        }
+        public double chinese = 85, math = 90, english = 78;
+
+        public double GetTotal() =&gt; chinese + math + english;
+
+        // 传统写法
+        // public double GetAverage()
+        // {
+        //     return GetTotal() / 3;
+        // }
+
+        // =&gt; 简写：同样的事压成一行
+        public double GetAverage() =&gt; GetTotal() / 3;
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**只读属性：**
-
-using System;
+</div><div class="card"><h3>只读属性：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942400',this)">复制</button></div>
+<pre id="c_4309942400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
-    class Program
+    class Student
     {
-        static void Main()
-        {
-            // 传统
-            public double Total
-            {
-                get { return chinese + math + english; }
-            }
+        public double chinese = 85, math = 90, english = 78;
 
-            // =&gt; 简写（连 get { } 都省了）
-            public double Total =&gt; chinese + math + english;
-        }
+        // 传统写法
+        // public double Total
+        // {
+        //     get { return chinese + math + english; }
+        // }
+
+        // =&gt; 简写（连 get { } 都省了）
+        public double Total =&gt; chinese + math + english;
     }
-}</code></pre><div class="card"><h3>属性简写 + 方法简写一起上：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376749888',this)">复制</button></div>
-<pre id="c_4376749888"><code class="language-csharp">using System;
+}</code></pre>
+</div><div class="card"><h3>属性简写 + 方法简写一起上：</h3></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309925760',this)">复制</button></div>
+<pre id="c_4309925760"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
@@ -682,25 +679,27 @@ namespace HelloWorld
         public double Chinese;
         public double Math;
         public double English;
+
         public double Total =&gt; Chinese + Math + English;       // 只读属性
         public double GetAverage() =&gt; Total / 3;                // 方法
         public bool IsPassed() =&gt; GetAverage() &gt;= 60;           // 方法
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-**适用条件：** 方法体**只有一行** `return` 或一行语句时才能用。多行逻辑、if-else 绕弯的还是老老实实用 `{ }`。</code></pre>
+</div><div class="card"><p><strong>适用条件：</strong> 方法体<strong>只有一行</strong> <code>return</code> 或一行语句时才能用。多行逻辑、if-else 绕弯的还是老老实实用 <code>{ }</code>。</p></div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 密码强度校验</h1>
-<div class="ok-box">用属性封装密码，要求长度 ≥ 6 位才接受，太短直接拒绝。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376743808',this)">复制</button></div>
-<pre id="c_4376743808"><code class="language-csharp">using System;
+<div class="ok-box">用属性封装密码，要求长度 ≥ 6 位才接受，太短直接拒绝。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309924224',this)">复制</button></div>
+<pre id="c_4309924224"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class User
     {
         private string password;
         public string Username { get; set; }
+
         public string Password
         {
             get =&gt; password;
@@ -712,14 +711,10 @@ namespace HelloWorld
                     Console.WriteLine($&quot;密码太短（{value.Length}位），至少需要6位&quot;);
             }
         }
+
         public string Info =&gt; $&quot;{Username}，密码已设置：{(password != null ? &quot;是&quot; : &quot;否&quot;)}&quot;;
     }
-}</code></pre>
-</div><pre class="plain-box"><code>
-using System;
 
-namespace HelloWorld
-{
     class Program
     {
         static void Main()
@@ -730,14 +725,75 @@ namespace HelloWorld
             Console.WriteLine(u.Info);   // admin，密码已设置：是（123被拒，仍是123456）
         }
     }
-}</code></pre><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744768',this)">复制</button></div>
-<pre id="c_4376744768"><code class="language-csharp">using System;
+}</code></pre>
+</div><svg viewBox="0 0 680 328" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="两次给 Password 赋值：123456 通过、123 被 set 拦下，密码仍是 123456">
+  <defs><marker id="k13d" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">赋值先进 set：长度 ≥ 6 才写进字段，否则原值不动</text>
+  <rect x="24" y="44" width="220" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="71" fill="#38bdf8" font-size="10" font-family="monospace">u.Password = "123456"</text>
+  <line x1="248" y1="66" x2="268" y2="66" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13d)"/>
+  <rect x="272" y="44" width="150" height="44" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="347" y="71" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">长度 6 ≥ 6</text>
+  <line x1="426" y1="66" x2="446" y2="66" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13d)"/>
+  <rect x="450" y="44" width="120" height="44" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="510" y="71" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">✓ 存入</text>
+  <rect x="24" y="108" width="220" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="135" fill="#38bdf8" font-size="10" font-family="monospace">u.Password = "123"</text>
+  <line x1="248" y1="130" x2="268" y2="130" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13d)"/>
+  <rect x="272" y="108" width="150" height="44" rx="6" fill="#2a2116" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="347" y="135" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">长度 3 < 6</text>
+  <line x1="426" y1="130" x2="446" y2="130" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13d)"/>
+  <rect x="450" y="108" width="120" height="44" rx="6" fill="#2a2116" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="510" y="135" text-anchor="middle" fill="#ef4444" font-size="10.5" font-family="monospace">✗ 被拒</text>
+  <rect x="24" y="172" width="632" height="56" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="40" y="194" fill="#d7e0ee" font-size="11" font-family="monospace">private string password 的真实值：123456</text>
+  <text x="40" y="214" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">第二次赋值的 123 从来没进去过 —— 校验失败就不赋值</text>
+  <rect x="24" y="240" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="265" fill="#22c55e" font-size="10.5" font-family="monospace">u.Info → admin，密码已设置：是　（Info 是只读属性，只有 =>）</text>
+  <text x="24" y="310" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">封装的本质：字段藏起来（private），门开在 set 里，不合规的直接挡在门外。</text>
+</svg><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><svg viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个赋值穿过 set 的范围检查：合法的写进字段，越界的被拒绝并保持原值">
+  <defs>
+    <marker id="p13-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
+    <marker id="p13-g" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker>
+    <marker id="p13-r" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ef4444"/></marker>
+  </defs>
+  <text x="40" y="28" fill="#6b7d97" font-size="9.5" font-family="sans-serif">外部这样赋值</text>
+  <text x="524" y="28" fill="#6b7d97" font-size="9.5" font-family="sans-serif">结果</text>
+  <rect x="40" y="48" width="150" height="40" rx="7" fill="#21283a" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="115" y="73" text-anchor="middle" fill="#ef4444" font-size="12" font-family="monospace">value = -300</text>
+  <line x1="194" y1="68" x2="266" y2="68" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p13-r)"/>
+  <rect x="40" y="104" width="150" height="40" rx="7" fill="#21283a" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="115" y="129" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">value = 25</text>
+  <line x1="194" y1="124" x2="266" y2="124" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p13-g)"/>
+  <rect x="40" y="160" width="150" height="40" rx="7" fill="#21283a" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="115" y="185" text-anchor="middle" fill="#ef4444" font-size="12" font-family="monospace">value = 1200</text>
+  <line x1="194" y1="180" x2="266" y2="180" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.75" marker-end="url(#p13-r)"/>
+  <rect x="272" y="36" width="180" height="176" rx="10" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1"/>
+  <text x="362" y="62" text-anchor="middle" fill="#f59e0b" font-size="10.5" font-family="sans-serif">set 里的范围检查</text>
+  <text x="362" y="94" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">value &gt;= -273</text>
+  <text x="362" y="114" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">&amp;&amp;</text>
+  <text x="362" y="134" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">value &lt;= 1000</text>
+  <text x="362" y="166" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">两项都成立才放行</text>
+  <rect x="524" y="76" width="136" height="40" rx="7" fill="#10261c" stroke="#22c55e" stroke-opacity="0.6" stroke-width="1"/>
+  <text x="592" y="101" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">celsius = 25</text>
+  <rect x="524" y="152" width="136" height="40" rx="7" fill="#2a1a1a" stroke="#ef4444" stroke-opacity="0.5" stroke-width="1"/>
+  <text x="592" y="170" text-anchor="middle" fill="#ef4444" font-size="10" font-family="sans-serif">拒绝赋值</text>
+  <text x="592" y="185" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">原值保持不变</text>
+  <line x1="456" y1="96" x2="520" y2="96" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#p13-g)"/>
+  <text x="488" y="88" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">通过</text>
+  <line x1="456" y1="172" x2="520" y2="172" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#p13-r)"/>
+  <text x="488" y="164" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">不通过</text>
+  <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">字段前加 <tspan font-family="monospace">private</tspan>，外面就只能通过 <tspan font-family="monospace">Celsius</tspan> 属性进来——挡不住脏数据的属性，等于没封装。</text>
+</svg><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923584',this)">复制</button></div>
+<pre id="c_4309923584"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Temperature
     {
         <span class="code-blank">___</span> double celsius;     // private 字段
+
         public double Celsius
         {
             <span class="code-blank">___</span> =&gt; celsius;     // get
@@ -751,10 +807,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923456',this)">复制</button></div>
+<pre id="c_4309923456"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -775,24 +830,53 @@ namespace HelloWorld
         }
     }
 }</code></pre>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>为什么要封装？</strong>：把内部细节藏起来，只暴露安全的访问口，防乱改</li><li><strong>public（公开）vs private（私有）</strong>：public 谁都能用，private 只有自己类里能用</li><li><strong>属性（Property）— 更优雅的 Set/Get</strong>：<code>public 类型 名 {get;set;}</code> 自动管读写</li><li><strong>表达式体成员（=&gt;）— 一行搞定</strong>：<code>=&gt; 表达式</code> 一行写方法/属性，更简洁</li></ul></div><div class="ok-box">💡 接下来是「综合练习」——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>为什么要封装？</strong>：把内部细节藏起来，只暴露安全的访问口，防乱改</li><li><strong>public（公开）vs private（私有）</strong>：public 谁都能用，private 只有自己类里能用</li><li><strong>属性（Property）— 更优雅的 Set/Get</strong>：<code>public 类型 名 {get;set;}</code> 自动管读写</li><li><strong>表达式体成员（=&gt;）— 一行搞定</strong>：<code>=&gt; 表达式</code> 一行写方法/属性，更简洁</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>综合练习 — 学生成绩管理器</h1>
 <div class="ok-box">三门成绩封装为属性（0-100），总分/平均分/等级用 <code>=&gt;</code> 写为只读属性。</div><div class="card"><h3>期望输入：</h3></div><pre class="plain-box"><code>张三 语文85 数学90 英语78
 （尝试设置 Chinese = 120 —— 应被拦截）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三: 总分253 平均84.3 等级B
-成绩120无效（被拦截）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376744896',this)">复制</button></div>
-<pre id="c_4376744896"><code class="language-csharp">using System;
+成绩120无效（被拦截）</code></pre><svg viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三门成绩各自经过属性校验后汇总，算出总分、平均分和等级">
+  <defs>
+    <marker id="p13-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
+  </defs>
+  <rect x="40" y="30" width="180" height="86" rx="9" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="130" y="52" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">public double Chinese</text>
+  <text x="130" y="74" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">set: 0 &lt;= value &lt;= 100</text>
+  <text x="130" y="94" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">→ 字段 chinese = 85</text>
+  <line x1="130" y1="116" x2="130" y2="140" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p13-b)"/>
+  <rect x="240" y="30" width="180" height="86" rx="9" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="330" y="52" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">public double Math</text>
+  <text x="330" y="74" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">set: 0 &lt;= value &lt;= 100</text>
+  <text x="330" y="94" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">→ 字段 math = 90</text>
+  <line x1="330" y1="116" x2="330" y2="140" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p13-b)"/>
+  <rect x="440" y="30" width="180" height="86" rx="9" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="530" y="52" text-anchor="middle" fill="#38bdf8" font-size="11" font-family="monospace">public double English</text>
+  <text x="530" y="74" text-anchor="middle" fill="#f59e0b" font-size="9.5" font-family="monospace">set: 0 &lt;= value &lt;= 100</text>
+  <text x="530" y="94" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">→ 字段 english = 78</text>
+  <line x1="530" y1="116" x2="530" y2="140" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p13-b)"/>
+  <line x1="130" y1="146" x2="550" y2="146" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.35"/>
+  <line x1="340" y1="146" x2="340" y2="164" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.6" marker-end="url(#p13-b)"/>
+  <rect x="40" y="168" width="600" height="58" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="60" y="190" fill="#22c55e" font-size="10.5" font-family="monospace">Total =&gt; chinese + math + english　　Average =&gt; Total / 3</text>
+  <text x="60" y="212" fill="#8b9bb4" font-size="9.5" font-family="monospace">Grade =&gt; Average&gt;=90?"A":Average&gt;=80?"B":Average&gt;=70?"C":Average&gt;=60?"D":"F"</text>
+  <text x="40" y="248" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个 <tspan font-family="monospace">=&gt;</tspan> 只读属性不存数据、每次访问现算——所以改了成绩，总分和等级自动跟着变，不用手动同步。</text>
+  <text x="40" y="264" fill="#6b7d97" font-size="10" font-family="sans-serif">120 分会被 set 挡在门外，只打印「成绩120无效」，chinese 还是 85。</text>
+</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309921536',this)">复制</button></div>
+<pre id="c_4309921536"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Student
     {
         public string Name { get; set; }
         <span class="code-blank">___</span> double chinese, math, english;
+
         public double Chinese
         {
             <span class="code-blank">___</span> =&gt; chinese;
@@ -805,6 +889,7 @@ namespace HelloWorld
             }
         }
         // Math 和 English 同理（自己补全）
+
         public double Total =&gt; <span class="code-blank">___</span> + Math + English;
         public double Average =&gt; <span class="code-blank">___</span> / 3;
         public string Grade =&gt;
@@ -812,10 +897,9 @@ namespace HelloWorld
         Average &gt;= 70 ? &quot;C&quot; : Average &gt;= <span class="code-blank">___</span> ? &quot;D&quot; : &quot;F&quot;;
     }
 }</code></pre>
-</div><pre class="plain-box"><code>
-&gt; 📝 参考代码（做完再对照，不要提前看哦）
-
-using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309921024',this)">复制</button></div>
+<pre id="c_4309921024"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -864,9 +948,11 @@ namespace HelloWorld
         Average &gt;= 90 ? &quot;A&quot; : Average &gt;= 80 ? &quot;B&quot; :
         Average &gt;= 70 ? &quot;C&quot; :         Average &gt;= 60 ? &quot;D&quot; : &quot;F&quot;;
     }
-}</code></pre><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376745088',this)">复制</button></div>
-<pre id="c_4376745088"><code class="language-csharp">using System;
+}</code></pre>
+</div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309920704',this)">复制</button></div>
+<pre id="c_4309920704"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Thermometer
@@ -893,13 +979,106 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><pre class="plain-box"><code></code></pre></div></div>
+</div></div></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的「扫码提交课后作业」二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Product</code> 类，包含名称、价格字段。价格用属性封装，不能为负数。</p><ul><li>提示：<code>public double Price { get { ... } set { ... } }</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>Price = 19.9 → ✅ 设置成功</code></li></ul><ul><li>输出：<code>Price = -10 → ❌ 价格不能为负</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>SpeedLimit</code> 类：封装车速（0-300），添加只读属性 <code>Penalty</code> 返回处罚——≤120 &quot;正常&quot;，≤150 &quot;扣3分&quot;，≤180 &quot;扣6分&quot;，&gt;180 &quot;吊销驾照&quot;。</p><ul><li>提示：<code>Penalty</code> 用 <code>=&gt;</code> + 三元嵌套，或 <code>get { }</code> 用 if-else</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>Speed = 100 → 正常</code></li></ul><ul><li>输出：<code>Speed = 140 → 扣3分</code></li></ul><ul><li>输出：<code>Speed = 200 → 吊销驾照</code></li></ul><ul><li>输出：<code>Speed = -10 → ❌ 被拦截</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>改造课件11的 <code>Book</code> 类：将 <code>price</code> 改为属性（不能为负），添加只读属性 <code>Level</code>——价格 ≥ 50 返回&quot;贵&quot;，否则返回&quot;便宜&quot;。</p><ul><li>提示：<code>Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;</code>，用 <code>=&gt;</code></li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》¥45 → 便宜</code></li></ul><ul><li>输出：<code>《算法导论》¥89 → 贵</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Rectangle</code> 类：宽高用属性封装（0-10000），添加只读属性 <code>Area</code>（面积）和 <code>Perimeter</code>（周长）自动计算。</p><ul><li>提示：<code>Area =&gt; Width * Height</code>，<code>Perimeter =&gt; 2 * (Width + Height)</code>，宽和高改一个，面积周长自动更新</li></ul></div><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376742400',this)">复制</button></div>
-<pre id="c_4376742400"><code class="language-csharp">using System;
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Product</code> 类，包含名称、价格字段。价格用属性封装，不能为负数。</p><ul><li>提示：<code>public double Price { get { ... } set { ... } }</code></li></ul></div><svg viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：19.9 通过校验、-10 被拦下，price 字段保持 19.9">
+  <defs><marker id="k13q1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">外部只能通过属性赋值，实际写字段的动作发生在 set 里</text>
+  <rect x="24" y="40" width="280" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="38" y="67" fill="#38bdf8" font-size="11" font-family="monospace">u.Price = 19.9</text>
+  <rect x="324" y="40" width="280" height="44" rx="6" fill="#1b2536" stroke="#ef4444" stroke-opacity="0.35" stroke-width="1"/>
+  <text x="338" y="67" fill="#ef4444" font-size="11" font-family="monospace">u.Price = -10</text>
+  <line x1="164" y1="84" x2="164" y2="106" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13q1)"/>
+  <line x1="464" y1="84" x2="464" y2="106" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13q1)"/>
+  <rect x="24" y="110" width="632" height="72" rx="8" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="40" y="134" fill="#f59e0b" font-size="10.5" font-family="monospace">public double Price</text>
+  <text x="40" y="154" fill="#d7e0ee" font-size="10" font-family="monospace">set { if (value &gt;= 0) price = value;  else Console.WriteLine(&quot;❌ 价格不能为负&quot;); }</text>
+  <text x="40" y="172" fill="#8b9bb4" font-size="10" font-family="monospace">get { return price; }</text>
+  <line x1="340" y1="182" x2="340" y2="204" stroke="#22c55e" stroke-width="1.2" stroke-opacity="0.85" marker-end="url(#k13q1)"/>
+  <rect x="24" y="208" width="632" height="52" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="232" fill="#22c55e" font-size="10.5" font-family="monospace">private double price = 19.9　（-10 被拦，字段没被改写）</text>
+  <text x="40" y="250" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">输出：Price = 19.9 → ✅ 设置成功　　Price = -10 → ❌ 价格不能为负</text>
+  <text x="24" y="292" fill="#6b7d97" font-size="9.5" font-family="sans-serif">属性名 Price 大写、字段名 price 小写，两个都存在：外部只认属性。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>Price = 19.9 → ✅ 设置成功</code></li></ul><ul><li>输出：<code>Price = -10 → ❌ 价格不能为负</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>SpeedLimit</code> 类：封装车速（0-300），添加只读属性 <code>Penalty</code> 返回处罚——≤120 &quot;正常&quot;，≤150 &quot;扣3分&quot;，≤180 &quot;扣6分&quot;，&gt;180 &quot;吊销驾照&quot;。</p><ul><li>提示：<code>Penalty</code> 用 <code>=&gt;</code> + 三元嵌套，或 <code>get { }</code> 用 if-else</li></ul></div><svg viewBox="0 0 680 286" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：车速 100 正常、140 扣3分、200 吊销驾照、-10 被拦截">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">只读属性 Penalty 按车速区间返回处罚，用三元嵌套或 if-else</text>
+  <rect x="60.0" y="76" width="224.0" height="46" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <rect x="284.0" y="76" width="56.0" height="46" rx="4" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <rect x="340.0" y="76" width="56.0" height="46" rx="4" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <rect x="396.0" y="76" width="224.0" height="46" rx="4" fill="#2a1616" stroke="#ef4444" stroke-opacity="0.45" stroke-width="1"/>
+  <line x1="60" y1="130" x2="620" y2="130" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.4"/>
+  <text x="60.0" y="146" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">0</text>
+  <text x="284.0" y="146" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">120</text>
+  <text x="340.0" y="146" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">150</text>
+  <text x="396.0" y="146" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">180</text>
+  <text x="620.0" y="146" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">300</text>
+  <line x1="246.66666666666666" y1="74" x2="246.66666666666666" y2="58" stroke="#22c55e" stroke-width="1.4" stroke-opacity="0.9"/>
+  <text x="246.66666666666666" y="54" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">100</text>
+  <line x1="321.3333333333333" y1="74" x2="321.3333333333333" y2="58" stroke="#f59e0b" stroke-width="1.4" stroke-opacity="0.9"/>
+  <text x="321.3333333333333" y="54" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="monospace">140</text>
+  <line x1="433.3333333333333" y1="74" x2="433.3333333333333" y2="58" stroke="#ef4444" stroke-width="1.4" stroke-opacity="0.9"/>
+  <text x="433.3333333333333" y="54" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">200</text>
+  <rect x="24" y="158" width="150" height="40" rx="6" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="36" y="174" fill="#22c55e" font-size="9" font-family="monospace">0~120</text>
+  <text x="36" y="190" fill="#22c55e" font-size="10.5" font-family="monospace">正常</text>
+  <rect x="182" y="158" width="150" height="40" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="194" y="174" fill="#f59e0b" font-size="9" font-family="monospace">120~150</text>
+  <text x="194" y="190" fill="#f59e0b" font-size="10.5" font-family="monospace">扣3分</text>
+  <rect x="340" y="158" width="150" height="40" rx="6" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="352" y="174" fill="#f59e0b" font-size="9" font-family="monospace">150~180</text>
+  <text x="352" y="190" fill="#f59e0b" font-size="10.5" font-family="monospace">扣6分</text>
+  <rect x="498" y="158" width="150" height="40" rx="6" fill="#2a1616" stroke="#ef4444" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="510" y="174" fill="#ef4444" font-size="9" font-family="monospace">>180</text>
+  <text x="510" y="190" fill="#ef4444" font-size="10.5" font-family="monospace">吊销驾照</text>
+  <rect x="24" y="210" width="632" height="40" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="40" y="235" fill="#d7e0ee" font-size="9.5" font-family="monospace">Speed = -10 → set 里 if (value &gt;= 0 &amp;&amp; value &lt;= 300) 拦下 → ❌ 被拦截，原值不变</text>
+  <text x="24" y="270" fill="#6b7d97" font-size="9.5" font-family="sans-serif">Penalty 只写 =>，不给 set —— 外部改不了处罚结果，只能改 Speed。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>Speed = 100 → 正常</code></li></ul><ul><li>输出：<code>Speed = 140 → 扣3分</code></li></ul><ul><li>输出：<code>Speed = 200 → 吊销驾照</code></li></ul><ul><li>输出：<code>Speed = -10 → ❌ 被拦截</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>改造课件11的 <code>Book</code> 类：将 <code>price</code> 改为属性（不能为负），添加只读属性 <code>Level</code>——价格 ≥ 50 返回&quot;贵&quot;，否则返回&quot;便宜&quot;。</p><ul><li>提示：<code>Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;</code>，用 <code>=&gt;</code></li></ul></div><svg viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：45 元判便宜、89 元判贵，阈值 50 由三元表达式决定">
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">price 改成属性（不能为负），Level 用 => 自动算</text>
+  <rect x="24" y="38" width="632" height="44" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
+  <text x="40" y="65" fill="#38bdf8" font-size="10.5" font-family="monospace">public string Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;;</text>
+  <rect x="24" y="96" width="632" height="30" rx="4" fill="#1b2536" stroke="#64748b" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="44" y="116" fill="#8b9bb4" font-size="9" font-family="sans-serif">书名</text>
+  <text x="300" y="116" fill="#8b9bb4" font-size="9" font-family="sans-serif">price</text>
+  <text x="460" y="116" fill="#8b9bb4" font-size="9" font-family="sans-serif">Level</text>
+  <rect x="24" y="130" width="632" height="40" rx="4" fill="#1b2536" stroke="#64748b" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="44" y="155" fill="#d7e0ee" font-size="11" font-family="monospace">《C#入门》</text>
+  <text x="300" y="155" fill="#38bdf8" font-size="11" font-family="monospace">¥45</text>
+  <rect x="452" y="135" width="80" height="30" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="492" y="155" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">便宜</text>
+  <rect x="24" y="174" width="632" height="40" rx="4" fill="#1b2536" stroke="#64748b" stroke-opacity="0.2" stroke-width="1"/>
+  <text x="44" y="199" fill="#d7e0ee" font-size="11" font-family="monospace">《算法导论》</text>
+  <text x="300" y="199" fill="#38bdf8" font-size="11" font-family="monospace">¥89</text>
+  <rect x="452" y="179" width="80" height="30" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="492" y="199" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">贵</text>
+  <text x="24" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">45 &lt; 50 走冒号后面那个「便宜」；89 ≥ 50 走前面的「贵」——阈值只有一个。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》¥45 → 便宜</code></li></ul><ul><li>输出：<code>《算法导论》¥89 → 贵</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Rectangle</code> 类：宽高用属性封装（0-10000），添加只读属性 <code>Area</code>（面积）和 <code>Perimeter</code>（周长）自动计算。</p><ul><li>提示：<code>Area =&gt; Width * Height</code>，<code>Perimeter =&gt; 2 * (Width + Height)</code>，宽和高改一个，面积周长自动更新</li></ul></div><svg viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：宽从 5 改成 8，面积周长自动从 15/16 变成 24/22">
+  <defs><marker id="k13q4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f59e0b"/></marker></defs>
+  <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">Area 和 Perimeter 只有 =>，宽高一变，它们立刻跟着变</text>
+  <rect x="24" y="44" width="288" height="150" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="38" y="68" fill="#38bdf8" font-size="10" font-family="monospace">Width = 5、Height = 3</text>
+  <line x1="38" y1="78" x2="298" y2="78" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <text x="38" y="108" fill="#8b9bb4" font-size="9.5" font-family="monospace">Area</text>
+  <text x="38" y="130" fill="#22c55e" font-size="13" font-family="monospace">=> 15</text>
+  <text x="38" y="144" fill="#8b9bb4" font-size="9.5" font-family="monospace">Perimeter</text>
+  <text x="38" y="166" fill="#22c55e" font-size="13" font-family="monospace">=> 16</text>
+  <rect x="368" y="44" width="288" height="150" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
+  <text x="382" y="68" fill="#38bdf8" font-size="10" font-family="monospace">Width = 8、Height = 3</text>
+  <line x1="382" y1="78" x2="642" y2="78" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.25"/>
+  <text x="382" y="108" fill="#8b9bb4" font-size="9.5" font-family="monospace">Area</text>
+  <text x="382" y="130" fill="#22c55e" font-size="13" font-family="monospace">=> 24</text>
+  <text x="382" y="144" fill="#8b9bb4" font-size="9.5" font-family="monospace">Perimeter</text>
+  <text x="382" y="166" fill="#22c55e" font-size="13" font-family="monospace">=> 22</text>
+  <line x1="316" y1="118" x2="362" y2="118" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.9" marker-end="url(#k13q4)"/>
+  <text x="339" y="108" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="sans-serif">Width = 8</text>
+  <rect x="24" y="206" width="632" height="44" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
+  <text x="40" y="233" fill="#f59e0b" font-size="10" font-family="monospace">Width = -1 不在 0~10000 内 → set 拦下 → ❌ 被拦截，Width 还是 8</text>
+  <text x="24" y="280" fill="#6b7d97" font-size="9.5" font-family="sans-serif">面积不用存字段，只写 => Width * Height：随时算、不会和宽高对不上。</text>
+</svg><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309925184',this)">复制</button></div>
+<pre id="c_4309925184"><code class="language-csharp">using System;
+
 namespace HelloWorld
 {
     class Program
@@ -907,16 +1086,22 @@ namespace HelloWorld
         static void Main()
         {
             // ==================== 第1题 ====================
+
+
             // ==================== 第2题 ====================
+
+
             // ==================== 第3题 ====================
+
+
             // ==================== 第4题 ====================
+
         }
     }
+
     // ===== 各类定义写在这里 =====
 }</code></pre>
-</div><pre class="plain-box"><code>
-
-&gt; 🤖 **AI 助教**：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</code></pre>
+</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
 
@@ -1020,8 +1205,8 @@ document.addEventListener('click',function(e){
 // 点击移动端信息条跳转下一页
 function mobileInfoTap(){goSlide(1)}
 // ========== localStorage ==========
-const LS=(k,d)=>localStorage.getItem(k)||d;
-const LSset=(k,v)=>localStorage.setItem(k,v);
+const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
+const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
 
 // ========== 主题 ==========
 // ========== 在线编辑器下拉 ==========
