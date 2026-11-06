@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -462,8 +477,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><h3>正确示例：数到 5</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376643392',this)">复制</button></div>
-<pre id="c_4376643392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317742912',this)">复制</button></div>
+<pre id="c_4317742912"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -482,8 +497,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>条件为 true → 执行花括号里的代码 → 回到条件 → 再判断 → 直到条件为 false 退出</li><li>每次执行到最后，一定要让循环条件<strong>向 false 靠拢</strong></li></ul></div><div class="card"><h3>☠️ 死循环——最常见的坑</h3><p>忘了更新变量，条件永远为 true：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376642880',this)">复制</button></div>
-<pre id="c_4376642880"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317742400',this)">复制</button></div>
+<pre id="c_4317742400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -520,8 +535,8 @@ namespace HelloWorld
         }
     }
 }</code></pre><div class="card"><p>把模板填成具体例子——先执行一次，再判断要不要继续：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376642304',this)">复制</button></div>
-<pre id="c_4376642304"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317741824',this)">复制</button></div>
+<pre id="c_4317741824"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -540,8 +555,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>while vs do-while 的区别：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376642048',this)">复制</button></div>
-<pre id="c_4376642048"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317741568',this)">复制</button></div>
+<pre id="c_4317741568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -561,8 +576,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>for 循环</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376624832',this)">复制</button></div>
-<pre id="c_4376624832"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317707968',this)">复制</button></div>
+<pre id="c_4317707968"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -590,8 +605,8 @@ i=1      i&lt;=5? ✅     输出     i++变2    i&lt;=5? ✅
          i&lt;=5? ✅     输出     i++变3    i&lt;=5? ✅
          ...
          i&lt;=5? ❌ 停止</code></pre><div class="card"><ul><li>口诀：<strong>初始只一次，每次先判断后执行，每次执行完再更新</strong></li><li><code>i</code> 只在 for 内部有效</li></ul></div><div class="card"><h3>示例：求 1+2+3+...+100 的和</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376624192',this)">复制</button></div>
-<pre id="c_4376624192"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317707328',this)">复制</button></div>
+<pre id="c_4317707328"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -609,8 +624,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>示例：求 1~100 中所有偶数的和</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376624000',this)">复制</button></div>
-<pre id="c_4376624000"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317707136',this)">复制</button></div>
+<pre id="c_4317707136"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -633,8 +648,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>VS Code 调试技巧</h1>
 <div class="card"><p>靠 <code>Console.WriteLine</code> 查 bug 就像抹黑走路——调试器让你直接<strong>在代码里停车，看清每个变量</strong>。</p></div><div class="card"><h3>场景：成绩求和为什么不对？</h3></div><div class="card"><p>三科成绩 85、90、78，心算都知道是 253，但程序输出 168——少了一科。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376643776',this)">复制</button></div>
-<pre id="c_4376643776"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317743296',this)">复制</button></div>
+<pre id="c_4317743296"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -657,8 +672,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习1 — 三种循环对比</h1>
 <div class="ok-box">同一需求，三种写法：</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376620096',this)">复制</button></div>
-<pre id="c_4376620096"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317703232',this)">复制</button></div>
+<pre id="c_4317703232"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -681,7 +696,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 312" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="while、do-while、for 三种写法输出 1 到 5，三要素摆放位置不同">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 312" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="while、do-while、for 三种写法输出 1 到 5，三要素摆放位置不同">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">同一个需求「输出 1~5」，三要素摆的位置不一样</text>
   <rect x="24" y="40" width="200" height="156" rx="10" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.42" stroke-width="1"/>
   <text x="38" y="64" fill="#38bdf8" font-size="12" font-family="monospace">while</text>
@@ -716,7 +731,7 @@ namespace HelloWorld
   <rect x="24" y="216" width="632" height="48" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="340" y="246" text-anchor="middle" fill="#22c55e" font-size="13" font-family="sans-serif">三种写法输出完全相同：1 2 3 4 5</text>
   <text x="24" y="292" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">次数确定优先 for；至少执行一次用 do-while；次数不定用 while。</text>
-</svg><div class="card"><ul><li>动手：用三种循环分别计算 1~10 的乘积</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>while：适合次数不确定的场景</li><li>do-while：至少执行一次，适合&quot;先做再说&quot;</li><li>for：初始化+条件+更新写在一起，次数确定时最简洁</li><li>三种循环可以互相替换，选最顺手的即可</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用三种循环输出 1 到 N 的平方：</p></div><svg viewBox="0 0 680 236" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="while、for、do-while 三种写法输出同样的 1、4、9">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：用三种循环分别计算 1~10 的乘积</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>while：适合次数不确定的场景</li><li>do-while：至少执行一次，适合&quot;先做再说&quot;</li><li>for：初始化+条件+更新写在一起，次数确定时最简洁</li><li>三种循环可以互相替换，选最顺手的即可</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用三种循环输出 1 到 N 的平方：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 236" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="while、for、do-while 三种写法输出同样的 1、4、9">
   <text x="24" y="28" fill="#8b9bb4" font-size="11" font-family="sans-serif">n = 3　→　每个版本都应该打印 1、4、9 这三行</text>
   <rect x="24" y="44" width="200" height="152" rx="10" fill="#1b2536" stroke="#334155" stroke-width="1"/>
   <text x="124" y="68" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">while</text>
@@ -743,9 +758,9 @@ namespace HelloWorld
   <text x="556" y="136" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">4</text>
   <text x="556" y="156" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">9</text>
   <text x="24" y="222" fill="#8b9bb4" font-size="11" font-family="sans-serif">三种写法的结果一模一样——它们只是「什么时候判断条件」不同，循环干的事完全一样。</text>
-</svg><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376619456',this)">复制</button></div>
-<pre id="c_4376619456"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317702592',this)">复制</button></div>
+<pre id="c_4317702592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -772,8 +787,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376619328',this)">复制</button></div>
-<pre id="c_4376619328"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317702464',this)">复制</button></div>
+<pre id="c_4317702464"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -801,8 +816,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>循环嵌套 — 九九乘法表</h1>
 <div class="card"><ul><li>循环里面再套一个循环，解决复杂重复问题</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376620416',this)">复制</button></div>
-<pre id="c_4376620416"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317703552',this)">复制</button></div>
+<pre id="c_4317703552"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -830,8 +845,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>break — 跳出循环</h1>
 <div class="ok-box">break = &quot;我不玩了，到此为止&quot;。遇到 break，<strong>立刻跳出整个循环</strong>，后面的代码不执行，循环后面的代码继续。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376618624',this)">复制</button></div>
-<pre id="c_4376618624"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317701696',this)">复制</button></div>
+<pre id="c_4317701696"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -856,8 +871,8 @@ i=4 → 输出 4 → i++
 i=5 → 💥 break! → 跳出 for，不输出 5
               ↓
        循环后面的代码继续…</code></pre><div class="ok-box">🏃 就像跑 10 圈，跑到第 5 圈摔了一跤——直接出局，后面 6、7、8、9、10 都不跑了</div><div class="ok-box">🛗 就像坐电梯从 1 楼上 10 楼，到了 5 楼发现有急事，按开门键冲出去——上面的 6~10 楼跟我没关系了</div><div class="ok-box">🔍 就像在全班花名册里找&quot;张三&quot;，找到的那一刻合上本子走人——后面的人不用看了</div><div class="card"><h3>实战应用：猜数字游戏</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376617984',this)">复制</button></div>
-<pre id="c_4376617984"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317701056',this)">复制</button></div>
+<pre id="c_4317701056"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -884,8 +899,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>continue — 跳过本次循环</h1>
 <div class="ok-box">continue = &quot;这一轮我不玩了，下一轮继续&quot;。遇到 continue，<strong>跳过本轮剩余代码</strong>，直接进入下一次循环，循环不会终止。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376619072',this)">复制</button></div>
-<pre id="c_4376619072"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317702208',this)">复制</button></div>
+<pre id="c_4317702208"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -911,7 +926,22 @@ i=5 → 输出 5 → i++ → 条件不满足退出</code></pre><div class="ok-bo
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>break vs continue — 一跳，一过</h1>
-<div class="card"><p>两句话都是<span class="term">在循环里提前动手</span>，但结果完全不一样：<code>break</code> 让<strong>整个循环结束</strong>，<code>continue</code> 只让<strong>这一轮结束</strong>。</p></div><svg viewBox="0 0 680 318" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="break 到第 3 轮直接结束循环，continue 只跳过第 3 轮">
+<div class="card"><p>两句话都是<span class="term">在循环里提前动手</span>，但结果完全不一样：<code>break</code> 让<strong>整个循环结束</strong>，<code>continue</code> 只让<strong>这一轮结束</strong>。</p></div><div class="svg-fig"><svg class="anim" viewBox="0 0 680 318" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="break 到第 3 轮直接结束循环，continue 只跳过第 3 轮">
+  <style>
+    /* 光标底色（静态与 PDF 都是隐藏） */
+    .bc-cur{fill:#f59e0b;fill-opacity:.13;stroke:#f59e0b;stroke-width:1.4;stroke-dasharray:5 4;opacity:0}
+    /* 动画只在屏幕播放，PDF 导出时自动退回静态完整图 */
+    @media screen{
+      .bc-arr{stroke-dasharray:30}
+      .anim.run .bc-curL{animation:bcWalkL 2.7s ease-in-out both}
+      .anim.run .bc-curR{animation:bcWalkR 3.6s ease-in-out both}
+      .anim.run .bc-arrL{animation:bcDraw .45s ease-out 2s both}
+      .anim.run .bc-arrR{animation:bcDraw .45s ease-out 1.65s both}
+      @keyframes bcDraw{from{stroke-dashoffset:30}to{stroke-dashoffset:0}}
+      @keyframes bcWalkL{0%{x:37px;opacity:0}6%{x:37px;opacity:1}30%{x:37px}55%{x:93px}76%{x:149px}94%{x:149px;opacity:1}100%{x:149px;opacity:0}}
+      @keyframes bcWalkR{0%{x:363px;opacity:0}4%{x:363px;opacity:1}20%{x:363px}36%{x:419px}52%{x:475px}70%{x:531px}88%{x:587px}96%{x:587px;opacity:1}100%{x:587px;opacity:0}}
+    }
+  </style>
   <defs>
     <marker id="bc-o" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto">
       <path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/>
@@ -933,7 +963,7 @@ i=5 → 输出 5 → i++ → 条件不满足退出</code></pre><div class="ok-bo
   <rect x="264" y="74" width="48" height="34" rx="7" fill="#141a26" stroke="#475569" stroke-opacity="0.35" stroke-width="1"/>
   <text x="288" y="96" text-anchor="middle" fill="#64748b" font-size="13" font-family="monospace">5</text>
 
-  <line x1="176" y1="110" x2="176" y2="138" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#bc-o)"/>
+  <line class="bc-arr bc-arrL" x1="176" y1="110" x2="176" y2="138" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#bc-o)"/>
   <text x="176" y="156" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="sans-serif">循环立刻结束</text>
   <text x="176" y="175" text-anchor="middle" fill="#64748b" font-size="10.5" font-family="sans-serif">i=4、5 根本轮不到</text>
 
@@ -955,7 +985,7 @@ i=5 → 输出 5 → i++ → 条件不满足退出</code></pre><div class="ok-bo
   <rect x="590" y="74" width="48" height="34" rx="7" fill="#16202e" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
   <text x="614" y="96" text-anchor="middle" fill="#d7e0ee" font-size="13" font-family="monospace">5</text>
 
-  <line x1="502" y1="110" x2="502" y2="132" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#bc-o)"/>
+  <line class="bc-arr bc-arrR" x1="502" y1="110" x2="502" y2="132" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#bc-o)"/>
   <text x="502" y="150" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="sans-serif">只跳过这一轮</text>
   <text x="502" y="169" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">i=4、5 照常执行</text>
 
@@ -963,9 +993,12 @@ i=5 → 输出 5 → i++ → 条件不满足退出</code></pre><div class="ok-bo
   <text x="410" y="218" fill="#22c55e" font-size="14" font-family="monospace">1 2 4 5</text>
 
   <text x="24" y="302" fill="#8b9bb4" font-size="11" font-family="sans-serif">同样是 if (i == 3)：break 结束「整个循环」，continue 只结束「这一轮」——一个字之差，输出差一半。</text>
-</svg><div class="card"><p>写代码时它们只差一个单词：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376617344',this)">复制</button></div>
-<pre id="c_4376617344"><code class="language-csharp">using System;
+
+  <rect class="bc-cur bc-curL" x="37" y="71" width="54" height="40" rx="9"/>
+  <rect class="bc-cur bc-curR" x="363" y="71" width="54" height="40" rx="9"/>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>写代码时它们只差一个单词：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317697472',this)">复制</button></div>
+<pre id="c_4317697472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -996,8 +1029,8 @@ namespace HelloWorld
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂练习2 — 猜数字</h1>
 <div class="ok-box">实现猜数字游戏：随机生成1~100的数字，用户每次猜完提示太大/太小，猜对显示次数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376615040',this)">复制</button></div>
-<pre id="c_4376615040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313589120',this)">复制</button></div>
+<pre id="c_4313589120"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1030,7 +1063,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="猜数字：假设答案是 50，三次迭代后猜对并 break 跳出循环">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="猜数字：假设答案是 50，三次迭代后猜对并 break 跳出循环">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">假设 answer = 50：while (true) 的每一次迭代</text>
   <rect x="24" y="38" width="632" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
   <text x="36" y="56" fill="#8b9bb4" font-size="9" font-family="sans-serif">第几次</text>
@@ -1054,7 +1087,7 @@ namespace HelloWorld
   <text x="500" y="168" fill="#22c55e" font-size="10" font-family="sans-serif">break 跳出</text>
   <text x="24" y="216" fill="#22c55e" font-size="10.5" font-family="sans-serif">猜对之后 break —— 循环直接结束，不会再问第 4 次</text>
   <text x="24" y="244" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">while (true) 本身永不停止，全靠 break 退出；漏写 break 就是死循环。</text>
-</svg><div class="card"><ul><li>动手：加上次数限制（超过7次算失败）</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>while (true)</code> 是死循环，靠 <code>break</code> 退出——猜对才跳出去</li><li><code>rand.Next(1, 101)</code> 生成 1~100 的随机数（左闭右开）</li><li><code>count++</code> 记录猜测次数</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：</p></div><svg viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="猜数字循环：比对后没猜中就打印提示、绕回去再猜；猜中才 break 跳出">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：加上次数限制（超过7次算失败）</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>while (true)</code> 是死循环，靠 <code>break</code> 退出——猜对才跳出去</li><li><code>rand.Next(1, 101)</code> 生成 1~100 的随机数（左闭右开）</li><li><code>count++</code> 记录猜测次数</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="猜数字循环：比对后没猜中就打印提示、绕回去再猜；猜中才 break 跳出">
   <defs>
     <marker id="p7-c" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
     <marker id="p7-g" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#22c55e"/></marker>
@@ -1084,9 +1117,9 @@ namespace HelloWorld
   <polyline points="190,252 150,252 150,116 186,116" fill="none" stroke="#f59e0b" stroke-width="1.3" stroke-opacity="0.8" marker-end="url(#p7-o)"/>
   <text x="100" y="108" fill="#f59e0b" font-size="9.5" font-family="sans-serif">再猜一次</text>
   <text x="24" y="300" fill="#8b9bb4" font-size="11" font-family="sans-serif">while (true) 本身不会停，全靠猜中那一刻的 break 跳出去——这就是「死循环 + 出口」的标准写法。</text>
-</svg><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376614208',this)">复制</button></div>
-<pre id="c_4376614208"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318598912',this)">复制</button></div>
+<pre id="c_4318598912"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1118,8 +1151,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376614016',this)">复制</button></div>
-<pre id="c_4376614016"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318599104',this)">复制</button></div>
+<pre id="c_4318599104"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1162,7 +1195,7 @@ namespace HelloWorld
    ***
   *****
  *******
-*********</code></pre><svg viewBox="0 0 680 208" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="等腰三角形逐行拆解：第 i 行打 5-i 个空格，再打 2i-1 个星号">
+*********</code></pre><div class="svg-fig"><svg class="auto" viewBox="0 0 680 208" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="等腰三角形逐行拆解：第 i 行打 5-i 个空格，再打 2i-1 个星号">
   <text x="330" y="24" text-anchor="middle" fill="#6b7d97" font-size="9.5" font-family="sans-serif">行 i</text>
   <text x="400" y="24" fill="#6b7d97" font-size="9.5" font-family="sans-serif">空格 = 5 - i</text>
   <text x="510" y="24" fill="#6b7d97" font-size="9.5" font-family="sans-serif">星号 = 2i - 1</text>
@@ -1189,9 +1222,9 @@ namespace HelloWorld
   <text x="404" y="148" fill="#38bdf8" font-size="11" font-family="monospace">0</text>
   <text x="516" y="148" fill="#f59e0b" font-size="11" font-family="monospace">9</text>
   <text x="24" y="192" fill="#8b9bb4" font-size="11" font-family="sans-serif">每多一行：空格少一个（往左缩）、星号多两个（往两边长）——所以两条腰是斜的。i 从 1 数到 5，三角形就出来了。</text>
-</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>外层 for 控制行数（i），共 5 行</li><li>每行先输出空格：第 i 行需要 <code>5 - i</code> 个空格</li><li>再输出星号：第 i 行需要 <code>2 × i - 1</code> 个星号</li><li>空格和星号各用一个内层 for 循环</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376612864',this)">复制</button></div>
-<pre id="c_4376612864"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>外层 for 控制行数（i），共 5 行</li><li>每行先输出空格：第 i 行需要 <code>5 - i</code> 个空格</li><li>再输出星号：第 i 行需要 <code>2 × i - 1</code> 个星号</li><li>空格和星号各用一个内层 for 循环</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318600256',this)">复制</button></div>
+<pre id="c_4318600256"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1217,8 +1250,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376612160',this)">复制</button></div>
-<pre id="c_4376612160"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318600960',this)">复制</button></div>
+<pre id="c_4318600960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1242,8 +1275,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个正整数 n，输出<strong>斐波那契数列</strong>的前 n 项。<br>斐波那契：第1、2项都是1，之后每项 = 前两项之和（1, 1, 2, 3, 5, 8…）。<br>要求：自己用循环写，维护&quot;前两项&quot;变量递推，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376611840',this)">复制</button></div>
-<pre id="c_4376611840"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318601280',this)">复制</button></div>
+<pre id="c_4318601280"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1267,7 +1300,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="16"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>用 for 循环计算 1~100 中所有奇数的和。</p><ul><li>提示：<code>if (i % 2 != 0)</code> 判断奇数</li></ul></div><svg viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：for 遍历 1~100，用 if 只留下奇数，50 个奇数累加得 2500">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>用 for 循环计算 1~100 中所有奇数的和。</p><ul><li>提示：<code>if (i % 2 != 0)</code> 判断奇数</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：for 遍历 1~100，用 if 只留下奇数，50 个奇数累加得 2500">
   <defs><marker id="k7q1a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker></defs>
   <rect x="24" y="32" width="632" height="62" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
   <text x="40" y="56" fill="#d7e0ee" font-size="11" font-family="monospace">for (int i = 1; i &lt;= 100; i++)</text>
@@ -1289,7 +1322,7 @@ namespace HelloWorld
   <text x="456" y="150" fill="#8b9bb4" font-size="10" font-family="monospace">sum =</text>
   <text x="456" y="168" fill="#22c55e" font-size="15" font-family="monospace">2500</text>
   <text x="24" y="210" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">50 个奇数相加正好 2500；少写 if 判断就变成 1~100 全加 = 5050。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>1~100 奇数和为：2500</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用 while 循环输出九九乘法表。</p><ul><li>提示：外层 while 控制行，内层 while 控制列</li></ul></div><svg viewBox="0 0 680 338" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：外层 j 控制行、内层 i 只数到 j，格子组成下三角共 45 个算式">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>1~100 奇数和为：2500</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>用 while 循环输出九九乘法表。</p><ul><li>提示：外层 while 控制行，内层 while 控制列</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 338" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：外层 j 控制行、内层 i 只数到 j，格子组成下三角共 45 个算式">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">外层 j = 行，内层 i = 列，且 i 只数到 j</text>
   <text x="218.0" y="68" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">1</text>
   <text x="254.0" y="68" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="monospace">2</text>
@@ -1397,7 +1430,7 @@ namespace HelloWorld
   <text x="540" y="196" fill="#6b7d97" font-size="9" font-family="sans-serif">j=1 那一行</text>
   <text x="540" y="212" fill="#6b7d97" font-size="9" font-family="sans-serif">只有 1 个 1×1=1</text>
   <text x="24" y="316" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">1 + 2 + … + 9 = 45 个算式；内层上界写成 9 就会打满 81 个，变成矩形。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>1×1=1</code></li></ul><ul><li>输出：<code>1×2=2    2×2=4</code></li></ul><ul><li>输出：<code>1×3=3    2×3=6    3×3=9</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入一个整数 N，计算 N 的阶乘（N! = 1 × 2 × 3 × ... × N）。注意：0 的阶乘为 1。</p><ul><li>提示：用 for 循环累乘</li></ul></div><svg viewBox="0 0 680 200" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：result 从 1 开始，依次乘 2、3、4、5，得到 5! = 120">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>1×1=1</code></li></ul><ul><li>输出：<code>1×2=2    2×2=4</code></li></ul><ul><li>输出：<code>1×3=3    2×3=6    3×3=9</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入一个整数 N，计算 N 的阶乘（N! = 1 × 2 × 3 × ... × N）。注意：0 的阶乘为 1。</p><ul><li>提示：用 for 循环累乘</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 200" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：result 从 1 开始，依次乘 2、3、4、5，得到 5! = 120">
   <defs><marker id="k7q3a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <rect x="24" y="60" width="100" height="52" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="74" y="80" text-anchor="middle" fill="#8b9bb4" font-size="9" font-family="sans-serif">i=1</text>
@@ -1424,11 +1457,11 @@ namespace HelloWorld
   <text x="594" y="102" text-anchor="middle" fill="#22c55e" font-size="15" font-family="monospace">120</text>
   <text x="24" y="140" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">result 初值是 1（不是 0），所以 N = 0 时循环一次都不进，结果仍是 1 —— 正好是 0! = 1。</text>
   <text x="24" y="168" fill="#22c55e" font-size="11" font-family="sans-serif">输出：5! = 120　　累乘用 *=，累加才用 +=。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个整数：→ 5</code></li></ul><ul><li>输出：<code>5! = 120</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>用循环嵌套输出如下菱形图案（共 5 行，上半 3 行 + 下半 2 行）：</p></div><pre class="plain-box"><code>  *
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入一个整数：→ 5</code></li></ul><ul><li>输出：<code>5! = 120</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>用循环嵌套输出如下菱形图案（共 5 行，上半 3 行 + 下半 2 行）：</p></div><pre class="plain-box"><code>  *
  ***
 *****
  ***
-  *</code></pre><div class="card"><ul><li>提示：先输出空格，再输出星号</li></ul></div><svg viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：菱形 5 行，每行的空格数从 2 减到 0 再回到 2，星号数 1、3、5、3、1">
+  *</code></pre><div class="card"><ul><li>提示：先输出空格，再输出星号</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：菱形 5 行，每行的空格数从 2 减到 0 再回到 2，星号数 1、3、5、3、1">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">5 行 = 上半 3 行 + 下半 2 行，先打空格再打星号</text>
   <rect x="24" y="38" width="632" height="26" rx="6" fill="#16202e" stroke="#64748b" stroke-opacity="0.28" stroke-width="1"/>
   <text x="36" y="56" fill="#8b9bb4" font-size="9" font-family="sans-serif">行</text>
@@ -1470,9 +1503,9 @@ namespace HelloWorld
   <text x="443.0" y="240" fill="#22c55e" font-size="14" font-family="monospace">*</text>
   <text x="24" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">上半 3 行：空格 2→0、星号 1→3→5；下半 2 行倒过来。</text>
   <text x="24" y="290" fill="#6b7d97" font-size="10" font-family="sans-serif">外层 for 控行，内层两个 for：先打空格、再打星号，每行末尾换行。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：见题面中的菱形图案</li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376611456',this)">复制</button></div>
-<pre id="c_4376611456"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：见题面中的菱形图案</li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4318601664',this)">复制</button></div>
+<pre id="c_4318601664"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1508,7 +1541,7 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <img src="images/shared/homework-submit-qrcode.png" alt="扫码提交课后作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
                 <p>扫码提交课后作业</p>
                 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
             </div>
@@ -1684,11 +1717,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';

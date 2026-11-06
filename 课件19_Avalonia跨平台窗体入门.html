@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -438,7 +453,7 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>从控制台到窗体</h1>
-<div class="ok-box">之前写的是&quot;黑框打字&quot;，今天起写的是&quot;能点的窗口&quot;。</div><svg viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="控制台程序与窗体程序对比">
+<div class="ok-box">之前写的是&quot;黑框打字&quot;，今天起写的是&quot;能点的窗口&quot;。</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="控制台程序与窗体程序对比">
   <!-- 左：控制台 -->
   <rect x="30" y="30" width="280" height="225" rx="14" fill="#21283a"/>
   <circle cx="52" cy="52" r="5" fill="#ff5f57"/>
@@ -471,11 +486,11 @@ pre,pre code{page-break-inside:avoid}
   <text x="567" y="142" text-anchor="middle" fill="#ffffff" font-size="13" font-family="sans-serif">取消</text>
   <text x="392" y="186" fill="#64748b" font-size="12" font-family="sans-serif">// 点了按钮才执行 → 事件驱动</text>
   <text x="392" y="210" fill="#64748b" font-size="12" font-family="sans-serif">// 用 XAML 描述界面</text>
-</svg><div class="card"><table><tr><th>对比维度</th><th>控制台程序</th><th>窗体程序（Avalonia）</th></tr><tr><td>用户界面</td><td>黑底白字命令行</td><td>图形化窗口（用 XAML 描述）</td></tr><tr><td>交互方式</td><td>键盘输入 → 文字输出</td><td>鼠标点击、输入框、按钮</td></tr><tr><td>程序结构</td><td><strong>顺序执行</strong>：一行接一行，卡在 <code>ReadLine</code> 等输入</td><td><em>事件驱动</em>：用户操作才触发对应代码</td></tr><tr><td>典型代码</td><td><code>Console.ReadLine()</code></td><td><code>Click=&quot;方法名&quot;</code>（在 XAML 里关联）</td></tr></table></div><div class="card"><h3>一句话抓住本质</h3><p>窗体程序就两件事：<strong>摆控件</strong> + <strong>写事件</strong>——先在窗口上摆好按钮、文本框，再告诉程序&quot;用户点了按钮，就执行这段代码&quot;。</p></div><div class="ok-box">💡 记住套路：<strong>控件 + 事件</strong>。后面每一页都在这套路上加东西，看懂这一页就不慌。</div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><table><tr><th>对比维度</th><th>控制台程序</th><th>窗体程序（Avalonia）</th></tr><tr><td>用户界面</td><td>黑底白字命令行</td><td>图形化窗口（用 XAML 描述）</td></tr><tr><td>交互方式</td><td>键盘输入 → 文字输出</td><td>鼠标点击、输入框、按钮</td></tr><tr><td>程序结构</td><td><strong>顺序执行</strong>：一行接一行，卡在 <code>ReadLine</code> 等输入</td><td><em>事件驱动</em>：用户操作才触发对应代码</td></tr><tr><td>典型代码</td><td><code>Console.ReadLine()</code></td><td><code>Click=&quot;方法名&quot;</code>（在 XAML 里关联）</td></tr></table></div><div class="card"><h3>一句话抓住本质</h3><p>窗体程序就两件事：<strong>摆控件</strong> + <strong>写事件</strong>——先在窗口上摆好按钮、文本框，再告诉程序&quot;用户点了按钮，就执行这段代码&quot;。</p></div><div class="ok-box">💡 记住套路：<strong>控件 + 事件</strong>。后面每一页都在这套路上加东西，看懂这一页就不慌。</div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>跨平台与 Avalonia</h1>
-<div class="ok-box">一句话：Avalonia 让你&quot;写一次界面，Windows / macOS / Linux 都能跑&quot;。</div><div class="card"><h3>什么是&quot;跨平台&quot;</h3><ul><li>同一份代码，不用大改，就能在<strong>不同操作系统</strong>上运行</li><li>桌面系统：<strong>Windows、macOS、Linux</strong></li><li>移动系统：<strong>iOS、Android</strong></li><li>网页 Web：<strong>WebAssembly（浏览器里直接跑）</strong></li><li>好处：少写几套代码、你用自己的电脑（Win 或 Mac）都能跑本课例子</li></ul></div><div class="ok-box">💡 Avalonia 的&quot;门槛&quot;极低：<strong>只要一个平台能&quot;画像素&quot;还能&quot;收输入&quot;，就能跑 Avalonia</strong>——所以它从桌面一路覆盖到手机、网页甚至嵌入式设备。</div><svg viewBox="0 0 720 340" width="100%" style="max-width:720px;margin:0 auto;display:block" role="img" aria-label="一份 C# XAML 代码可运行在多个平台">
+<div class="ok-box">一句话：Avalonia 让你&quot;写一次界面，Windows / macOS / Linux 都能跑&quot;。</div><div class="card"><h3>什么是&quot;跨平台&quot;</h3><ul><li>同一份代码，不用大改，就能在<strong>不同操作系统</strong>上运行</li><li>桌面系统：<strong>Windows、macOS、Linux</strong></li><li>移动系统：<strong>iOS、Android</strong></li><li>网页 Web：<strong>WebAssembly（浏览器里直接跑）</strong></li><li>好处：少写几套代码、你用自己的电脑（Win 或 Mac）都能跑本课例子</li></ul></div><div class="ok-box">💡 Avalonia 的&quot;门槛&quot;极低：<strong>只要一个平台能&quot;画像素&quot;还能&quot;收输入&quot;，就能跑 Avalonia</strong>——所以它从桌面一路覆盖到手机、网页甚至嵌入式设备。</div><div class="svg-fig"><svg class="auto" viewBox="0 0 720 340" width="100%" style="max-width:720px;margin:0 auto;display:block" role="img" aria-label="一份 C# XAML 代码可运行在多个平台">
   <defs>
     <marker id="arw4" markerWidth="10" markerHeight="10" refX="6" refY="3" orient="auto">
       <path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/>
@@ -542,7 +557,7 @@ pre,pre code{page-break-inside:avoid}
     <line x1="450" y1="171" x2="522" y2="170"/>
     <line x1="450" y1="171" x2="522" y2="278"/>
   </g>
-</svg><div class="card"><h3>Avalonia 是什么</h3><ul><li><strong>开源的跨平台 UI 框架</strong>，用 <strong>.NET + C# + XAML</strong> 描述图形界面</li><li>它<strong>自带渲染引擎</strong>（基于 Skia）<strong>自己画控件</strong>，不依赖系统原生控件，所以界面在哪儿都长得一模一样</li><li>对比另一个跨平台框架 <strong>MAUI</strong>：MAUI &quot;包装&quot;各系统的原生控件（外观随系统变），Avalonia &quot;自己画&quot;（外观完全统一）——本课选它，正是看中跨平台一致、老师 Mac 也能演示</li><li>和你们听过的 <strong>WinForms</strong> 是&quot;同类&quot;（画窗口、摆控件），但 WinForms 只能在 Windows 跑</li></ul></div><div class="card"><h3>为什么本课选 Avalonia（而不是 WinForms / MAUI）</h3></div><div class="card"><table><tr><th></th><th>WinForms</th><th>MAUI</th><th>Avalonia</th></tr><tr><td>能跑的系统</td><td>仅 Windows</td><td>桌面 + 手机</td><td>桌面 + 手机 + Web 等</td></tr><tr><td>界面实现</td><td>系统原生控件</td><td>包装系统原生控件</td><td><strong>自绘</strong>（Skia，外观统一）</td></tr><tr><td>老师能否 Mac 演示</td><td>不行</td><td>可（但偏重）</td><td>可以 ✅</td></tr></table></div><div class="ok-box">💡 官方一句话：<strong>&quot;一个代码库，无限可能&quot;（One codebase, endless possibilities）</strong>。记住：<strong>Avalonia = 跨平台的&quot;WinForms 升级版&quot;</strong>，后面学的&quot;控件 + 事件&quot;套路和它几乎一样。</div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><h3>Avalonia 是什么</h3><ul><li><strong>开源的跨平台 UI 框架</strong>，用 <strong>.NET + C# + XAML</strong> 描述图形界面</li><li>它<strong>自带渲染引擎</strong>（基于 Skia）<strong>自己画控件</strong>，不依赖系统原生控件，所以界面在哪儿都长得一模一样</li><li>对比另一个跨平台框架 <strong>MAUI</strong>：MAUI &quot;包装&quot;各系统的原生控件（外观随系统变），Avalonia &quot;自己画&quot;（外观完全统一）——本课选它，正是看中跨平台一致、老师 Mac 也能演示</li><li>和你们听过的 <strong>WinForms</strong> 是&quot;同类&quot;（画窗口、摆控件），但 WinForms 只能在 Windows 跑</li></ul></div><div class="card"><h3>为什么本课选 Avalonia（而不是 WinForms / MAUI）</h3></div><div class="card"><table><tr><th></th><th>WinForms</th><th>MAUI</th><th>Avalonia</th></tr><tr><td>能跑的系统</td><td>仅 Windows</td><td>桌面 + 手机</td><td>桌面 + 手机 + Web 等</td></tr><tr><td>界面实现</td><td>系统原生控件</td><td>包装系统原生控件</td><td><strong>自绘</strong>（Skia，外观统一）</td></tr><tr><td>老师能否 Mac 演示</td><td>不行</td><td>可（但偏重）</td><td>可以 ✅</td></tr></table></div><div class="ok-box">💡 官方一句话：<strong>&quot;一个代码库，无限可能&quot;（One codebase, endless possibilities）</strong>。记住：<strong>Avalonia = 跨平台的&quot;WinForms 升级版&quot;</strong>，后面学的&quot;控件 + 事件&quot;套路和它几乎一样。</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>创建第一个 Avalonia 项目</h1>
@@ -554,8 +569,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>常用控件 — TextBlock / TextBox / Button</h1>
 <div class="ok-box">⚠️ <strong>和 WinForms 的三个大不同（务必先看）</strong><br>1. 显示文字用 <strong><code>TextBlock</code></strong>，不是 <code>Label</code>（<code>Label</code> 在 Avalonia 是给别的控件加快捷键的，不用来显示文字）<br>2. 修改属性名变了：<code>BackColor</code> → <code>Background</code>、<code>Enabled</code> → <code>IsEnabled</code>、<code>ReadOnly</code> → <code>IsReadOnly</code><br>3. <strong>没有 <code>MessageBox.Show</code></strong>！要提示用户，用窗口上的 <code>TextBlock</code> 显示文字。本课都用 <code>TextBlock</code> 显示提示</div><div class="card"><h3>XAML 快速看懂</h3><p>XAML 是用&quot;标签&quot;描述界面的语言。Avalonia 的文件后缀是 <strong><code>.axaml</code></strong>（不是 <code>.xaml</code>，特意和 WPF 区分开）：</p><ul><li><strong>标签名 = 控件类名</strong>：<code>&lt;Button&gt;</code> 就是按钮，<code>&lt;TextBox&gt;</code> 就是输入框</li><li><strong>标签里的属性 = 控件属性</strong>：<code>Background=&quot;Blue&quot;</code>、<code>Content=&quot;确定&quot;</code> 都是在设属性</li><li><strong>标签之间的内容 = 控件的&quot;内容&quot;</strong>：<code>&lt;Button&gt;确定&lt;/Button&gt;</code> 等价于 <code>Content=&quot;确定&quot;</code></li><li>文件开头通常有三个命名空间（<code>xmlns</code>、<code>xmlns:x</code>、<code>x:Class</code>），照模板写即可，不用背</li></ul></div><div class="ok-box">💡 XAML 看着像网页 HTML，但它描述的是一棵&quot;对象树&quot;：每个标签对应一个 C# 对象，属性就是对象的字段。看懂这点，后面换控件只是换标签名。</div><div class="card"><p>界面写在 <code>MainWindow.axaml</code> 里，用 <strong><code>StackPanel</code></strong>（竖直排列容器）把控件一个个摞起来：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341449856',this)">复制</button></div>
-<pre id="c_4341449856"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338615360',this)">复制</button></div>
+<pre id="c_4338615360"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock x:Name=&quot;tip&quot; Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -566,20 +581,20 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>布局基础 — 控件摆在哪里</h1>
 <div class="ok-box">控件不能随便乱飘，得放进&quot;布局容器&quot;里，由容器决定它们怎么排列。Avalonia 常用 5 种布局容器：</div><div class="card"><h3>1. StackPanel —— 摞起来 / 排成行</h3><p>控件一个接一个竖直（默认）或水平排列，<code>Spacing</code> 控制间距：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341448960',this)">复制</button></div>
-<pre id="c_4341448960"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338614464',this)">复制</button></div>
+<pre id="c_4338614464"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
     &lt;Button Content=&quot;按钮1&quot; /&gt;
     &lt;Button Content=&quot;按钮2&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><h3>2. Grid —— 表格（最灵活）</h3><p>用 <code>ColumnDefinitions</code> / <code>RowDefinitions</code> 划分行列，<code>*</code> 表示按比例、<code>Auto</code> 表示按内容；再用 <code>Grid.Row</code> / <code>Grid.Column</code> 把控件放进指定格：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341432192',this)">复制</button></div>
-<pre id="c_4341432192"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338581312',this)">复制</button></div>
+<pre id="c_4338581312"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Content=&quot;左上&quot; /&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Content=&quot;右上&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
 </div><div class="ok-box">💡 <code>*</code> 和 <code>Auto</code> 是 Grid 的灵魂：前者按比例分剩余空间，后者刚好包住内容。</div><div class="card"><h3>3. DockPanel —— 靠边停靠</h3><p>子控件用 <code>DockPanel.Dock=&quot;Top/Left/Right/Bottom&quot;</code> 贴边；<code>LastChildFill=&quot;True&quot;</code> 让最后一个填满剩余区：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341431872',this)">复制</button></div>
-<pre id="c_4341431872"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338580992',this)">复制</button></div>
+<pre id="c_4338580992"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
     &lt;Button DockPanel.Dock=&quot;Top&quot; Content=&quot;顶栏&quot; /&gt;
     &lt;Button DockPanel.Dock=&quot;Left&quot; Content=&quot;侧栏&quot; /&gt;
     &lt;TextBlock Text=&quot;中间填充区&quot; /&gt;
@@ -589,8 +604,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>事件 — 按钮点击做什么</h1>
 <div class="card"><p>在 XAML 里用 <code>Click=&quot;方法名&quot;</code> 把按钮和代码关联，再到 <code>MainWindow.axaml.cs</code> 里写这个方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341430848',this)">复制</button></div>
-<pre id="c_4341430848"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338579968',this)">复制</button></div>
+<pre id="c_4338579968"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -605,8 +620,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>方法体填上真正的业务逻辑，就是最常见的写法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341430656',this)">复制</button></div>
-<pre id="c_4341430656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338579776',this)">复制</button></div>
+<pre id="c_4338579776"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -625,8 +640,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>修改控件属性</h1>
 <div class="card"><p>可以在代码里动态修改属性（注意属性名和 WinForms 不同）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341431360',this)">复制</button></div>
-<pre id="c_4341431360"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338580480',this)">复制</button></div>
+<pre id="c_4338580480"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -653,8 +668,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 姓名问候器</h1>
 <div class="ok-box">用 TextBox 输入姓名，点击按钮后在 TextBlock 显示问候语——掌握 XAML 的 <code>x:Name</code> 和 C# 事件处理。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341429056',this)">复制</button></div>
-<pre id="c_4341429056"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338578176',this)">复制</button></div>
+<pre id="c_4338578176"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -662,8 +677,8 @@ namespace HelloWorld
     &lt;TextBlock x:Name=&quot;result&quot; Text=&quot;结果会显示在这里&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341428992',this)">复制</button></div>
-<pre id="c_4341428992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338578112',this)">复制</button></div>
+<pre id="c_4338578112"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -688,8 +703,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：试试空输入直接点&quot;确定&quot;，再看输入&quot;张三&quot;后的结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>x:Name=&quot;nameBox&quot;</code> —— 给 XAML 里的控件起名，C# 代码就能用这个名字访问它</li><li>Avalonia <strong>没有 MessageBox</strong>！要用窗口上的 <code>TextBlock</code> 显示提示文字</li><li><code>string.IsNullOrWhiteSpace(name)</code> —— 检查是否为空或全空格，比 <code>name == &quot;&quot;</code> 更安全</li><li>事件方法签名固定为 <code>(object? sender, RoutedEventArgs e)</code>，<code>Click=&quot;方法名&quot;</code> 会自动关联</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，加上&quot;清空&quot;按钮的功能（点击后清空 TextBox 和结果 TextBlock）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341428416',this)">复制</button></div>
-<pre id="c_4341428416"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338577536',this)">复制</button></div>
+<pre id="c_4338577536"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -703,8 +718,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341428352',this)">复制</button></div>
-<pre id="c_4341428352"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338577472',this)">复制</button></div>
+<pre id="c_4338577472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -729,16 +744,16 @@ namespace HelloWorld
 密码：123456
 （尝试错误的密码如 111111 —— 应提示错误并清空密码框）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>（正确时）✅ 登录成功！（文字变绿）
 （错误时）❌ 用户名或密码错误（文字变红，密码框自动清空）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>PasswordChar=&quot;*&quot;</code> —— 让密码框显示为星号，但 <code>Text</code> 属性仍是真实密码</li><li>颜色用 <code>Foreground = Brushes.Green</code>，<strong>不是 ForeColor</strong></li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341426560',this)">复制</button></div>
-<pre id="c_4341426560"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338575680',this)">复制</button></div>
+<pre id="c_4338575680"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;<span class="code-blank">___</span>&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341427008',this)">复制</button></div>
-<pre id="c_4341427008"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338576128',this)">复制</button></div>
+<pre id="c_4338576128"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -765,16 +780,16 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4341426304',this)">复制</button></div>
-<pre id="c_4341426304"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338575424',this)">复制</button></div>
+<pre id="c_4338575424"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;*&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341426240',this)">复制</button></div>
-<pre id="c_4341426240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338575296',this)">复制</button></div>
+<pre id="c_4338575296"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -818,7 +833,7 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <img src="images/shared/homework-submit-qrcode.png" alt="扫码提交课后作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
                 <p>扫码提交课后作业</p>
                 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
             </div>
@@ -994,11 +1009,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';

@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -438,8 +453,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>struct 结构体 — 轻量级的&quot;小类&quot;</h1>
 <div class="card"><p>回顾课件9：<strong>值类型</strong>是&quot;给你复印件，你改你的我不管&quot;（<code>int</code>、<code>double</code>）；<strong>引用类型</strong>是&quot;给你门牌号，你按地址改了我也变&quot;（<code>class</code>、数组）。那有没有值类型的&quot;小类&quot;？——<strong>结构体 struct</strong>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317091840',this)">复制</button></div>
-<pre id="c_4317091840"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369661760',this)">复制</button></div>
+<pre id="c_4369661760"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -476,8 +491,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>结构体 vs 类</h1>
 <div class="card"><table><tr><th></th><th>类（class）</th><th>结构体（struct）</th></tr><tr><td>类型</td><td>引用类型</td><td>值类型</td></tr><tr><td>赋值</td><td>传门牌号，互相影响</td><td>传复印件，独立</td></tr><tr><td><strong>构造方法</strong></td><td>可有无参构造</td><td>不能自定义无参构造</td></tr><tr><td><strong>继承</strong></td><td>支持</td><td>不支持（不能继承）</td></tr><tr><td>适用场景</td><td>复杂对象（学生、账户）</td><td>简单数据（坐标、颜色）</td></tr></table></div><div class="card"><h3>构造方法的区别：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316515200',this)">复制</button></div>
-<pre id="c_4316515200"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369517632',this)">复制</button></div>
+<pre id="c_4369517632"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -496,8 +511,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>继承的区别：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4317091200',this)">复制</button></div>
-<pre id="c_4317091200"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369661120',this)">复制</button></div>
+<pre id="c_4369661120"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -510,8 +525,8 @@ namespace HelloWorld
     // struct RGB : Color { }          // ❌ 编译错误！struct 不能继承
 }</code></pre>
 </div><div class="ok-box">💡 继承的概念和用法会在<strong>课件15</strong>重点讲解，这里先记住结论：class 能继承，struct 不能。</div><div class="card"><p>什么时候用结构体？</p></div><div class="card"><ul><li>数据量小（几个字段）</li><li>赋值后希望独立，不想互相影响——因为 struct 是值类型，赋值=复印：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316514368',this)">复制</button></div>
-<pre id="c_4316514368"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516800',this)">复制</button></div>
+<pre id="c_4369516800"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -532,8 +547,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>结构体完整示例</h1>
 <div class="ok-box">💬 来看一个完整的 struct——颜色 <code>Color</code>：有字段（RGB）、有构造方法（必须有参数）、有普通方法（<code>ToHex</code>），和 class 写法几乎一样。唯一不同的是赋值：<code>c2 = c1</code> 是复印而非共享，改一个不动另一个。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316515968',this)">复制</button></div>
-<pre id="c_4316515968"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369518400',this)">复制</button></div>
+<pre id="c_4369518400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -574,8 +589,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — struct 三维坐标</h1>
 <div class="ok-box">用 struct 定义三维坐标，体会值类型赋值后互不干扰的特点。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316512448',this)">复制</button></div>
-<pre id="c_4316512448"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369514880',this)">复制</button></div>
+<pre id="c_4369514880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -611,7 +626,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="Point3D(3,4,5) 的平方和 50，开方得 7.07">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="Point3D(3,4,5) 的平方和 50，开方得 7.07">
   <defs><marker id="k14d1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="24" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">Distance() 内部就是这一串平方和</text>
   <rect x="24" y="36" width="112" height="42" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
@@ -649,7 +664,7 @@ namespace HelloWorld
   <text x="428" y="112" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">p2 = p1 是整份复印：</text>
   <text x="428" y="132" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">改 p2.X = 10，p1.X 还是 3</text>
   <text x="24" y="300" fill="#6b7d97" font-size="9.5" font-family="sans-serif">struct 是值类型：赋值等于复制一份，两个变量互不影响（class 是共用同一个对象）。</text>
-</svg><div class="card"><ul><li>动手：把 <code>Point3D</code> 改成 <code>class</code>，观察 p1.X 是 3 还是 10</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>struct 的 <code>=</code> 是<strong>全量复制</strong>——p2 拿到 p1 的所有值，从此各过各的</li><li>如果是 class，<code>p2 = p1</code> 后改 p2.X 会把 p1.X 也改了——因为共用同一个对象</li><li><code>Distance()</code> 演示 struct 里也能写方法，和 class 没区别</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vector2</code> 结构体（二维向量）：</p></div><svg viewBox="0 0 680 282" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="struct 赋值是整份复制，改了 v2 不影响 v1">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 <code>Point3D</code> 改成 <code>class</code>，观察 p1.X 是 3 还是 10</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>struct 的 <code>=</code> 是<strong>全量复制</strong>——p2 拿到 p1 的所有值，从此各过各的</li><li>如果是 class，<code>p2 = p1</code> 后改 p2.X 会把 p1.X 也改了——因为共用同一个对象</li><li><code>Distance()</code> 演示 struct 里也能写方法，和 class 没区别</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vector2</code> 结构体（二维向量）：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 282" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="struct 赋值是整份复制，改了 v2 不影响 v1">
   <defs>
     <marker id="p14-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
     <marker id="p14-o" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
@@ -678,9 +693,9 @@ namespace HelloWorld
   <text x="560" y="222" fill="#6b7d97" font-size="9.5" font-family="sans-serif">两个变量</text>
   <text x="560" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">占两块内存</text>
   <text x="40" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">struct 的 <tspan font-family="monospace">=</tspan> 是复印：v2 拿到一份独立数据。换成 class 就是两个变量指向同一个对象，改 v2.X 连 v1.X 一起变。</text>
-</svg><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316495424',this)">复制</button></div>
-<pre id="c_4316495424"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369481472',this)">复制</button></div>
+<pre id="c_4369481472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -716,8 +731,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316495232',this)">复制</button></div>
-<pre id="c_4316495232"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369481280',this)">复制</button></div>
+<pre id="c_4369481280"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -754,8 +769,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>enum 枚举 — 给常量取个名字</h1>
 <div class="card"><p>一周有七天，用 <code>int</code> 表示——0=周一，1=周二……但 <code>day = 8</code> 没人拦。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316517248',this)">复制</button></div>
-<pre id="c_4316517248"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369519168',this)">复制</button></div>
+<pre id="c_4369519168"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -768,8 +783,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>枚举</strong> = 限定取值范围的&quot;选择题&quot;：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316517120',this)">复制</button></div>
-<pre id="c_4316517120"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369519424',this)">复制</button></div>
+<pre id="c_4369519424"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -798,8 +813,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>枚举的底层是整数</h1>
 <div class="card"><p>枚举本质是整数，每个名字对应一个数字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316514176',this)">复制</button></div>
-<pre id="c_4316514176"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516608',this)">复制</button></div>
+<pre id="c_4369516608"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -823,8 +838,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box">💬 枚举和 int 之间用强制转换互转：<br>- <strong>枚举 → int</strong>：<code>(int)GameState.Playing</code> → 得到 <code>1</code><br>- <strong>int → 枚举</strong>：<code>(GameState)2</code> → 得到 <code>Paused</code><br>- 注意：int 转枚举时数字超出范围不会报错，只是一个无名称的数值——所以尽量从已有枚举值转，别拿未知数字硬转</div><div class="card"><p>可以自定义数值：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316513920',this)">复制</button></div>
-<pre id="c_4316513920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516352',this)">复制</button></div>
+<pre id="c_4369516352"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -840,8 +855,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>课堂练习2 — 枚举应用</h1>
 <div class="ok-box">用枚举管理游戏状态，结合 switch 做状态切换。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316494208',this)">复制</button></div>
-<pre id="c_4316494208"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369480256',this)">复制</button></div>
+<pre id="c_4369480256"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -869,7 +884,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="GameState 的四个值与整数对应，输入 1 得到 Playing，输出游戏中">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="GameState 的四个值与整数对应，输入 1 得到 Playing，输出游戏中">
   <defs><marker id="k14d2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f59e0b"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举名 ↔ 整数 一一对应，都是 0 起编</text>
   <rect x="24" y="38" width="230" height="176" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
@@ -900,7 +915,7 @@ namespace HelloWorld
   <text x="302" y="221" fill="#22c55e" font-size="10.5" font-family="monospace">→ 游戏中...</text>
   <text x="24" y="258" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">switch 配枚举：写 GameState.Playing 比写 1 好读，编译器还能帮你查漏。</text>
   <text x="24" y="282" fill="#6b7d97" font-size="9.5" font-family="sans-serif">输入 5 时强转出的是个「不存在的枚举值」，正好落进 default。</text>
-</svg><div class="card"><ul><li>动手：输入 0/1/2/3 分别观察效果，再输入 5 看 default 分支</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(GameState)choice</code> 把 int 转成枚举——前面学的强制转换</li><li>switch 配合枚举：编译器会检查是否漏了某个枚举值，不容易出错</li><li>枚举让代码从 <code>if (state == 0)</code> 变成 <code>state == GameState.Menu</code>，可读性飞升</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Direction</code> 枚举，根据输入输出中文方向：</p></div><svg viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="输入数字强制转成 Direction 枚举，switch 输出对应中文方向">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：输入 0/1/2/3 分别观察效果，再输入 5 看 default 分支</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(GameState)choice</code> 把 int 转成枚举——前面学的强制转换</li><li>switch 配合枚举：编译器会检查是否漏了某个枚举值，不容易出错</li><li>枚举让代码从 <code>if (state == 0)</code> 变成 <code>state == GameState.Menu</code>，可读性飞升</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Direction</code> 枚举，根据输入输出中文方向：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="输入数字强制转成 Direction 枚举，switch 输出对应中文方向">
   <defs>
     <marker id="p14-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
   </defs>
@@ -948,9 +963,9 @@ namespace HelloWorld
   <rect x="424" y="186" width="150" height="30" rx="6" fill="none" stroke="#64748b" stroke-opacity="0.45" stroke-width="1" stroke-dasharray="4 3"/>
   <text x="499" y="206" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">→ 未知方向</text>
   <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举的底层就是 0、1、2、3——所以能强转，也能用 switch 比；写 <tspan font-family="monospace">Direction.North</tspan> 比写 0 好懂得多。</text>
-</svg><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316493632',this)">复制</button></div>
-<pre id="c_4316493632"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369479680',this)">复制</button></div>
+<pre id="c_4369479680"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -976,8 +991,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316493440',this)">复制</button></div>
-<pre id="c_4316493440"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369479488',this)">复制</button></div>
+<pre id="c_4369479488"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1013,7 +1028,7 @@ namespace HelloWorld
 <div class="ok-box">用枚举定义纸牌花色，用 struct 定义纸牌——枚举和结构体配合使用。</div><div class="card"><h3>期望输入：</h3></div><pre class="plain-box"><code>红心 A、黑桃 Q
 （复制纸牌后修改花色为梅花，原牌应不受影响）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>Hearts A
 Spades Q
-Hearts A（原牌不变——struct 值类型行为）</code></pre><svg viewBox="0 0 680 224" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="纸牌的点数经过 switch 表达式换成 A/J/Q/K，再和花色拼成名字">
+Hearts A（原牌不变——struct 值类型行为）</code></pre><div class="svg-fig"><svg class="auto" viewBox="0 0 680 224" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="纸牌的点数经过 switch 表达式换成 A/J/Q/K，再和花色拼成名字">
   <defs>
     <marker id="p14-c" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -1047,9 +1062,9 @@ Hearts A（原牌不变——struct 值类型行为）</code></pre><svg viewBox=
   <text x="40" y="176" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">1/11/12/13 换成 A/J/Q/K，其余直接 ToString()——switch 表达式一个赋值就写完了。</text>
   <text x="40" y="196" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b">c3 = c1</tspan> 只是复印：把 c3.Suit 改成 Clubs，c1 依然是 Hearts A——这就是 struct 的值类型行为。</text>
   <text x="40" y="212" fill="#6b7d97" font-size="9.5" font-family="sans-serif">另外注意：枚举直接打印出来就是名字（Hearts），不用自己写映射。</text>
-</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>枚举 <code>Suit</code> 定义四种花色，<code>Card</code> 结构体组合花色+点数</li><li>点数 1/11/12/13 要转换成 A/J/Q/K——用 switch 表达式最简洁</li><li>struct 赋值是复印，改 c3 不动 c1</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316491648',this)">复制</button></div>
-<pre id="c_4316491648"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>枚举 <code>Suit</code> 定义四种花色，<code>Card</code> 结构体组合花色+点数</li><li>点数 1/11/12/13 要转换成 A/J/Q/K——用 switch 表达式最简洁</li><li>struct 赋值是复印，改 c3 不动 c1</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369477696',this)">复制</button></div>
+<pre id="c_4369477696"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1094,8 +1109,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316491136',this)">复制</button></div>
-<pre id="c_4316491136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369477184',this)">复制</button></div>
+<pre id="c_4369477184"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1138,8 +1153,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义枚举 <code>Light { Red, Green, Yellow }</code> 表示交通灯。用户输入当前灯（0/1/2），程序输出<strong>下一个灯</strong>（Red→Green→Yellow→Red 循环）。<br>要求：自己用枚举 + 取模运算实现切换，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316490816',this)">复制</button></div>
-<pre id="c_4316490816"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369476864',this)">复制</button></div>
+<pre id="c_4369476864"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1159,7 +1174,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>TrafficLight</code> 枚举（Red/Yellow/Green），用 switch 根据枚举值输出对应的中文和操作。</p><ul><li>提示：<code>enum TrafficLight { Red, Yellow, Green }</code></li></ul></div><svg viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：TrafficLight 三个值，Red 输出红灯停车、Green 输出绿灯通行">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>TrafficLight</code> 枚举（Red/Yellow/Green），用 switch 根据枚举值输出对应的中文和操作。</p><ul><li>提示：<code>enum TrafficLight { Red, Yellow, Green }</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：TrafficLight 三个值，Red 输出红灯停车、Green 输出绿灯通行">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举定三个值，switch 各给一句中文 + 操作</text>
   <rect x="24" y="38" width="240" height="150" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="38" y="60" fill="#38bdf8" font-size="10" font-family="monospace">enum TrafficLight</text>
@@ -1183,7 +1198,7 @@ namespace HelloWorld
   <text x="306" y="194" fill="#22c55e" font-size="10.5" font-family="monospace">→ 绿灯　通行</text>
   <text x="24" y="212" fill="#8b9bb4" font-size="10" font-family="sans-serif">三行输出对应三个 case：Red → 红灯 停车，Green → 绿灯 通行（Yellow 照着写）。</text>
   <text x="24" y="232" fill="#6b7d97" font-size="9.5" font-family="sans-serif">换成 int 也能写 if (x == 0)，但 Red 这个名字一眼就懂。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>Red → 红灯 停车</code></li></ul><ul><li>输出：<code>Green → 绿灯 通行</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Fraction</code> 结构体表示分数——两个字段 <code>Top</code>（分子）和 <code>Bottom</code>（分母）、构造方法初始化两者、<code>ToDecimal()</code> 方法返回 <code>(double)Top / Bottom</code> 的小数结果。创建 f1 = 3/4，复制给 f2 后改 f2 的分子为 5——验证 f1 不受影响（struct 值类型）。</p><ul><li>提示：字段类型用 <code>int</code>，<code>ToDecimal()</code> 里先把分子转 <code>double</code> 再除</li></ul></div><svg viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：f1=3/4 复制给 f2，改 f2 分子为 5 后 f1 仍是 3/4">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>Red → 红灯 停车</code></li></ul><ul><li>输出：<code>Green → 绿灯 通行</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>Fraction</code> 结构体表示分数——两个字段 <code>Top</code>（分子）和 <code>Bottom</code>（分母）、构造方法初始化两者、<code>ToDecimal()</code> 方法返回 <code>(double)Top / Bottom</code> 的小数结果。创建 f1 = 3/4，复制给 f2 后改 f2 的分子为 5——验证 f1 不受影响（struct 值类型）。</p><ul><li>提示：字段类型用 <code>int</code>，<code>ToDecimal()</code> 里先把分子转 <code>double</code> 再除</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 300" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：f1=3/4 复制给 f2，改 f2 分子为 5 后 f1 仍是 3/4">
   <defs><marker id="k14q2" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">struct 的 = 是整份复印：改 f2 不动 f1</text>
   <rect x="24" y="40" width="250" height="90" rx="8" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
@@ -1207,7 +1222,7 @@ namespace HelloWorld
   <rect x="24" y="226" width="632" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="253" fill="#22c55e" font-size="11" font-family="monospace">3/4 = 0.75　　复制后 f2 = 5/4 = 1.25，f1 仍是 3/4</text>
   <text x="24" y="292" fill="#6b7d97" font-size="9.5" font-family="sans-serif">要真共用一份就改用 class；struct 天生是复印机。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>3/4 = 0.75</code></li></ul><ul><li>输出：<code>复制后 f2 = 5/4 = 1.25，f1 仍是 3/4</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>定义 <code>OrderStatus</code> 枚举（Pending/Processing/Shipped/Delivered），用一个方法 <code>ShowStatus(OrderStatus s)</code> 根据枚举值 switch 输出订单状态中文和下一步操作。</p><ul><li>提示：<code>enum OrderStatus { Pending, Processing, Shipped, Delivered }</code></li></ul></div><svg viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：OrderStatus 四个状态，Processing 处理中的下一步是发货">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>3/4 = 0.75</code></li></ul><ul><li>输出：<code>复制后 f2 = 5/4 = 1.25，f1 仍是 3/4</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>定义 <code>OrderStatus</code> 枚举（Pending/Processing/Shipped/Delivered），用一个方法 <code>ShowStatus(OrderStatus s)</code> 根据枚举值 switch 输出订单状态中文和下一步操作。</p><ul><li>提示：<code>enum OrderStatus { Pending, Processing, Shipped, Delivered }</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：OrderStatus 四个状态，Processing 处理中的下一步是发货">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">一个方法 ShowStatus，按枚举值给状态中文 + 下一步</text>
   <rect x="24" y="44" width="146" height="96" rx="8" fill="#16202e" stroke="#8b9bb4" stroke-opacity="0.3" stroke-width="1"/>
   <text x="36" y="66" fill="#8b9bb4" font-size="9.5" font-family="monospace">Pending</text>
@@ -1232,7 +1247,7 @@ namespace HelloWorld
   <text x="40" y="180" fill="#d7e0ee" font-size="10" font-family="monospace">输入 Processing → showStatus 里命中 case OrderStatus.Processing</text>
   <text x="40" y="200" fill="#f59e0b" font-size="10.5" font-family="monospace">输出：状态：处理中 → 下一步：发货</text>
   <text x="24" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">输入 Delivered 则走最后一支：状态：已签收 → 下一步：无。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入订单状态（Processing/Delivered）：→ Processing</code></li></ul><ul><li>输出：<code>状态：处理中 → 下一步：发货</code></li></ul><ul><li>输出：<code>（若输入 Delivered）状态：已签收 → 下一步：无</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Point</code> 结构体（int X, int Y），构造方法初始化坐标，<code>DistanceTo(Point other)</code> 方法用勾股定理计算两点距离（<code>Math.Sqrt</code>）。创建 p1=(0,0)、p2=(3,4)，输出距离，然后把 p2 复制给 p3，修改 p3 坐标后验证 p2 不受影响。</p><ul><li>提示：<code>DistanceTo</code> 返回 <code>double</code>，公式 <code>Math.Sqrt((X-other.X)² + (Y-other.Y)²)</code></li></ul></div><svg viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：p1(0,0) 到 p2(3,4) 距离 5，复制出 p3 改成 (6,8) 后 p2 不变">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入订单状态（Processing/Delivered）：→ Processing</code></li></ul><ul><li>输出：<code>状态：处理中 → 下一步：发货</code></li></ul><ul><li>输出：<code>（若输入 Delivered）状态：已签收 → 下一步：无</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Point</code> 结构体（int X, int Y），构造方法初始化坐标，<code>DistanceTo(Point other)</code> 方法用勾股定理计算两点距离（<code>Math.Sqrt</code>）。创建 p1=(0,0)、p2=(3,4)，输出距离，然后把 p2 复制给 p3，修改 p3 坐标后验证 p2 不受影响。</p><ul><li>提示：<code>DistanceTo</code> 返回 <code>double</code>，公式 <code>Math.Sqrt((X-other.X)² + (Y-other.Y)²)</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：p1(0,0) 到 p2(3,4) 距离 5，复制出 p3 改成 (6,8) 后 p2 不变">
   <defs><marker id="k14q4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">勾股定理：3² + 4² = 25，开方得 5</text>
   <line x1="70" y1="220" x2="300" y2="220" stroke="#64748b" stroke-width="1.2" stroke-opacity="0.5"/>
@@ -1257,9 +1272,9 @@ namespace HelloWorld
   <text x="388" y="196" fill="#22c55e" font-size="10" font-family="sans-serif">p2 仍是 (3, 4)，距离还是 5</text>
   <rect x="24" y="248" width="632" height="36" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="272" fill="#22c55e" font-size="10.5" font-family="monospace">p1 到 p2 距离：5　　复制后改 p3 为 (6,8)，p2 仍是 (3,4)</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>p1 到 p2 距离：5</code></li></ul><ul><li>输出：<code>复制后改 p3 为 (6,8)，p2 仍是 (3,4)</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，结构体和枚举定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4316490752',this)">复制</button></div>
-<pre id="c_4316490752"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>p1 到 p2 距离：5</code></li></ul><ul><li>输出：<code>复制后改 p3 为 (6,8)，p2 仍是 (3,4)</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，结构体和枚举定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369476800',this)">复制</button></div>
+<pre id="c_4369476800"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1297,7 +1312,7 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <img src="images/shared/homework-submit-qrcode.png" alt="扫码提交课后作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
                 <p>扫码提交课后作业</p>
                 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
             </div>
@@ -1473,11 +1488,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';

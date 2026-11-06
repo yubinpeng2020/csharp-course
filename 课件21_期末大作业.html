@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -455,10 +470,10 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>可选主题方向（灵感参考）</h1>
-<div class="card"><p>每个方向都配好了字段和能直接照做的功能模块，挑一个改改就是你的题目：</p></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 16px">
+<div class="card"><p>每个方向都配好了字段和能直接照做的功能模块，挑一个改改就是你的题目：</p></div><div class="svg-fig svg-fig--block"><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px 16px">
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="作品集：多张卡片">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="作品集：多张卡片">
         <rect x="6" y="10" width="80" height="62" rx="8" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
         <rect x="14" y="20" width="20" height="24" rx="3" fill="#38bdf8" fill-opacity="0.45"/>
         <rect x="38" y="20" width="20" height="24" rx="3" fill="#38bdf8" fill-opacity="0.7"/>
@@ -476,7 +491,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="药箱：箱体与十字">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="药箱：箱体与十字">
         <rect x="12" y="28" width="68" height="48" rx="7" fill="#f59e0b" fill-opacity="0.14" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
         <path d="M34 28 V21 a5 5 0 0 1 5 -5 h14 a5 5 0 0 1 5 5 v7" fill="none" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1.5"/>
         <rect x="43" y="38" width="6" height="24" rx="1.5" fill="#22c55e" fill-opacity="0.8"/>
@@ -492,7 +507,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="宿舍：楼栋与窗户">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="宿舍：楼栋与窗户">
         <rect x="24" y="12" width="44" height="68" rx="5" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
         <rect x="32" y="24" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.55"/>
         <rect x="44" y="24" width="8" height="9" rx="2" fill="#38bdf8" fill-opacity="0.3"/>
@@ -514,7 +529,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="社团：日历与成员">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="社团：日历与成员">
         <rect x="12" y="20" width="68" height="58" rx="7" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1.5"/>
         <line x1="12" y1="36" x2="80" y2="36" stroke="#22c55e" stroke-opacity="0.4" stroke-width="1.5"/>
         <line x1="28" y1="13" x2="28" y2="26" stroke="#22c55e" stroke-width="2.2" stroke-linecap="round"/>
@@ -534,7 +549,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="记账：钱包与柱状统计">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="记账：钱包与柱状统计">
         <rect x="8" y="14" width="46" height="34" rx="7" fill="#f59e0b" fill-opacity="0.16" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
         <rect x="42" y="24" width="20" height="13" rx="5" fill="#f59e0b" fill-opacity="0.3" stroke="#f59e0b" stroke-opacity="0.55" stroke-width="1.5"/>
         <circle cx="53" cy="30" r="2.6" fill="#f59e0b" fill-opacity="0.8"/>
@@ -552,7 +567,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:14px 16px;display:flex;gap:12px;align-items:flex-start">
     <div style="flex:0 0 88px">
-      <svg viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="课程表：周次与节次网格">
+      <svg class="auto" viewBox="0 0 92 92" width="88" height="88" role="img" aria-label="课程表：周次与节次网格">
         <rect x="10" y="14" width="72" height="64" rx="6" fill="#38bdf8" fill-opacity="0.08" stroke="#38bdf8" stroke-opacity="0.5" stroke-width="1.5"/>
         <line x1="28" y1="14" x2="28" y2="78" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
         <line x1="46" y1="14" x2="46" y2="78" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1.5"/>
@@ -573,7 +588,7 @@ pre,pre code{page-break-inside:avoid}
       <div><span style="color:var(--text-muted)">亮点</span>　今日课程、每周课时统计</div>
     </div>
   </div>
-</div><div class="ok-box">💡 也可以自提主题（如&quot;绿植养护记录&quot;&quot;家庭菜谱收藏&quot;），照着上面的样子定字段、列功能就行；<strong>提前和教师确认一下</strong>更稳妥。</div>
+</div><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播本页图示的动画">↻ 重播</button></div></div><div class="ok-box">💡 也可以自提主题（如&quot;绿植养护记录&quot;&quot;家庭菜谱收藏&quot;），照着上面的样子定字段、列功能就行；<strong>提前和教师确认一下</strong>更稳妥。</div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>功能要求（基础清单）</h1>
@@ -592,12 +607,12 @@ pre,pre code{page-break-inside:avoid}
   <div style="margin-top:14px;padding:9px 13px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.55">
     ⚠️ <span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">保存 / 加载</span>是硬指标 —— 少了它，功能分最多拿一半。
   </div>
-</div><div style="font-size:15px;margin:0 0 5px">交互怎么写，按你选的档位：</div>
+</div><div class="svg-fig svg-fig--block"><div style="font-size:15px;margin:0 0 5px">交互怎么写，按你选的档位：</div>
 <div style="font-size:13.5px;line-height:1.5;color:var(--text-muted);margin:0 0 11px">📌 图里用<span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">个人记账本</span>举例，你换成自己的主题就行 —— 照这个样子搭界面，不用跟着做记账本。</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
   <div class="card" style="margin:0;padding:12px 14px 10px">
     <div style="font-weight:700;font-size:14px;margin-bottom:8px">控制台档<span style="color:var(--text-muted);font-weight:400;font-size:12.5px">　数字菜单 → 调方法</span></div>
-    <svg viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="控制台档：数字菜单界面">
+    <svg class="auto" viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="控制台档：数字菜单界面">
       <rect x="0" y="0" width="340" height="168" rx="9" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
       <circle cx="16" cy="15" r="3.8" fill="#ef4444" fill-opacity="0.85"/>
       <circle cx="29" cy="15" r="3.8" fill="#f59e0b" fill-opacity="0.85"/>
@@ -614,7 +629,7 @@ pre,pre code{page-break-inside:avoid}
   </div>
   <div class="card" style="margin:0;padding:12px 14px 10px">
     <div style="font-weight:700;font-size:14px;margin-bottom:8px">界面档<span style="color:var(--text-muted);font-weight:400;font-size:12.5px">　控件 + 事件 → 调方法</span></div>
-    <svg viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="界面档：窗体控件布局">
+    <svg class="auto" viewBox="0 0 340 168" width="100%" style="max-width:372px;display:block;margin:0 auto" role="img" aria-label="界面档：窗体控件布局">
       <rect x="0" y="0" width="340" height="168" rx="9" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.75" stroke-width="1"/>
       <rect x="1" y="1" width="338" height="26" rx="8" fill="#e2e8f0"/>
       <rect x="1" y="16" width="338" height="11" fill="#e2e8f0"/>
@@ -640,7 +655,7 @@ pre,pre code{page-break-inside:avoid}
     </svg>
     <div style="margin-top:7px;min-height:40px;font-size:12.5px;line-height:1.6;color:var(--text-muted)">按钮 Click 里调管理方法，列表跟着刷新；提示写进 <span style="font-family:monospace;color:#38bdf8">TextBlock</span>，删除点两次才真删</div>
   </div>
-</div><div class="card" style="margin:0;padding:15px 20px;background-image:linear-gradient(135deg,rgba(34,197,94,.10),rgba(34,197,94,0) 62%)">
+</div><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播本页图示的动画">↻ 重播</button></div></div><div class="card" style="margin:0;padding:15px 20px;background-image:linear-gradient(135deg,rgba(34,197,94,.10),rgba(34,197,94,0) 62%)">
   <div style="display:flex;align-items:baseline;gap:11px;margin-bottom:11px">
     <span style="font-size:15.5px;font-weight:700;color:#22c55e">可选亮点</span>
     <span style="font-size:13px;color:var(--text-muted)">做了更出彩 —— 任选一两条，也可以自己想</span>
@@ -765,13 +780,13 @@ pre,pre code{page-break-inside:avoid}
     <div style="margin-top:3px;font-family:monospace;font-size:11.5px;color:#cbd5e1;background:rgba(148,163,184,.10);border:1px solid rgba(148,163,184,.22);border-radius:5px;padding:5px 8px;line-height:1.6">1 | 10-01 | 餐饮 | 23.5 | 食堂午饭<br>2 | 10-02 | 交通 | 3 | 公交</div>
     <div style="margin-top:auto;padding-top:7px;font-size:12.5px;color:var(--text-muted)">读写这个文件也在这一个类里</div>
   </div>
-</div><div style="font-size:14.5px;line-height:1.5;margin:10px 0 0">下面两张图分开看：<b style="color:#f59e0b">图 1</b> 讲一条记录怎么穿过三层，<b style="color:#38bdf8">图 2</b> 讲 Item 和 Manager 各管什么。</div>
+</div><div class="svg-fig svg-fig--block"><div style="font-size:14.5px;line-height:1.5;margin:10px 0 0">下面两张图分开看：<b style="color:#f59e0b">图 1</b> 讲一条记录怎么穿过三层，<b style="color:#38bdf8">图 2</b> 讲 Item 和 Manager 各管什么。</div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px">
   <div class="card" style="margin:0;padding:13px 16px 12px;background-image:linear-gradient(135deg,rgba(245,158,11,.09),rgba(245,158,11,0) 62%)">
     <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:2px">
       <span style="display:inline-block;padding:1px 7px;border-radius:4px;background:rgba(245,158,11,.15);color:#f59e0b;font-size:11.5px;font-weight:600;margin-right:8px">图 1</span><span style="font-size:15px;font-weight:700;color:#f59e0b">三个层，一条记录走一遍</span>
     </div>
-    <svg viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="新增一条记录穿过三层：交互层读到三个值、模型层装成一条、数据层存进文件">
+    <svg class="auto" viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="新增一条记录穿过三层：交互层读到三个值、模型层装成一条、数据层存进文件">
       <text x="0" y="12" font-size="11.5" font-family="sans-serif" fill="#94a3b8">场景：新增一条 —— 餐饮 · 23.5 元 · 10-01</text>
       <rect x="0" y="22" width="97" height="54" rx="8" fill="rgba(245,158,11,.10)" stroke="#f59e0b" stroke-width="1.3"/>
       <text x="48.5" y="42" text-anchor="middle" font-size="13.5" font-weight="bold" font-family="sans-serif" fill="#f59e0b">交互层</text>
@@ -798,7 +813,7 @@ pre,pre code{page-break-inside:avoid}
     <div style="display:flex;align-items:baseline;gap:9px;margin-bottom:2px">
       <span style="display:inline-block;padding:1px 7px;border-radius:4px;background:rgba(56,189,248,.15);color:#38bdf8;font-size:11.5px;font-weight:600;margin-right:8px">图 2</span><span style="font-size:15px;font-weight:700;color:#38bdf8">Item 是卡片，Manager 是卡盒</span>
     </div>
-    <svg viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="Item 像一张记录卡，Manager 像装卡的盒子，负责增减与存盘">
+    <svg class="auto" viewBox="0 0 320 108" width="100%" style="display:block" role="img" aria-label="Item 像一张记录卡，Manager 像装卡的盒子，负责增减与存盘">
       <text x="0" y="12" font-size="11.5" font-family="sans-serif" fill="#94a3b8">场景：一条记录 = 一张卡，一叠卡 = 一个卡盒</text>
       <rect x="0" y="22" width="96" height="58" rx="7" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-width="1.3"/>
       <text x="48" y="41" text-anchor="middle" font-size="12.5" font-family="monospace" fill="#e2e8f0">10-01</text>
@@ -825,7 +840,7 @@ pre,pre code{page-break-inside:avoid}
       <div><b style="color:#38bdf8">Manager</b>　管一叠：集合 + 增删改查 + 读写文件</div>
     </div>
   </div>
-</div><div style="margin-top:6px;padding:8px 14px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.62">
+</div><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播本页图示的动画">↻ 重播</button></div></div><div style="margin-top:6px;padding:8px 14px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.62">
   🔁 两档在第一层各写各的，装成同一个 <span style="font-family:monospace;font-size:13px;color:#38bdf8">XxxItem</span> 之后就汇合了 —— 模型层和数据层两档共用，通常写进同一个 <span style="font-family:monospace;font-size:13px;color:#38bdf8">XxxManager</span> 类，落到代码两个类就够。<br>
   换界面只重写第一层，所以先把控制台版写通，再套界面最省力。
 </div>
@@ -833,8 +848,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>参考案例框架 ① 模型类 — 一条记录长什么样</h1>
 <div class="ok-box">这三页都用<strong>记账本</strong>演示（就是示例一的 <code>Record</code> / <code>RecordManager</code>），字段跟上一页那张卡一模一样。先看一条记录怎么表示。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305095104',this)">复制</button></div>
-<pre id="c_4305095104"><code class="language-csharp">public class Record
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307781760',this)">复制</button></div>
+<pre id="c_4307781760"><code class="language-csharp">public class Record
 {
     public int Id { get; set; }                   // 编号（自动生成）
     public string Date { get; set; } = &quot;&quot;;        // 日期
@@ -865,8 +880,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>参考案例框架 ② 管理器 — 一个集合 + 增删改查</h1>
 <div class="ok-box">还是<strong>记账本</strong>：多条记录装进一个集合，再给它几个方法。外面的菜单、按钮只调方法，不直接碰 <code>List</code>。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305095360',this)">复制</button></div>
-<pre id="c_4305095360"><code class="language-csharp">// ② 管理器（1）：一个集合 + 增删改查
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307782016',this)">复制</button></div>
+<pre id="c_4307782016"><code class="language-csharp">// ② 管理器（1）：一个集合 + 增删改查
 public class RecordManager
 {
     List&lt;Record&gt; records = new List&lt;Record&gt;();   // 所有记录都在这
@@ -890,8 +905,8 @@ public class RecordManager
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>参考案例框架 ③ 存盘与读盘 — 一行一条</h1>
 <div class="ok-box">还是<strong>记账本</strong>：集合只在内存里，一关程序就没了 —— <code>Save()</code> 写进 txt，<code>Load()</code> 时读回来。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305093312',this)">复制</button></div>
-<pre id="c_4305093312"><code class="language-csharp">public void Save()
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307779968',this)">复制</button></div>
+<pre id="c_4307779968"><code class="language-csharp">public void Save()
 {
     List&lt;string&gt; lines = new List&lt;string&gt;();
     foreach (Record r in records)
@@ -919,7 +934,7 @@ public void Load()
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>切换到界面档 — 只多一段 XAML</h1>
-<div class="card"><p>选了界面档，模型层和数据层原样搬过去，只补一个窗口 —— <strong>换的只是外面那层壳，逻辑不动</strong>。</p></div><svg viewBox="0 0 680 116" width="100%" style="max-width:800px;margin:2px auto 0;display:block" role="img" aria-label="两档文件结构对比：控制台档只有 Program.cs，界面档换成 MainWindow 两个文件；模型层与数据层两档共用同一份">
+<div class="card"><p>选了界面档，模型层和数据层原样搬过去，只补一个窗口 —— <strong>换的只是外面那层壳，逻辑不动</strong>。</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 116" width="100%" style="max-width:800px;margin:2px auto 0;display:block" role="img" aria-label="两档文件结构对比：控制台档只有 Program.cs，界面档换成 MainWindow 两个文件；模型层与数据层两档共用同一份">
   <rect x="10" y="4" width="252" height="46" rx="7" fill="rgba(245,158,11,.10)" stroke="#f59e0b" stroke-opacity="0.75" stroke-width="1.2"/>
   <text x="24" y="23" font-size="14" font-weight="bold" font-family="sans-serif" fill="#f59e0b">控制台档</text>
   <text x="24" y="41" font-size="12.5" font-family="monospace" fill="#e2e8f0">Program.cs</text>
@@ -937,9 +952,9 @@ public void Load()
   <rect x="10" y="66" width="660" height="44" rx="7" fill="rgba(56,189,248,.10)" stroke="#38bdf8" stroke-opacity="0.55" stroke-width="1.2"/>
   <text x="26" y="86" font-size="13.5" font-family="sans-serif" fill="#38bdf8">Record.cs（模型层）　+　RecordManager.cs（数据层）</text>
   <text x="26" y="104" font-size="12.5" font-family="sans-serif" fill="#94a3b8">两档共用同一份 —— 一个字都不用改，直接搬过去</text>
-</svg><div class="card"><p>多出来的只有 <code>MainWindow</code> 两个文件：<code>.axaml</code> 写界面长什么样，<code>.axaml.cs</code> 写按钮被点时干什么：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4305093888',this)">复制</button></div>
-<pre id="c_4305093888"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>多出来的只有 <code>MainWindow</code> 两个文件：<code>.axaml</code> 写界面长什么样，<code>.axaml.cs</code> 写按钮被点时干什么：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4307780544',this)">复制</button></div>
+<pre id="c_4307780544"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;dateBox&quot; PlaceholderText=&quot;日期 2026-10-01&quot; /&gt;
     &lt;TextBox x:Name=&quot;categoryBox&quot; PlaceholderText=&quot;类别 餐饮 / 交通&quot; /&gt;
@@ -957,7 +972,7 @@ public void Load()
 ├── Record.cs          一条记录长什么样（模型类，约 50 行）
 ├── RecordManager.cs   管 List + 读写文件 / 统计 / 排序（约 230 行）
 ├── Program.cs         菜单 + 各功能方法（约 300 行）
-└── records.txt        数据文件，一行一条：1|2026-10-01|餐饮|23.5|食堂午饭</code></pre><div class="card"><p><code>dotnet run</code> 跑起来是这样：</p></div><svg viewBox="0 0 680 308" width="100%" style="max-width:700px;margin:0 auto;display:block" role="img" aria-label="控制台版运行效果：菜单 + 记录列表 + 统计">
+└── records.txt        数据文件，一行一条：1|2026-10-01|餐饮|23.5|食堂午饭</code></pre><div class="card"><p><code>dotnet run</code> 跑起来是这样：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 308" width="100%" style="max-width:700px;margin:0 auto;display:block" role="img" aria-label="控制台版运行效果：菜单 + 记录列表 + 统计">
   <rect x="0" y="0" width="680" height="308" rx="10" fill="#21283a" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
   <circle cx="23" cy="21" r="5" fill="#ef4444" fill-opacity="0.85"/>
   <circle cx="42" cy="21" r="5" fill="#f59e0b" fill-opacity="0.85"/>
@@ -973,7 +988,7 @@ public void Load()
   <text x="26" y="222" fill="#d7e0ee" font-size="16" font-family="monospace">[2] 2026-10-01  交通  支出  2.00 元   公交</text>
   <text x="26" y="248" fill="#f59e0b" font-size="16" font-family="monospace">[7] 2026-10-04  其他  收入 200.00 元  家里给的生活费</text>
   <text x="26" y="276" fill="#22c55e" font-size="16" font-family="monospace">共 8 条，合计 -4.50 元（支出为正 / 收入为负）</text>
-</svg><div class="ok-box">🔁 <strong>程序不会自己结束</strong>：<code>while</code> 大循环里做完一件回到菜单接着选，只有选 <strong>0（退出）</strong> 才 <code>break</code>。</div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">🔁 <strong>程序不会自己结束</strong>：<code>while</code> 大循环里做完一件回到菜单接着选，只有选 <strong>0（退出）</strong> 才 <code>break</code>。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>示例一 — 新增一条，其余三条照着改</h1>
@@ -998,7 +1013,7 @@ public void Load()
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>示例二 — 界面档：同一套逻辑换张脸</h1>
-<div class="ok-box">📌 界面档交出来就是这样 —— 界面照这个搭，逻辑还是同一套。</div><svg viewBox="0 0 680 336" width="100%" style="max-width:792px;margin:0 auto;display:block" role="img" aria-label="界面版窗口外观：左边表单、右边列表、底部提示">
+<div class="ok-box">📌 界面档交出来就是这样 —— 界面照这个搭，逻辑还是同一套。</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 336" width="100%" style="max-width:792px;margin:0 auto;display:block" role="img" aria-label="界面版窗口外观：左边表单、右边列表、底部提示">
   <rect x="10" y="6" width="660" height="324" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.7" stroke-width="1.2"/>
   <rect x="10" y="6" width="660" height="30" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-opacity="0.35" stroke-width="1"/>
   <rect x="10" y="20" width="660" height="16" fill="#e2e8f0"/>
@@ -1039,7 +1054,7 @@ public void Load()
   <text x="255" y="248" fill="#334155" font-size="13.5" font-family="monospace">[5] 2026-10-03 娱乐 支出 60.00 元 电影票</text>
   <text x="255" y="280" fill="#b45309" font-size="13.5" font-family="monospace">[6] 2026-10-04 其他 收入 200.00 元 生活费</text>
   <text x="240" y="312" fill="#0369a1" font-size="13" font-family="sans-serif">共 6 条，合计 -4.50 元（支出为正 / 收入为负）</text>
-</svg><div class="card"><p><code>Record.cs</code> 和 <code>RecordManager.cs</code> 挪进 <code>Models/</code> 和 <code>Services/</code> 两个文件夹就能用。变的只有<span class="term">怎么问</span>和<span class="term">怎么显示</span>：</p></div><div class="card"><table><tr><th>控制台里</th><th>界面里</th><th>差在哪</th></tr><tr><td><code>Console.ReadLine()</code></td><td><code>dateBox.Text</code></td><td>从输入框里读</td></tr><tr><td><code>Console.WriteLine(...)</code></td><td><code>listBox.Items.Add(...)</code></td><td>往列表里塞一行</td></tr><tr><td>数字菜单 + <code>if</code> 分支</td><td>按钮的 <code>Click</code> 事件</td><td>点哪个按钮就跑哪个方法</td></tr></table></div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p><code>Record.cs</code> 和 <code>RecordManager.cs</code> 挪进 <code>Models/</code> 和 <code>Services/</code> 两个文件夹就能用。变的只有<span class="term">怎么问</span>和<span class="term">怎么显示</span>：</p></div><div class="card"><table><tr><th>控制台里</th><th>界面里</th><th>差在哪</th></tr><tr><td><code>Console.ReadLine()</code></td><td><code>dateBox.Text</code></td><td>从输入框里读</td></tr><tr><td><code>Console.WriteLine(...)</code></td><td><code>listBox.Items.Add(...)</code></td><td>往列表里塞一行</td></tr><tr><td>数字菜单 + <code>if</code> 分支</td><td>按钮的 <code>Click</code> 事件</td><td>点哪个按钮就跑哪个方法</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="16"><div class="slide-inner markable">
 <h1>示例二 — 按钮里其实就三件事</h1>
@@ -1279,11 +1294,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';

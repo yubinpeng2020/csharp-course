@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -461,8 +476,8 @@ pre,pre code{page-break-inside:avoid}
 │  ⚙️ SayHello()                 │
 └────────────────────────────────┘
       ↑ 外部只能走 SetAge()，里面可以检查&quot;年龄不能为负&quot;</code></pre><div class="card"><p>类比：<strong>遥控器</strong>——你按&quot;音量+&quot;就行，不需要知道里面的电路怎么走的。外壳把元件封装在内部，按钮是唯一可以碰的地方。</p></div><div class="card"><p><strong>不封装会出什么问题？</strong> 课件11-12我们写的类，字段全是 <code>public</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310521408',this)">复制</button></div>
-<pre id="c_4310521408"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340383040',this)">复制</button></div>
+<pre id="c_4340383040"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -481,8 +496,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>public（公开）vs private（私有）</h1>
 <div class="card"><p>上页说&quot;贴权限标签&quot;，这个标签在 C# 里叫<strong>访问修饰符</strong>——它决定了谁能碰这个字段或方法。C# 有多个访问级别，本节课先掌握最核心的两个。后面课件还会讲 <code>protected</code>（子类可用），但 <code>public</code> 和 <code>private</code> 覆盖了 90% 的场景。</p></div><div class="card"><table><tr><th>修饰符</th><th>含义</th><th>比喻</th></tr><tr><td><code>public</code></td><td>公开的，谁都能用</td><td>门牌号</td></tr><tr><td><code>private</code></td><td>私有的，仅类内部可用</td><td>日记本</td></tr></table></div><div class="card"><p>来看代码——同一个类，名字公开、年龄和成绩私有：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309944512',this)">复制</button></div>
-<pre id="c_4309944512"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340238592',this)">复制</button></div>
+<pre id="c_4340238592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -505,8 +520,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>private 了就不能碰了？——通过公开的方法安全访问</h3></div><div class="card"><p>把字段设为 private 之后，外部不能直接 <code>s.age = 18</code>，但可以通过类自己提供的 public 方法来操作——方法内部可以做检查，拒绝不合理的值。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943680',this)">复制</button></div>
-<pre id="c_4309943680"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340237760',this)">复制</button></div>
+<pre id="c_4340237760"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -542,8 +557,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box">💬 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943488',this)">复制</button></div>
-<pre id="c_4309943488"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340237568',this)">复制</button></div>
+<pre id="c_4340237568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -564,8 +579,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>属性（Property）— 更优雅的 Set/Get</h1>
 <div class="card"><p>Set/Get 方法好用，但每次写两个方法太啰嗦。C# 提供了<strong>属性</strong>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309945472',this)">复制</button></div>
-<pre id="c_4309945472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340239552',this)">复制</button></div>
+<pre id="c_4340239552"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -599,8 +614,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943168',this)">复制</button></div>
-<pre id="c_4309943168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340237248',this)">复制</button></div>
+<pre id="c_4340237248"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -627,8 +642,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>表达式体成员（=&gt;）— 一行搞定</h1>
 <div class="card"><p><code>{ return ...; }</code> 写多了手酸？C# 提供了 <code>=&gt;</code> 简写——方法、属性、甚至构造方法都能缩成一行。</p></div><div class="card"><p><code>=&gt;</code> 读作<strong>&quot;结果是&quot;</strong>，语法：<code>成员 =&gt; 表达式</code>。</p></div><div class="card"><h3>方法：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942656',this)">复制</button></div>
-<pre id="c_4309942656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340236736',this)">复制</button></div>
+<pre id="c_4340236736"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -649,8 +664,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>只读属性：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942400',this)">复制</button></div>
-<pre id="c_4309942400"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340236480',this)">复制</button></div>
+<pre id="c_4340236480"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -669,8 +684,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>属性简写 + 方法简写一起上：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309925760',this)">复制</button></div>
-<pre id="c_4309925760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340203456',this)">复制</button></div>
+<pre id="c_4340203456"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -690,8 +705,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 密码强度校验</h1>
 <div class="ok-box">用属性封装密码，要求长度 ≥ 6 位才接受，太短直接拒绝。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309924224',this)">复制</button></div>
-<pre id="c_4309924224"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340201920',this)">复制</button></div>
+<pre id="c_4340201920"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -726,7 +741,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 328" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="两次给 Password 赋值：123456 通过、123 被 set 拦下，密码仍是 123456">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 328" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="两次给 Password 赋值：123456 通过、123 被 set 拦下，密码仍是 123456">
   <defs><marker id="k13d" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">赋值先进 set：长度 ≥ 6 才写进字段，否则原值不动</text>
   <rect x="24" y="44" width="220" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
@@ -751,7 +766,7 @@ namespace HelloWorld
   <rect x="24" y="240" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="265" fill="#22c55e" font-size="10.5" font-family="monospace">u.Info → admin，密码已设置：是　（Info 是只读属性，只有 =>）</text>
   <text x="24" y="310" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">封装的本质：字段藏起来（private），门开在 set 里，不合规的直接挡在门外。</text>
-</svg><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><svg viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个赋值穿过 set 的范围检查：合法的写进字段，越界的被拒绝并保持原值">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：试试 <code>Password = &quot;abc&quot;</code> 和 <code>Password = &quot;abcdefgh&quot;</code>，对比结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>set</code> 里不只看数值范围，还能检查字符串长度——封装不限于数字</li><li><code>value</code> 在 string 类型时就是传进来的字符串，<code>value.Length</code> 直接取长度</li><li><code>value</code> 是 C# 关键字，代表 <code>=</code> 右边传进来的值；字符串时就是字符串，数字时就是数字</li><li>封装不限于数值范围：字符串长度、格式校验、甚至调用外部接口判断都可以放在 <code>set</code> 里</li><li>校验不通过时不执行赋值，原值保持不变</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>Temperature</code> 类封装温度，范围 -273 到 1000：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三个赋值穿过 set 的范围检查：合法的写进字段，越界的被拒绝并保持原值">
   <defs>
     <marker id="p13-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
     <marker id="p13-g" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker>
@@ -784,9 +799,9 @@ namespace HelloWorld
   <line x1="456" y1="172" x2="520" y2="172" stroke="#ef4444" stroke-width="1.2" stroke-opacity="0.8" marker-end="url(#p13-r)"/>
   <text x="488" y="164" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">不通过</text>
   <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">字段前加 <tspan font-family="monospace">private</tspan>，外面就只能通过 <tspan font-family="monospace">Celsius</tspan> 属性进来——挡不住脏数据的属性，等于没封装。</text>
-</svg><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923584',this)">复制</button></div>
-<pre id="c_4309923584"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340201280',this)">复制</button></div>
+<pre id="c_4340201280"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -808,8 +823,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923456',this)">复制</button></div>
-<pre id="c_4309923456"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340201152',this)">复制</button></div>
+<pre id="c_4340201152"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -840,7 +855,7 @@ namespace HelloWorld
 <h1>综合练习 — 学生成绩管理器</h1>
 <div class="ok-box">三门成绩封装为属性（0-100），总分/平均分/等级用 <code>=&gt;</code> 写为只读属性。</div><div class="card"><h3>期望输入：</h3></div><pre class="plain-box"><code>张三 语文85 数学90 英语78
 （尝试设置 Chinese = 120 —— 应被拦截）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>张三: 总分253 平均84.3 等级B
-成绩120无效（被拦截）</code></pre><svg viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三门成绩各自经过属性校验后汇总，算出总分、平均分和等级">
+成绩120无效（被拦截）</code></pre><div class="svg-fig"><svg class="auto" viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="三门成绩各自经过属性校验后汇总，算出总分、平均分和等级">
   <defs>
     <marker id="p13-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -866,9 +881,9 @@ namespace HelloWorld
   <text x="60" y="212" fill="#8b9bb4" font-size="9.5" font-family="monospace">Grade =&gt; Average&gt;=90?"A":Average&gt;=80?"B":Average&gt;=70?"C":Average&gt;=60?"D":"F"</text>
   <text x="40" y="248" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个 <tspan font-family="monospace">=&gt;</tspan> 只读属性不存数据、每次访问现算——所以改了成绩，总分和等级自动跟着变，不用手动同步。</text>
   <text x="40" y="264" fill="#6b7d97" font-size="10" font-family="sans-serif">120 分会被 set 挡在门外，只打印「成绩120无效」，chinese 还是 85。</text>
-</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309921536',this)">复制</button></div>
-<pre id="c_4309921536"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340199232',this)">复制</button></div>
+<pre id="c_4340199232"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -898,8 +913,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309921024',this)">复制</button></div>
-<pre id="c_4309921024"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340198720',this)">复制</button></div>
+<pre id="c_4340198720"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -950,8 +965,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309920704',this)">复制</button></div>
-<pre id="c_4309920704"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340198400',this)">复制</button></div>
+<pre id="c_4340198400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -983,7 +998,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Product</code> 类，包含名称、价格字段。价格用属性封装，不能为负数。</p><ul><li>提示：<code>public double Price { get { ... } set { ... } }</code></li></ul></div><svg viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：19.9 通过校验、-10 被拦下，price 字段保持 19.9">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Product</code> 类，包含名称、价格字段。价格用属性封装，不能为负数。</p><ul><li>提示：<code>public double Price { get { ... } set { ... } }</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 316" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：19.9 通过校验、-10 被拦下，price 字段保持 19.9">
   <defs><marker id="k13q1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#22c55e"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">外部只能通过属性赋值，实际写字段的动作发生在 set 里</text>
   <rect x="24" y="40" width="280" height="44" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
@@ -1001,7 +1016,7 @@ namespace HelloWorld
   <text x="40" y="232" fill="#22c55e" font-size="10.5" font-family="monospace">private double price = 19.9　（-10 被拦，字段没被改写）</text>
   <text x="40" y="250" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">输出：Price = 19.9 → ✅ 设置成功　　Price = -10 → ❌ 价格不能为负</text>
   <text x="24" y="292" fill="#6b7d97" font-size="9.5" font-family="sans-serif">属性名 Price 大写、字段名 price 小写，两个都存在：外部只认属性。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>Price = 19.9 → ✅ 设置成功</code></li></ul><ul><li>输出：<code>Price = -10 → ❌ 价格不能为负</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>SpeedLimit</code> 类：封装车速（0-300），添加只读属性 <code>Penalty</code> 返回处罚——≤120 &quot;正常&quot;，≤150 &quot;扣3分&quot;，≤180 &quot;扣6分&quot;，&gt;180 &quot;吊销驾照&quot;。</p><ul><li>提示：<code>Penalty</code> 用 <code>=&gt;</code> + 三元嵌套，或 <code>get { }</code> 用 if-else</li></ul></div><svg viewBox="0 0 680 286" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：车速 100 正常、140 扣3分、200 吊销驾照、-10 被拦截">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>Price = 19.9 → ✅ 设置成功</code></li></ul><ul><li>输出：<code>Price = -10 → ❌ 价格不能为负</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>定义 <code>SpeedLimit</code> 类：封装车速（0-300），添加只读属性 <code>Penalty</code> 返回处罚——≤120 &quot;正常&quot;，≤150 &quot;扣3分&quot;，≤180 &quot;扣6分&quot;，&gt;180 &quot;吊销驾照&quot;。</p><ul><li>提示：<code>Penalty</code> 用 <code>=&gt;</code> + 三元嵌套，或 <code>get { }</code> 用 if-else</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 286" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：车速 100 正常、140 扣3分、200 吊销驾照、-10 被拦截">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">只读属性 Penalty 按车速区间返回处罚，用三元嵌套或 if-else</text>
   <rect x="60.0" y="76" width="224.0" height="46" rx="4" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <rect x="284.0" y="76" width="56.0" height="46" rx="4" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
@@ -1034,7 +1049,7 @@ namespace HelloWorld
   <rect x="24" y="210" width="632" height="40" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
   <text x="40" y="235" fill="#d7e0ee" font-size="9.5" font-family="monospace">Speed = -10 → set 里 if (value &gt;= 0 &amp;&amp; value &lt;= 300) 拦下 → ❌ 被拦截，原值不变</text>
   <text x="24" y="270" fill="#6b7d97" font-size="9.5" font-family="sans-serif">Penalty 只写 =>，不给 set —— 外部改不了处罚结果，只能改 Speed。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>Speed = 100 → 正常</code></li></ul><ul><li>输出：<code>Speed = 140 → 扣3分</code></li></ul><ul><li>输出：<code>Speed = 200 → 吊销驾照</code></li></ul><ul><li>输出：<code>Speed = -10 → ❌ 被拦截</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>改造课件11的 <code>Book</code> 类：将 <code>price</code> 改为属性（不能为负），添加只读属性 <code>Level</code>——价格 ≥ 50 返回&quot;贵&quot;，否则返回&quot;便宜&quot;。</p><ul><li>提示：<code>Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;</code>，用 <code>=&gt;</code></li></ul></div><svg viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：45 元判便宜、89 元判贵，阈值 50 由三元表达式决定">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>Speed = 100 → 正常</code></li></ul><ul><li>输出：<code>Speed = 140 → 扣3分</code></li></ul><ul><li>输出：<code>Speed = 200 → 吊销驾照</code></li></ul><ul><li>输出：<code>Speed = -10 → ❌ 被拦截</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>改造课件11的 <code>Book</code> 类：将 <code>price</code> 改为属性（不能为负），添加只读属性 <code>Level</code>——价格 ≥ 50 返回&quot;贵&quot;，否则返回&quot;便宜&quot;。</p><ul><li>提示：<code>Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;</code>，用 <code>=&gt;</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 250" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：45 元判便宜、89 元判贵，阈值 50 由三元表达式决定">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">price 改成属性（不能为负），Level 用 => 自动算</text>
   <rect x="24" y="38" width="632" height="44" rx="8" fill="#16202e" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
   <text x="40" y="65" fill="#38bdf8" font-size="10.5" font-family="monospace">public string Level =&gt; price &gt;= 50 ? &quot;贵&quot; : &quot;便宜&quot;;</text>
@@ -1053,7 +1068,7 @@ namespace HelloWorld
   <rect x="452" y="179" width="80" height="30" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
   <text x="492" y="199" text-anchor="middle" fill="#f59e0b" font-size="11" font-family="monospace">贵</text>
   <text x="24" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">45 &lt; 50 走冒号后面那个「便宜」；89 ≥ 50 走前面的「贵」——阈值只有一个。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》¥45 → 便宜</code></li></ul><ul><li>输出：<code>《算法导论》¥89 → 贵</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Rectangle</code> 类：宽高用属性封装（0-10000），添加只读属性 <code>Area</code>（面积）和 <code>Perimeter</code>（周长）自动计算。</p><ul><li>提示：<code>Area =&gt; Width * Height</code>，<code>Perimeter =&gt; 2 * (Width + Height)</code>，宽和高改一个，面积周长自动更新</li></ul></div><svg viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：宽从 5 改成 8，面积周长自动从 15/16 变成 24/22">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>《C#入门》¥45 → 便宜</code></li></ul><ul><li>输出：<code>《算法导论》¥89 → 贵</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>定义 <code>Rectangle</code> 类：宽高用属性封装（0-10000），添加只读属性 <code>Area</code>（面积）和 <code>Perimeter</code>（周长）自动计算。</p><ul><li>提示：<code>Area =&gt; Width * Height</code>，<code>Perimeter =&gt; 2 * (Width + Height)</code>，宽和高改一个，面积周长自动更新</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：宽从 5 改成 8，面积周长自动从 15/16 变成 24/22">
   <defs><marker id="k13q4" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#f59e0b"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">Area 和 Perimeter 只有 =>，宽高一变，它们立刻跟着变</text>
   <rect x="24" y="44" width="288" height="150" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
@@ -1075,9 +1090,9 @@ namespace HelloWorld
   <rect x="24" y="206" width="632" height="44" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="233" fill="#f59e0b" font-size="10" font-family="monospace">Width = -1 不在 0~10000 内 → set 拦下 → ❌ 被拦截，Width 还是 8</text>
   <text x="24" y="280" fill="#6b7d97" font-size="9.5" font-family="sans-serif">面积不用存字段，只写 => Width * Height：随时算、不会和宽高对不上。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309925184',this)">复制</button></div>
-<pre id="c_4309925184"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340202880',this)">复制</button></div>
+<pre id="c_4340202880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1115,7 +1130,7 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <img src="images/shared/homework-submit-qrcode.png" alt="扫码提交课后作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
                 <p>扫码提交课后作业</p>
                 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
             </div>
@@ -1291,11 +1306,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';

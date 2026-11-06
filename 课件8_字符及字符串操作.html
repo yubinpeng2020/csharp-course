@@ -70,7 +70,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;transform:translateX(30px);transition:opacity .35s,transform .35s;pointer-events:none;overflow-y:auto}
 .slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));opacity:.6;z-index:10}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto;z-index:1}
-.slide-inner{max-width:920px;margin:0 auto;padding:56px 48px 80px}
+.slide-inner{max-width:920px;margin:0 auto;padding:48px 48px 64px}
 
 /* 标题 */
 .slide-inner h1{color:#fff;font-size:calc(var(--font-size) * 1.625);margin-bottom:24px;padding-bottom:12px;border-bottom:1px solid rgba(0,212,170,0.2);letter-spacing:-0.3px}
@@ -363,6 +363,21 @@ html,body{height:auto!important;overflow:visible!important}
 pre,pre code{page-break-inside:avoid}
 .fold-toggle{display:none!important}
 .fold-content{max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important}
+.svg-replay-bar{display:none!important}
+}
+/* ── SVG 图动画 + 右上角重播按钮 ── */
+.svg-fig{position:relative}
+.svg-replay-bar{display:flex;justify-content:flex-end;max-width:680px;margin:2px auto 0;padding:0 2px}
+.svg-fig--block .svg-replay-bar{max-width:none;margin-top:4px}
+.svg-replay{display:inline-flex;align-items:center;gap:4px;padding:2px 10px;
+  font:600 11.5px/1.2 inherit;font-family:inherit;color:#38bdf8;background:rgba(56,189,248,.13);
+  border:1px solid rgba(56,189,248,.45);border-radius:999px;cursor:pointer;
+  opacity:.86;transition:opacity .18s,background .18s,border-color .18s,transform .12s}
+.svg-replay:hover{opacity:1;background:rgba(56,189,248,.20);border-color:rgba(56,189,248,.75)}
+.svg-replay:active{transform:scale(.96)}
+@keyframes svgPop{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media screen{
+  svg.auto.play > *:not(style):not(defs):not(title):not(desc){animation:svgPop .38s ease both;animation-delay:calc(var(--i,0) * 45ms)}
 }
 </style>
 </head>
@@ -444,8 +459,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>字符串的声明与拼接</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373518336',this)">复制</button></div>
-<pre id="c_4373518336"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373217088',this)">复制</button></div>
+<pre id="c_4373217088"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -469,8 +484,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>字符串长度与判空</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373517888',this)">复制</button></div>
-<pre id="c_4373517888"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373216640',this)">复制</button></div>
+<pre id="c_4373216640"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -499,8 +514,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>截取子串 — Substring</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373517760',this)">复制</button></div>
-<pre id="c_4373517760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373216512',this)">复制</button></div>
+<pre id="c_4373216512"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -524,8 +539,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>替换 — Replace</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372942272',this)">复制</button></div>
-<pre id="c_4372942272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373073600',this)">复制</button></div>
+<pre id="c_4373073600"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -549,8 +564,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>拆分 — Split</h1>
 <div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372941504',this)">复制</button></div>
-<pre id="c_4372941504"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373072832',this)">复制</button></div>
+<pre id="c_4373072832"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -582,8 +597,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>大小写转换与去空格</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372943616',this)">复制</button></div>
-<pre id="c_4372943616"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373074816',this)">复制</button></div>
+<pre id="c_4373074816"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -609,8 +624,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>链式调用</h1>
 <div class="card"><p>多个字符串方法可以像火车一样连起来写，从左到右依次执行。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372940992',this)">复制</button></div>
-<pre id="c_4372940992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373072320',this)">复制</button></div>
+<pre id="c_4373072320"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -634,8 +649,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>查找与判断</h1>
 <div class="card"><table><tr><th>方法</th><th>说明</th><th>示例</th></tr><tr><td><code>Contains(str)</code></td><td>是否包含</td><td><code>&quot;hello&quot;.Contains(&quot;ll&quot;)</code> → true</td></tr><tr><td><code>IndexOf(str)</code></td><td>首次出现位置，找不到返回-1</td><td><code>&quot;hello&quot;.IndexOf(&quot;l&quot;)</code> → 2</td></tr><tr><td><code>StartsWith(str)</code></td><td>是否以XX开头</td><td><code>&quot;test.cs&quot;.StartsWith(&quot;test&quot;)</code> → true</td></tr><tr><td><code>EndsWith(str)</code></td><td>是否以XX结尾</td><td><code>&quot;test.cs&quot;.EndsWith(&quot;.cs&quot;)</code> → true</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372939712',this)">复制</button></div>
-<pre id="c_4372939712"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373071040',this)">复制</button></div>
+<pre id="c_4373071040"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -660,8 +675,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂练习1 — 查找与截取</h1>
 <div class="ok-box">解析邮箱地址：检查是否含@，拆分用户名和域名，判断邮箱类型。用到 Contains / IndexOf / Substring / EndsWith。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372921280',this)">复制</button></div>
-<pre id="c_4372921280"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373036224',this)">复制</button></div>
+<pre id="c_4373036224"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -698,7 +713,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 272" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="zhang@qq.com 的下标与 Substring 截取：用户名 zhang、域名 qq.com">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 272" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="zhang@qq.com 的下标与 Substring 截取：用户名 zhang、域名 qq.com">
   <defs><marker id="k8d1a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="30" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">email 的每个字符都有下标（从 0 开始数），@ 在第 5 位</text>
   <text x="153.0" y="52" text-anchor="middle" fill="#6b7d97" font-size="8.5" font-family="monospace">0</text>
@@ -755,7 +770,7 @@ namespace HelloWorld
   <rect x="342" y="186" width="200" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
   <text x="354" y="211" fill="#22c55e" font-size="11" font-family="monospace">EndsWith → 这是QQ邮箱</text>
   <text x="24" y="250" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">口诀：先 Contains 判断有没有 @，再 IndexOf 定位，最后 Substring 截成两段。</text>
-</svg><div class="card"><ul><li>动手：加上判断域名是否以 www. 开头</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Contains(&quot;@&quot;)</code> 判断邮箱是否合法 — 先检查有没有 @</li><li><code>IndexOf(&quot;@&quot;)</code> 找到 @ 的位置，<code>Substring</code> 根据位置截取用户名和域名</li><li><code>EndsWith</code> 判断邮箱服务商</li><li>口诀：<strong>先 Contains 判断，再 IndexOf 定位，最后 Substring 截取</strong></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次解析网址，拆分协议和主机名：</p></div><div class="ok-box">例如输入 <code><a href="https://www.baidu.com</code>" target="_blank" rel="noopener">https://www.baidu.com<code></a> → 输出 </code>协议：https<code>，</code>主机：www.baidu.com`</div><svg viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="网址按 :// 的位置切成协议和主机两段">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：加上判断域名是否以 www. 开头</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Contains(&quot;@&quot;)</code> 判断邮箱是否合法 — 先检查有没有 @</li><li><code>IndexOf(&quot;@&quot;)</code> 找到 @ 的位置，<code>Substring</code> 根据位置截取用户名和域名</li><li><code>EndsWith</code> 判断邮箱服务商</li><li>口诀：<strong>先 Contains 判断，再 IndexOf 定位，最后 Substring 截取</strong></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——这次解析网址，拆分协议和主机名：</p></div><div class="ok-box">例如输入 <code><a href="https://www.baidu.com</code>" target="_blank" rel="noopener">https://www.baidu.com<code></a> → 输出 </code>协议：https<code>，</code>主机：www.baidu.com`</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="网址按 :// 的位置切成协议和主机两段">
   <defs>
     <marker id="p8-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -775,9 +790,9 @@ namespace HelloWorld
   <text x="525" y="212" text-anchor="middle" fill="#38bdf8" font-size="11.5" font-family="monospace">url.Substring(idx + 3)</text>
   <text x="525" y="234" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">主机 → www.baidu.com</text>
   <text x="60" y="274" fill="#8b9bb4" font-size="11" font-family="sans-serif">口诀：先 <tspan fill="#f59e0b">IndexOf</tspan> 定位分隔符，再 <tspan fill="#f59e0b">Substring</tspan> 按位置切；右边那个 +3 是因为 <tspan font-family="monospace">://</tspan> 本身占 3 个字符，要跳过它们。</text>
-</svg><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372920960',this)">复制</button></div>
-<pre id="c_4372920960"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373035904',this)">复制</button></div>
+<pre id="c_4373035904"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -803,8 +818,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372920448',this)">复制</button></div>
-<pre id="c_4372920448"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373035392',this)">复制</button></div>
+<pre id="c_4373035392"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -835,8 +850,8 @@ namespace HelloWorld
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂练习2 — 清洗与拆分</h1>
 <div class="ok-box">输入一句带空格和标点的英文，清洗后按空格拆分，统计单词数。用到 Trim / Replace / Split / ToLower / Length。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372921856',this)">复制</button></div>
-<pre id="c_4372921856"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373036992',this)">复制</button></div>
+<pre id="c_4373036992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -861,7 +876,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><svg viewBox="0 0 680 350" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="从「··Hello, World!··」到两个单词：Trim、Replace、ToLower、Split 四步">
+</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 350" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="从「··Hello, World!··」到两个单词：Trim、Replace、ToLower、Split 四步">
   <defs><marker id="k8d2a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">链式调用：每一步都返回新字符串，接到下一步继续处理</text>
   <text x="24" y="63" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">第 1 步  读取</text>
@@ -890,7 +905,7 @@ namespace HelloWorld
   <text x="337" y="287" text-anchor="middle" fill="#22c55e" font-size="10.5" font-family="monospace">world</text>
   <text x="392" y="287" fill="#22c55e" font-size="10.5" font-family="monospace">words.Length = 2</text>
   <text x="24" y="330" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">· 表示空格：Trim 只去首尾；标点去掉后两个单词之间只剩一个空格，Split 才能切准。</text>
-</svg><div class="card"><ul><li>动手：统计每个单词的长度</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Replace</code> 连续调用去掉标点 — 这就是链式调用的威力</li><li><code>Split(' ')</code> 按空格切成数组，<code>Length</code> 统计单词数</li><li><code>foreach</code> 逐词输出（循环见课件7）</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——输入路径，清洗后拆分目录层级：</p></div><div class="ok-box">例如输入 <code>C:\Users\Admin\Desktop</code> → 输出 4 层：<code>C:</code> <code>Users</code> <code>Admin</code> <code>Desktop</code></div><svg viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="路径按反斜杠 Split 成四个元素的数组">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：统计每个单词的长度</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>Replace</code> 连续调用去掉标点 — 这就是链式调用的威力</li><li><code>Split(' ')</code> 按空格切成数组，<code>Length</code> 统计单词数</li><li><code>foreach</code> 逐词输出（循环见课件7）</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——输入路径，清洗后拆分目录层级：</p></div><div class="ok-box">例如输入 <code>C:\Users\Admin\Desktop</code> → 输出 4 层：<code>C:</code> <code>Users</code> <code>Admin</code> <code>Desktop</code></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="路径按反斜杠 Split 成四个元素的数组">
   <defs>
     <marker id="p8-b" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -913,9 +928,9 @@ namespace HelloWorld
   <text x="556" y="158" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">Desktop</text>
   <text x="60" y="204" fill="#8b9bb4" font-size="11" font-family="sans-serif">一段字符串 → 按分隔符切开 → 变成 4 个元素的数组，<tspan fill="#22c55e" font-family="monospace">parts.Length</tspan> 正好是层数 4。</text>
   <text x="60" y="222" fill="#6b7d97" font-size="10.5" font-family="sans-serif">注意：C# 里写反斜杠要写成 <tspan font-family="monospace">"\\"</tspan>（两个），单个 \ 是转义符。</text>
-</svg><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372921536',this)">复制</button></div>
-<pre id="c_4372921536"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373036672',this)">复制</button></div>
+<pre id="c_4373036672"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -937,8 +952,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372920128',this)">复制</button></div>
-<pre id="c_4372920128"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373035072',this)">复制</button></div>
+<pre id="c_4373035072"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -964,8 +979,8 @@ namespace HelloWorld
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>字符串相等比较</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372941312',this)">复制</button></div>
-<pre id="c_4372941312"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373073344',this)">复制</button></div>
+<pre id="c_4373073344"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -990,8 +1005,8 @@ namespace HelloWorld
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>格式化字符串</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372939200',this)">复制</button></div>
-<pre id="c_4372939200"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373070720',this)">复制</button></div>
+<pre id="c_4373070720"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1020,8 +1035,8 @@ namespace HelloWorld
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>StringBuilder — 高效拼接</h1>
 <div class="ok-box">💡 循环里大量拼接字符串时，<code>string</code> 每次都会创建新对象，<code>StringBuilder</code> 在原缓冲区上追加，性能更高。</div><div class="card"><table><tr><th>方式</th><th>特点</th><th>适用场景</th></tr><tr><td><code>string</code> 拼接</td><td>每次创建新对象，产生垃圾</td><td>少量拼接（&lt; 5 次）</td></tr><tr><td><code>StringBuilder</code></td><td>在内部缓冲区追加，不产生垃圾</td><td>循环中拼接、大量拼接</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372919360',this)">复制</button></div>
-<pre id="c_4372919360"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373034304',this)">复制</button></div>
+<pre id="c_4373034304"><code class="language-csharp">using System;
 using System.Text;
 
 namespace HelloWorld
@@ -1057,7 +1072,7 @@ namespace HelloWorld
 用户名：zhang san
 用户名长度：9（有效✅）
 密码：********（已隐藏）
-密码强度：中等（含字母+数字，长度8）</code></pre><svg viewBox="0 0 680 226" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="用户名与密码各自经过清洗和校验，最终生成注册摘要">
+密码强度：中等（含字母+数字，长度8）</code></pre><div class="svg-fig"><svg class="auto" viewBox="0 0 680 226" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="用户名与密码各自经过清洗和校验，最终生成注册摘要">
   <defs>
     <marker id="p8-c" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#64748b"/></marker>
   </defs>
@@ -1096,9 +1111,9 @@ namespace HelloWorld
   <text x="586" y="166" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">掩码 ********</text>
   <text x="24" y="200" fill="#8b9bb4" font-size="11" font-family="sans-serif"><tspan fill="#f59e0b" font-family="monospace">raw.Trim().ToLower()</tspan> 可以连成一串（方法链），一个表达式就把清洗做完。</text>
   <text x="24" y="218" fill="#6b7d97" font-size="10.5" font-family="sans-serif">密码不打印原文，用 <tspan font-family="monospace">new string('*', password.Length)</tspan> 生成等长的星号。</text>
-</svg><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用户名：<code>Trim()</code> + <code>ToLower()</code> + 检查是否有空格用 <code>Contains(&quot; &quot;)</code></li><li>密码：<code>Length</code> 判长度，逐字符判断是否含字母/数字</li><li>方法链：<code>raw.Trim().ToLower()</code> 一步完成清洗</li><li>密码显示用 <code>new string('*', password.Length)</code> 掩码</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372916416',this)">复制</button></div>
-<pre id="c_4372916416"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用户名：<code>Trim()</code> + <code>ToLower()</code> + 检查是否有空格用 <code>Contains(&quot; &quot;)</code></li><li>密码：<code>Length</code> 判长度，逐字符判断是否含字母/数字</li><li>方法链：<code>raw.Trim().ToLower()</code> 一步完成清洗</li><li>密码显示用 <code>new string('*', password.Length)</code> 掩码</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373031360',this)">复制</button></div>
+<pre id="c_4373031360"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1146,8 +1161,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372915712',this)">复制</button></div>
-<pre id="c_4372915712"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373030592',this)">复制</button></div>
+<pre id="c_4373030592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1192,8 +1207,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一段文字和一个字符，输出该<strong>字符在文字中出现的次数</strong>。<br>要求：自己用循环遍历每个字符并计数，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372915392',this)">复制</button></div>
-<pre id="c_4372915392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373030272',this)">复制</button></div>
+<pre id="c_4373030272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1214,7 +1229,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="18"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入密码，检测其强度。要求：长度至少 8 位，同时包含字母和数字。</p><ul><li>提示：<code>Length</code> + 遍历每个字符用 <code>char.IsLetter()</code> 和 <code>char.IsDigit()</code> 判断</li></ul></div><svg viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：长度 8、含字母、含数字三项都满足，密码强度为强">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>编写程序：输入密码，检测其强度。要求：长度至少 8 位，同时包含字母和数字。</p><ul><li>提示：<code>Length</code> + 遍历每个字符用 <code>char.IsLetter()</code> 和 <code>char.IsDigit()</code> 判断</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：长度 8、含字母、含数字三项都满足，密码强度为强">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个条件逐项检查，全部成立才算「强」</text>
   <rect x="24" y="44" width="500" height="40" rx="6" fill="#1b2536" stroke="#64748b" stroke-opacity="0.3" stroke-width="1"/>
   <text x="40" y="70" fill="#d7e0ee" font-size="10.5" font-family="monospace">长度：password.Length = 8　→　8 &gt;= 8</text>
@@ -1228,7 +1243,7 @@ namespace HelloWorld
   <rect x="24" y="204" width="632" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
   <text x="40" y="232" fill="#22c55e" font-size="13" font-family="monospace">三项都满足　→　密码强度：强</text>
   <text x="24" y="272" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">缺任何一项都判「弱」：用 &amp;&amp; 把三个条件串起来，别写成三个独立的 if。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入密码：→ abc12345</code></li></ul><ul><li>输出：<code>密码强度：强</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个英文句子，统计元音字母（a、e、i、o、u）和辅音字母各有多少个，不区分大小写。</p><ul><li>提示：<code>ToLower()</code> 统一转小写，判断是否为元音，不是且为字母的就是辅音</li></ul></div><svg viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：Hello World 逐字符分类，元音 3 个、辅音 7 个，空格不算">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入密码：→ abc12345</code></li></ul><ul><li>输出：<code>密码强度：强</code></li></ul></div><div class="card"><h3>题2（3分）</h3><p>编写程序：输入一个英文句子，统计元音字母（a、e、i、o、u）和辅音字母各有多少个，不区分大小写。</p><ul><li>提示：<code>ToLower()</code> 统一转小写，判断是否为元音，不是且为字母的就是辅音</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 232" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：Hello World 逐字符分类，元音 3 个、辅音 7 个，空格不算">
   <text x="24" y="30" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">ToLower() 之后逐字符判断：a/e/i/o/u 是元音，其余字母是辅音</text>
   <rect x="68" y="64" width="44" height="38" rx="6" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.45" stroke-width="1"/>
   <text x="90" y="89" text-anchor="middle" fill="#38bdf8" font-size="13" font-family="monospace">h</text>
@@ -1262,7 +1277,7 @@ namespace HelloWorld
   <text x="320" y="176" fill="#38bdf8" font-size="15" font-family="monospace">7</text>
   <text x="544" y="166" fill="#6b7d97" font-size="10" font-family="monospace">h l l w r l d</text>
   <text x="24" y="214" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">大小写都算：先 ToLower() 统一小写，再判断就不用写两遍。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入字符串：→ Hello World</code></li></ul><ul><li>输出：<code>元音：3，辅音：7</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入&quot;YYYY-MM-DD&quot;格式的日期字符串，用 <code>Split</code> 拆分后用 <code>$&quot;{D5}&quot;</code> 或 <code>$&quot;D2&quot;</code> 格式化输出为&quot;YYYY年MM月DD日&quot;。</p><ul><li>提示：<code>Split('-')</code> → arr[0]年, arr[1]月, arr[2]日</li></ul></div><svg viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：2026-07-01 经 Split('-') 拆成三段，再拼成 2026年07月01日">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入字符串：→ Hello World</code></li></ul><ul><li>输出：<code>元音：3，辅音：7</code></li></ul></div><div class="card"><h3>题3（3分）</h3><p>编写程序：输入&quot;YYYY-MM-DD&quot;格式的日期字符串，用 <code>Split</code> 拆分后用 <code>$&quot;{D5}&quot;</code> 或 <code>$&quot;D2&quot;</code> 格式化输出为&quot;YYYY年MM月DD日&quot;。</p><ul><li>提示：<code>Split('-')</code> → arr[0]年, arr[1]月, arr[2]日</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：2026-07-01 经 Split('-') 拆成三段，再拼成 2026年07月01日">
   <defs><marker id="k8q3a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <rect x="24" y="40" width="320" height="44" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="40" y="68" fill="#38bdf8" font-size="12" font-family="monospace">"2026-07-01"</text>
@@ -1282,7 +1297,7 @@ namespace HelloWorld
   <text x="40" y="212" fill="#8b9bb4" font-size="10" font-family="monospace">$"{arr[0]}年{arr[1]}月{arr[2]}日"</text>
   <text x="40" y="232" fill="#22c55e" font-size="14" font-family="monospace">2026年07月01日</text>
   <text x="24" y="270" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">07、01 本来就有两位，不用补零；如果输入 2026-7-1，就要用 D2 补成 07、01。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入日期：→ 2026-07-01</code></li></ul><ul><li>输出：<code>2026年07月01日</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>编写程序：输入一个身份证号，先验证长度是否为18位，再提取出生日期（第7-14位），最后用 <code>Substring</code> 截取年/月/日并格式化输出。</p><ul><li>提示：<code>Length == 18</code> 验证，<code>Substring(6, 4)</code> + <code>Substring(10, 2)</code> + <code>Substring(12, 2)</code></li></ul></div><svg viewBox="0 0 680 266" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：18 位身份证，下标 6~13 是出生日期，拆成 1990 年 01 月 01 日">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入日期：→ 2026-07-01</code></li></ul><ul><li>输出：<code>2026年07月01日</code></li></ul></div><div class="card"><h3>题4（4分）</h3><p>编写程序：输入一个身份证号，先验证长度是否为18位，再提取出生日期（第7-14位），最后用 <code>Substring</code> 截取年/月/日并格式化输出。</p><ul><li>提示：<code>Length == 18</code> 验证，<code>Substring(6, 4)</code> + <code>Substring(10, 2)</code> + <code>Substring(12, 2)</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 266" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题4：18 位身份证，下标 6~13 是出生日期，拆成 1990 年 01 月 01 日">
   <text x="24" y="30" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">18 位身份证：下标 6~13 这 8 位就是出生日期</text>
   <text x="160" y="54" text-anchor="middle" fill="#6b7d97" font-size="9" font-family="sans-serif">地区码</text>
   <text x="370" y="54" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="sans-serif">出生日期 8 位</text>
@@ -1345,9 +1360,9 @@ namespace HelloWorld
   <rect x="70" y="156" width="540" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
   <text x="86" y="184" fill="#22c55e" font-size="13" font-family="monospace">出生日期：1990年01月01日</text>
   <text x="24" y="232" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">先 Length == 18 校验长度，再截取；长度不对就提示「身份证号有误」，否则 Substring 会越界报错。</text>
-</svg><div class="ok-box">验收示范：<ul><li>输入：<code>请输入身份证号：→ 110101199001011234</code></li></ul><ul><li>输出：<code>出生日期：1990年01月01日</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4372914560',this)">复制</button></div>
-<pre id="c_4372914560"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入身份证号：→ 110101199001011234</code></li></ul><ul><li>输出：<code>出生日期：1990年01月01日</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4373026176',this)">复制</button></div>
+<pre id="c_4373026176"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1383,7 +1398,7 @@ namespace HelloWorld
     <div class="end-right">
         <div class="end-qr-row">
             <div class="end-qr-card">
-                <img src="images/shared/homework-submit-qrcode.png" alt="作业提交二维码" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
+                <img src="images/shared/homework-submit-qrcode.png" alt="扫码提交课后作业" onerror="this.style.display='none'" onclick="zoomQR(this)" style="cursor:pointer">
                 <p>扫码提交课后作业</p>
                 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" class="end-link">📤 打开作业提交入口</a>
             </div>
@@ -1559,11 +1574,63 @@ for(let i=0;i<total;i++)dotsHtml+=`<span class="progress-dot" data-idx="${i}" on
 document.getElementById('progressDots').innerHTML=dotsHtml;
 let dots=document.querySelectorAll('.progress-dot');
 
+// 普通 SVG 图：让图内元素按书写顺序依次浮现（顺序≈数据流/推理顺序）
+function playSvg(sv){
+    if(!sv)return;
+    if(sv.classList.contains('anim')){   // 手工编排的动画（光标走动等）
+        sv.classList.remove('run');
+        void sv.getBoundingClientRect();
+        sv.classList.add('run');
+        return;
+    }
+    let k=0;
+    for(const el of sv.children){
+        const tg=el.tagName.toLowerCase();
+        if(tg==='style'||tg==='defs'||tg==='title'||tg==='desc')continue;
+        el.style.setProperty('--i',k++);
+    }
+    sv.classList.remove('play');
+    void sv.getBoundingClientRect();
+    sv.classList.add('play');
+}
+function replaySvg(btn){
+    const fig=btn.closest('.svg-fig');
+    if(!fig)return;
+    const list=[...fig.querySelectorAll('svg')];
+    list.forEach(function(sv,i){ setTimeout(function(){ playSvg(sv); }, i*160); });
+}
+// 按钮条右边缘对齐图右边缘（图宽随 max-width 变化，680/800 都有）
+function syncReplayBars(){
+    document.querySelectorAll('.svg-fig').forEach(function(fig){
+        if(fig.classList.contains('svg-fig--block'))return;
+        const sv=fig.querySelector('svg'), bar=fig.querySelector('.svg-replay-bar');
+        if(!sv||!bar)return;
+        const w=Math.round(sv.getBoundingClientRect().width);
+        if(w>0)bar.style.maxWidth=w+'px';
+    });
+}
+window.addEventListener('resize', syncReplayBars);
+document.addEventListener('DOMContentLoaded', syncReplayBars);
+if(document.readyState!=='loading')syncReplayBars();
 function showSlide(idx){
     if(idx<0||idx>=total)return;
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
+    const actSlide=slides[idx];
+    if(actSlide&&actSlide.querySelectorAll){
+        actSlide.querySelectorAll('svg.anim').forEach(function(sv){
+            sv.classList.remove('run');
+            void sv.getBoundingClientRect();
+            sv.classList.add('run');
+        });
+        // 普通图：同页多张图依次登场，避免四张一起跳
+        actSlide.querySelectorAll('svg.auto').forEach(function(sv,i){
+            sv.classList.remove('play');
+            setTimeout(function(){ playSvg(sv); }, i*180);
+        });
+    }
     curr=idx;
     let cp=Math.max(0,Math.min(idx,contentTotal));
     document.getElementById('progressFill').style.width=(cp/contentTotal*100)+'%';
