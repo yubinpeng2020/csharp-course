@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件17_CSharp常用类 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -452,8 +465,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>Math — 数学计算</h1>
 <div class="ok-box">当你要算圆的面积时——<code>Math.PI * Math.Pow(半径, 2)</code>，一行搞定。C# 把数学公式全封装在 <code>Math</code> 类里，拿来就用。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>Math.Abs(x)</code></td><td>绝对值</td><td><code>Abs(-5)</code> → 5</td></tr><tr><td><code>Math.Max(a,b)</code> / <code>Min(a,b)</code></td><td>最大值/最小值</td><td><code>Max(10,20)</code> → 20</td></tr><tr><td><code>Math.Pow(x,y)</code></td><td>x 的 y 次方</td><td><code>Pow(2,3)</code> → 8</td></tr><tr><td><code>Math.Sqrt(x)</code></td><td>平方根</td><td><code>Sqrt(16)</code> → 4</td></tr><tr><td><code>Math.Round(x,n)</code></td><td>四舍五入到 n 位</td><td><code>Round(3.14159,2)</code> → 3.14</td></tr><tr><td><code>Math.Floor(x)</code> / <code>Ceiling(x)</code></td><td>向下/向上取整</td><td><code>Floor(3.9)</code> → 3</td></tr><tr><td><code>Math.PI</code></td><td>圆周率常量</td><td>3.14159...</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342336832',this)">复制</button></div>
-<pre id="c_4342336832"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383263616',this)">复制</button></div>
+<pre id="c_4383263616"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 
@@ -488,8 +501,8 @@ using System;
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>DateTime — 日期时间</h1>
 <div class="ok-box">当你要算自己活了多少天时——<code>DateTime.Today - 生日</code>，直接拿到天数。日期加减、格式化输出都在 <code>DateTime</code> 里。</div><div class="card"><table><tr><th>方法/属性</th><th>作用</th><th>示例</th></tr><tr><td><code>DateTime.Now</code></td><td>当前日期时间</td><td><code>2026-07-01 14:30:00</code></td></tr><tr><td><code>DateTime.Today</code></td><td>今天（时间归零）</td><td><code>2026-07-01 00:00:00</code></td></tr><tr><td><code>new DateTime(y,m,d)</code></td><td>指定日期</td><td><code>new DateTime(2000,1,1)</code></td></tr><tr><td><code>dt.AddDays(n)</code> / <code>AddMonths(n)</code></td><td>加减天/月</td><td><code>today.AddDays(7)</code> → 下周</td></tr><tr><td><code>dt2 - dt1</code></td><td>日期差 → TimeSpan</td><td><code>now - birthday</code> → 活了 X 天</td></tr><tr><td><code>dt.ToString(&quot;格式&quot;)</code></td><td>格式化输出</td><td><code>&quot;yyyy-MM-dd&quot;</code></td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342480384',this)">复制</button></div>
-<pre id="c_4342480384"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595392',this)">复制</button></div>
+<pre id="c_4383595392"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 
@@ -523,8 +536,8 @@ using System;
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>Random — 随机数</h1>
 <div class="ok-box">当你要写个抽奖程序时——<code>new Random().Next(0, 名单长度)</code>，随机选一个人。骰子、硬币、验证码，全靠 <code>Random</code>。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例</th></tr><tr><td><code>new Random()</code></td><td>创建随机数生成器</td><td><code>Random rand = new Random();</code></td></tr><tr><td><code>rand.Next()</code></td><td>任意非负整数</td><td><code>Next()</code> → 0~21亿</td></tr><tr><td><code>rand.Next(max)</code></td><td>0 ~ max-1</td><td><code>Next(100)</code> → 0~99</td></tr><tr><td><code>rand.Next(min,max)</code></td><td>min ~ max-1</td><td><code>Next(1,7)</code> → 1~6</td></tr><tr><td><code>rand.NextDouble()</code></td><td>0.0 ~ 1.0 小数</td><td><code>NextDouble()</code> → 0.73...</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342334912',this)">复制</button></div>
-<pre id="c_4342334912"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595072',this)">复制</button></div>
+<pre id="c_4383595072"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 
@@ -562,8 +575,8 @@ using System;
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>Convert — 类型转换</h1>
 <div class="ok-box">用户输入永远是 <code>string</code>——<code>&quot;25&quot;</code> 想拿来算，得先变成 <code>int</code>。<code>Convert</code> 就是专门做这个的，而且比 <code>Parse</code> 更宽容。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>入参为 null</th></tr><tr><td><code>Convert.ToInt32(s)</code></td><td>string → int</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToDouble(s)</code></td><td>string → double</td><td>返回 0 ✅</td></tr><tr><td><code>Convert.ToBoolean(s)</code></td><td>string → bool</td><td>返回 false ✅</td></tr><tr><td><code>Convert.ToString(x)</code></td><td>任意类型 → string</td><td><code>&quot;&quot;</code></td></tr><tr><td><code>int.Parse(s)</code></td><td>对比：同功能</td><td>💥 抛异常</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342334016',this)">复制</button></div>
-<pre id="c_4342334016"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383260992',this)">复制</button></div>
+<pre id="c_4383260992"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 
@@ -593,8 +606,8 @@ using System;
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>Path — 文件路径处理</h1>
 <div class="ok-box"><code>C:\照片\2026\me.jpg</code> 这个路径，怎么取出文件名、后缀名、目录？<code>Path</code> 类专门干这个，再也不用自己拆字符串了。</div><div class="card"><table><tr><th>方法</th><th>作用</th><th>示例（path = <code>C:\照片\me.jpg</code>）</th></tr><tr><td><code>Path.GetFileName(p)</code></td><td>取文件名</td><td><code>&quot;me.jpg&quot;</code></td></tr><tr><td><code>Path.GetFileNameWithoutExtension(p)</code></td><td>无后缀文件名</td><td><code>&quot;me&quot;</code></td></tr><tr><td><code>Path.GetExtension(p)</code></td><td>取后缀</td><td><code>&quot;.jpg&quot;</code></td></tr><tr><td><code>Path.GetDirectoryName(p)</code></td><td>取目录</td><td><code>&quot;C:\照片&quot;</code></td></tr><tr><td><code>Path.Combine(a,b,c)</code></td><td>安全拼接路径</td><td><code>&quot;C:\照片\2026&quot;</code></td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342300160',this)">复制</button></div>
-<pre id="c_4342300160"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383243520',this)">复制</button></div>
+<pre id="c_4383243520"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 using System.IO;
@@ -627,8 +640,8 @@ using System.IO;
 ✅ 正确！
 ...
 做对 4/5 题，用时 23.5 秒</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342298368',this)">复制</button></div>
-<pre id="c_4342298368"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383241728',this)">复制</button></div>
+<pre id="c_4383241728"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 
@@ -684,7 +697,7 @@ using System;
   <rect x="24" y="228" width="632" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="255" fill="#22c55e" font-size="12" font-family="monospace">做对 4/5 题，用时 23.5 秒</text>
   <text x="24" y="290" fill="#6b7d97" font-size="9.5" font-family="sans-serif">类名点方法就能用，不用 new（DateTime.Now / Math.Round 都是静态成员）。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把5题改成10题；把加法改成乘法（<code>*</code>），体验四类知识联动</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>rand.Next(10, 100)</code> — Random 生成题目数字（页面5）</li><li><code>Convert.ToInt32(Console.ReadLine())</code> — Convert 把用户输入转 int（页面6）</li><li><code>Math.Abs(answer - (a + b)) == 0</code> — Math 判断答对没有（页面3）</li><li><code>(DateTime.Now - start).TotalSeconds</code> — DateTime 计时（页面4）</li><li>四行代码，四个类联动——这就是&quot;常用类&quot;的真实用法</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——随机出1道乘法题：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 262" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="一道随机乘法题依次用到 Random、Console、Convert 和 if 判断">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把5题改成10题；把加法改成乘法（<code>*</code>），体验四类知识联动</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>rand.Next(10, 100)</code> — Random 生成题目数字（页面5）</li><li><code>Convert.ToInt32(Console.ReadLine())</code> — Convert 把用户输入转 int（页面6）</li><li><code>Math.Abs(answer - (a + b)) == 0</code> — Math 判断答对没有（页面3）</li><li><code>(DateTime.Now - start).TotalSeconds</code> — DateTime 计时（页面4）</li><li>四行代码，四个类联动——这就是&quot;常用类&quot;的真实用法</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——随机出1道乘法题：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 262" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="一道随机乘法题依次用到 Random、Console、Convert 和 if 判断">
   <defs>
     <marker id="p17-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
   </defs>
@@ -717,8 +730,8 @@ using System;
   <text x="470" y="224" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">if — 比一比，判对错</text>
   <text x="40" y="254" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">注意第 2 行：读进来的是字符串，不转成数字 <tspan font-family="monospace">"28" == 28</tspan> 永远不成立。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342297792',this)">复制</button></div>
-<pre id="c_4342297792"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383241152',this)">复制</button></div>
+<pre id="c_4383241152"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -739,8 +752,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342297600',this)">复制</button></div>
-<pre id="c_4342297600"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383240960',this)">复制</button></div>
+<pre id="c_4383240960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -764,7 +777,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>Math — 数学计算</strong>：<code>Math.Max/Math.Sqrt/Math.Abs</code> 等常用数学函数</li><li><strong>DateTime — 日期时间</strong>：<code>DateTime.Now</code> 取当前时间，<code>AddDays</code> 算偏移</li><li><strong>Random — 随机数</strong>：<code>new Random().Next(起,止)</code> 取区间随机整数</li><li><strong>Convert — 类型转换</strong>：<code>Convert.ToInt32()</code> 等跨类型稳妥转换</li><li><strong>Path — 文件路径处理</strong>：<code>Path.Combine</code> 拼路径、<code>Path.GetFileName</code> 取文件名</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>Math — 数学计算</strong>：<code>Math.Max/Math.Sqrt/Math.Abs</code> 等常用数学函数</li><li><strong>DateTime — 日期时间</strong>：<code>DateTime.Now</code> 取当前时间，<code>AddDays</code> 算偏移</li><li><strong>Random — 随机数</strong>：<code>new Random().Next(起,止)</code> 取区间随机整数</li><li><strong>Convert — 类型转换</strong>：<code>Convert.ToInt32()</code> 等跨类型稳妥转换</li><li><strong>Path — 文件路径处理</strong>：<code>Path.Combine</code> 拼路径、<code>Path.GetFileName</code> 取文件名</li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>综合练习 — 学生成绩统计分析系统</h1>
@@ -818,8 +831,8 @@ namespace HelloWorld
   <text x="345" y="221" text-anchor="middle" fill="#38bdf8" font-size="10.5" font-family="monospace">全班平均分：84.6　　最高分学生：周八（277分）</text>
   <text x="40" y="256" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">六个人各算各的（循环里），全班数据要在循环里顺手累计或比较——出了循环就没有 line 了。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>File.ReadAllLines</code> — 读文件全部行（页面7 文件操作）</li><li><code>Convert.ToInt32</code> — string 转数字（页面6 类型转换）</li><li><code>Math.Round(x, 1)</code> — 四舍五入保留1位小数（页面3 常用类）</li><li><code>DateTime.Now</code> — 取当前日期时间（页面4 常用类）</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342296064',this)">复制</button></div>
-<pre id="c_4342296064"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383239424',this)">复制</button></div>
+<pre id="c_4383239424"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 using System.IO;
@@ -868,8 +881,8 @@ using System.IO;
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342295552',this)">复制</button></div>
-<pre id="c_4342295552"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238912',this)">复制</button></div>
+<pre id="c_4383238912"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 using System.IO;
@@ -917,9 +930,9 @@ using System.IO;
         }
     }
 }</code></pre>
-</div></div></div><div class="card"><ul><li>动手：把 <code>scores.txt</code> 改成你自己的班级数据，看结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>File.ReadAllLines</code> — 逐行读取文件（Path 相关，页面7）</li><li><code>Convert.ToInt32</code> — 文件读出来都是 string，必须转数字（页面6）</li><li><code>Math.Round(..., 1)</code> — 保留一位小数（页面3）</li><li><code>DateTime.Now</code> — 生成报告日期（页面4）</li><li>每行代码都精准用到页面3-7的内容——&quot;综合&quot;二字落到实处</li></ul></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个目标日期（如 <code>2026-12-31</code>），程序算出<strong>距离今天还有多少天</strong>。<br>要求：用 <code>DateTime</code> 和 <code>TimeSpan</code> 自己算差值，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342295040',this)">复制</button></div>
-<pre id="c_4342295040"><code class="language-csharp">using System;
+</div></div></div><div class="card"><ul><li>动手：把 <code>scores.txt</code> 改成你自己的班级数据，看结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>File.ReadAllLines</code> — 逐行读取文件（Path 相关，页面7）</li><li><code>Convert.ToInt32</code> — 文件读出来都是 string，必须转数字（页面6）</li><li><code>Math.Round(..., 1)</code> — 保留一位小数（页面3）</li><li><code>DateTime.Now</code> — 生成报告日期（页面4）</li><li>每行代码都精准用到页面3-7的内容——&quot;综合&quot;二字落到实处</li></ul></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一个目标日期（如 <code>2026-12-31</code>），程序算出<strong>距离今天还有多少天</strong>。<br>要求：用 <code>DateTime</code> 和 <code>TimeSpan</code> 自己算差值，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238400',this)">复制</button></div>
+<pre id="c_4383238400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -937,7 +950,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>输入三角形两边长 a、b 和夹角角度（度），用公式 <code>面积 = 0.5 × a × b × sin(角度转弧度)</code> 计算面积，保留两位小数。提示：弧度 = 角度 × <code>Math.PI / 180</code>。</p><ul><li>知识：<code>Math.Sin</code>、<code>Math.PI</code>、<code>Math.Round</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：a=3、b=4、夹角 90 度，面积 0.5×3×4×1 = 6.00">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>输入三角形两边长 a、b 和夹角角度（度），用公式 <code>面积 = 0.5 × a × b × sin(角度转弧度)</code> 计算面积，保留两位小数。提示：弧度 = 角度 × <code>Math.PI / 180</code>。</p><ul><li>知识：<code>Math.Sin</code>、<code>Math.PI</code>、<code>Math.Round</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：a=3、b=4、夹角 90 度，面积 0.5×3×4×1 = 6.00">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">sin 要吃弧度，所以先把角度乘 Math.PI / 180</text>
   <polyline points="84,214 244,214 84,94 Z" fill="none" stroke="#38bdf8" stroke-width="1.2" stroke-opacity="0.7"/>
   <path d="M 84 192 A 22 22 0 0 1 106 214" fill="none" stroke="#f59e0b" stroke-width="1.2" stroke-opacity="0.8"/>
@@ -1039,9 +1052,9 @@ namespace HelloWorld
   <text x="360" y="214" fill="#6b7d97" font-size="8.5" font-family="sans-serif">最后一组不足 5 人也单独成组</text>
   <rect x="24" y="244" width="632" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="271" fill="#22c55e" font-size="10.5" font-family="monospace">共12人，每组5人，分3组　（Math.Ceiling(12 / 5.0) = 3）</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入每组人数：→ 5</code></li></ul><ul><li>输出：<code>分组时间：2026-07-15 14:30:22</code></li></ul><ul><li>输出：<code>共12人，每组5人，分3组</code></li></ul><ul><li>输出：<code>第1组：王五 钱十三 陈七 吴九 孙十二</code></li></ul><ul><li>输出：<code>第2组：杨十四 张三 冯十一 周八 赵六</code></li></ul><ul><li>输出：<code>第3组：李四 郑十</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每道题用注释分隔<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4342294592',this)">复制</button></div>
-<pre id="c_4342294592"><code class="language-csharp">namespace HelloWorld
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入每组人数：→ 5</code></li></ul><ul><li>输出：<code>分组时间：2026-07-15 14:30:22</code></li></ul><ul><li>输出：<code>共12人，每组5人，分3组</code></li></ul><ul><li>输出：<code>第1组：王五 钱十三 陈七 吴九 孙十二</code></li></ul><ul><li>输出：<code>第2组：杨十四 张三 冯十一 周八 赵六</code></li></ul><ul><li>输出：<code>第3组：李四 郑十</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每道题用注释分隔<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383237952',this)">复制</button></div>
+<pre id="c_4383237952"><code class="language-csharp">namespace HelloWorld
 {
 using System;
 using System.IO;
@@ -1065,7 +1078,7 @@ using System.Collections.Generic;
         }
     }
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner end-page">
 
@@ -1392,18 +1405,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件16_文件操作 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -460,8 +473,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>文件操作的两个核心类</h1>
 <div class="card"><p>C# 用两个类搞定所有文件读写，一个管写、一个管读：</p></div><div class="card"><table><tr><th>类</th><th>方向</th><th>比喻</th><th>核心方法</th></tr><tr><td><code>StreamWriter</code></td><td>程序 → 文件</td><td>把字写在纸上</td><td><code>Write()</code> <code>WriteLine()</code></td></tr><tr><td><code>StreamReader</code></td><td>文件 → 程序</td><td>看书上的字</td><td><code>ReadLine()</code> <code>ReadToEnd()</code></td></tr></table></div><div class="card"><h3>StreamWriter — 写入文件</h3></div><div class="card"><p>注意：<code>StreamWriter</code> 和 <code>StreamReader</code> 都在 <code>System.IO</code> 命名空间里，文件开头要加 <code>using System.IO;</code>。</p></div><div class="card"><p>完整可运行的代码——运行后在项目文件夹里就能看到生成的 <code>test.txt</code>（和 <code>.cs</code> 文件同级）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365402880',this)">复制</button></div>
-<pre id="c_4365402880"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4302002880',this)">复制</button></div>
+<pre id="c_4302002880"><code class="language-csharp">namespace HelloWorld
 {
 using System.IO;  // 文件操作都在这个命名空间
 
@@ -476,8 +489,9 @@ using System.IO;  // 文件操作都在这个命名空间
     }
 }</code></pre>
 </div><div class="card"><p>但有个坑——<strong>万一忘了 <code>Close()</code></strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365402688',this)">复制</button></div>
-<pre id="c_4365402688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301651904',this)">复制</button></div>
+<pre id="c_4301651904"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -492,8 +506,9 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>后果：文件被你的程序占着，别的程序打不开，你自己都删不掉。</p></div><div class="card"><p>好消息：用 <code>using</code> 解决——离开 <code>{ }</code> 自动关闭：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365402496',this)">复制</button></div>
-<pre id="c_4365402496"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301651712',this)">复制</button></div>
+<pre id="c_4301651712"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -508,9 +523,10 @@ using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 从这页开始，所有文件操作代码都用 <code>using</code> 包裹。</div><div class="card"><p><code>WriteLine</code> 写完自动换行，<code>Write</code> 不换行：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365402240',this)">复制</button></div>
-<pre id="c_4365402240"><code class="language-csharp">using System;
+</div><div class="ok-box"><span class="eico">💡</span> 从这页开始，所有文件操作代码都用 <code>using</code> 包裹。</div><div class="card"><p><code>WriteLine</code> 写完自动换行，<code>Write</code> 不换行：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301651456',this)">复制</button></div>
+<pre id="c_4301651456"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -529,8 +545,9 @@ using (StreamWriter sw = new StreamWriter(&quot;test.txt&quot;))
     }
 }</code></pre>
 </div><div class="card"><p>默认每次写入会<strong>清空原文件</strong>，加 <code>true</code> 变成追加：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365369216',this)">复制</button></div>
-<pre id="c_4365369216"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301651264',this)">复制</button></div>
+<pre id="c_4301651264"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -550,9 +567,10 @@ using (StreamWriter sw = new StreamWriter(&quot;score.txt&quot;, true))
         }
     }
 }</code></pre>
-</div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;)</code> → 覆盖写入，从头写</p></div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;, true)</code> → 追加写入，原有内容保留</p></div><div class="card"><h3>StreamReader — 读取文件</h3></div><div class="card"><p>同样用 <code>using</code> 包裹，两种读法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365368832',this)">复制</button></div>
-<pre id="c_4365368832"><code class="language-csharp">using System;
+</div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;)</code> → 覆盖写入，从头写</p></div><div class="card"><p><code>new StreamWriter(&quot;文件名&quot;, true)</code> → 追加写入，原有内容保留</p></div><div class="card"><h3>StreamReader — 读取文件</h3></div><div class="card"><p>同样用 <code>using</code> 包裹，两种读法：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301650880',this)">复制</button></div>
+<pre id="c_4301650880"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -582,8 +600,8 @@ using (StreamReader sr = new StreamReader(&quot;score.txt&quot;))
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>File 类 — 一行搞定读和写</h1>
 <div class="card"><p>StreamReader/Writer 灵活但步骤多。<code>File</code> 类提供快捷方法：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365408960',this)">复制</button></div>
-<pre id="c_4365408960"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301672896',this)">复制</button></div>
+<pre id="c_4301672896"><code class="language-csharp">using System;
 using System.IO;
 
 namespace HelloWorld
@@ -619,8 +637,9 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>异常处理 — try-catch</h1>
 <div class="card"><p>上了用了 <code>File.ReadAllText()</code> 读文件，但如果文件压根不存在呢？程序直接崩——C# 会在出错时生成一个 <code>Exception</code> 对象（装着错误信息），没人拦截它就一路抛到最外层，程序闪退。</p></div><div class="card"><p>不想让它崩？用 <code>try-catch</code> 兜住：<code>try</code> 里放可能出错的代码，<code>catch</code> 里写怎么善后。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365367296',this)">复制</button></div>
-<pre id="c_4365367296"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301649408',this)">复制</button></div>
+<pre id="c_4301649408"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -644,9 +663,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><p>常见的文件异常类型，按具体→笼统的顺序写：</p></div><div class="card"><table><tr><th>catch 类型</th><th>捕获场景</th></tr><tr><td><code>FileNotFoundException</code></td><td>文件不存在</td></tr><tr><td><code>DirectoryNotFoundException</code></td><td>文件夹不存在</td></tr><tr><td><code>IOException</code></td><td>读写失败（被占用、无权限等）</td></tr><tr><td><code>Exception</code></td><td>兜底——上面没匹配到的全归它</td></tr></table></div><div class="ok-box">💡 你还可以主动 <code>throw</code> 异常——在自己的方法里发现不合理参数时抛出去，让调用者用 <code>try-catch</code> 兜住：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365366592',this)">复制</button></div>
-<pre id="c_4365366592"><code class="language-csharp">using System;
+</div><div class="card"><p>常见的文件异常类型，按具体→笼统的顺序写：</p></div><div class="card"><table><tr><th>catch 类型</th><th>捕获场景</th></tr><tr><td><code>FileNotFoundException</code></td><td>文件不存在</td></tr><tr><td><code>DirectoryNotFoundException</code></td><td>文件夹不存在</td></tr><tr><td><code>IOException</code></td><td>读写失败（被占用、无权限等）</td></tr><tr><td><code>Exception</code></td><td>兜底——上面没匹配到的全归它</td></tr></table></div><div class="ok-box"><span class="eico">💡</span> 你还可以主动 <code>throw</code> 异常——在自己的方法里发现不合理参数时抛出去，让调用者用 <code>try-catch</code> 兜住：</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301648704',this)">复制</button></div>
+<pre id="c_4301648704"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -654,6 +673,8 @@ namespace HelloWorld
     {
         static void Main()
         {
+            double balance = 1000;    // 账户余额
+
             void Withdraw(double amount)
             {
                 if (amount &lt;= 0)
@@ -662,12 +683,15 @@ namespace HelloWorld
                     throw new InvalidOperationException(&quot;余额不足&quot;);
                 balance -= amount;
             }
+
+            Withdraw(200);
+            Console.WriteLine($&quot;取款成功，余额 {balance}&quot;);
         }
     }
 }</code></pre>
-</div><div class="card"><p>调用方用 try-catch 接住：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365366400',this)">复制</button></div>
-<pre id="c_4365366400"><code class="language-csharp">using System;
+</div><div class="card"><p>调用方用 try-catch 接住：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301648512',this)">复制</button></div>
+<pre id="c_4301648512"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -675,6 +699,17 @@ namespace HelloWorld
     {
         static void Main()
         {
+            double balance = 1000;
+
+            void Withdraw(double amount)
+            {
+                if (amount &lt;= 0)
+                    throw new ArgumentException(&quot;取款金额必须大于0&quot;);
+                if (amount &gt; balance)
+                    throw new InvalidOperationException(&quot;余额不足&quot;);
+                balance -= amount;
+            }
+
             try
             {
                 Withdraw(-100);
@@ -691,8 +726,9 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>还有 <code>finally</code>——不管 try 里出不出事，<code>finally</code> 里的代码一定执行。典型场景是关闭文件：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365366272',this)">复制</button></div>
-<pre id="c_4365366272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301648384',this)">复制</button></div>
+<pre id="c_4301648384"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -718,7 +754,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 用了 <code>using</code> 就基本不需要手写 <code>finally</code>——它自动帮你调用 <code>Close()</code>，等价于上面整个 try-catch-finally。</div><div class="ok-box">🤖 <strong>AI 定位异常根因</strong>：程序崩了别慌——把完整的异常信息（类型 + 消息 + 堆栈跟踪）贴给 AI，它能帮你快速定位是哪一行、什么原因。但修好代码后必须用课件7教的调试技巧自己走一遍，确保真的修好了。</div>
+</div><div class="ok-box"><span class="eico">💡</span> 用了 <code>using</code> 就基本不需要手写 <code>finally</code>——它自动帮你调用 <code>Close()</code>，等价于上面整个 try-catch-finally。</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 定位异常根因</strong>：程序崩了别慌——把完整的异常信息（类型 + 消息 + 堆栈跟踪）贴给 AI，它能帮你快速定位是哪一行、什么原因。但修好代码后必须用课件7教的调试技巧自己走一遍，确保真的修好了。</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 成绩单工具</h1>
@@ -729,8 +765,8 @@ namespace HelloWorld
 李四：90分
 王五：78分
 平均分：84.3</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365367616',this)">复制</button></div>
-<pre id="c_4365367616"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301649984',this)">复制</button></div>
+<pre id="c_4301649984"><code class="language-csharp">using System;
 using System.IO;
 
 namespace HelloWorld
@@ -785,7 +821,7 @@ namespace HelloWorld
   <text x="24" y="226" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">读的时候按行读（ReadAllLines 或 StreamReader.ReadLine），每行再 Split 成两段。</text>
   <text x="24" y="250" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">写完记得关：using 块结束自动 Flush + Close，不然内容可能还在缓冲区没落盘。</text>
   <text x="24" y="274" fill="#6b7d97" font-size="9" font-family="sans-serif">File.Exists() 先判断，文件不存在时别硬读，会抛 FileNotFoundException。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 <code>true</code> 去掉，观察第二次运行时之前的成绩还在不在</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>new StreamWriter(file, true)</code> 的 <code>true</code> = 追加模式，旧数据保留</li><li>不加 <code>true</code> = 覆盖模式，每次运行清空文件重写</li><li><code>File.Exists()</code> 判断文件是否存在，避免读不存在的文件崩掉</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——②读取文件并计算平均分：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="读取成绩文件、逐行拆分成姓名和分数、最后算出平均分">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 <code>true</code> 去掉，观察第二次运行时之前的成绩还在不在</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>new StreamWriter(file, true)</code> 的 <code>true</code> = 追加模式，旧数据保留</li><li>不加 <code>true</code> = 覆盖模式，每次运行清空文件重写</li><li><code>File.Exists()</code> 判断文件是否存在，避免读不存在的文件崩掉</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——②读取文件并计算平均分：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 296" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="读取成绩文件、逐行拆分成姓名和分数、最后算出平均分">
   <defs>
     <marker id="p16-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -811,9 +847,10 @@ namespace HelloWorld
   <text x="340" y="238" text-anchor="middle" fill="#8b9bb4" font-size="10" font-family="monospace">张三：85分　李四：90分　王五：78分</text>
   <text x="340" y="258" text-anchor="middle" fill="#22c55e" font-size="11" font-family="monospace">平均分：253 / 3 = 84.3</text>
   <text x="40" y="288" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">读之前先 <tspan font-family="monospace">File.Exists()</tspan> 判一下：文件不存在直接读会抛异常。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365366016',this)">复制</button></div>
-<pre id="c_4365366016"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301650560',this)">复制</button></div>
+<pre id="c_4301650560"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -839,8 +876,9 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365365760',this)">复制</button></div>
-<pre id="c_4365365760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301648000',this)">复制</button></div>
+<pre id="c_4301648000"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -868,7 +906,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>为什么需要文件操作？</strong>：数据要<span class="term">存下来</span>，关了程序还在</li><li><strong>文件操作的两个核心类</strong>：<code>File</code>（静态快捷）和 <code>StreamReader/Writer</code>（逐行读写）</li><li><strong>File 类 — 一行搞定读和写</strong>：<code>File.ReadAllText</code> / <code>File.WriteAllText</code></li><li><strong>异常处理 — try-catch</strong>：文件不存在等意外用 try-catch 兜住，程序不崩</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>为什么需要文件操作？</strong>：数据要<span class="term">存下来</span>，关了程序还在</li><li><strong>文件操作的两个核心类</strong>：<code>File</code>（静态快捷）和 <code>StreamReader/Writer</code>（逐行读写）</li><li><strong>File 类 — 一行搞定读和写</strong>：<code>File.ReadAllText</code> / <code>File.WriteAllText</code></li><li><strong>异常处理 — try-catch</strong>：文件不存在等意外用 try-catch 兜住，程序不崩</li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>综合练习 — 简易通讯录</h1>
@@ -906,14 +944,15 @@ namespace HelloWorld
   <text x="330" y="196" fill="#6b7d97" font-size="9.5" font-family="sans-serif">查找用 StartsWith 比行首——用 Contains 会把「张三丰」也查出来。</text>
   <text x="30" y="290" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个功能都落在同一个文件上：一个写、一个整读、一个读着筛——文件本身不会「查」，全靠程序判断。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>File.AppendAllText(文件, 内容)</code> 追加一行，自动处理关闭</li><li><code>File.ReadAllLines(文件)</code> 读全部行返回数组</li><li><code>File.Exists(文件)</code> 判断文件是否存在，读/查前先判断</li><li>查找用 <code>line.StartsWith(关键词)</code></li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365363584',this)">复制</button></div>
-<pre id="c_4365363584"><code class="language-csharp">namespace HelloWorld
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301645824',this)">复制</button></div>
+<pre id="c_4301645824"><code class="language-csharp">namespace HelloWorld
 {
     class Program
     {
         static void Main()
         {
 using System.IO;
+using System;
 
             string file = &quot;contacts.txt&quot;;
 
@@ -959,8 +998,8 @@ using System.IO;
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365363008',this)">复制</button></div>
-<pre id="c_4365363008"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301645312',this)">复制</button></div>
+<pre id="c_4301645312"><code class="language-csharp">using System;
 using System.IO;
 
 namespace HelloWorld
@@ -1014,8 +1053,9 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己用 <code>StreamReader</code> 打开一个文本文件，<strong>逐行读取</strong>并统计：总行数、以及所有行的总字符数（不含换行）。<br>要求：自己写循环读取，不依赖 <code>File.ReadAllLines</code> 一次性读入。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365362688',this)">复制</button></div>
-<pre id="c_4365362688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301644992',this)">复制</button></div>
+<pre id="c_4301644992"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -1041,7 +1081,7 @@ using (StreamReader sr = new StreamReader(&quot;data.txt&quot;))
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（3分）</h3><p>编写成绩分析程序：读取 <code>scores.txt</code>（每行格式：<code>姓名 成绩</code>），输出最高分、最低分、平均分和及格率（≥60分的人数/总人数）。用 <code>try-catch</code> 处理文件不存在的情况。</p><ul><li>提示：<code>File.ReadAllLines()</code> + <code>Split(' ')</code> 拆分行</li></ul></div><div class="ok-box">期望输入：<code>scores.txt</code> 含 张三 85 / 李四 90 / 王五 78 / 赵六 55 / 孙七 60</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：5 行成绩算出最高 90、最低 55、平均 73.6、及格率 80%">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（3分）</h3><p>编写成绩分析程序：读取 <code>scores.txt</code>（每行格式：<code>姓名 成绩</code>），输出最高分、最低分、平均分和及格率（≥60分的人数/总人数）。用 <code>try-catch</code> 处理文件不存在的情况。</p><ul><li>提示：<code>File.ReadAllLines()</code> + <code>Split(' ')</code> 拆分行</li></ul></div><div class="ok-box">期望输入：<code>scores.txt</code> 含 张三 85 / 李四 90 / 王五 78 / 赵六 55 / 孙七 60</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 290" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：5 行成绩算出最高 90、最低 55、平均 73.6、及格率 80%">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">一次遍历拿齐四个指标，不用读四遍文件</text>
   <rect x="24" y="40" width="200" height="176" rx="8" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
   <text x="38" y="62" fill="#38bdf8" font-size="10" font-family="monospace">scores.txt</text>
@@ -1190,9 +1230,9 @@ using (StreamReader sr = new StreamReader(&quot;data.txt&quot;))
   <text x="624" y="178" text-anchor="end" fill="#22c55e" font-size="9" font-family="sans-serif">每个字符 (char)(c - 3) ↓</text>
   <text x="24" y="250" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">空格 +3 变成 #，看不出原样；-3 就原封不动回来了 —— 所以能无损还原。</text>
   <text x="24" y="272" fill="#6b7d97" font-size="9" font-family="sans-serif">读用 File.ReadAllText，写用 File.WriteAllText；整段文本一次进内存，用 foreach 逐个改。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>encrypted.txt → Khoor#Zruog</code></li></ul><ul><li>输出：<code>decrypted.txt → Hello World</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，题2的 Logger 类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4365365312',this)">复制</button></div>
-<pre id="c_4365365312"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>encrypted.txt → Khoor#Zruog</code></li></ul><ul><li>输出：<code>decrypted.txt → Hello World</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，题2的 Logger 类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4301647744',this)">复制</button></div>
+<pre id="c_4301647744"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1216,7 +1256,7 @@ namespace HelloWorld
 
     // ===== 题2的 Logger 类写在这里 =====
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
 
@@ -1543,18 +1583,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

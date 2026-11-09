@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件14_结构体与枚举 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -453,8 +466,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>struct 结构体 — 轻量级的&quot;小类&quot;</h1>
 <div class="card"><p>回顾课件9：<strong>值类型</strong>是&quot;给你复印件，你改你的我不管&quot;（<code>int</code>、<code>double</code>）；<strong>引用类型</strong>是&quot;给你门牌号，你按地址改了我也变&quot;（<code>class</code>、数组）。那有没有值类型的&quot;小类&quot;？——<strong>结构体 struct</strong>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369661760',this)">复制</button></div>
-<pre id="c_4369661760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381498560',this)">复制</button></div>
+<pre id="c_4381498560"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -476,23 +489,27 @@ namespace HelloWorld
     {
         static void Main()
         {
-            PointClass c1 = new PointClass();  c1.X = 10; c1.Y = 20;
+            PointClass c1 = new PointClass();   // 创建对象
+            c1.X = 10;
+            c1.Y = 20;
             PointClass c2 = c1;                 // c2 拿门牌号
             c2.X = 99;                          // c1.X 也变 99！⚠️
 
-            PointStruct s1 = new PointStruct(); s1.X = 10; s1.Y = 20;
+            PointStruct s1 = new PointStruct(); // 创建结构体变量
+            s1.X = 10;
+            s1.Y = 20;
             PointStruct s2 = s1;                // s2 拿到复印件
             s2.X = 99;                          // s1.X 还是 10 ✅
         }
     }
 }</code></pre>
-</div><div class="ok-box">💬 同样是 <code>=</code> 赋值，结果天差地别：<br>- <code>c2 = c1</code>（class）→ c2 和 c1 指向<strong>同一个对象</strong>，改 c2 就是改 c1<br>- <code>s2 = s1</code>（struct）→ s2 拿到的是<strong>全新副本</strong>，从此各过各的，互不干扰<br>- 这就是&quot;门牌号&quot;vs&quot;复印件&quot;在代码里的体现——<strong>struct 天然隔离，class 天然共享</strong></div>
+</div><div class="ok-box"><span class="eico">💬</span> 同样是 <code>=</code> 赋值，结果天差地别：<br>- <code>c2 = c1</code>（class）→ c2 和 c1 指向<strong>同一个对象</strong>，改 c2 就是改 c1<br>- <code>s2 = s1</code>（struct）→ s2 拿到的是<strong>全新副本</strong>，从此各过各的，互不干扰<br>- 这就是&quot;门牌号&quot;vs&quot;复印件&quot;在代码里的体现——<strong>struct 天然隔离，class 天然共享</strong></div>
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>结构体 vs 类</h1>
-<div class="card"><table><tr><th></th><th>类（class）</th><th>结构体（struct）</th></tr><tr><td>类型</td><td>引用类型</td><td>值类型</td></tr><tr><td>赋值</td><td>传门牌号，互相影响</td><td>传复印件，独立</td></tr><tr><td><strong>构造方法</strong></td><td>可有无参构造</td><td>不能自定义无参构造</td></tr><tr><td><strong>继承</strong></td><td>支持</td><td>不支持（不能继承）</td></tr><tr><td>适用场景</td><td>复杂对象（学生、账户）</td><td>简单数据（坐标、颜色）</td></tr></table></div><div class="card"><h3>构造方法的区别：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369517632',this)">复制</button></div>
-<pre id="c_4369517632"><code class="language-csharp">using System;
+<div class="card"><table><tr><th></th><th>类（class）</th><th>结构体（struct）</th></tr><tr><td>类型</td><td>引用类型</td><td>值类型</td></tr><tr><td>赋值</td><td>传门牌号，互相影响</td><td>传复印件，独立</td></tr><tr><td><strong>构造方法</strong></td><td>可有无参构造</td><td>不能自定义无参构造</td></tr><tr><td><strong>继承</strong></td><td>支持</td><td>不支持（不能继承）</td></tr><tr><td>适用场景</td><td>复杂对象（学生、账户）</td><td>简单数据（坐标、颜色）</td></tr></table></div><div class="card"><h3>构造方法的区别：</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381165696',this)">复制</button></div>
+<pre id="c_4381165696"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -509,10 +526,21 @@ namespace HelloWorld
         // public Point() { }          // ❌ 编译错误！
         public Point(int x, int y) { } // ✅ 有参构造可以
     }
+
+    class Program
+    {
+        static void Main()
+        {
+            Student s1 = new Student();          // class 无参构造
+            Student s2 = new Student(&quot;张三&quot;);
+            Point p = new Point(3, 4);           // struct 只能走有参构造
+            Console.WriteLine(&quot;class 和 struct 都创建成功&quot;);
+        }
+    }
 }</code></pre>
 </div><div class="card"><h3>继承的区别：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369661120',this)">复制</button></div>
-<pre id="c_4369661120"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381498176',this)">复制</button></div>
+<pre id="c_4381498176"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -523,13 +551,29 @@ namespace HelloWorld
     // struct：不能继承（编译报错）
     struct Color { }
     // struct RGB : Color { }          // ❌ 编译错误！struct 不能继承
+
+    class Program
+    {
+        static void Main()
+        {
+            Dog d = new Dog();
+            Color c = new Color();
+            Console.WriteLine(&quot;class 能继承、struct 不能——这两行都能编译通过&quot;);
+        }
+    }
 }</code></pre>
-</div><div class="ok-box">💡 继承的概念和用法会在<strong>课件15</strong>重点讲解，这里先记住结论：class 能继承，struct 不能。</div><div class="card"><p>什么时候用结构体？</p></div><div class="card"><ul><li>数据量小（几个字段）</li><li>赋值后希望独立，不想互相影响——因为 struct 是值类型，赋值=复印：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516800',this)">复制</button></div>
-<pre id="c_4369516800"><code class="language-csharp">using System;
+</div><div class="ok-box"><span class="eico">💡</span> 继承的概念和用法会在<strong>课件15</strong>重点讲解，这里先记住结论：class 能继承，struct 不能。</div><div class="card"><p>什么时候用结构体？</p></div><div class="card"><ul><li>数据量小（几个字段）</li><li>赋值后希望独立，不想互相影响——因为 struct 是值类型，赋值=复印：</li></ul></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381165056',this)">复制</button></div>
+<pre id="c_4381165056"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
+    struct Point
+    {
+        public int X;
+        public int Y;
+    }
+
     class Program
     {
         static void Main()
@@ -537,7 +581,9 @@ namespace HelloWorld
             Point p1 = new Point { X = 10, Y = 20 };
             Point p2 = p1;          // 复制一份，p2 独立
             p2.X = 99;
-            // p1.X 还是 10 ✅ ，p2.X 变成 99
+
+            Console.WriteLine($&quot;p1.X = {p1.X}（还是 10 ✅）&quot;);
+            Console.WriteLine($&quot;p2.X = {p2.X}（变成 99）&quot;);
             // 如果是 class，p1.X 也会变成 99 ⚠️
         }
     }
@@ -546,9 +592,9 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>结构体完整示例</h1>
-<div class="ok-box">💬 来看一个完整的 struct——颜色 <code>Color</code>：有字段（RGB）、有构造方法（必须有参数）、有普通方法（<code>ToHex</code>），和 class 写法几乎一样。唯一不同的是赋值：<code>c2 = c1</code> 是复印而非共享，改一个不动另一个。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369518400',this)">复制</button></div>
-<pre id="c_4369518400"><code class="language-csharp">using System;
+<div class="ok-box"><span class="eico">💬</span> 来看一个完整的 struct——颜色 <code>Color</code>：有字段（RGB）、有构造方法（必须有参数）、有普通方法（<code>ToHex</code>），和 class 写法几乎一样。唯一不同的是赋值：<code>c2 = c1</code> 是复印而非共享，改一个不动另一个。</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381167040',this)">复制</button></div>
+<pre id="c_4381167040"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -561,7 +607,9 @@ namespace HelloWorld
         // 结构体也可以有构造方法（必须有参数）
         public Color(int r, int g, int b)
         {
-            Red = r; Green = g; Blue = b;
+            Red = r;
+            Green = g;
+            Blue = b;
         }
 
         // 结构体也可以有方法
@@ -589,8 +637,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — struct 三维坐标</h1>
 <div class="ok-box">用 struct 定义三维坐标，体会值类型赋值后互不干扰的特点。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369514880',this)">复制</button></div>
-<pre id="c_4369514880"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146816',this)">复制</button></div>
+<pre id="c_4381146816"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -602,7 +650,9 @@ namespace HelloWorld
 
         public Point3D(double x, double y, double z)
         {
-            X = x; Y = y; Z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         // 计算到原点的距离
@@ -664,7 +714,7 @@ namespace HelloWorld
   <text x="428" y="112" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">p2 = p1 是整份复印：</text>
   <text x="428" y="132" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">改 p2.X = 10，p1.X 还是 3</text>
   <text x="24" y="300" fill="#6b7d97" font-size="9.5" font-family="sans-serif">struct 是值类型：赋值等于复制一份，两个变量互不影响（class 是共用同一个对象）。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 <code>Point3D</code> 改成 <code>class</code>，观察 p1.X 是 3 还是 10</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>struct 的 <code>=</code> 是<strong>全量复制</strong>——p2 拿到 p1 的所有值，从此各过各的</li><li>如果是 class，<code>p2 = p1</code> 后改 p2.X 会把 p1.X 也改了——因为共用同一个对象</li><li><code>Distance()</code> 演示 struct 里也能写方法，和 class 没区别</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vector2</code> 结构体（二维向量）：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 282" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="struct 赋值是整份复制，改了 v2 不影响 v1">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 <code>Point3D</code> 改成 <code>class</code>，观察 p1.X 是 3 还是 10</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li>struct 的 <code>=</code> 是<strong>全量复制</strong>——p2 拿到 p1 的所有值，从此各过各的</li><li>如果是 class，<code>p2 = p1</code> 后改 p2.X 会把 p1.X 也改了——因为共用同一个对象</li><li><code>Distance()</code> 演示 struct 里也能写方法，和 class 没区别</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Vector2</code> 结构体（二维向量）：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 282" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="struct 赋值是整份复制，改了 v2 不影响 v1">
   <defs>
     <marker id="p14-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
     <marker id="p14-o" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
@@ -694,8 +744,8 @@ namespace HelloWorld
   <text x="560" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">占两块内存</text>
   <text x="40" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">struct 的 <tspan font-family="monospace">=</tspan> 是复印：v2 拿到一份独立数据。换成 class 就是两个变量指向同一个对象，改 v2.X 连 v1.X 一起变。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369481472',this)">复制</button></div>
-<pre id="c_4369481472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146240',this)">复制</button></div>
+<pre id="c_4381146240"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -707,7 +757,8 @@ namespace HelloWorld
         // 构造方法
         public <span class="code-blank">___</span>(double x, double y)
         {
-            X = <span class="code-blank">___</span>; Y = <span class="code-blank">___</span>;
+            X = <span class="code-blank">___</span>;
+            Y = <span class="code-blank">___</span>;
         }
 
         // 返回向量长度
@@ -731,8 +782,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369481280',this)">复制</button></div>
-<pre id="c_4369481280"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146048',this)">复制</button></div>
+<pre id="c_4381146048"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -743,7 +794,8 @@ namespace HelloWorld
 
         public Vector2(double x, double y)
         {
-            X = x; Y = y;
+            X = x;
+            Y = y;
         }
 
         public double Length()
@@ -769,8 +821,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>enum 枚举 — 给常量取个名字</h1>
 <div class="card"><p>一周有七天，用 <code>int</code> 表示——0=周一，1=周二……但 <code>day = 8</code> 没人拦。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369519168',this)">复制</button></div>
-<pre id="c_4369519168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381166208',this)">复制</button></div>
+<pre id="c_4381166208"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -783,8 +835,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>枚举</strong> = 限定取值范围的&quot;选择题&quot;：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369519424',this)">复制</button></div>
-<pre id="c_4369519424"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381168192',this)">复制</button></div>
+<pre id="c_4381168192"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -813,8 +865,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>枚举的底层是整数</h1>
 <div class="card"><p>枚举本质是整数，每个名字对应一个数字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516608',this)">复制</button></div>
-<pre id="c_4369516608"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381166912',this)">复制</button></div>
+<pre id="c_4381166912"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -837,9 +889,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💬 枚举和 int 之间用强制转换互转：<br>- <strong>枚举 → int</strong>：<code>(int)GameState.Playing</code> → 得到 <code>1</code><br>- <strong>int → 枚举</strong>：<code>(GameState)2</code> → 得到 <code>Paused</code><br>- 注意：int 转枚举时数字超出范围不会报错，只是一个无名称的数值——所以尽量从已有枚举值转，别拿未知数字硬转</div><div class="card"><p>可以自定义数值：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369516352',this)">复制</button></div>
-<pre id="c_4369516352"><code class="language-csharp">using System;
+</div><div class="ok-box"><span class="eico">💬</span> 枚举和 int 之间用强制转换互转：<br>- <strong>枚举 → int</strong>：<code>(int)GameState.Playing</code> → 得到 <code>1</code><br>- <strong>int → 枚举</strong>：<code>(GameState)2</code> → 得到 <code>Paused</code><br>- 注意：int 转枚举时数字超出范围不会报错，只是一个无名称的数值——所以尽量从已有枚举值转，别拿未知数字硬转</div><div class="card"><p>可以自定义数值：</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381168128',this)">复制</button></div>
+<pre id="c_4381168128"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -849,14 +901,24 @@ namespace HelloWorld
         NotFound = 404,
         ServerError = 500
     }
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine($&quot;OK          = {(int)HttpStatus.OK}&quot;);
+            Console.WriteLine($&quot;NotFound    = {(int)HttpStatus.NotFound}&quot;);
+            Console.WriteLine($&quot;ServerError = {(int)HttpStatus.ServerError}&quot;);
+        }
+    }
 }</code></pre>
 </div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>课堂练习2 — 枚举应用</h1>
 <div class="ok-box">用枚举管理游戏状态，结合 switch 做状态切换。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369480256',this)">复制</button></div>
-<pre id="c_4369480256"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381145472',this)">复制</button></div>
+<pre id="c_4381145472"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -915,7 +977,7 @@ namespace HelloWorld
   <text x="302" y="221" fill="#22c55e" font-size="10.5" font-family="monospace">→ 游戏中...</text>
   <text x="24" y="258" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">switch 配枚举：写 GameState.Playing 比写 1 好读，编译器还能帮你查漏。</text>
   <text x="24" y="282" fill="#6b7d97" font-size="9.5" font-family="sans-serif">输入 5 时强转出的是个「不存在的枚举值」，正好落进 default。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：输入 0/1/2/3 分别观察效果，再输入 5 看 default 分支</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>(GameState)choice</code> 把 int 转成枚举——前面学的强制转换</li><li>switch 配合枚举：编译器会检查是否漏了某个枚举值，不容易出错</li><li>枚举让代码从 <code>if (state == 0)</code> 变成 <code>state == GameState.Menu</code>，可读性飞升</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Direction</code> 枚举，根据输入输出中文方向：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="输入数字强制转成 Direction 枚举，switch 输出对应中文方向">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：输入 0/1/2/3 分别观察效果，再输入 5 看 default 分支</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>(GameState)choice</code> 把 int 转成枚举——前面学的强制转换</li><li>switch 配合枚举：编译器会检查是否漏了某个枚举值，不容易出错</li><li>枚举让代码从 <code>if (state == 0)</code> 变成 <code>state == GameState.Menu</code>，可读性飞升</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——定义 <code>Direction</code> 枚举，根据输入输出中文方向：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="输入数字强制转成 Direction 枚举，switch 输出对应中文方向">
   <defs>
     <marker id="p14-b" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#64748b"/></marker>
   </defs>
@@ -964,8 +1026,8 @@ namespace HelloWorld
   <text x="499" y="206" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">→ 未知方向</text>
   <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举的底层就是 0、1、2、3——所以能强转，也能用 switch 比；写 <tspan font-family="monospace">Direction.North</tspan> 比写 0 好懂得多。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369479680',this)">复制</button></div>
-<pre id="c_4369479680"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381144896',this)">复制</button></div>
+<pre id="c_4381144896"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -991,8 +1053,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369479488',this)">复制</button></div>
-<pre id="c_4369479488"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381144704',this)">复制</button></div>
+<pre id="c_4381144704"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1021,7 +1083,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>struct 结构体 — 轻量级的&quot;小类&quot;</strong>：适合坐标、金额这种小数据组合</li><li><strong>结构体 vs 类</strong>：struct 是值类型（复制整体），class 是引用类型</li><li><strong>结构体完整示例</strong>：定义字段+构造+方法，用法类似类</li><li><strong>enum 枚举 — 给常量取个名字</strong>：<code>enum 颜色 {红,绿,蓝}</code> 让代码更易读</li><li><strong>枚举的底层是整数</strong>：默认从 0 开始编号，可手动指定</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>struct 结构体 — 轻量级的&quot;小类&quot;</strong>：适合坐标、金额这种小数据组合</li><li><strong>结构体 vs 类</strong>：struct 是值类型（复制整体），class 是引用类型</li><li><strong>结构体完整示例</strong>：定义字段+构造+方法，用法类似类</li><li><strong>enum 枚举 — 给常量取个名字</strong>：<code>enum 颜色 {红,绿,蓝}</code> 让代码更易读</li><li><strong>枚举的底层是整数</strong>：默认从 0 开始编号，可手动指定</li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>综合练习 — 纸牌花色</h1>
@@ -1063,8 +1125,8 @@ Hearts A（原牌不变——struct 值类型行为）</code></pre><div class="s
   <text x="40" y="196" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b">c3 = c1</tspan> 只是复印：把 c3.Suit 改成 Clubs，c1 依然是 Hearts A——这就是 struct 的值类型行为。</text>
   <text x="40" y="212" fill="#6b7d97" font-size="9.5" font-family="sans-serif">另外注意：枚举直接打印出来就是名字（Hearts），不用自己写映射。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>枚举 <code>Suit</code> 定义四种花色，<code>Card</code> 结构体组合花色+点数</li><li>点数 1/11/12/13 要转换成 A/J/Q/K——用 switch 表达式最简洁</li><li>struct 赋值是复印，改 c3 不动 c1</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369477696',this)">复制</button></div>
-<pre id="c_4369477696"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381142784',this)">复制</button></div>
+<pre id="c_4381142784"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1109,8 +1171,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369477184',this)">复制</button></div>
-<pre id="c_4369477184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381142272',this)">复制</button></div>
+<pre id="c_4381142272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1123,7 +1185,8 @@ namespace HelloWorld
 
         public Card(Suit s, int n)
         {
-            Suit = s; Number = n;
+            Suit = s;
+            Number = n;
         }
 
         public string GetName()
@@ -1153,8 +1216,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义枚举 <code>Light { Red, Green, Yellow }</code> 表示交通灯。用户输入当前灯（0/1/2），程序输出<strong>下一个灯</strong>（Red→Green→Yellow→Red 循环）。<br>要求：自己用枚举 + 取模运算实现切换，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369476864',this)">复制</button></div>
-<pre id="c_4369476864"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381141952',this)">复制</button></div>
+<pre id="c_4381141952"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1174,7 +1237,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>TrafficLight</code> 枚举（Red/Yellow/Green），用 switch 根据枚举值输出对应的中文和操作。</p><ul><li>提示：<code>enum TrafficLight { Red, Yellow, Green }</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：TrafficLight 三个值，Red 输出红灯停车、Green 输出绿灯通行">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>TrafficLight</code> 枚举（Red/Yellow/Green），用 switch 根据枚举值输出对应的中文和操作。</p><ul><li>提示：<code>enum TrafficLight { Red, Yellow, Green }</code></li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：TrafficLight 三个值，Red 输出红灯停车、Green 输出绿灯通行">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举定三个值，switch 各给一句中文 + 操作</text>
   <rect x="24" y="38" width="240" height="150" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="38" y="60" fill="#38bdf8" font-size="10" font-family="monospace">enum TrafficLight</text>
@@ -1272,9 +1335,9 @@ namespace HelloWorld
   <text x="388" y="196" fill="#22c55e" font-size="10" font-family="sans-serif">p2 仍是 (3, 4)，距离还是 5</text>
   <rect x="24" y="248" width="632" height="36" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="272" fill="#22c55e" font-size="10.5" font-family="monospace">p1 到 p2 距离：5　　复制后改 p3 为 (6,8)，p2 仍是 (3,4)</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>p1 到 p2 距离：5</code></li></ul><ul><li>输出：<code>复制后改 p3 为 (6,8)，p2 仍是 (3,4)</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，结构体和枚举定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4369476800',this)">复制</button></div>
-<pre id="c_4369476800"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>p1 到 p2 距离：5</code></li></ul><ul><li>输出：<code>复制后改 p3 为 (6,8)，p2 仍是 (3,4)</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，结构体和枚举定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381143808',this)">复制</button></div>
+<pre id="c_4381143808"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1298,7 +1361,7 @@ namespace HelloWorld
 
     // ===== 结构体和枚举定义写在这里 =====
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner end-page">
 
@@ -1625,18 +1688,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

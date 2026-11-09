@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件9_数组 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -458,8 +471,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>数组的定义与访问</h1>
 <div class="card"><h3>三种定义方式：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379494848',this)">复制</button></div>
-<pre id="c_4379494848"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305394432',this)">复制</button></div>
+<pre id="c_4305394432"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -475,13 +488,15 @@ namespace HelloWorld
 
             // 方式3：先分配，再逐个赋值
             int[] scores3 = new int[3];
-            scores3[0] = 85; scores3[1] = 90; scores3[2] = 78;
+            scores3[0] = 85;
+            scores3[1] = 90;
+            scores3[2] = 78;
         }
     }
 }</code></pre>
 </div><div class="card"><h3>访问元素：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379494656',this)">复制</button></div>
-<pre id="c_4379494656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305061888',this)">复制</button></div>
+<pre id="c_4305061888"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -501,8 +516,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>关于 <code>Length</code>：</h3></div><div class="card"><ul><li><code>Length</code> 不是方法（没有括号），是数组自带的<strong>属性</strong>，直接返回元素个数</li><li>索引从 0 开始，最后一个元素是 <code>Length - 1</code></li><li>写 <code>i &lt;= scores.Length</code> 是新手最常见错误——会导致索引越界</li></ul></div><div class="card"><h3>for 循环遍历：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379494080',this)">复制</button></div>
-<pre id="c_4379494080"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305061312',this)">复制</button></div>
+<pre id="c_4305061312"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -510,6 +525,8 @@ namespace HelloWorld
     {
         static void Main()
         {
+            int[] scores = { 85, 92, 78, 96, 88 };   // 5 个成绩
+
             for (int i = 0; i &lt; scores.Length; i++)
                 Console.WriteLine($&quot;第{i+1}个：{scores[i]}&quot;);
         }
@@ -520,8 +537,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1</h1>
 <div class="ok-box">用数组存储5个成绩，计算总分、平均分和及格人数。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379493184',this)">复制</button></div>
-<pre id="c_4379493184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305060416',this)">复制</button></div>
+<pre id="c_4305060416"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -586,7 +603,7 @@ namespace HelloWorld
   <text x="56" y="224" fill="#22c55e" font-size="11" font-family="monospace">五个都在 60 以上　→　及格人数 5 / 5</text>
   <text x="24" y="262" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">两个循环各干一件事；循环条件写 i &lt; scores.Length，别写死 5。</text>
   <rect class="sm-cur" x="37" y="39" width="68" height="50" rx="8"/>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 scores 改成自己的数据，观察结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>scores.Length</code> 获取数组长度，循环不用写死数字</li><li><code>(double)sum / scores.Length</code> 强制转 double，否则整数除法会丢掉小数</li><li>两个 for 循环各做一件事——遍历求和、遍历统计</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——求一周的<strong>最高温、最低温、平均温</strong>，并<strong>统计高温天数</strong>（&gt;30）：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 252" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="七天温度数组，标出最高、最低和高温天，最后输出一行结果">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：把 scores 改成自己的数据，观察结果变化</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>scores.Length</code> 获取数组长度，循环不用写死数字</li><li><code>(double)sum / scores.Length</code> 强制转 double，否则整数除法会丢掉小数</li><li>两个 for 循环各做一件事——遍历求和、遍历统计</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——求一周的<strong>最高温、最低温、平均温</strong>，并<strong>统计高温天数</strong>（&gt;30）：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 252" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="七天温度数组，标出最高、最低和高温天，最后输出一行结果">
   <defs>
     <marker id="p9-a" markerWidth="10" markerHeight="10" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#38bdf8"/></marker>
   </defs>
@@ -619,8 +636,8 @@ namespace HelloWorld
   <text x="340" y="200" text-anchor="middle" fill="#22c55e" font-size="12.5" font-family="monospace">最高：35，最低：25，平均：29.7，高温天：3</text>
   <text x="60" y="240" fill="#6b7d97" font-size="10.5" font-family="sans-serif">同一个循环里干四件事：比大小两次、累加一次、数一次 &gt;30——不要为了四个结果写四个循环。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379492608',this)">复制</button></div>
-<pre id="c_4379492608"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305043392',this)">复制</button></div>
+<pre id="c_4305043392"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -644,8 +661,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379492416',this)">复制</button></div>
-<pre id="c_4379492416"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305043200',this)">复制</button></div>
+<pre id="c_4305043200"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -675,8 +692,8 @@ namespace HelloWorld
 <div class="card"><ul><li><code>foreach</code> 是专门遍历集合的循环，比 <code>for</code> 更简洁</li><li>语法拆解：</li></ul></div><pre class="plain-box"><code>  foreach ( int    s      in   scores  )
           ↑类型  ↑临时变量 ↑in ↑数组名
           每次循环，当前元素的值赋给 s</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379495552',this)">复制</button></div>
-<pre id="c_4379495552"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305062592',this)">复制</button></div>
+<pre id="c_4305062592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -697,8 +714,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>✅ 适合：求和、找最值、显示列表</li><li>⚠️ foreach 中 <code>s</code> 是只读的，不能修改数组元素！要修改用 <code>for</code></li><li>不需要手动写 <code>i++</code> 和 <code>scores[i]</code>，更简洁安全</li></ul></div><div class="card"><h3>上页的成绩求和，用 foreach 重写：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379459456',this)">复制</button></div>
-<pre id="c_4379459456"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305043072',this)">复制</button></div>
+<pre id="c_4305043072"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -727,8 +744,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>数组最值</h1>
 <div class="card"><p>手工找最大值的思路：<strong>先假设第一个是最大值，逐个比较，遇到更大的就替换</strong></p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379459008',this)">复制</button></div>
-<pre id="c_4379459008"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305042624',this)">复制</button></div>
+<pre id="c_4305042624"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -749,8 +766,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>找最小值把 <code>&gt;</code> 换成 <code>&lt;</code> 即可。</p></div><div class="card"><p>快捷方式——C# 提供了现成方法（需 <code>using System.Linq;</code>）：</p></div><div class="card"><table><tr><th>方法</th><th>作用</th><th>返回值</th></tr><tr><td><code>scores.Max()</code></td><td>找最大值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Min()</code></td><td>找最小值</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Sum()</code></td><td>求总和</td><td>元素类型（int → int）</td></tr><tr><td><code>scores.Average()</code></td><td>求平均值</td><td><code>double</code>（自动转浮点）</td></tr><tr><td><code>Array.Sort(scores)</code></td><td>原地排序</td><td><code>void</code>（直接改数组）</td></tr></table></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379457920',this)">复制</button></div>
-<pre id="c_4379457920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305041536',this)">复制</button></div>
+<pre id="c_4305041536"><code class="language-csharp">using System;
 using System.Linq;      // Max / Min / Sum / Average 来自 LINQ
 
 namespace HelloWorld
@@ -770,11 +787,11 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 考试建议手写循环，日常写代码优先用现成方法。</div>
+</div><div class="ok-box"><span class="eico">💡</span> 考试建议手写循环，日常写代码优先用现成方法。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>冒泡排序</h1>
-<div class="ok-box">🤖 <strong>还记得吗</strong>：课件2我们用 AI 写了冒泡排序，当时能跑但可能没真懂。今天用原理一行行手写——这正是四步法的最后一步：<strong>关掉 AI，自己重写一遍</strong>。</div><div class="card"><p>排序 = 把一组数据按照<strong>从小到大（升序）</strong>或<strong>从大到小（降序）</strong>重新排列。冒泡排序是最直观的排序算法。</p></div><div class="card"><p>核心思想：<strong>相邻两个元素比较，如果顺序错了就交换。一轮结束，最大元素&quot;沉&quot;到最后。</strong></p></div><div class="card"><p>以 <code>{ 85, 90, 78, 88, 92 }</code> 从小到大排序为例：</p></div><div class="card"><p><strong>第1轮</strong> — 比较相邻元素，大的后移：</p></div><pre class="plain-box"><code>85  90  78  88  92
+<div class="ok-box"><span class="eico">🤖</span> <strong>还记得吗</strong>：课件2我们用 AI 写了冒泡排序，当时能跑但可能没真懂。今天用原理一行行手写——这正是四步法的最后一步：<strong>关掉 AI，自己重写一遍</strong>。</div><div class="card"><p>排序 = 把一组数据按照<strong>从小到大（升序）</strong>或<strong>从大到小（降序）</strong>重新排列。冒泡排序是最直观的排序算法。</p></div><div class="card"><p>核心思想：<strong>相邻两个元素比较，如果顺序错了就交换。一轮结束，最大元素&quot;沉&quot;到最后。</strong></p></div><div class="card"><p>以 <code>{ 85, 90, 78, 88, 92 }</code> 从小到大排序为例：</p></div><div class="card"><p><strong>第1轮</strong> — 比较相邻元素，大的后移：</p></div><pre class="plain-box"><code>85  90  78  88  92
 ↓
 85 &lt; 90? ✅ 不动  →  85, 90, 78, 88, 92
 90 &gt; 78? ❌ 交换  →  85, 78, 90, 88, 92
@@ -782,8 +799,8 @@ namespace HelloWorld
 90 &lt; 92? ✅ 不动  →  85, 78, 88, 90, [92] ← 92 沉底！</code></pre><div class="card"><p><strong>第2轮</strong> — 只比较前4个（92已就位）：</p></div><pre class="plain-box"><code>85 &gt; 78? ❌ 交换  →  78, 85, 88, 90
 85 &lt; 88? ✅ 不动
 88 &lt; 90? ✅ 不动  →  78, 85, 88, [90, 92] ← 90 沉底！</code></pre><div class="card"><p><strong>第3轮</strong> — 只比较前3个：</p></div><pre class="plain-box"><code>78, 85, 88 ← 已经有序，无需交换！→ [78, 85, 88, 90, 92]</code></pre><div class="card"><ul><li>规律：n 个元素需要 <strong>n-1 轮</strong>，每轮比较次数递减</li></ul></div><button class="fold-toggle qa" onclick="toggleFold(this)"><span class="arrow">▶</span> ❓ 为什么叫&quot;冒泡&quot;？</button><div class="fold-content"><div class="ok-box" style="border-color:rgba(245,158,11,0.3);background:linear-gradient(135deg,rgba(245,158,11,0.04),var(--bg-card))">每一轮都要把当前还没排好序的元素中的最大值&quot;冒&quot;到最右边——就像水里的气泡，大的总会浮到水面。第 1 轮把最大数沉到最右，第 2 轮把次大数沉到倒数第二……每完成一轮，就有一个数永久就位，后面的轮次不用再管它。</div></div><div class="card"><h3>代码实现：</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379455872',this)">复制</button></div>
-<pre id="c_4379455872"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305039488',this)">复制</button></div>
+<pre id="c_4305039488"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -813,8 +830,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>捷径（但不要求手写）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379455680',this)">复制</button></div>
-<pre id="c_4379455680"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305039296',this)">复制</button></div>
+<pre id="c_4305039296"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -822,14 +839,20 @@ namespace HelloWorld
     {
         static void Main()
         {
+            int[] scores = { 85, 92, 78, 96, 88 };
+            Console.WriteLine(&quot;排序前：&quot; + string.Join(&quot;, &quot;, scores));
+
             Array.Sort(scores);            // 从小到大
+            Console.WriteLine(&quot;正序后：&quot; + string.Join(&quot;, &quot;, scores));
+
             Array.Reverse(scores);         // 翻转顺序
+            Console.WriteLine(&quot;倒序后：&quot; + string.Join(&quot;, &quot;, scores));
         }
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>Array.Sort(scores)</code> — 原地排序，直接修改数组，从小到大排列</li><li><code>Array.Reverse(scores)</code> — 原地翻转，把数组元素首尾颠倒</li><li>两者都无返回值（<code>void</code>），排序结果直接体现在原数组上</li></ul></div><div class="card"><h3>排序后怎么用？</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379455232',this)">复制</button></div>
-<pre id="c_4379455232"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305038848',this)">复制</button></div>
+<pre id="c_4305038848"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -837,16 +860,19 @@ namespace HelloWorld
     {
         static void Main()
         {
+            int[] scores = { 85, 92, 78, 96, 88 };
+            Array.Sort(scores);        // 先排好序，下面才有意义
+
             // ① 正序输出（从小到大）
             foreach (int s in scores)
                 Console.Write(s + &quot; &quot;);
-            // 输出：78 85 88 90 92
+            // 输出：78 85 88 92 96
 
             // ② 逆序输出（从大到小）
             Console.WriteLine();
             for (int i = scores.Length - 1; i &gt;= 0; i--)
                 Console.Write(scores[i] + &quot; &quot;);
-            // 输出：92 90 88 85 78
+            // 输出：96 92 88 85 78
 
             // ③ 输出前3名
             Console.WriteLine(&quot;\n前三名：&quot;);
@@ -860,8 +886,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>值类型与引用类型</h1>
 <div class="card"><h3>用生活比喻理解&quot;值&quot;和&quot;引用&quot;</h3></div><div class="card"><ul><li><strong>值类型</strong> = 复印一张纸给你。你在你的纸上改，不影响我的原件</li><li><strong>引用类型</strong> = 给你我家的门牌号。你按门牌号找到我家，改了东西，我也受影响</li></ul></div><div class="card"><h3>用代码验证：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379457088',this)">复制</button></div>
-<pre id="c_4379457088"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305040704',this)">复制</button></div>
+<pre id="c_4305040704"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -882,7 +908,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">📌 <strong>数组是引用类型</strong>。arr1 和 arr2 存的是同一个地址，改 arr2 就是在改 arr1。</div><div class="card"><h3>&quot;引用&quot;到底是什么？</h3></div><div class="card"><p>数组变量本身存的不是数据，而是一个<strong>地址</strong>（门牌号）。真正的数据存在内存的另一块区域里：</p></div><pre class="plain-box"><code>arr1 →  [地址0x100] →  {1, 2, 3}  ← 真正的数据
+</div><div class="ok-box"><span class="eico">📌</span> <strong>数组是引用类型</strong>。arr1 和 arr2 存的是同一个地址，改 arr2 就是在改 arr1。</div><div class="card"><h3>&quot;引用&quot;到底是什么？</h3></div><div class="card"><p>数组变量本身存的不是数据，而是一个<strong>地址</strong>（门牌号）。真正的数据存在内存的另一块区域里：</p></div><pre class="plain-box"><code>arr1 →  [地址0x100] →  {1, 2, 3}  ← 真正的数据
 arr2 →  [地址0x100] ↗              ← 复制的也是同一个地址
 
 arr2[0] = 99 → 改了数据 → arr1[0] = 99  ← 同一个地方，一起变了</code></pre><div class="ok-box">引用 = 门牌号 = 内存地址。多个变量拿着同一个地址，改一处全变。</div><div class="card"><h3>总结对比：</h3></div><div class="card"><table><tr><th></th><th>值类型</th><th>引用类型</th></tr><tr><td>比喻</td><td>复印件</td><td>门牌号</td></tr><tr><td>改了之后</td><td>互不影响</td><td>牵一发动全身</td></tr><tr><td>代表类型</td><td>int、double、bool</td><td>数组、string、class</td></tr><tr><td>默认值</td><td>0、false</td><td>null</td></tr><tr><td>赋值行为</td><td>复制数据本身</td><td>复制地址（指向原数据）</td></tr></table></div>
@@ -890,8 +916,8 @@ arr2[0] = 99 → 改了数据 → arr1[0] = 99  ← 同一个地方，一起变�
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>多维数组</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379454016',this)">复制</button></div>
-<pre id="c_4379454016"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305037632',this)">复制</button></div>
+<pre id="c_4305037632"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -909,8 +935,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>访问二维数组：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379453824',this)">复制</button></div>
-<pre id="c_4379453824"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305037440',this)">复制</button></div>
+<pre id="c_4305037440"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -925,8 +951,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>应用：存储多个班级成绩</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379453632',this)">复制</button></div>
-<pre id="c_4379453632"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305037248',this)">复制</button></div>
+<pre id="c_4305037248"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -948,7 +974,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是数组？</strong>：一组相同类型数据的集合，用下标访问</li><li><strong>数组的定义与访问</strong>：<code>类型[] 名 = new 类型[长度];</code> 下标从 0 开始</li><li><strong>foreach 遍历</strong>：逐个取出元素，不用管下标</li><li><strong>数组最值</strong>：先假设第 0 个是极值，逐个比较更新</li><li><strong>冒泡排序</strong>：相邻两两比，大的往后冒，外层控制轮数</li><li><strong>值类型与引用类型</strong>：int 等是值类型（复制值），数组/类是引用类型（复制地址）</li><li><strong>多维数组</strong>：<code>int[,]</code> 二维表，用两个下标定位</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>什么是数组？</strong>：一组相同类型数据的集合，用下标访问</li><li><strong>数组的定义与访问</strong>：<code>类型[] 名 = new 类型[长度];</code> 下标从 0 开始</li><li><strong>foreach 遍历</strong>：逐个取出元素，不用管下标</li><li><strong>数组最值</strong>：先假设第 0 个是极值，逐个比较更新</li><li><strong>冒泡排序</strong>：相邻两两比，大的往后冒，外层控制轮数</li><li><strong>值类型与引用类型</strong>：int 等是值类型（复制值），数组/类是引用类型（复制地址）</li><li><strong>多维数组</strong>：<code>int[,]</code> 二维表，用两个下标定位</li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>综合练习 — 学生成绩管理</h1>
@@ -996,8 +1022,8 @@ A:2 B:3 C:2 D:2 F:1</code></pre><div class="svg-fig"><svg class="auto" viewBox="
   <text x="554" y="194" text-anchor="middle" fill="#22c55e" font-size="12.5" font-family="monospace">A2 B3 C2 D2 F1</text>
   <text x="32" y="236" fill="#6b7d97" font-size="10.5" font-family="sans-serif">拆成四个循环也能做，但要多遍历三遍——所以能合并就合并，这就是「一次遍历搞定全部」的意义。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>所有计算放在<strong>同一个 foreach</strong> 里，一次遍历全部搞定</li><li>同时找最大和最小：两个 if 放在循环体里</li><li>等级统计：用 5 个计数器 + if-else if 阶梯判断</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379448576',this)">复制</button></div>
-<pre id="c_4379448576"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305035456',this)">复制</button></div>
+<pre id="c_4305035456"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1030,8 +1056,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379451136',this)">复制</button></div>
-<pre id="c_4379451136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305034880',this)">复制</button></div>
+<pre id="c_4305034880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1064,8 +1090,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义一个含 5 个整数的数组，把数组<strong>反转</strong>（首尾互换）后输出。<br>要求：自己写循环用临时变量交换元素，不能用 <code>Array.Reverse</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4379450688',this)">复制</button></div>
-<pre id="c_4379450688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305034560',this)">复制</button></div>
+<pre id="c_4305034560"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1088,7 +1114,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建数组存储10个整数，统计其中偶数的个数和偶数的平均值。</p><ul><li>提示：<code>if (nums[i] % 2 == 0)</code> 判断偶数</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 236" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：10 个数里挑出 5 个偶数，和 70，平均 14.0">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建数组存储10个整数，统计其中偶数的个数和偶数的平均值。</p><ul><li>提示：<code>if (nums[i] % 2 == 0)</code> 判断偶数</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 236" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：10 个数里挑出 5 个偶数，和 70，平均 14.0">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">10 个整数：偶数的挑出来，其余跳过</text>
   <rect x="30" y="42" width="58" height="40" rx="5" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.5" stroke-width="1"/>
   <text x="59" y="68" text-anchor="middle" fill="#f59e0b" font-size="12" font-family="monospace">20</text>
@@ -1231,9 +1257,9 @@ namespace HelloWorld
   <rect x="40" y="282" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="56" y="307" fill="#22c55e" font-size="11" font-family="monospace">高于平均分：84、86、88、90、94　共 5 人</text>
   <text x="24" y="342" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">统计要用严格大于（v &gt; avg）；写 &gt;= 也不会错，因为没人正好等于 83.4。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 70, 72, 84, 86, 88, 90, 94 }</code></li></ul><ul><li>输出：<code>平均分：83.4，高于平均分：5 人</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375949376',this)">复制</button></div>
-<pre id="c_4375949376"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>成绩 = { 70, 72, 84, 86, 88, 90, 94 }</code></li></ul><ul><li>输出：<code>平均分：83.4，高于平均分：5 人</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4305033856',this)">复制</button></div>
+<pre id="c_4305033856"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1255,7 +1281,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner end-page">
 
@@ -1582,18 +1608,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

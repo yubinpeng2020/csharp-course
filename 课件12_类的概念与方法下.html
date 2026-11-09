@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件12_类的概念与方法下 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -507,8 +520,8 @@ pre,pre code{page-break-inside:avoid}
 
   <text x="16" y="328" fill="#8b9bb4" font-size="11" font-family="sans-serif">同名方法靠「参数个数 / 参数类型」区分——这一步在编译期就确定，运行时不会再去猜。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339993152',this)">复制</button></div>
-<pre id="c_4339993152"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347201856',this)">复制</button></div>
+<pre id="c_4347201856"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -537,8 +550,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>构造方法重载</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339990784',this)">复制</button></div>
-<pre id="c_4339990784"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347183040',this)">复制</button></div>
+<pre id="c_4347183040"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -576,9 +589,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li>同一个 <code>new Student( )</code>，参数不同就走不同的构造方法</li></ul></div><div class="ok-box">💡 既然有对象初始化器 <code>new Student { name=&quot;张三&quot; }</code>，还需要构造函数重载吗？<strong>需要！看三个场景——</strong></div><div class="card"><p><strong>场景一：强制传参。</strong> 初始化器可以不写 <code>age</code>（默认 0），但业务上学生必须有年龄。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339957568',this)">复制</button></div>
-<pre id="c_4339957568"><code class="language-csharp">using System;
+</div><div class="card"><ul><li>同一个 <code>new Student( )</code>，参数不同就走不同的构造方法</li></ul></div><div class="ok-box"><span class="eico">💡</span> 既然有对象初始化器 <code>new Student { name=&quot;张三&quot; }</code>，还需要构造函数重载吗？<strong>需要！看三个场景——</strong></div><div class="card"><p><strong>场景一：强制传参。</strong> 初始化器可以不写 <code>age</code>（默认 0），但业务上学生必须有年龄。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347182656',this)">复制</button></div>
+<pre id="c_4347182656"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -613,8 +626,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>场景二：做校验。</strong> 年龄不能为负，初始化器赋值完了才发现不了。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339957312',this)">复制</button></div>
-<pre id="c_4339957312"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347182400',this)">复制</button></div>
+<pre id="c_4347182400"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -654,9 +667,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><p><strong>场景三：private 字段。</strong> 初始化器只能碰 <code>public</code> 的字段，<code>private</code> 的根本看不见。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339957376',this)">复制</button></div>
-<pre id="c_4339957376"><code class="language-csharp">using System;
+</div><div class="card"><p><strong>场景三：private 字段。</strong> 初始化器只能碰 <code>public</code> 的字段，<code>private</code> 的根本看不见。</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347182464',this)">复制</button></div>
+<pre id="c_4347182464"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -670,16 +683,28 @@ namespace HelloWorld
             this.id = id;       // ✅ 构造函数可以访问 private
             this.name = name;
         }
+
+        public string Id =&gt; id;  // 只读属性，把学号读出来用
     }
-    // var s = new Student { id = &quot;S001&quot;, name = &quot;张三&quot; };  // ❌ 编译错误！
+
+    class Program
+    {
+        static void Main()
+        {
+            Student s = new Student(&quot;S001&quot;, &quot;张三&quot;);
+            Console.WriteLine($&quot;学号 {s.Id}，姓名 {s.name}&quot;);
+
+            // Student t = new Student { name = &quot;李四&quot; };  // ❌ 没有无参构造，编译错误
+        }
+    }
 }</code></pre>
-</div><div class="ok-box">💬 初始化器是&quot;简装版&quot;，构造函数是&quot;精装版&quot;——要强制、要校验、要保密就上构造函数。</div>
+</div><div class="ok-box"><span class="eico">💬</span> 初始化器是&quot;简装版&quot;，构造函数是&quot;精装版&quot;——要强制、要校验、要保密就上构造函数。</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>课堂练习1 — 方法重载</h1>
 <div class="ok-box">用方法重载改造一个打印工具——不管传什么类型的参数，都叫同一个方法名 <code>Print</code>。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339991872',this)">复制</button></div>
-<pre id="c_4339991872"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347200768',this)">复制</button></div>
+<pre id="c_4347200768"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -734,7 +759,7 @@ namespace HelloWorld
   <text x="338" y="214" fill="#d7e0ee" font-size="10" font-family="monospace">Print(string value)</text>
   <text x="338" y="234" fill="#22c55e" font-size="10.5" font-family="monospace">→ 字符串：「Hello」</text>
   <text x="24" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">名字一样、参数类型不同 = 重载；靠参数类型区分，不看返回值。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：给 <code>Printer</code> 再加一个 <code>Print(bool value)</code> 重载，输出<span class="term-q">「布尔值：True/False」</span></li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li>三个 <code>Print</code> 方法名完全一样，C# 靠参数类型自动区分——传 <code>int</code> 走第一个，传 <code>string</code> 走第三个</li><li>这就是重载的核心价值：调用方只管写 <code>p.Print(...)</code>，不用记 <code>PrintInt</code>、<code>PrintDouble</code>、<code>PrintString</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——下面的三个 <code>Multiply</code> 还没写完，请依次补全：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 224" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="按参数个数和参数类型两个维度，看三个 Multiply 各占哪一格">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：给 <code>Printer</code> 再加一个 <code>Print(bool value)</code> 重载，输出<span class="term-q">「布尔值：True/False」</span></li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li>三个 <code>Print</code> 方法名完全一样，C# 靠参数类型自动区分——传 <code>int</code> 走第一个，传 <code>string</code> 走第三个</li><li>这就是重载的核心价值：调用方只管写 <code>p.Print(...)</code>，不用记 <code>PrintInt</code>、<code>PrintDouble</code>、<code>PrintString</code></li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——下面的三个 <code>Multiply</code> 还没写完，请依次补全：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 224" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="按参数个数和参数类型两个维度，看三个 Multiply 各占哪一格">
   <text x="240" y="30" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">2 个参数</text>
   <text x="450" y="30" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">3 个参数</text>
   <text x="116" y="76" text-anchor="middle" fill="#6b7d97" font-size="10" font-family="sans-serif">int 参数</text>
@@ -754,8 +779,8 @@ namespace HelloWorld
   <text x="40" y="200" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">重载的判断标准只看「参数列表」：个数不同算重载，类型不同也算重载；只改返回类型不算。</text>
   <text x="40" y="216" fill="#6b7d97" font-size="10" font-family="sans-serif">所以 ① 补返回类型和参数，② 加一个 c 变成三参数，③ 把类型换成 double——三格互不打架。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339957184',this)">复制</button></div>
-<pre id="c_4339957184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347182272',this)">复制</button></div>
+<pre id="c_4347182272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -775,9 +800,9 @@ namespace HelloWorld
 
     }
 }</code></pre>
-</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339956992',this)">复制</button></div>
-<pre id="c_4339956992"><code class="language-csharp">using System;
+</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347182080',this)">复制</button></div>
+<pre id="c_4347182080"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -798,14 +823,25 @@ namespace HelloWorld
             return a * b;
         }
     }
+
+    class Program
+    {
+        static void Main()
+        {
+            Calculator c = new Calculator();
+            Console.WriteLine($&quot;2 × 3 = {c.Multiply(2, 3)}&quot;);
+            Console.WriteLine($&quot;2 × 3 × 4 = {c.Multiply(2, 3, 4)}&quot;);
+            Console.WriteLine($&quot;1.5 × 2.0 = {c.Multiply(1.5, 2.0)}&quot;);
+        }
+    }
 }</code></pre>
 </div></div></div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>static — 属于类，不属于对象</h1>
 <div class="card"><p>来看一段代码，注意 <code>static</code> 关键字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339995264',this)">复制</button></div>
-<pre id="c_4339995264"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347202880',this)">复制</button></div>
+<pre id="c_4347202880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -879,8 +915,8 @@ namespace HelloWorld
 
   <text x="40" y="322" fill="#8b9bb4" font-size="11" font-family="sans-serif">普通字段随 new 复制到每个对象；static 字段只存在类上，c1、c2、c3 看到的温度是同一个变量。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><table><tr><th></th><th>普通成员</th><th>static 成员</th></tr><tr><td>归属于</td><td>每个对象各有一份</td><td>整个类共享一份</td></tr><tr><td>比喻</td><td>铅笔（自己的）</td><td>空调遥控器（共用的）</td></tr><tr><td>调用方式</td><td><code>对象.成员</code></td><td><code>类名.成员</code></td></tr><tr><td>需要 new？</td><td>必须先 new 对象</td><td>直接用，不需要 new</td></tr></table></div><div class="card"><ul><li>你之前就在用 static！<code>Console.WriteLine()</code>、<code>int.Parse()</code> 都是 static 方法——从来没有 <code>new Console()</code> 过，对吧？</li></ul></div><div class="card"><h3>示例：学生计数器</h3><p>static 到底解决什么问题？看一个真实场景——<strong>统计一共创建过多少个学生</strong>。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339956928',this)">复制</button></div>
-<pre id="c_4339956928"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347203328',this)">复制</button></div>
+<pre id="c_4347203328"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -917,8 +953,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习2 — 最大公约数与质数判断</h1>
 <div class="ok-box">定义静态工具类，包含求最大公约数和判断质数的方法，直接用类名调用，体会 <code>static</code> 的便利。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339954688',this)">复制</button></div>
-<pre id="c_4339954688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347179968',this)">复制</button></div>
+<pre id="c_4347179968"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -979,7 +1015,7 @@ namespace HelloWorld
   <text x="40" y="212" fill="#8b9bb4" font-size="9.5" font-family="monospace">GCD(48,18) 辗转相除：48 % 18 = 12　18 % 12 = 6　12 % 6 = 0</text>
   <text x="40" y="230" fill="#22c55e" font-size="9.5" font-family="sans-serif">余数变成 0 时，除数 6 就是最大公约数</text>
   <text x="24" y="274" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">工具类的方法都写成 static：像 Console.WriteLine 一样，类名点一下就能用。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：用 <code>MathTool.GCD()</code> 求 24 和 36 的最大公约数，看看结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>GCD</code> 和 <code>IsPrime</code> 都是 <code>static</code>——不需要创建对象，像使用 <code>Console.WriteLine()</code> 一样直接 <code>MathTool.GCD(...)</code> 就能调用</li><li><code>static</code> 方法的好处：像工具箱里的工具，随拿随用，不用先&quot;买一套新工具箱&quot;</li><li><code>IsPrime</code> 的循环条件 <code>i * i &lt;= num</code> 是质数判定的优化写法：如果 <code>num</code> 是合数，必有一个因子 ≤ √num</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>MathTool</code> 添加 <code>Square</code> 和 <code>Cube</code> 方法：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 240" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="MathTool 是静态工具箱，四个方法都用类名直接调用，其中 Square 和 Cube 待补全">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：用 <code>MathTool.GCD()</code> 求 24 和 36 的最大公约数，看看结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>GCD</code> 和 <code>IsPrime</code> 都是 <code>static</code>——不需要创建对象，像使用 <code>Console.WriteLine()</code> 一样直接 <code>MathTool.GCD(...)</code> 就能调用</li><li><code>static</code> 方法的好处：像工具箱里的工具，随拿随用，不用先&quot;买一套新工具箱&quot;</li><li><code>IsPrime</code> 的循环条件 <code>i * i &lt;= num</code> 是质数判定的优化写法：如果 <code>num</code> 是合数，必有一个因子 ≤ √num</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——给 <code>MathTool</code> 添加 <code>Square</code> 和 <code>Cube</code> 方法：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 240" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="MathTool 是静态工具箱，四个方法都用类名直接调用，其中 Square 和 Cube 待补全">
   <rect x="40" y="28" width="600" height="102" rx="10" fill="#16202e" stroke="#38bdf8" stroke-opacity="0.4" stroke-width="1"/>
   <text x="56" y="50" fill="#38bdf8" font-size="11" font-family="monospace">class MathTool　（static 工具箱：不用 new，类名直接点）</text>
   <rect x="56" y="62" width="132" height="52" rx="7" fill="#21283a" stroke="#64748b" stroke-opacity="0.55" stroke-width="1"/>
@@ -999,8 +1035,8 @@ namespace HelloWorld
   <text x="60" y="192" fill="#22c55e" font-size="11.5" font-family="monospace">MathTool.Square(5) → 25　　MathTool.Cube(3) → 27</text>
   <text x="40" y="228" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">static 方法不用先造对象——写 <tspan font-family="monospace">MathTool.Square(5)</tspan> 就能用，跟 <tspan font-family="monospace">Console.WriteLine()</tspan> 一个套路。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339954112',this)">复制</button></div>
-<pre id="c_4339954112"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347179392',this)">复制</button></div>
+<pre id="c_4347179392"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1030,8 +1066,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339953920',this)">复制</button></div>
-<pre id="c_4339953920"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347179200',this)">复制</button></div>
+<pre id="c_4347179200"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1061,7 +1097,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>方法重载</strong>：同名不同参数（个数/类型），调用时按实参匹配</li><li><strong>构造方法重载</strong>：一个类写多个构造方法，方便用不同方式创建</li><li><strong>static — 属于类，不属于对象</strong>：<code>static</code> 成员直接用 <code>类名.</code> 访问，不依赖实例；学生计数器就是用它数<span class="term">一共创建了多少个对象</span></li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>方法重载</strong>：同名不同参数（个数/类型），调用时按实参匹配</li><li><strong>构造方法重载</strong>：一个类写多个构造方法，方便用不同方式创建</li><li><strong>static — 属于类，不属于对象</strong>：<code>static</code> 成员直接用 <code>类名.</code> 访问，不依赖实例；学生计数器就是用它数<span class="term">一共创建了多少个对象</span></li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>综合练习 — 商品库存管理</h1>
@@ -1106,8 +1142,8 @@ namespace HelloWorld
   <text x="30" y="186" fill="#6b7d97" font-size="10" font-family="sans-serif">构造方法同理有三份：<tspan font-family="monospace">(name, price, stock)</tspan> 全给、<tspan font-family="monospace">(name, price)</tspan> 库存默认 0、<tspan font-family="monospace">()</tspan> 空对象稍后再填。</text>
   <text x="30" y="204" fill="#6b7d97" font-size="10" font-family="sans-serif">比例补货那一步注意：<tspan font-family="monospace">(int)(41 * 0.5)</tspan> = 20，小数被截掉，所以是 41 + 20 = 61。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>三个构造重载：完整（名称+价格+库存）、精简（名称+价格，库存默认0）、默认（空）</li><li>三个入库方法重载：<code>Restock(int qty)</code> 指定数量、<code>Restock()</code> 默认+1、<code>Restock(double rate)</code> 按比例补货</li><li><code>static int TotalTypes</code> 统计商品种类</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339951104',this)">复制</button></div>
-<pre id="c_4339951104"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347176448',this)">复制</button></div>
+<pre id="c_4347176448"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1192,8 +1228,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339950592',this)">复制</button></div>
-<pre id="c_4339950592"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347175936',this)">复制</button></div>
+<pre id="c_4347175936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1271,8 +1307,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：用<strong>递归</strong>写一个方法 <code>Factorial(n)</code>，返回 n 的阶乘（n! = n × (n-1) × … × 1，0! = 1）。<br>要求：自己写递归方法并在 <code>Main</code> 里调用，不能用循环代替。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339946368',this)">复制</button></div>
-<pre id="c_4339946368"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347175616',this)">复制</button></div>
+<pre id="c_4347175616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1295,7 +1331,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Rectangle</code> 类：构造方法初始化长宽，<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）、<code>IsSquare()</code>（判断正方形）。</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 330" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：5×3 与 4×4 两个矩形，面积周长与是否正方形">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>定义 <code>Rectangle</code> 类：构造方法初始化长宽，<code>GetArea()</code>（面积）、<code>GetPerimeter()</code>（周长）、<code>IsSquare()</code>（判断正方形）。</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 330" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：5×3 与 4×4 两个矩形，面积周长与是否正方形">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">同一个类创建两个对象，各自算自己的面积、周长、是否正方形</text>
   <rect x="24" y="40" width="300" height="160" rx="10" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="38" y="64" fill="#8b9bb4" font-size="9.5" font-family="monospace">Rectangle r1 = new Rectangle(5, 3)</text>
@@ -1334,7 +1370,7 @@ namespace HelloWorld
   <rect x="24" y="252" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="277" fill="#22c55e" font-size="12" font-family="monospace">最高分：王五（平均89.0）</text>
   <text x="24" y="308" fill="#6b7d97" font-size="9.5" font-family="sans-serif">GetBest 里先 max = students[0]，再 foreach 比平均分，返回的是整个对象。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>学生数据 = 张三(80,75,82)、李四(88,92,78)、王五(95,82,90)</code></li></ul><ul><li>输出：<code>最高分：王五（平均89.0）</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>设计 <code>Logger</code> 日志类，综合运用构造重载 + 方法重载 + static 计数：</p><ul><li><strong>构造重载</strong>：<code>Logger(string name)</code> 指定日志名称、<code>Logger()</code> 默认名称&quot;系统日志&quot;</li><li><strong>方法重载</strong>：<code>Log(string msg)</code> 普通日志、<code>Log(string msg, string level)</code> 带级别（如 INFO、ERROR）</li><li><strong>static</strong> <code>int TotalLogs</code>：所有实例共享，每次调用 Log 都 +1</li><li>提示：构造方法里也要能区分不同 Logger 实例的名字</li></ul></div><div class="ok-box">💬 日志级别是什么？<br>- <code>INFO</code>（信息）— 正常运行记录，如&quot;程序启动&quot;、&quot;用户登录&quot;<br>- <code>WARN</code>（警告）— 有点问题但不影响运行，如&quot;密码即将过期&quot;<br>- <code>ERROR</code>（错误）— 出问题了，如&quot;文件未找到&quot;<br>- 题中只需把级别当普通字符串传进去，<code>Log(&quot;程序启动&quot;, &quot;INFO&quot;)</code> 即可</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：两个 Logger 各记两条日志，static TotalLogs 共享计数 4">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>学生数据 = 张三(80,75,82)、李四(88,92,78)、王五(95,82,90)</code></li></ul><ul><li>输出：<code>最高分：王五（平均89.0）</code></li></ul></div><div class="card"><h3>题3（4分）</h3><p>设计 <code>Logger</code> 日志类，综合运用构造重载 + 方法重载 + static 计数：</p><ul><li><strong>构造重载</strong>：<code>Logger(string name)</code> 指定日志名称、<code>Logger()</code> 默认名称&quot;系统日志&quot;</li><li><strong>方法重载</strong>：<code>Log(string msg)</code> 普通日志、<code>Log(string msg, string level)</code> 带级别（如 INFO、ERROR）</li><li><strong>static</strong> <code>int TotalLogs</code>：所有实例共享，每次调用 Log 都 +1</li><li>提示：构造方法里也要能区分不同 Logger 实例的名字</li></ul></div><div class="ok-box"><span class="eico">💬</span> 日志级别是什么？<br>- <code>INFO</code>（信息）— 正常运行记录，如&quot;程序启动&quot;、&quot;用户登录&quot;<br>- <code>WARN</code>（警告）— 有点问题但不影响运行，如&quot;密码即将过期&quot;<br>- <code>ERROR</code>（错误）— 出问题了，如&quot;文件未找到&quot;<br>- 题中只需把级别当普通字符串传进去，<code>Log(&quot;程序启动&quot;, &quot;INFO&quot;)</code> 即可</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 268" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题3：两个 Logger 各记两条日志，static TotalLogs 共享计数 4">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">构造重载决定日志名，方法重载决定带不带级别</text>
   <rect x="24" y="40" width="300" height="118" rx="8" fill="#1b2536" stroke="#64748b" stroke-opacity="0.32" stroke-width="1"/>
   <text x="38" y="62" fill="#8b9bb4" font-size="9" font-family="monospace">new Logger()　　默认名</text>
@@ -1380,9 +1416,9 @@ namespace HelloWorld
   <rect x="24" y="240" width="632" height="44" rx="8" fill="#2a2116" stroke="#f59e0b" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="267" fill="#f59e0b" font-size="10.5" font-family="monospace">static int ConversionCount = 4 —— 每调一次 Convert 就 +1，四个重载都要加</text>
   <text x="24" y="306" fill="#6b7d97" font-size="9.5" font-family="sans-serif">构造方法只定满分（150）；转到哪个分制由参数决定，别把 100 写死。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>满分150的试卷，转百分制</code></li></ul><ul><li>输出：<code>135分 → 百分制：90.0</code></li></ul><ul><li>输出：<code>120分 → 百分制：80.0</code></li></ul><ul><li>输出：<code>[132, 120, 141] 平均 → 百分制：87.3</code></li></ul><ul><li>输出：<code>90分 → 120分制：72.0</code></li></ul><ul><li>输出：<code>共执行 4 次转换</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4339953408',this)">复制</button></div>
-<pre id="c_4339953408"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>满分150的试卷，转百分制</code></li></ul><ul><li>输出：<code>135分 → 百分制：90.0</code></li></ul><ul><li>输出：<code>120分 → 百分制：80.0</code></li></ul><ul><li>输出：<code>[132, 120, 141] 平均 → 百分制：87.3</code></li></ul><ul><li>输出：<code>90分 → 120分制：72.0</code></li></ul><ul><li>输出：<code>共执行 4 次转换</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4347178688',this)">复制</button></div>
+<pre id="c_4347178688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1406,7 +1442,7 @@ namespace HelloWorld
 
     // ===== 各类定义写在这里 =====
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner end-page">
 
@@ -1733,18 +1769,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

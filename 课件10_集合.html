@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件10_集合 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -453,8 +466,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>数组的局限性</h1>
 <div class="card"><p>数组很好用，但有三个死穴：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303273664',this)">复制</button></div>
-<pre id="c_4303273664"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595904',this)">复制</button></div>
+<pre id="c_4383595904"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -502,8 +515,8 @@ namespace HelloWorld
 
   <text x="20" y="304" font-size="12" fill="#5F5E5A">C# 的 using 只导入当前这一层，不会自动包含子命名空间。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p><code>using System;</code> 只导入 System 这一层（<code>Console</code>、<code>Math</code>、<code>Array</code>…）；<code>List&lt;T&gt;</code>、<code>Dictionary&lt;K,V&gt;</code> 藏在更深的 <code>Collections → Generic</code> 里，<strong>不会</strong>被带进来。所以用 List 必须再补一行 <code>using System.Collections.Generic;</code>，两条 <code>using</code> 都写在<strong>文件最顶部</strong>（<code>namespace</code> 之前）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303273088',this)">复制</button></div>
-<pre id="c_4303273088"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595392',this)">复制</button></div>
+<pre id="c_4383595392"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -522,8 +535,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>List&lt;T&gt;</code> 的 <code>T</code> 就是个占位符，用的时候换成具体类型：<code>List&lt;int&gt;</code>、<code>List&lt;string&gt;</code></li><li>不需要指定大小，会自动扩容</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303128640',this)">复制</button></div>
-<pre id="c_4303128640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383262656',this)">复制</button></div>
+<pre id="c_4383262656"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -545,8 +558,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>List 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>获取数量</td><td><code>arr.Length</code></td><td><code>list.Count</code></td></tr><tr><td>访问元素</td><td><code>arr[0]</code></td><td><code>list[0]</code></td></tr><tr><td>添加</td><td>❌（长度固定，不能增）</td><td><code>Add(x)</code> 末尾追加一个元素</td></tr><tr><td>插入</td><td>❌</td><td><code>Insert(i, x)</code> 在第 i 位插入</td></tr><tr><td>按位置删</td><td>❌</td><td><code>RemoveAt(i)</code> 删第 i 个（从 0 数）</td></tr><tr><td>按值删</td><td>❌</td><td><code>Remove(x)</code> 删第一个等于 x 的</td></tr><tr><td>清空</td><td>❌（需重新 new）</td><td><code>Clear()</code> 删除全部</td></tr><tr><td>排序</td><td><code>Array.Sort(arr)</code> 升序</td><td><code>Sort()</code> 升序</td></tr><tr><td>查位置</td><td><code>Array.IndexOf(arr, x)</code> 找不到返回 -1</td><td><code>IndexOf(x)</code> 找不到返回 -1</td></tr></table></div><div class="ok-box">数组也能排序、查位置，但要用<strong>静态方法</strong> <code>Array.Sort</code> / <code>Array.IndexOf</code>（数组长度固定，所以没有 <code>Add</code> / <code>Remove</code> / <code>Clear</code> 这类动态增删）。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303127360',this)">复制</button></div>
-<pre id="c_4303127360"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383261376',this)">复制</button></div>
+<pre id="c_4383261376"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -561,8 +574,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>数组能排序、能查找，但<strong>长度固定</strong>——要扩容得自己搬。需要频繁增删时改用 <code>List&lt;T&gt;</code>，下面是它的常用操作：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303127168',this)">复制</button></div>
-<pre id="c_4303127168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383261184',this)">复制</button></div>
+<pre id="c_4383261184"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -601,8 +614,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>List 创建与遍历</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303126976',this)">复制</button></div>
-<pre id="c_4303126976"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383260992',this)">复制</button></div>
+<pre id="c_4383260992"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -616,7 +629,8 @@ namespace HelloWorld
 
             // 方式2：空列表，逐个添加
             List&lt;string&gt; names = new List&lt;string&gt;();
-            names.Add(&quot;张三&quot;); names.Add(&quot;李四&quot;);
+            names.Add(&quot;张三&quot;);
+            names.Add(&quot;李四&quot;);
 
             // 方式3：数组转 List
             int[] arr = { 85, 90, 78 };
@@ -625,8 +639,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>遍历——for 和 foreach 都可以：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303126784',this)">复制</button></div>
-<pre id="c_4303126784"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383260800',this)">复制</button></div>
+<pre id="c_4383260800"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -650,8 +664,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — List 学生管理</h1>
 <div class="ok-box">用 List&lt;string&gt; 管理学生名单：新增、删除、查找，体会和数组的区别。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303093056',this)">复制</button></div>
-<pre id="c_4303093056"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383243456',this)">复制</button></div>
+<pre id="c_4383243456"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -711,7 +725,7 @@ namespace HelloWorld
   <rect x="40" y="210" width="620" height="44" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="56" y="238" fill="#22c55e" font-size="11" font-family="monospace">查找 王五 → Contains("王五") 返回 true → 输出「在列表中！」</text>
   <text x="24" y="280" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">数组长度写死、删了留窟窿；List 一删就自动补位，Count 跟着减。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：加上&quot;修改姓名&quot;和&quot;在第1位插入&quot;功能</li></ul></div><div class="ok-box"><strong style="color:var(--green)">💬 解释说明</strong><br><ul><li><code>List&lt;T&gt;</code> 不用指定大小，<code>Add()</code> 往末尾加，<code>Count</code> 自动更新</li><li><code>RemoveAt(索引)</code> 按位置删，<code>Contains()</code> 检查是否存在——数组没有这两个</li><li>增删改查都比数组方便，这就是 List 的价值</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用 List 管理待办事项：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="待办清单四次操作后元素的变化：新增、插入、删除">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>动手：加上&quot;修改姓名&quot;和&quot;在第1位插入&quot;功能</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>List&lt;T&gt;</code> 不用指定大小，<code>Add()</code> 往末尾加，<code>Count</code> 自动更新</li><li><code>RemoveAt(索引)</code> 按位置删，<code>Contains()</code> 检查是否存在——数组没有这两个</li><li>增删改查都比数组方便，这就是 List 的价值</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码——用 List 管理待办事项：</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="待办清单四次操作后元素的变化：新增、插入、删除">
   <defs>
     <marker id="p10-a" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#475569"/></marker>
   </defs>
@@ -756,8 +770,8 @@ namespace HelloWorld
   <text x="616" y="237" fill="#6b7d97" font-size="10" font-family="monospace">Count=3</text>
   <text x="24" y="278" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">数组长度写死改不了；List 随时增删，Count 自动跟着变——这就是集合比数组好用的地方。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303092480',this)">复制</button></div>
-<pre id="c_4303092480"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242880',this)">复制</button></div>
+<pre id="c_4383242880"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -782,8 +796,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303092288',this)">复制</button></div>
-<pre id="c_4303092288"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242688',this)">复制</button></div>
+<pre id="c_4383242688"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -814,8 +828,8 @@ namespace HelloWorld
 [0] → &quot;张三&quot;                &quot;张三&quot; → 85 分
 [1] → &quot;李四&quot;                &quot;李四&quot; → 90 分
 [2] → &quot;王五&quot;                &quot;王五&quot; → 78 分</code></pre><div class="card"><h3><code>&lt;K,V&gt;</code> 里为什么有两个类型？</h3></div><div class="card"><p><code>List&lt;T&gt;</code> 只有一个占位符（装什么类型），<code>Dictionary&lt;K,V&gt;</code> 有两个——K 管键的类型，V 管值的类型：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303092096',this)">复制</button></div>
-<pre id="c_4303092096"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242496',this)">复制</button></div>
+<pre id="c_4383242496"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -833,8 +847,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box">K 和 V 不限于 <code>string</code> → <code>int</code>，可以是任意类型的组合——<code>Dictionary&lt;int, string&gt;</code>（学号→姓名）、<code>Dictionary&lt;string, bool&gt;</code>（姓名→是否及格）都行。</div><div class="card"><h3>代码创建：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303091840',this)">复制</button></div>
-<pre id="c_4303091840"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242240',this)">复制</button></div>
+<pre id="c_4383242240"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -858,8 +872,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>Dictionary 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>代码</th><th>说明</th></tr><tr><td>增/改</td><td><code>dict[&quot;键&quot;] = 值</code></td><td>键不存在→新增，键已存在→覆盖（同一个语法）</td></tr><tr><td>删</td><td><code>dict.Remove(&quot;键&quot;)</code></td><td>按键删除，键不存在也不会报错</td></tr><tr><td>查</td><td>先 <code>dict.ContainsKey(&quot;键&quot;)</code> 再 <code>dict[&quot;键&quot;]</code></td><td>先判断再取值，避免键不存在时报错</td></tr><tr><td>遍历</td><td><code>foreach (var kv in dict)</code></td><td><code>kv.Key</code> 取键，<code>kv.Value</code> 取值</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303091200',this)">复制</button></div>
-<pre id="c_4303091200"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383241600',this)">复制</button></div>
+<pre id="c_4383241600"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -896,7 +910,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>本节知识梳理</h1>
-<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>数组的局限性</strong>：长度固定、增删麻烦</li><li><strong>List&lt;T&gt; — 动态数组</strong>：<code>List&lt;int&gt;</code> 长度可随用随长</li><li><strong>List 常用操作</strong>：<code>Add</code> 加、<code>Remove</code> 删、<code>Count</code> 数个数、<code>Contains</code> 查存在</li><li><strong>List 创建与遍历</strong>：<code>new List&lt;T&gt;()</code> 或 <code>new(){...}</code>，for/foreach 遍历</li><li><strong>Dictionary — 键值对</strong>：<code>Dictionary&lt;K,V&gt;</code> 用<span class="term">键</span>查<span class="term">值</span>，像字典</li><li><strong>Dictionary 常用操作</strong>：<code>Add</code> 加、<code>[键]</code> 取、<code>ContainsKey</code> 判断键是否存在</li></ul></div><div class="ok-box">💡 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
+<div class="card"><p>今天我们一起啃下了这些核心内容：</p></div><div class="card"><ul><li><strong>数组的局限性</strong>：长度固定、增删麻烦</li><li><strong>List&lt;T&gt; — 动态数组</strong>：<code>List&lt;int&gt;</code> 长度可随用随长</li><li><strong>List 常用操作</strong>：<code>Add</code> 加、<code>Remove</code> 删、<code>Count</code> 数个数、<code>Contains</code> 查存在</li><li><strong>List 创建与遍历</strong>：<code>new List&lt;T&gt;()</code> 或 <code>new(){...}</code>，for/foreach 遍历</li><li><strong>Dictionary — 键值对</strong>：<code>Dictionary&lt;K,V&gt;</code> 用<span class="term">键</span>查<span class="term">值</span>，像字典</li><li><strong>Dictionary 常用操作</strong>：<code>Add</code> 加、<code>[键]</code> 取、<code>ContainsKey</code> 判断键是否存在</li></ul></div><div class="ok-box"><span class="eico">💡</span> 接下来是<span class="term">综合练习</span>——不再是单个知识点的小练习，而是把上面这些<strong>串起来</strong>解决一个真实小任务。先自己动手写，实在卡住再看答案。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>综合练习 — 购物车</h1>
@@ -945,8 +959,8 @@ namespace HelloWorld
   <text x="32" y="222" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b" font-family="monospace">cart[商品名] = 数量</tspan> 一句同时管「新增」和「改数量」；键不存在就新建，存在就覆盖。</text>
   <text x="32" y="238" fill="#6b7d97" font-size="10" font-family="sans-serif">查看时 kv.Key 是商品名、kv.Value 是数量，别拿反了。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>cart[商品名] = 数量</code> — 增/改都用这个语法</li><li><code>cart.Remove(商品名)</code> 删除，<code>foreach (var kv in cart)</code> 查看</li><li>while 循环 + switch/if 实现菜单交互</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303088768',this)">复制</button></div>
-<pre id="c_4303088768"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383239168',this)">复制</button></div>
+<pre id="c_4383239168"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -984,8 +998,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303088064',this)">复制</button></div>
-<pre id="c_4303088064"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238464',this)">复制</button></div>
+<pre id="c_4383238464"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1023,8 +1037,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入若干个整数（逗号分隔），用 <code>List</code> 存储并<strong>去掉重复</strong>，输出去重后的列表。<br>要求：自己写——拆分、转换、遍历判断是否已存在再添加，不能用 <code>Distinct()</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303087744',this)">复制</button></div>
-<pre id="c_4303087744"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238144',this)">复制</button></div>
+<pre id="c_4383238144"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1048,7 +1062,7 @@ namespace HelloWorld
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建 <code>List&lt;int&gt;</code> 存储10个随机数，计算总和与平均值，找出最大值。</p><ul><li>提示：<code>Random rand = new Random(42);</code> 固定种子保证验收输出一致，<code>rand.Next(1, 101)</code> 生成 1~100 的随机数</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：10 个数 98 60 55 50 48 45 42 40 38 36，总和 512 平均 51.2 最大 98">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="card"><h3>题1（2分）</h3><p>创建 <code>List&lt;int&gt;</code> 存储10个随机数，计算总和与平均值，找出最大值。</p><ul><li>提示：<code>Random rand = new Random(42);</code> 固定种子保证验收输出一致，<code>rand.Next(1, 101)</code> 生成 1~100 的随机数</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 246" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题1：10 个数 98 60 55 50 48 45 42 40 38 36，总和 512 平均 51.2 最大 98">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">这一组 10 个数：一次遍历同时求总和与最大值</text>
   <rect x="30" y="42" width="58" height="40" rx="5" fill="#10261c" stroke="#22c55e" stroke-opacity="0.5" stroke-width="1"/>
   <text x="59" y="68" text-anchor="middle" fill="#22c55e" font-size="12" font-family="monospace">98</text>
@@ -1166,9 +1180,9 @@ namespace HelloWorld
   <text x="500" y="158" fill="#8b9bb4" font-size="9.5" font-family="sans-serif">再存出现次数当值</text>
   <text x="500" y="176" fill="#6b7d97" font-size="9" font-family="sans-serif">顺序按第一次出现排</text>
   <text x="24" y="258" fill="#8b9bb4" font-size="10" font-family="sans-serif">写法：if (dict.ContainsKey(w)) dict[w]++; else dict[w] = 1;　—— 别忘先判存在。</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box">💬 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303087296',this)">复制</button></div>
-<pre id="c_4303087296"><code class="language-csharp">using System;
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383237760',this)">复制</button></div>
+<pre id="c_4383237760"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1191,7 +1205,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner end-page">
 
@@ -1518,18 +1532,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

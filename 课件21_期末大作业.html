@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件21_期末大作业 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -404,18 +417,20 @@ pre,pre code{page-break-inside:avoid}
 <a href="#" class="nav-link" data-page="17"><span class="nav-status"></span>16. 从示例到你的主题 — 只改 4 个地方 </a>
 <a href="#" class="nav-link" data-page="18"><span class="nav-status"></span>17. 开发步骤与时间安排 </a>
 <a href="#" class="nav-link" data-page="19"><span class="nav-status"></span>18. 提交要求 </a>
-<a href="#" class="nav-link" data-page="20"><span class="nav-status"></span>19. 基础分 ① 功能实现（55 分） </a>
-<a href="#" class="nav-link" data-page="21"><span class="nav-status"></span>20. 基础分 ② 代码与规范（45 分） </a>
-<a href="#" class="nav-link" data-page="22"><span class="nav-status"></span>21. 界面分（满分 20，界面档） </a>
-<a href="#" class="nav-link" data-page="23"><span class="nav-status"></span>22. 温馨提示与常见坑 </a>
-<a href="#" class="nav-link nav-special" data-page="24"><span class="nav-status"></span>结束页</a>
+<a href="#" class="nav-link" data-page="20"><span class="nav-status"></span>19. 基础分 100 分，六项怎么给 </a>
+<a href="#" class="nav-link" data-page="21"><span class="nav-status"></span>20. 功能完整性（35）· 文件持久化（10） </a>
+<a href="#" class="nav-link" data-page="22"><span class="nav-status"></span>21. 代码规范与结构（20）· 交互与可用性（15） </a>
+<a href="#" class="nav-link" data-page="23"><span class="nav-status"></span>22. 设计文档（10）· 答辩表现（10） </a>
+<a href="#" class="nav-link" data-page="24"><span class="nav-status"></span>23. 界面分（满分 20，界面档） </a>
+<a href="#" class="nav-link" data-page="25"><span class="nav-status"></span>24. 温馨提示与常见坑 </a>
+<a href="#" class="nav-link nav-special" data-page="26"><span class="nav-status"></span>结束页</a>
 
 </nav>
 <div class="main-area" id="mainArea">
     <div class="header-bar">
         <div class="progress-wrap">
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-            <span class="progress-text" id="progressText">0 / 24</span>
+            <span class="progress-text" id="progressText">0 / 26</span>
         </div>
         <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
@@ -466,7 +481,7 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>两档怎么选</h1>
-<div class="card"><table><tr><th></th><th>控制台档（基础线）</th><th>界面档（进阶线）</th></tr><tr><td>交互方式</td><td><code>Console</code> 数字菜单</td><td>Avalonia 窗体 + 按钮</td></tr><tr><td>用到知识</td><td>课件 3~18</td><td>课件 3~20</td></tr><tr><td>工作量</td><td>一套功能</td><td>一套功能 + 一层界面（多 2~3 天）</td></tr><tr><td>答辩重点</td><td>讲清业务逻辑与数据结构怎么设计</td><td>先讲清逻辑，再讲事件怎么把界面和逻辑串起来</td></tr><tr><td>满分</td><td><strong>100</strong></td><td><strong>120</strong>（100 + 界面 20）</td></tr><tr><td>适合谁</td><td>想把精力放在逻辑上</td><td>对界面有兴趣、愿意多花时间</td></tr></table></div><div class="ok-box">✅ <strong>控制台档做完想加界面，随时加</strong>：<code>Record.cs</code> / <code>RecordManager.cs</code> 不用改，只是多套一层窗体。动手前先把文件夹复制一份，界面在副本上做。</div><div class="card"><h3>还没想好？</h3></div><div class="card"><ul><li>想早点跑通、把心思放在业务逻辑上 → 控制台档</li><li>会一点 XAML，或者愿意花 2~3 天学 → 界面档</li><li>完全没主意 → 先做控制台档，做完再决定加不加界面</li></ul></div>
+<div class="card"><table><tr><th></th><th>控制台档（基础线）</th><th>界面档（进阶线）</th></tr><tr><td>交互方式</td><td><code>Console</code> 数字菜单</td><td>Avalonia 窗体 + 按钮</td></tr><tr><td>用到知识</td><td>课件 3~18</td><td>课件 3~20</td></tr><tr><td>工作量</td><td>一套功能</td><td>一套功能 + 一层界面（多 2~3 天）</td></tr><tr><td>答辩重点</td><td>讲清业务逻辑与数据结构怎么设计</td><td>先讲清逻辑，再讲事件怎么把界面和逻辑串起来</td></tr><tr><td>满分</td><td><strong>100</strong></td><td><strong>120</strong>（100 + 界面 20）</td></tr><tr><td>适合谁</td><td>想把精力放在逻辑上</td><td>对界面有兴趣、愿意多花时间</td></tr></table></div><div class="ok-box"><span class="eico">✅</span> <strong>控制台档做完想加界面，随时加</strong>：<code>Record.cs</code> / <code>RecordManager.cs</code> 不用改，只是多套一层窗体。动手前先把文件夹复制一份，界面在副本上做。</div><div class="card"><h3>还没想好？</h3></div><div class="card"><ul><li>想早点跑通、把心思放在业务逻辑上 → 控制台档</li><li>会一点 XAML，或者愿意花 2~3 天学 → 界面档</li><li>完全没主意 → 先做控制台档，做完再决定加不加界面</li></ul></div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>可选主题方向（灵感参考）</h1>
@@ -588,7 +603,7 @@ pre,pre code{page-break-inside:avoid}
       <div><span style="color:var(--text-muted)">亮点</span>　今日课程、每周课时统计</div>
     </div>
   </div>
-</div><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播本页图示的动画">↻ 重播</button></div></div><div class="ok-box">💡 也可以自提主题（如&quot;绿植养护记录&quot;&quot;家庭菜谱收藏&quot;），照着上面的样子定字段、列功能就行；<strong>提前和教师确认一下</strong>更稳妥。</div>
+</div><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播本页图示的动画">↻ 重播</button></div></div><div class="ok-box"><span class="eico">💡</span> 也可以自提主题（如&quot;绿植养护记录&quot;&quot;家庭菜谱收藏&quot;），照着上面的样子定字段、列功能就行；<strong>提前和教师确认一下</strong>更稳妥。</div>
 </div></div>
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>功能要求（基础清单）</h1>
@@ -605,7 +620,7 @@ pre,pre code{page-break-inside:avoid}
     <div style="grid-column:1/-1"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(56,189,248,.16);color:#38bdf8;font-size:11.5px;font-weight:700;vertical-align:-3px;margin-right:8px">5</span><b>保存 / 加载</b><span style="color:var(--text-muted);font-size:14.5px">　关掉重开还在</span></div>
   </div>
   <div style="margin-top:14px;padding:9px 13px;border-radius:8px;background:rgba(245,158,11,.10);border-left:3px solid #f59e0b;font-size:14.5px;line-height:1.55">
-    ⚠️ <span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">保存 / 加载</span>是硬指标 —— 少了它，功能分最多拿一半。
+    ⚠️ <span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">保存 / 加载</span>是硬指标 —— 少了它，持久化那 10 分直接没有。
   </div>
 </div><div class="svg-fig svg-fig--block"><div style="font-size:15px;margin:0 0 5px">交互怎么写，按你选的档位：</div>
 <div style="font-size:13.5px;line-height:1.5;color:var(--text-muted);margin:0 0 11px">📌 图里用<span style="background:rgba(79,195,247,.12);color:var(--accent2);padding:2px 7px;border-radius:4px;border:1px solid rgba(79,195,247,.30);font-weight:500">个人记账本</span>举例，你换成自己的主题就行 —— 照这个样子搭界面，不用跟着做记账本。</div>
@@ -693,7 +708,7 @@ pre,pre code{page-break-inside:avoid}
     <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">3</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">事件</span><span style="color:var(--text-muted)">按钮 <span style="font-family:monospace;font-size:13.5px;color:#38bdf8">Click</span>（<span style="font-family:monospace;font-size:13.5px;color:#38bdf8">RoutedEventArgs</span>）</span></div>
     <div style="display:flex;align-items:flex-start;gap:9px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700;flex:0 0 19px;margin-top:1px">4</span><span style="flex:0 0 80px;font-weight:700;font-size:15.5px">业务边界</span><span style="color:var(--text-muted)">事件里只调管理方法，业务写进管理类</span></div>
   </div>
-</div><div class="ok-box">💡 课件18<span class="term">图书管理系统</span>是同一套三层结构：一个 <code>Book</code> 类 + <code>List&lt;Book&gt;</code> + 文件读写 —— 结构想不起来就回去翻那份代码，把类名换成你的就行。</div>
+</div><div class="ok-box"><span class="eico">💡</span> 课件18<span class="term">图书管理系统</span>是同一套三层结构：一个 <code>Book</code> 类 + <code>List&lt;Book&gt;</code> + 文件读写 —— 结构想不起来就回去翻那份代码，把类名换成你的就行。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>项目结构参考（三层）</h1>
@@ -848,14 +863,28 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>参考案例框架 ① 模型类 — 一条记录长什么样</h1>
 <div class="ok-box">这三页都用<strong>记账本</strong>演示（就是示例一的 <code>Record</code> / <code>RecordManager</code>），字段跟上一页那张卡一模一样。先看一条记录怎么表示。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307781760',this)">复制</button></div>
-<pre id="c_4307781760"><code class="language-csharp">public class Record
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311811712',this)">复制</button></div>
+<pre id="c_4311811712"><code class="language-csharp">using System;
+
+namespace HelloWorld
 {
-    public int Id { get; set; }                   // 编号（自动生成）
-    public string Date { get; set; } = &quot;&quot;;        // 日期
-    public string Category { get; set; } = &quot;&quot;;    // 类别
-    public double Amount { get; set; }            // 金额
-    public string Note { get; set; } = &quot;&quot;;        // 备注
+    public class Record
+    {
+        public int Id { get; set; }                   // 编号（自动生成）
+        public string Date { get; set; } = &quot;&quot;;        // 日期
+        public string Category { get; set; } = &quot;&quot;;    // 类别
+        public double Amount { get; set; }            // 金额
+        public string Note { get; set; } = &quot;&quot;;        // 备注
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Record r = new Record { Id = 1, Date = &quot;2026-01-05&quot;, Category = &quot;餐饮&quot;, Amount = 28.5, Note = &quot;午饭&quot; };
+            Console.WriteLine($&quot;{r.Id} | {r.Date} | {r.Category} | {r.Amount} | {r.Note}&quot;);
+        }
+    }
 }</code></pre>
 </div><div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px">
   <div class="card" style="margin:0;padding:13px 15px 12px;background-image:linear-gradient(135deg,rgba(56,189,248,.09),rgba(56,189,248,0) 62%)">
@@ -875,59 +904,152 @@ pre,pre code{page-break-inside:avoid}
       <div style="font-family:monospace">Note</div><div>→ 备注，多数主题都有</div>
     </div>
   </div>
-</div><div class="card"><ul><li><code>{ get; set; }</code>：外面能直接读、直接赋值，不用另外写 getter / setter 方法</li><li><code>string</code> 给 <code>= &quot;&quot;</code>：没填时也不会是 <code>null</code>，后面拼接不会崩</li><li>类名、字段名跟着主题换，<strong>结构和顺序别动</strong> —— 动了 <code>Load</code> / <code>Save</code> 就得跟着改</li></ul></div><div class="ok-box">🛠 现在就动手：把 <code>Record</code> 换成你的类名，<code>Date</code> / <code>Category</code> / <code>Amount</code> / <code>Note</code> 换成你主题的字段 —— 这几行写完，第一步就成了。</div>
+</div><div class="card"><ul><li><code>{ get; set; }</code>：外面能直接读、直接赋值，不用另外写 getter / setter 方法</li><li><code>string</code> 给 <code>= &quot;&quot;</code>：没填时也不会是 <code>null</code>，后面拼接不会崩</li><li>类名、字段名跟着主题换，<strong>结构和顺序别动</strong> —— 动了 <code>Load</code> / <code>Save</code> 就得跟着改</li></ul></div><div class="ok-box"><span class="eico">🛠</span> 现在就动手：把 <code>Record</code> 换成你的类名，<code>Date</code> / <code>Category</code> / <code>Amount</code> / <code>Note</code> 换成你主题的字段 —— 这几行写完，第一步就成了。</div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>参考案例框架 ② 管理器 — 一个集合 + 增删改查</h1>
-<div class="ok-box">还是<strong>记账本</strong>：多条记录装进一个集合，再给它几个方法。外面的菜单、按钮只调方法，不直接碰 <code>List</code>。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307782016',this)">复制</button></div>
-<pre id="c_4307782016"><code class="language-csharp">// ② 管理器（1）：一个集合 + 增删改查
-public class RecordManager
+<div class="ok-box">还是<strong>记账本</strong>：多条记录装进一个集合，再给它几个方法。外面的菜单、按钮只调方法，不直接碰 <code>List</code>。</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311793408',this)">复制</button></div>
+<pre id="c_4311793408"><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.IO;
+
+namespace HelloWorld
 {
-    List&lt;Record&gt; records = new List&lt;Record&gt;();   // 所有记录都在这
-    string file = &quot;records.txt&quot;;                 // 存在哪个文件
-
-    public void Add(Record r) { records.Add(r); Save(); }
-    public void Remove(int id) { records.RemoveAll(r =&gt; r.Id == id); Save(); }
-    public Record FindById(int id) { return records.Find(r =&gt; r.Id == id); }
-    public List&lt;Record&gt; All() { return records; }
-
-    public void Update(int id, string newNote)
+    public class Record
     {
-        Record r = FindById(id);   // 先按编号找到那条
-        if (r == null) return;     // 没找到就返回，别让它崩
-        r.Note = newNote;          // 改字段
-        Save();                    // 改完立刻存
+        public int Id { get; set; }
+        public string Date { get; set; } = &quot;&quot;;
+        public string Category { get; set; } = &quot;&quot;;
+        public double Amount { get; set; }
+        public string Note { get; set; } = &quot;&quot;;
+    }
+
+    public class RecordManager
+    {
+        List&lt;Record&gt; records = new List&lt;Record&gt;();   // 所有记录都在这
+        string file = &quot;records.txt&quot;;                 // 存在哪个文件
+
+        public void Add(Record r)
+        {
+            records.Add(r);
+            Save();                              // 加完立刻存盘
+        }
+
+        public void Remove(int id)
+        {
+            records.RemoveAll(r =&gt; r.Id == id);
+            Save();
+        }
+
+        public Record FindById(int id)
+        {
+            return records.Find(r =&gt; r.Id == id);
+        }
+
+        public List&lt;Record&gt; All()
+        {
+            return records;
+        }
+
+        public void Update(int id, string newNote)
+        {
+            Record r = FindById(id);   // 先按编号找到那条
+            if (r == null) return;     // 没找到就返回，别让它崩
+            r.Note = newNote;          // 改字段
+            Save();                    // 改完立刻存
+        }
+
+        // 存盘细节：见页面11 的 Save() / Load()
+        public void Save()
+        {
+            List&lt;string&gt; lines = new List&lt;string&gt;();
+            foreach (Record r in records)
+                lines.Add(r.Id + &quot;|&quot; + r.Date + &quot;|&quot; + r.Category + &quot;|&quot; + r.Amount + &quot;|&quot; + r.Note);
+            File.WriteAllLines(file, lines);
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            RecordManager m = new RecordManager();
+            m.Add(new Record { Id = 1, Date = &quot;2026-01-05&quot;, Category = &quot;餐饮&quot;, Amount = 28.5, Note = &quot;午饭&quot; });
+            m.Update(1, &quot;和同事一起吃&quot;);
+            Console.WriteLine($&quot;{m.FindById(1).Note}｜共 {m.All().Count} 条&quot;);
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li>四个方法正好是<span class="term">增删改查</span>：<code>Add</code> / <code>Remove</code> / <code>Update</code> / <code>FindById</code>，<code>All()</code> 给菜单列表用</li><li>每个方法改完都调 <code>Save()</code> —— 关掉程序数据还在，这就叫持久化</li><li><code>r =&gt; r.Id == id</code> 是 lambda：在集合里找&quot;编号等于 id&quot;的那条</li><li>编号不用用户填，<code>NextId()</code> 自动算 —— 见<span class="term">示例一</span>那页</li></ul></div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>参考案例框架 ③ 存盘与读盘 — 一行一条</h1>
-<div class="ok-box">还是<strong>记账本</strong>：集合只在内存里，一关程序就没了 —— <code>Save()</code> 写进 txt，<code>Load()</code> 时读回来。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307779968',this)">复制</button></div>
-<pre id="c_4307779968"><code class="language-csharp">public void Save()
-{
-    List&lt;string&gt; lines = new List&lt;string&gt;();
-    foreach (Record r in records)
-        lines.Add(r.Id + &quot;|&quot; + r.Date + &quot;|&quot; + r.Category + &quot;|&quot; + r.Amount + &quot;|&quot; + r.Note);
-    File.WriteAllLines(file, lines);
-}
+<div class="ok-box">还是<strong>记账本</strong>：集合只在内存里，一关程序就没了 —— <code>Save()</code> 写进 txt，<code>Load()</code> 时读回来。</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4311810176',this)">复制</button></div>
+<pre id="c_4311810176"><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.IO;
 
-public void Load()
+namespace HelloWorld
 {
-    records.Clear();
-    if (!File.Exists(file)) return;   // 第一次运行还没有这个文件
-    foreach (string line in File.ReadAllLines(file))
+    public class Record
     {
-        string[] p = line.Split('|');
-        Record r = new Record();
-        r.Id = int.Parse(p[0]);
-        r.Date = p[1];
-        r.Category = p[2];
-        r.Amount = double.Parse(p[3]);
-        r.Note = p[4];
-        records.Add(r);
+        public int Id { get; set; }
+        public string Date { get; set; } = &quot;&quot;;
+        public string Category { get; set; } = &quot;&quot;;
+        public double Amount { get; set; }
+        public string Note { get; set; } = &quot;&quot;;
+    }
+
+    public class RecordManager
+    {
+        List&lt;Record&gt; records = new List&lt;Record&gt;();
+        string file = &quot;records.txt&quot;;
+
+        public void Save()
+        {
+            List&lt;string&gt; lines = new List&lt;string&gt;();
+            foreach (Record r in records)
+                lines.Add(r.Id + &quot;|&quot; + r.Date + &quot;|&quot; + r.Category + &quot;|&quot; + r.Amount + &quot;|&quot; + r.Note);
+            File.WriteAllLines(file, lines);
+        }
+
+        public void Load()
+        {
+            records.Clear();
+            if (!File.Exists(file)) return;   // 第一次运行还没有这个文件
+            foreach (string line in File.ReadAllLines(file))
+            {
+                string[] p = line.Split('|');
+                Record r = new Record();
+                r.Id = int.Parse(p[0]);
+                r.Date = p[1];
+                r.Category = p[2];
+                r.Amount = double.Parse(p[3]);
+                r.Note = p[4];
+                records.Add(r);
+            }
+        }
+
+        public void Add(Record r) { records.Add(r); }
+        public List&lt;Record&gt; All() { return records; }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            RecordManager m = new RecordManager();
+            m.Add(new Record { Id = 1, Date = &quot;2026-01-05&quot;, Category = &quot;餐饮&quot;, Amount = 28.5, Note = &quot;午饭&quot; });
+            m.Add(new Record { Id = 2, Date = &quot;2026-01-06&quot;, Category = &quot;交通&quot;, Amount = 6, Note = &quot;公交&quot; });
+            m.Save();                 // 存进 records.txt
+
+            RecordManager m2 = new RecordManager();
+            m2.Load();                // 从 records.txt 读回来
+            foreach (Record r in m2.All())
+                Console.WriteLine($&quot;{r.Id} | {r.Date} | {r.Category} | {r.Amount} | {r.Note}&quot;);
+        }
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>Load()</code> 启动调一次、<code>Save()</code> 增删改后调；<code>File.Exists</code> 那行不能省</li><li>存 5 段 ↔ 读 <code>Split('|')</code> 5 段，<strong>顺序必须一致</strong>，改字段要两边一起改</li></ul></div>
@@ -953,8 +1075,8 @@ public void Load()
   <text x="26" y="86" font-size="13.5" font-family="sans-serif" fill="#38bdf8">Record.cs（模型层）　+　RecordManager.cs（数据层）</text>
   <text x="26" y="104" font-size="12.5" font-family="sans-serif" fill="#94a3b8">两档共用同一份 —— 一个字都不用改，直接搬过去</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>多出来的只有 <code>MainWindow</code> 两个文件：<code>.axaml</code> 写界面长什么样，<code>.axaml.cs</code> 写按钮被点时干什么：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4307780544',this)">复制</button></div>
-<pre id="c_4307780544"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4311812608',this)">复制</button></div>
+<pre id="c_4311812608"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;dateBox&quot; PlaceholderText=&quot;日期 2026-10-01&quot; /&gt;
     &lt;TextBox x:Name=&quot;categoryBox&quot; PlaceholderText=&quot;类别 餐饮 / 交通&quot; /&gt;
@@ -968,7 +1090,7 @@ public void Load()
 </div></div>
 <div class="slide" data-page="13"><div class="slide-inner markable">
 <h1>示例一 — 控制台档：交出来就是这个样子</h1>
-<div class="ok-box">📌 控制台档交出来就是这样。选界面档也建议先把这套逻辑跑通，后面再加窗体（见<span class="term">示例二 — 界面档</span>那页）。</div><div class="card"><p>示例主题：<strong>个人记账本</strong>（日期 / 类别 / 金额 / 备注）。工程里就这 4 个文件 —— 3 个代码 + 1 个数据：</p></div><pre class="plain-box"><code>你的项目名/
+<div class="ok-box"><span class="eico">📌</span> 控制台档交出来就是这样。选界面档也建议先把这套逻辑跑通，后面再加窗体（见<span class="term">示例二 — 界面档</span>那页）。</div><div class="card"><p>示例主题：<strong>个人记账本</strong>（日期 / 类别 / 金额 / 备注）。工程里就这 4 个文件 —— 3 个代码 + 1 个数据：</p></div><pre class="plain-box"><code>你的项目名/
 ├── Record.cs          一条记录长什么样（模型类，约 50 行）
 ├── RecordManager.cs   管 List + 读写文件 / 统计 / 排序（约 230 行）
 ├── Program.cs         菜单 + 各功能方法（约 300 行）
@@ -988,7 +1110,7 @@ public void Load()
   <text x="26" y="222" fill="#d7e0ee" font-size="16" font-family="monospace">[2] 2026-10-01  交通  支出  2.00 元   公交</text>
   <text x="26" y="248" fill="#f59e0b" font-size="16" font-family="monospace">[7] 2026-10-04  其他  收入 200.00 元  家里给的生活费</text>
   <text x="26" y="276" fill="#22c55e" font-size="16" font-family="monospace">共 8 条，合计 -4.50 元（支出为正 / 收入为负）</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">🔁 <strong>程序不会自己结束</strong>：<code>while</code> 大循环里做完一件回到菜单接着选，只有选 <strong>0（退出）</strong> 才 <code>break</code>。</div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box"><span class="eico">🔁</span> <strong>程序不会自己结束</strong>：<code>while</code> 大循环里做完一件回到菜单接着选，只有选 <strong>0（退出）</strong> 才 <code>break</code>。</div>
 </div></div>
 <div class="slide" data-page="14"><div class="slide-inner markable">
 <h1>示例一 — 新增一条，其余三条照着改</h1>
@@ -1009,11 +1131,11 @@ public void Load()
     <div style="display:flex;align-items:baseline;gap:7px;margin-bottom:5px"><span style="display:inline-block;width:19px;height:19px;line-height:19px;text-align:center;border-radius:50%;background:rgba(245,158,11,.16);color:#f59e0b;font-size:11.5px;font-weight:700">4</span><span style="font-size:14px;font-weight:700;color:#f59e0b">立刻存盘</span></div>
     <div style="font-size:12.5px;line-height:1.6;color:var(--text-muted)">马上调 <span style="font-family:monospace">Save()</span>，关掉程序数据还在</div>
   </div>
-</div><div class="card"><ul><li><strong><code>Save()</code> 紧跟在增删改之后</strong> —— 这就是&quot;持久化硬指标&quot;，别攒到退出才存</li><li><strong>输入一律 <code>TryParse</code></strong>，输错了给提示重填，而不是让程序崩掉</li></ul></div><div class="ok-box">💡 <code>Program.cs</code> 里那一堆方法（查全部、查询、统计、排序），每个都只是&quot;读菜单 → 调 Manager → <code>Console.WriteLine</code>&quot;三件事。</div>
+</div><div class="card"><ul><li><strong><code>Save()</code> 紧跟在增删改之后</strong> —— 这就是&quot;持久化硬指标&quot;，别攒到退出才存</li><li><strong>输入一律 <code>TryParse</code></strong>，输错了给提示重填，而不是让程序崩掉</li></ul></div><div class="ok-box"><span class="eico">💡</span> <code>Program.cs</code> 里那一堆方法（查全部、查询、统计、排序），每个都只是&quot;读菜单 → 调 Manager → <code>Console.WriteLine</code>&quot;三件事。</div>
 </div></div>
 <div class="slide" data-page="15"><div class="slide-inner markable">
 <h1>示例二 — 界面档：同一套逻辑换张脸</h1>
-<div class="ok-box">📌 界面档交出来就是这样 —— 界面照这个搭，逻辑还是同一套。</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 336" width="100%" style="max-width:792px;margin:0 auto;display:block" role="img" aria-label="界面版窗口外观：左边表单、右边列表、底部提示">
+<div class="ok-box"><span class="eico">📌</span> 界面档交出来就是这样 —— 界面照这个搭，逻辑还是同一套。</div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 336" width="100%" style="max-width:792px;margin:0 auto;display:block" role="img" aria-label="界面版窗口外观：左边表单、右边列表、底部提示">
   <rect x="10" y="6" width="660" height="324" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-opacity="0.7" stroke-width="1.2"/>
   <rect x="10" y="6" width="660" height="30" rx="10" fill="#e2e8f0" stroke="#94a3b8" stroke-opacity="0.35" stroke-width="1"/>
   <rect x="10" y="20" width="660" height="16" fill="#e2e8f0"/>
@@ -1076,37 +1198,45 @@ public void Load()
 ├── Services/RecordManager.cs   管 List + 存盘读盘（原样搬过来）
 ├── MainWindow.axaml            界面长什么样
 ├── MainWindow.axaml.cs         按钮被点时干什么
-└── records.txt                 数据文件</code></pre><div class="ok-box">💡 第 2 步只是调一个方法。<code>Add()</code> 不关心调用它的是菜单还是按钮，它只管把数据存好——这就是&quot;分层&quot;最实际的好处。</div><div class="card"><ul><li>⚠️ 删除建议&quot;两次确认&quot;：第一次点只提示，第二次点才真删</li><li>⚠️ 列表刷新后会丢选中，所以另存一个 <code>selectedId</code> 记住它</li></ul></div>
+└── records.txt                 数据文件</code></pre><div class="ok-box"><span class="eico">💡</span> 第 2 步只是调一个方法。<code>Add()</code> 不关心调用它的是菜单还是按钮，它只管把数据存好——这就是&quot;分层&quot;最实际的好处。</div><div class="card"><ul><li>⚠️ 删除建议&quot;两次确认&quot;：第一次点只提示，第二次点才真删</li><li>⚠️ 列表刷新后会丢选中，所以另存一个 <code>selectedId</code> 记住它</li></ul></div>
 </div></div>
 <div class="slide" data-page="17"><div class="slide-inner markable">
 <h1>从示例到你的主题 — 只改 4 个地方</h1>
-<div class="card"><p>按这个改，改完就是你的作业：</p></div><div class="card"><table><tr><th>#</th><th>改什么</th><th>记账本里的样子</th><th>你改成</th></tr><tr><td>1</td><td>类名 + 字段</td><td><code>Record</code>：Id / Date / Category / Amount / Note</td><td>你的类名与字段</td></tr><tr><td>2</td><td>存盘 / 读盘</td><td>用 <code>\|</code> 把 5 段拼成一行</td><td>字段几段就拼几段，两头必须对上</td></tr><tr><td>3</td><td>交互层文字</td><td>菜单项 / 界面上的&quot;日期&quot;&quot;类别&quot;&quot;金额&quot;&quot;备注&quot;</td><td>你的字段名</td></tr><tr><td>4</td><td>数据文件名</td><td><code>records.txt</code></td><td><code>works.txt</code> / <code>members.txt</code> …</td></tr></table></div><div class="card"><p>字段还没定？回看<span class="term">可选主题方向</span>那张表里的<strong>典型字段举例</strong>一列，抄下来改一两个字就能用。</p></div><div class="ok-box">⚠️ 字段一改，<code>Save</code> / <code>Load</code>、菜单项、列表显示（或界面表单）<strong>全要跟着改</strong>——先把字段写成一张表贴在旁边，再动代码。</div><div class="card"><p>改完按顺序自检：① 增删改查各跑一遍 ② 打开 txt 看字段顺序 ③ 每个入口点一遍 ④ <strong>关掉重开</strong>看数据还在不在</p></div>
+<div class="card"><p>按这个改，改完就是你的作业：</p></div><div class="card"><table><tr><th>#</th><th>改什么</th><th>记账本里的样子</th><th>你改成</th></tr><tr><td>1</td><td>类名 + 字段</td><td><code>Record</code>：Id / Date / Category / Amount / Note</td><td>你的类名与字段</td></tr><tr><td>2</td><td>存盘 / 读盘</td><td>用 <code>\|</code> 把 5 段拼成一行</td><td>字段几段就拼几段，两头必须对上</td></tr><tr><td>3</td><td>交互层文字</td><td>菜单项 / 界面上的&quot;日期&quot;&quot;类别&quot;&quot;金额&quot;&quot;备注&quot;</td><td>你的字段名</td></tr><tr><td>4</td><td>数据文件名</td><td><code>records.txt</code></td><td><code>works.txt</code> / <code>members.txt</code> …</td></tr></table></div><div class="card"><p>字段还没定？回看<span class="term">可选主题方向</span>那张表里的<strong>典型字段举例</strong>一列，抄下来改一两个字就能用。</p></div><div class="ok-box"><span class="eico">⚠️</span> 字段一改，<code>Save</code> / <code>Load</code>、菜单项、列表显示（或界面表单）<strong>全要跟着改</strong>——先把字段写成一张表贴在旁边，再动代码。</div><div class="card"><p>改完按顺序自检：① 增删改查各跑一遍 ② 打开 txt 看字段顺序 ③ 每个入口点一遍 ④ <strong>关掉重开</strong>看数据还在不在</p></div>
 </div></div>
 <div class="slide" data-page="18"><div class="slide-inner markable">
 <h1>开发步骤与时间安排</h1>
-<div class="card"><p>建议按下面的节奏推进（共 2~3 周）；档位不用第 1 天定死，控制台版跑通后再决定要不要加界面也行：</p></div><div class="card"><ol><li><strong>第1天：定主题 + 列字段</strong> — 确定管理什么、每条记录有哪些字段</li><li><strong>第2~3天：写模型类 + 集合</strong> — 先把 <code>XxxItem</code> 类和 <code>List&lt;XxxItem&gt;</code> 跑通</li><li><strong>第4~6天：做功能</strong> — 先把基础清单做通（增删改查 + 查询）；控制台档配一套菜单，界面档把同样的方法挂到按钮上（直接复用第 2~3 天的 Manager）。有余力再加统计、排序这类亮点</li><li><strong>第7~8天：文件持久化</strong> — 加 Load/Save，确保重启不丢</li><li><strong>第9~10天：校验 + 整理</strong> — 控制台档理顺菜单与提示语，界面档整理布局</li><li><strong>答辩前：写文档 + 演练</strong> — 类图、功能说明、使用说明、截图</li></ol></div><div class="ok-box">💡 卡住先用 AI 助教（课件2 四步法），但<strong>最终代码必须自己写、自己讲得清</strong>。</div>
+<div class="card"><p>建议按下面的节奏推进（共 2~3 周）；档位不用第 1 天定死，控制台版跑通后再决定要不要加界面也行：</p></div><div class="card"><ol><li><strong>第1天：定主题 + 列字段</strong> — 确定管理什么、每条记录有哪些字段</li><li><strong>第2~3天：写模型类 + 集合</strong> — 先把 <code>XxxItem</code> 类和 <code>List&lt;XxxItem&gt;</code> 跑通</li><li><strong>第4~6天：做功能</strong> — 先把基础清单做通（增删改查 + 查询）；控制台档配一套菜单，界面档把同样的方法挂到按钮上（直接复用第 2~3 天的 Manager）。有余力再加统计、排序这类亮点</li><li><strong>第7~8天：文件持久化</strong> — 加 Load/Save，确保重启不丢</li><li><strong>第9~10天：校验 + 整理</strong> — 控制台档理顺菜单与提示语，界面档整理布局</li><li><strong>答辩前：写文档 + 演练</strong> — 类图、功能说明、使用说明、截图</li></ol></div><div class="ok-box"><span class="eico">💡</span> 卡住先用 AI 助教（课件2 四步法），但<strong>最终代码必须自己写、自己讲得清</strong>。</div>
 </div></div>
 <div class="slide" data-page="19"><div class="slide-inner markable">
 <h1>提交要求</h1>
-<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整项目，能打开、能运行（控制台档只需 .NET；界面档需还原 Avalonia 包）</li><li><strong>设计文档</strong>（Word/PDF）：①类图/字段说明 ②功能列表 ③使用说明 ④运行截图 ⑤<strong>写明所选档位</strong></li><li><strong>答辩演示</strong>：第十七和十八周，5~8 分钟讲思路 + 演示你的程序</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>提交到 <strong>WPS 问卷</strong>：扫描结束页的提交二维码进入，或直接访问 <a href="https://f.wps.cn/g/59fkZPWb/" target="_blank" rel="noopener">https://f.wps.cn/g/59fkZPWb/</a></li><li><strong>必须是 .zip 压缩包</strong>：把项目文件夹和设计文档压成一个包上传；<strong>不用自己命名</strong>，问卷会自动命名</li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页另一张二维码查看）</li></ul></div><div class="ok-box">⚠️ 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
+<div class="card"><p><em>提交内容：</em></p></div><div class="card"><ol><li><strong>源代码</strong>：完整项目，能打开、能运行（控制台档只需 .NET；界面档需还原 Avalonia 包）</li><li><strong>设计文档</strong>（Word/PDF）：①类图/字段说明 ②功能列表 ③使用说明 ④运行截图 ⑤<strong>写明所选档位</strong></li><li><strong>答辩演示</strong>：第十七和十八周，5~8 分钟讲思路 + 演示你的程序</li></ol></div><div class="card"><p><em>格式与平台：</em></p></div><div class="card"><ul><li>提交到 <strong>WPS 问卷</strong>：扫描结束页的提交二维码进入，或直接访问 <a href="https://f.wps.cn/g/59fkZPWb/" target="_blank" rel="noopener">https://f.wps.cn/g/59fkZPWb/</a></li><li><strong>必须是 .zip 压缩包</strong>：把项目文件夹和设计文档压成一个包上传；<strong>不用自己命名</strong>，问卷会自动命名</li><li>成绩同步至 <strong>腾讯文档</strong>（扫描结束页另一张二维码查看）</li></ul></div><div class="card"><h3>组队与个人贡献系数</h3></div><div class="card"><ul><li>建议<strong>独立完成</strong>，系数按 1 计，最终成绩就是项目评分。</li><li>确需组队（最多 3 人）：在设计文档里写清分工（谁写哪个类、哪个功能），按实际贡献填系数（1.0 / 0.8 / 0.6），<strong>最终成绩 = 项目评分 × 系数</strong>。</li><li>只挂名、讲不出自己写了什么的，按未参与计分。</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> 不能运行 / 没有文件持久化 / 完全照搬课件18 不改主题的，按对应扣分项处理。</div>
 </div></div>
 <div class="slide" data-page="20"><div class="slide-inner markable">
-<h1>基础分 ① 功能实现（55 分）</h1>
-<div class="card"><p>逐项验收，<strong>做到才给分，没做到就是 0 分</strong>；图表 / 主题这类<strong>界面亮点算界面分</strong>，不重复给。</p></div><div class="card"><table><tr><th>必做六项（45 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>新增记录</td><td>7</td><td>填完能加进去、列表马上出现，编号不重复</td></tr><tr><td>查看 / 列表</td><td>4</td><td>全部记录列出来、字段看得清；空的给提示</td></tr><tr><td>修改记录</td><td>7</td><td>按编号改完，列表和 txt 同时更新</td></tr><tr><td>删除记录</td><td>7</td><td>删掉指定那条、列表立刻少一行，删前确认</td></tr><tr><td>查询 / 筛选</td><td>6</td><td>按关键字或类别筛出；查不到要提示</td></tr><tr><td>保存 / 加载</td><td>14</td><td>关掉重开还在；一行一条、字段顺序一致</td></tr></table></div><div class="card"><table><tr><th>亮点功能（10 分，任选累加，满 10 封顶）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>统计（合计 / 分类汇总）</td><td>4</td><td>菜单里有这一项，算出来的数对得上</td></tr><tr><td>排序（按金额 / 日期）</td><td>4</td><td>一点就重排，顺序对、能还原</td></tr><tr><td>导出 CSV / txt</td><td>3</td><td>导出的文件能用 Excel 打开</td></tr><tr><td>按类别分组显示</td><td>3</td><td>有分类标题，组内明细不错位</td></tr><tr><td>关键字即时筛选</td><td>3</td><td>边打边过滤，清空恢复全部</td></tr><tr><td>随机生成测试数据</td><td>2</td><td>一键塞 20 条，方便演示验收</td></tr></table></div>
+<h1>基础分 100 分，六项怎么给</h1>
+<div class="card"><p>基础分是<strong>六项相加 = 100</strong>：控制台档做满就是 100，界面档再加 20 分界面分。每一项都逐条验收，<strong>做到才给分</strong>。</p></div><div class="card"><table><tr><th>评分项</th><th>分</th><th>主要看什么</th></tr><tr><td>功能完整性</td><td>35</td><td>增删改查 + 条件查询都能用，字段校验到位</td></tr><tr><td>代码规范与结构</td><td>20</td><td>模型类 / 管理类分得清，<code>List&lt;T&gt;</code> 用得对，命名与注释规范</td></tr><tr><td>交互与可用性</td><td>15</td><td>操作能顺下来，提示清楚，输错能重来、程序不崩</td></tr><tr><td>文件持久化</td><td>10</td><td>关掉重开数据还在，文件格式清晰可读</td></tr><tr><td>设计文档</td><td>10</td><td>类图 / 字段说明、功能列表、使用说明、运行截图，写明所选档位</td></tr><tr><td>答辩表现</td><td>10</td><td>讲得清类怎么设计、谁调用谁、关键代码在哪</td></tr></table></div><div class="ok-box"><span class="eico">💡</span> <strong>统计、排序、导出这类&quot;亮点&quot;不单列分值</strong>：做到了在<span class="term">功能完整性</span>里往高给，没做也不扣。先把上面六项做扎实，再谈亮点。</div><div class="ok-box"><span class="eico">📊</span> 与评分表同一口径：35 + 20 + 15 + 10 + 10 + 10 = <strong>100</strong>，下面三页逐项拆开。</div>
 </div></div>
 <div class="slide" data-page="21"><div class="slide-inner markable">
-<h1>基础分 ② 代码与规范（45 分）</h1>
-<div class="card"><p>功能做出来了，还要看代码能不能看懂、能不能改、能不能讲 —— 同样逐条验收。</p></div><div class="card"><table><tr><th>代码与结构（20 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>模型类</td><td>5</td><td>一条记录一个类，字段齐全、类型对</td></tr><tr><td>管理类</td><td>7</td><td>List + 增删改查 + 读写文件都在这一个类</td></tr><tr><td>分层文件</td><td>4</td><td>模型 / 数据 / 交互分三个文件，各管一摊</td></tr><tr><td>命名与注释</td><td>4</td><td>名字看得懂，关键方法有注释，缩进统一</td></tr></table></div><div class="card"><table><tr><th>交互与健壮性（15 分）</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>菜单循环</td><td>3</td><td>做完一件事回到菜单，选 0 才退出</td></tr><tr><td>输入校验</td><td>5</td><td><code>TryParse</code> + 判空，输错重填、程序不崩</td></tr><tr><td>提示信息</td><td>4</td><td>增删改查成功 / 失败都有提示</td></tr><tr><td>边界情况</td><td>3</td><td>空列表、查不到、删不存在都不崩</td></tr></table></div><div class="card"><p><strong>文档与答辩（10 分）</strong> —— 设计文档 5 分：类图、字段说明、功能列表、使用说明、运行截图，每样 1 分；答辩 5 分：讲得清类设计、调用关系、关键代码在哪。</p></div><div class="ok-box">📊 20 + 15 + 10 = 45，与上页 55 合计 <strong>100</strong>；控制台档做满就是 100。</div>
+<h1>功能完整性（35）· 文件持久化（10）</h1>
+<div class="card"><p>两项合计 45 分，是&quot;程序能不能用&quot;的底线，全都现场抽查。上一页必做 5 项在这里拆开：修改、删除各一项，&quot;保存 / 加载&quot;归持久化 10 分 —— <strong>数据只放内存、关掉就丢的，这 10 分直接清零。</strong></p></div><div class="card"><h3>功能完整性（35 分）</h3></div><div class="card"><table><tr><th>验收点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>新增记录</td><td>6</td><td>填完能加进去，列表马上出现，编号不重复</td></tr><tr><td>查看 / 列表</td><td>5</td><td>全部记录列得出来、字段看得清；一条都没有时给提示</td></tr><tr><td>修改记录</td><td>6</td><td>按编号改完，列表和文件同时更新</td></tr><tr><td>删除记录</td><td>6</td><td>删掉指定那条、列表立刻少一行，删前有确认</td></tr><tr><td>条件查询</td><td>7</td><td>按关键字或类别筛得出；查不到要提示</td></tr><tr><td>字段校验</td><td>5</td><td>金额不能为负、必填项不许空着存进去</td></tr></table></div><div class="card"><h3>文件持久化（10 分）</h3></div><div class="card"><table><tr><th>验收点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>启动自动加载</td><td>3</td><td>一开程序就把文件里的记录读进来</td></tr><tr><td>增删改后立即保存</td><td>4</td><td>改完不点&quot;保存&quot;也不丢，退出前自动写回</td></tr><tr><td>文件格式清晰</td><td>3</td><td>一行一条、字段顺序一致，记事本能直接看懂</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="22"><div class="slide-inner markable">
-<h1>界面分（满分 20，界面档）</h1>
-<div class="card"><p>界面档在这 20 分上看四件事 —— 也是逐项验收：</p></div><div class="card"><table><tr><th>评分点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>界面布局</td><td>4</td><td>表单、列表、提示分区清楚，不挤成一团</td></tr><tr><td>五个功能都接上</td><td>5</td><td>增删改查查各 1 分，点了有反应</td></tr><tr><td>事件只调方法</td><td>3</td><td>按钮里不写业务，只调 Manager</td></tr><tr><td><strong>特色发挥</strong></td><td><strong>8</strong></td><td>见下，做出 1 项给 4 分，2 项以上给满</td></tr></table></div><div class="card"><p><strong>&quot;特色发挥&quot;可以是什么</strong>（任选其一，做出效果就行）：</p></div><div class="card"><ul><li>列表做成卡片 / 带图标，或按类别分组显示</li><li>加一套配色主题（深色 / 浅色切换）</li><li>加统计图：分类占比、按月趋势</li><li>输入即时筛选，边打关键字边过滤</li><li>快捷键、导出 CSV / 复制到剪贴板</li></ul></div><div class="ok-box">⚠️ 界面分<strong>不白送</strong>：只摆两个控件、业务逻辑全写在按钮里、点一下就崩的，这 20 分拿不到几分。</div><div class="ok-box">📊 基础 100 + 界面 20 = <strong>满分 120</strong>。</div>
+<h1>代码规范与结构（20）· 交互与可用性（15）</h1>
+<div class="card"><p>功能做出来了，还要看代码能不能看懂、能不能改 —— 同样逐条验收；界面档同理，看的是点下去顺不顺、提示清不清楚、连点两下会不会崩。</p></div><div class="card"><h3>代码规范与结构（20 分）</h3></div><div class="card"><table><tr><th>验收点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>模型类</td><td>5</td><td>一条记录一个类，字段齐全、类型对</td></tr><tr><td>管理类</td><td>7</td><td><code>List</code> + 增删改查 + 读写文件都收在这一个类里</td></tr><tr><td>分层文件</td><td>4</td><td>模型 / 数据 / 交互分成三个文件，各管一摊</td></tr><tr><td>命名与注释</td><td>4</td><td>名字看得懂，关键方法有注释，缩进统一</td></tr></table></div><div class="card"><h3>交互与可用性（15 分）</h3></div><div class="card"><table><tr><th>验收点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>菜单循环</td><td>3</td><td>做完一件事回到菜单，选 0 才退出</td></tr><tr><td>输错不崩</td><td>5</td><td><code>TryParse</code> + 判空，输错给提示后能重填</td></tr><tr><td>提示信息</td><td>4</td><td>增删改查成功 / 失败都有明确反馈</td></tr><tr><td>边界情况</td><td>3</td><td>空列表、查不到、删不存在都处理过</td></tr></table></div>
 </div></div>
 <div class="slide" data-page="23"><div class="slide-inner markable">
-<h1>温馨提示与常见坑</h1>
-<div class="card"><ul><li>❌ <strong>套界面前不备份</strong>——直接改原项目，界面没做完就交不出能跑的东西。动手前先把控制台版整个文件夹复制一份，界面在副本上做</li><li>❌ <strong>只做了增删查，漏了&quot;改&quot;或&quot;查询&quot;</strong>——基础清单少一件，功能分直接掉</li><li>❌ <strong>菜单只跑一次就退出了</strong>——主菜单要用 <code>while (true)</code> 包住，做完一件事回到菜单，只有选 0（退出）才 <code>break</code></li><li>❌ <strong>界面档用 <code>MessageBox.Show</code></strong>——Avalonia 没有，改用 <code>TextBlock</code></li><li>❌ <strong>数据只放内存</strong>——没写文件，关掉就没了，持久化分直接丢</li><li>✅ <strong>控制台档跑通后想加界面，放手加</strong>——<code>Record.cs</code> / <code>RecordManager.cs</code> 不用动，只多一层窗体</li><li>✅ 输入一律 <code>TryParse</code> / 判空，避免非法输入直接崩溃</li><li>✅ <strong>基础清单做齐之后，有余力就加亮点</strong>——统计、排序、导出，功能分里往高给，且花不了多少时间</li><li>✅ 每加一个功能就运行试一次，别攒到最后一起调</li><li>✅ 答辩重点讲&quot;你的类怎么设计、谁调用谁&quot;，比炫界面 / 炫菜单更得分</li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：写文档和答辩稿时可以让 AI 帮忙润色，但<strong>核心代码和讲解必须自己来</strong>。</div>
+<h1>设计文档（10）· 答辩表现（10）</h1>
+<div class="card"><p><strong>设计文档（10 分）</strong> —— Word 或 PDF，交之前照着对一遍：</p></div><div class="card"><table><tr><th>内容</th><th>分</th><th>要求</th></tr><tr><td>类图 / 字段说明</td><td>3</td><td>每个类有哪些字段、什么类型，画得清楚</td></tr><tr><td>功能列表</td><td>2</td><td>做了哪些功能，逐条列出来</td></tr><tr><td>使用说明</td><td>2</td><td>怎么运行、菜单 / 界面怎么操作</td></tr><tr><td>运行截图</td><td>2</td><td>主要界面或菜单各截一张</td></tr><tr><td>写明所选档位</td><td>1</td><td>控制台档还是界面档，写在文档首页</td></tr></table></div><div class="card"><p><strong>答辩表现（10 分）</strong> —— 现场 5~8 分钟，老师会追问：</p></div><div class="card"><table><tr><th>看什么</th><th>分</th><th>说明</th></tr><tr><td>类怎么设计</td><td>4</td><td>为什么这么分字段、为什么用这个类</td></tr><tr><td>谁调用谁</td><td>3</td><td>菜单 / 按钮 → 管理类 → 文件，说得清流向</td></tr><tr><td>关键代码在哪</td><td>3</td><td>指得出增删改查、读写文件写在哪一行</td></tr></table></div>
 </div></div>
-<div class="slide" data-page="24"><div class="slide-inner end-page">
+<div class="slide" data-page="24"><div class="slide-inner markable">
+<h1>界面分（满分 20，界面档）</h1>
+<div class="card"><p>界面档在这 20 分上看四件事 —— 与演示验收打分表一致，同样逐项验收：</p></div><div class="card"><table><tr><th>评分点</th><th>分</th><th>做到才给（缺一项不给）</th></tr><tr><td>控件 4 种以上且用得对</td><td>4</td><td><code>TextBox</code> / <code>Button</code> / <code>ListBox</code> / <code>ComboBox</code> 等，放对地方、能正常用</td></tr><tr><td>布局分区清晰</td><td>4</td><td>用 <code>Grid</code> / <code>StackPanel</code> 分区，输入区、列表区、提示区分得开</td></tr><tr><td>事件串联正确</td><td>4</td><td>按钮 <code>Click</code> 只调管理类的方法，业务不写在界面里，改完立刻刷新</td></tr><tr><td><strong>特色发挥</strong></td><td><strong>8</strong></td><td>见下，做出 1 项给 4 分，2 项以上给满</td></tr></table></div><div class="card"><p><strong>&quot;特色发挥&quot;可以是什么</strong>（任选其一，做出效果就行）：</p></div><div class="card"><ul><li>列表做成卡片 / 带图标，或按类别分组显示</li><li>加一套配色主题（深色 / 浅色切换）</li><li>加统计图：分类占比、按月趋势</li><li>输入即时筛选，边打关键字边过滤</li><li>快捷键、导出 CSV / 复制到剪贴板</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> 界面分<strong>不白送</strong>：只摆一两个控件、业务逻辑全写进按钮里、点一下就崩、界面与数据对不上的，这 20 分拿不到几分。</div><div class="ok-box"><span class="eico">📊</span> 基础 100 + 界面 20 = <strong>满分 120</strong>。</div>
+</div></div>
+<div class="slide" data-page="25"><div class="slide-inner markable">
+<h1>温馨提示与常见坑</h1>
+<div class="card"><ul><li>❌ <strong>套界面前不备份</strong>——直接改原项目，界面没做完就交不出能跑的东西。动手前先把控制台版整个文件夹复制一份，界面在副本上做</li><li>❌ <strong>只做了增删查，漏了&quot;改&quot;或&quot;查询&quot;</strong>——基础清单少一件，功能分直接掉</li><li>❌ <strong>菜单只跑一次就退出了</strong>——主菜单要用 <code>while (true)</code> 包住，做完一件事回到菜单，只有选 0（退出）才 <code>break</code></li><li>❌ <strong>界面档用 <code>MessageBox.Show</code></strong>——Avalonia 没有，改用 <code>TextBlock</code></li><li>❌ <strong>数据只放内存</strong>——没写文件，关掉就没了，持久化分直接丢</li><li>✅ <strong>控制台档跑通后想加界面，放手加</strong>——<code>Record.cs</code> / <code>RecordManager.cs</code> 不用动，只多一层窗体</li><li>✅ 输入一律 <code>TryParse</code> / 判空，避免非法输入直接崩溃</li><li>✅ <strong>基础清单做齐之后，有余力就加亮点</strong>——统计、排序、导出，功能分里往高给，且花不了多少时间</li><li>✅ 每加一个功能就运行试一次，别攒到最后一起调</li><li>✅ 答辩重点讲&quot;你的类怎么设计、谁调用谁&quot;，比炫界面 / 炫菜单更得分</li></ul></div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：写文档和答辩稿时可以让 AI 帮忙润色，但<strong>核心代码和讲解必须自己来</strong>。</div>
+</div></div>
+<div class="slide" data-page="26"><div class="slide-inner end-page">
 
 <div class="end-thanks">
     <div class="end-left">
@@ -1284,7 +1414,7 @@ function changeFont(d){
 // ========== 幻灯片 ==========
 let slides=document.querySelectorAll('.slide,.cover'),
     navLinks=document.querySelectorAll('.nav-link'),
-    curr=0,total=24,contentTotal=22;
+    curr=0,total=26,contentTotal=24;
 
 // 进度圆点
 // 侧边栏点击
@@ -1431,18 +1561,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========

@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>课件18_项目实战_图书管理系统 — C#先知课堂</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230f172a'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Menlo,Consolas,monospace' font-size='31' font-weight='700' fill='%2338bdf8'%3EC%23%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="vendor/atom-one-dark.min.css">
 <script src="vendor/highlight.min.js"></script>
 <style>
@@ -34,10 +35,22 @@ body.font-xs{--font-size:12px}body.font-sm{--font-size:14px}body.font-md{--font-
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;background:linear-gradient(180deg,var(--bg-primary),var(--bg-secondary));color:var(--text);line-height:1.6;font-size:var(--font-size)}
 .container{display:flex;height:100vh}
-::-webkit-scrollbar{width:8px}
-::-webkit-scrollbar-track{background:rgba(255,255,255,0.02)}
-::-webkit-scrollbar-thumb{background:rgba(0,212,170,0.2);border-radius:4px}
-::-webkit-scrollbar-thumb:hover{background:rgba(0,212,170,0.4)}
+/* 右侧拖动轴：渐变 + 发光（light 主题单独给一套蓝色） */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,0.035);border-radius:5px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#00D4AA 0%,#4FC3F7 100%);border-radius:5px;box-shadow:0 0 8px rgba(0,212,170,0.45)}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#2EE9C3 0%,#7FD8FF 100%);box-shadow:0 0 12px rgba(0,212,170,0.7)}
+::-webkit-scrollbar-thumb:active{background:linear-gradient(180deg,#00B894 0%,#2196F3 100%)}
+.light ::-webkit-scrollbar-track{background:rgba(0,0,0,0.05)}
+.light ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#0969da 0%,#4FC3F7 100%);box-shadow:0 0 6px rgba(9,105,218,0.35)}
+
+/* ===== 提示框图标：待机轻微浮动，鼠标移上去跳一下 ===== */
+.eico{display:inline-block;animation:iconFloat 3s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.ok-box:hover .eico,.card:hover .eico{animation:iconBounce .6s ease}
+@keyframes iconBounce{0%{transform:translateY(0) scale(1)}40%{transform:translateY(-8px) scale(1.2)}100%{transform:translateY(0) scale(1)}}
+@media (prefers-reduced-motion:reduce){.eico{animation:none!important}}
+@media print{.eico{animation:none!important}}
 
 /* ===== 侧边栏 ===== */
 .sidebar{width:260px;min-width:260px;height:100vh;background:linear-gradient(180deg,rgba(10,14,39,0.98),rgba(13,20,48,0.95));border-right:1px solid var(--border);overflow-y:auto;padding:12px 0;flex-shrink:0;backdrop-filter:blur(10px);position:relative;z-index:10}
@@ -120,7 +133,7 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .prompt-box{background:var(--bg-input);border:1px solid rgba(0,212,170,0.2);border-left:3px solid var(--accent);overflow:hidden;position:relative;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03)}
 .code-toolbar{display:flex;align-items:center;justify-content:space-between;padding:6px 12px;background:rgba(0,0,0,0.3);border-bottom:1px solid rgba(255,255,255,0.04)}
 .code-lang{font-size:10px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase}
-.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;transition:all .2s}
+.copy-btn{background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.2);color:var(--accent);padding:3px 10px;border-radius:5px;cursor:pointer;font-size:11px;font-family:inherit;white-space:nowrap;transition:all .2s}
 .copy-btn:hover{background:rgba(0,212,170,0.2);border-color:var(--accent)}
 .copy-btn.copied{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 .prompt-box pre{background:transparent;padding:12px 16px;margin:0;font-size:calc(var(--font-size) * 0.85);line-height:1.7;overflow-x:auto}
@@ -446,7 +459,7 @@ pre,pre code{page-break-inside:avoid}
 </div>
 <div class="slide" data-page="2"><div class="slide-inner markable">
 <h1>项目目标</h1>
-<div class="ok-box">🚀 <strong>你的第一个完整项目——从零到一，写一个真正能用的系统。</strong></div><div class="card"><p>这不是练习题，这是一个<strong>有菜单、能存盘、关掉重开数据还在</strong>的真实程序。</p></div><pre class="plain-box"><code>╔══════════════════════════════════════════════╗
+<div class="ok-box"><span class="eico">🚀</span> <strong>你的第一个完整项目——从零到一，写一个真正能用的系统。</strong></div><div class="card"><p>这不是练习题，这是一个<strong>有菜单、能存盘、关掉重开数据还在</strong>的真实程序。</p></div><pre class="plain-box"><code>╔══════════════════════════════════════════════╗
 ║            📚 图书管理系统 v1.0               ║
 ╠══════════════════════════════════════════════╣
 ║  1.添加  2.查看  3.查找  4.借书  5.还书       ║
@@ -464,7 +477,7 @@ pre,pre code{page-break-inside:avoid}
 ║  📦 类与对象  📋 集合 List   💾 文件读写      ║
 ║  🛡️ 异常处理  🔀 switch   🔁 while 循环      ║
 ║        200 行代码，练完即战力                   ║
-╚══════════════════════════════════════════════╝</code></pre><div class="ok-box">👀 <strong>先控制台，后 GUI</strong>——今天用黑窗口跑通全部逻辑。后面学完 Avalonia 跨平台窗体，就能把它变成带按钮、输入框、列表的图形界面。<strong>先搞懂内核，再穿漂亮衣服。</strong></div>
+╚══════════════════════════════════════════════╝</code></pre><div class="ok-box"><span class="eico">👀</span> <strong>先控制台，后 GUI</strong>——今天用黑窗口跑通全部逻辑。后面学完 Avalonia 跨平台窗体，就能把它变成带按钮、输入框、列表的图形界面。<strong>先搞懂内核，再穿漂亮衣服。</strong></div>
 </div></div>
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>需求说明</h1>
@@ -508,11 +521,11 @@ pre,pre code{page-break-inside:avoid}
 </div></div>
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>AI 协作开发 — 用 AI 搭脚手架</h1>
-<div class="ok-box">200 多行代码，一条条敲太慢。<strong>把 AI 当搭档，不是替身——它给框架，你填灵魂。</strong></div><div class="card"><h3>⚠️ 三条铁律——开始前记牢</h3><ol><li><strong>只让 AI 写框架</strong>：类定义、方法签名、属性声明——这些重复劳动交给它</li><li><strong>业务逻辑必须自己写</strong>：判断条件、用户交互、数据校验——你自己想出来才算会</li><li><strong>写完一个方法就关 AI 测一次</strong>：不要一口气全问完再写，那样等于照抄</li></ol></div><div class="card"><h3>🔧 实操四步——跟着做就能跑通</h3></div><div class="card"><h3>第1步：生成 Book 类</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 C# <code>Book</code> 类，属性：<code>Title</code>、<code>Author</code>、<code>Price</code>、<code>Stock</code>。带构造函数和 <code>ToString()</code>&quot;</em></td><td>完整的 Book 类代码（属性、构造、ToString）</td><td>对照 <strong>4. 类的设计</strong>，理解每行含义后复制</td></tr></table></div><div class="card"><h3>第2步：生成 BookManager 空壳</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 <code>static class BookManager</code>，成员 <code>FilePath</code>、<code>List&lt;Book&gt;</code> books。给这些方法只写签名不写实现：<code>LoadBooks()</code>、<code>SaveBooks()</code>、<code>AddBook()</code>、<code>ShowBooks()</code>、<code>SearchBooks()</code>、<code>BorrowBook()</code>、<code>ReturnBook()</code>&quot;</em></td><td>每个方法只有 <code>{ }</code> 空壳，里面写 <code>// TODO</code></td><td><strong>一个方法一个方法填逻辑</strong>——先填 LoadBooks，写完就跳到第3步</td></tr></table></div><div class="card"><h3>第3步：写一个方法 → 贴给 AI 审查</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;这个 <code>AddBook()</code> 方法有没有 bug？边界情况处理好了吗？输入负数价格会怎样？&quot;</em></td><td>指出问题+建议修复</td><td><strong>理解为什么有问题</strong>再改，不要盲抄</td></tr></table></div><div class="ok-box">💡 关键原则：<strong>一次只问一个方法</strong>。五个方法一起贴，AI 的回答会糊，你也记不住。</div><div class="card"><h3>第4步：关掉 AI，跑起来验证</h3></div><div class="ok-box">写完一个功能模块（如添加+查看）——<strong>马上关掉 AI</strong>，运行程序，用 <strong>2. 需求说明</strong> 页面的菜单实测。跑通了再开 AI 写下一组。如果结果不对：先自己用课件7的调试技巧排查 → 实在找不到 → 把异常信息贴给 AI 定位。</div><div class="ok-box">💡 回到课件1那句话：<strong>AI 写脚手架，人写业务。</strong>今天这 200 行代码练完，你就真正懂了这句话。</div>
+<div class="ok-box">200 多行代码，一条条敲太慢。<strong>把 AI 当搭档，不是替身——它给框架，你填灵魂。</strong></div><div class="card"><h3>⚠️ 三条铁律——开始前记牢</h3><ol><li><strong>只让 AI 写框架</strong>：类定义、方法签名、属性声明——这些重复劳动交给它</li><li><strong>业务逻辑必须自己写</strong>：判断条件、用户交互、数据校验——你自己想出来才算会</li><li><strong>写完一个方法就关 AI 测一次</strong>：不要一口气全问完再写，那样等于照抄</li></ol></div><div class="card"><h3>🔧 实操四步——跟着做就能跑通</h3></div><div class="card"><h3>第1步：生成 Book 类</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 C# <code>Book</code> 类，属性：<code>Title</code>、<code>Author</code>、<code>Price</code>、<code>Stock</code>。带构造函数和 <code>ToString()</code>&quot;</em></td><td>完整的 Book 类代码（属性、构造、ToString）</td><td>对照 <strong>4. 类的设计</strong>，理解每行含义后复制</td></tr></table></div><div class="card"><h3>第2步：生成 BookManager 空壳</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;写一个 <code>static class BookManager</code>，成员 <code>FilePath</code>、<code>List&lt;Book&gt;</code> books。给这些方法只写签名不写实现：<code>LoadBooks()</code>、<code>SaveBooks()</code>、<code>AddBook()</code>、<code>ShowBooks()</code>、<code>SearchBooks()</code>、<code>BorrowBook()</code>、<code>ReturnBook()</code>&quot;</em></td><td>每个方法只有 <code>{ }</code> 空壳，里面写 <code>// TODO</code></td><td><strong>一个方法一个方法填逻辑</strong>——先填 LoadBooks，写完就跳到第3步</td></tr></table></div><div class="card"><h3>第3步：写一个方法 → 贴给 AI 审查</h3></div><div class="card"><table><tr><th>你告诉 AI</th><th>AI 给你</th><th>你做什么</th></tr><tr><td><em>&quot;这个 <code>AddBook()</code> 方法有没有 bug？边界情况处理好了吗？输入负数价格会怎样？&quot;</em></td><td>指出问题+建议修复</td><td><strong>理解为什么有问题</strong>再改，不要盲抄</td></tr></table></div><div class="ok-box"><span class="eico">💡</span> 关键原则：<strong>一次只问一个方法</strong>。五个方法一起贴，AI 的回答会糊，你也记不住。</div><div class="card"><h3>第4步：关掉 AI，跑起来验证</h3></div><div class="ok-box">写完一个功能模块（如添加+查看）——<strong>马上关掉 AI</strong>，运行程序，用 <strong>2. 需求说明</strong> 页面的菜单实测。跑通了再开 AI 写下一组。如果结果不对：先自己用课件7的调试技巧排查 → 实在找不到 → 把异常信息贴给 AI 定位。</div><div class="ok-box"><span class="eico">💡</span> 回到课件1那句话：<strong>AI 写脚手架，人写业务。</strong>今天这 200 行代码练完，你就真正懂了这句话。</div>
 </div></div>
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>类的设计</h1>
-<div class="ok-box">🤖 AI 第1步生成完整类 → 🧑 你对照理解每行含义</div><div class="card"><p><code>Book</code> 类 = 一本书的<strong>模板</strong>——定义了每本书有哪些属性和怎么展示自己。</p></div><pre class="plain-box"><code>┌─────────────────────────────────┐
+<div class="ok-box"><span class="eico">🤖</span> AI 第1步生成完整类 → 🧑 你对照理解每行含义</div><div class="card"><p><code>Book</code> 类 = 一本书的<strong>模板</strong>——定义了每本书有哪些属性和怎么展示自己。</p></div><pre class="plain-box"><code>┌─────────────────────────────────┐
 │          Book 对象               │
 │  ┌─────────────────────────────┐│
 │  │ Title   = &quot;C#入门&quot;          ││
@@ -522,9 +535,9 @@ pre,pre code{page-break-inside:avoid}
 │  └─────────────────────────────┘│
 │  ToString() →                   │
 │  &quot;C#入门 | 张老师 | ¥45 | 库存5&quot; │
-└─────────────────────────────────┘</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348478720',this)">复制</button></div>
-<pre id="c_4348478720"><code class="language-csharp">using System;
+└─────────────────────────────────┘</code></pre><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349706944',this)">复制</button></div>
+<pre id="c_4349706944"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -537,13 +550,24 @@ namespace HelloWorld
 
         public Book(string title, string author, double price, int stock)
         {
-            Title = title; Author = author;
-            Price = price; Stock = stock;
+            Title = title;
+            Author = author;
+            Price = price;
+            Stock = stock;
         }
 
         public override string ToString()
         {
             return $&quot;{Title} | {Author} | ¥{Price} | 库存{Stock}&quot;;
+        }
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Book b = new Book(&quot;C#入门&quot;, &quot;张老师&quot;, 45, 5);
+            Console.WriteLine(b);          // 自动调用 ToString()
         }
     }
 }</code></pre>
@@ -555,8 +579,8 @@ namespace HelloWorld
 ├── class Book                ← ① 数据：一本书长什么样
 ├── static class BookManager  ← ② 操作：增删查改全在这里
 └── class Program             ← ③ 入口：只显示菜单、分发任务</code></pre><div class="card"><ul><li><strong>Book</strong> — 只存数据 + 一个 <code>ToString()</code></li><li><strong>BookManager</strong> — 加 <code>static</code>，七个方法全是 <code>public static</code>，用 <code>BookManager.方法名()</code> 直接调，<strong>不用 <code>new</code></strong></li><li><strong>Program.Main</strong> — 不写业务逻辑，只做<span class="term-q">「加载 → 循环菜单 → 退出保存」</span></li></ul></div><div class="card"><h3>完整骨架（能编译、能运行）</h3><p>七个方法先留 <code>// TODO</code>，后面几页一个个填；填的时候<strong>只动方法体，不动外面的结构</strong>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348443776',this)">复制</button></div>
-<pre id="c_4348443776"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349688640',this)">复制</button></div>
+<pre id="c_4349688640"><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -627,13 +651,14 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><h3>四条结构规矩（写错一条就跑不起来）</h3></div><div class="card"><table><tr><th>规矩</th><th>反例（会报错）</th></tr><tr><td><code>using</code> 全写在文件最上面，<code>namespace</code> 之前</td><td>把 <code>using System.IO;</code> 写进 <code>Main</code> 里</td></tr><tr><td>一个文件可以有多个类，但只能有一个 <code>Main</code></td><td>每个类都写 <code>static void Main()</code></td></tr><tr><td>类写在 <code>namespace</code> 里</td><td>把类写在 <code>Main</code> 里面</td></tr><tr><td>方法写在类里、语句写在方法里</td><td>把 <code>books.Add(...)</code> 直接挂在 <code>namespace</code> 下</td></tr></table></div><div class="ok-box">💡 记住这张&quot;嵌套图&quot;：<code>namespace</code> → <code>class</code> → <code>方法</code> → <code>语句</code>，<strong>一层套一层，不能跳级</strong>。后面所有报错，先回来看自己是不是把某一行放错了层。</div><div class="card"><h3>现在就能 Run</h3><p>把 <code>books.txt</code> 复制到项目目录再运行：菜单会正常显示，选 1~5 暂时没反应（方法还是空壳），选 6 能退出。<strong>能跑到这一步，说明结构搭对了</strong>，剩下的只是往里填代码。</p></div><div class="ok-box">📌 这里的菜单是<strong>基础版 6 项</strong>；<span class="term">删除图书</span>是课堂作业题4 要你自己加的第 7 项（加完菜单变成 <code>6.删除  7.退出</code>）。</div>
+</div><div class="card"><h3>四条结构规矩（写错一条就跑不起来）</h3></div><div class="card"><table><tr><th>规矩</th><th>反例（会报错）</th></tr><tr><td><code>using</code> 全写在文件最上面，<code>namespace</code> 之前</td><td>把 <code>using System.IO;</code> 写进 <code>Main</code> 里</td></tr><tr><td>一个文件可以有多个类，但只能有一个 <code>Main</code></td><td>每个类都写 <code>static void Main()</code></td></tr><tr><td>类写在 <code>namespace</code> 里</td><td>把类写在 <code>Main</code> 里面</td></tr><tr><td>方法写在类里、语句写在方法里</td><td>把 <code>books.Add(...)</code> 直接挂在 <code>namespace</code> 下</td></tr></table></div><div class="ok-box"><span class="eico">💡</span> 记住这张&quot;嵌套图&quot;：<code>namespace</code> → <code>class</code> → <code>方法</code> → <code>语句</code>，<strong>一层套一层，不能跳级</strong>。后面所有报错，先回来看自己是不是把某一行放错了层。</div><div class="card"><h3>现在就能 Run</h3><p>把 <code>books.txt</code> 复制到项目目录再运行：菜单会正常显示，选 1~5 暂时没反应（方法还是空壳），选 6 能退出。<strong>能跑到这一步，说明结构搭对了</strong>，剩下的只是往里填代码。</p></div><div class="ok-box"><span class="eico">📌</span> 这里的菜单是<strong>基础版 6 项</strong>；<span class="term">删除图书</span>是课堂作业题4 要你自己加的第 7 项（加完菜单变成 <code>6.删除  7.退出</code>）。</div>
 </div></div>
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>BookManager — 数据统筹类</h1>
-<div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348442624',this)">复制</button></div>
-<pre id="c_4348442624"><code class="language-csharp">using System;
+<div class="ok-box"><span class="eico">📌</span> <strong>本页是分段讲解</strong>：下面这些方法要放进同一个项目里（配合页面5 的 <code>Book</code> 类和 <code>BookManager</code> 的字段）才能运行。想直接复制一个能跑的完整程序，看<strong>页面6<span class="term">程序结构</span></strong>里的整段骨架。</div><div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349687296',this)">复制</button></div>
+<pre id="c_4349687296"><code class="language-csharp">using System;
+using System.Collections.Generic;
 
 namespace HelloWorld
 {
@@ -662,8 +687,9 @@ namespace HelloWorld
                              └──────────────────────┘
   ① ReadAllLines 读每行      ③ new Book(...) 创建对象
   ② Split('|') 拆成4段       ④ books.Add(book) 加入列表</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348442240',this)">复制</button></div>
-<pre id="c_4348442240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349686912',this)">复制</button></div>
+<pre id="c_4349686912"><code class="language-csharp">using System;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -685,7 +711,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li><code>File.Exists</code> — 文件不存在就别读了，程序不会崩</li><li><code>ReadAllLines</code> — 把文件所有行读成 <code>string[]</code></li><li><code>Split('|')</code> — 按竖线拆开，每本书存成一行 <code>Title|Author|Price|Stock</code></li><li><code>double.Parse</code> / <code>int.Parse</code> — 文件里读出来都是 string，价格转 double，库存转 int</li></ul></div><div class="ok-box">📁 范例数据文件 <code>books.txt</code> 已准备好（4 列格式 <code>Title|Author|Price|Stock</code>），内容和上面 ASCII 图一样，复制到程序目录就能跑。题2 的 5 列新格式范例见同目录的 <code>books_isbn.txt</code>。</div><div class="card"><h3>SaveBooks() — 退出时从内存写回文件</h3></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books        📂 books.txt
+</div><div class="card"><ul><li><code>File.Exists</code> — 文件不存在就别读了，程序不会崩</li><li><code>ReadAllLines</code> — 把文件所有行读成 <code>string[]</code></li><li><code>Split('|')</code> — 按竖线拆开，每本书存成一行 <code>Title|Author|Price|Stock</code></li><li><code>double.Parse</code> / <code>int.Parse</code> — 文件里读出来都是 string，价格转 double，库存转 int</li></ul></div><div class="ok-box"><span class="eico">📁</span> 范例数据文件 <code>books.txt</code> 已准备好（4 列格式 <code>Title|Author|Price|Stock</code>），内容和上面 ASCII 图一样，复制到程序目录就能跑。题2 的 5 列新格式范例见同目录的 <code>books_isbn.txt</code>。</div><div class="card"><h3>SaveBooks() — 退出时从内存写回文件</h3></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books        📂 books.txt
   ┌──────────────────────┐   ┌──────────────────┐
   │ Book(&quot;C#入门&quot;,&quot;张老师&quot;,│ → │ C#入门|张老师|45|5│
   │       45,5)           │   │ 算法导论|李教授|89|3│
@@ -695,8 +721,10 @@ namespace HelloWorld
   │       68,2)           │   ① foreach 遍历列表
   └──────────────────────┘   ② 拼接成 &quot;Title|Author|Price|Stock&quot;
                              ③ WriteAllLines 一次写完</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348441600',this)">复制</button></div>
-<pre id="c_4348441600"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349686272',this)">复制</button></div>
+<pre id="c_4349686272"><code class="language-csharp">using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace HelloWorld
 {
@@ -713,7 +741,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li><code>foreach</code> 遍历列表，每本书拼成一行 <code>Title|Author|Price|Stock</code></li><li><code>WriteAllLines</code> — 把 <code>List&lt;string&gt;</code> 一次性写入文件</li><li>LoadBooks 用 <code>Split</code> 拆 → SaveBooks 用 <code>$&quot;{}&quot;</code> 拼——对称操作</li></ul></div><div class="ok-box">💡 LoadBooks 和 SaveBooks 是镜像操作：一个读、一个写。数据格式统一用 <code>|</code> 分隔，两边保持一致就行。</div>
+</div><div class="card"><ul><li><code>foreach</code> 遍历列表，每本书拼成一行 <code>Title|Author|Price|Stock</code></li><li><code>WriteAllLines</code> — 把 <code>List&lt;string&gt;</code> 一次性写入文件</li><li>LoadBooks 用 <code>Split</code> 拆 → SaveBooks 用 <code>$&quot;{}&quot;</code> 拼——对称操作</li></ul></div><div class="ok-box"><span class="eico">💡</span> LoadBooks 和 SaveBooks 是镜像操作：一个读、一个写。数据格式统一用 <code>|</code> 分隔，两边保持一致就行。</div>
 </div></div>
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>主程序框架</h1>
@@ -729,8 +757,8 @@ namespace HelloWorld
 ╠══════════════════════╣
 ║ 选择：_              ║
 ╚══════════════════════╝</code></pre><div class="card"><p><code>Main</code> 只做三件事：<strong>启动时加载 → 循环显示菜单 → 退出时保存</strong>。所有业务逻辑全在 BookManager，<code>Main</code> 只管分发任务。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348443136',this)">复制</button></div>
-<pre id="c_4348443136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349687616',this)">复制</button></div>
+<pre id="c_4349687616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -761,11 +789,11 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><h3>逐行解读：</h3></div><div class="card"><ul><li><code>BookManager.LoadBooks()</code> — 启动即加载。程序一打开，把 <code>books.txt</code> 里的数据读到内存。<strong>只调一次</strong>，放在 <code>while</code> 前面。</li><li><code>while (true)</code> — 无限循环。每次操作完回到菜单，直到用户选 6 才退出。</li><li><code>switch (choice)</code> — 用户输入 1~6，跳到对应方法。每个 <code>case</code> 一行代码——这就是把业务拆到 BookManager 的好处。</li><li><code>case &quot;6&quot;</code> — 先 <code>SaveBooks()</code> 把数据写回文件，再 <code>return</code> 退出程序。<strong>保存动作只在退出时执行一次</strong>。</li></ul></div><div class="ok-box">💡 记住这个模式：<strong>启动时 Load → 循环操作 → 退出时 Save</strong>。以后做任何带数据持久化的程序，都是这个结构。</div><div class="ok-box">🏃 <strong>现在就 Run！</strong> 把<span class="term-q">「BookManager — 数据统筹类」</span>页面提到的 <code>books.txt</code> 范例数据复制到程序目录（和 .cs 同文件夹），然后运行——程序能编译，菜单能显示。但除了退出保存，其他功能还是空壳。下一页写完 <code>ShowBooks()</code> 和 <code>AddBook()</code> 后再 Run，就能看到三本书了。</div>
+</div><div class="card"><h3>逐行解读：</h3></div><div class="card"><ul><li><code>BookManager.LoadBooks()</code> — 启动即加载。程序一打开，把 <code>books.txt</code> 里的数据读到内存。<strong>只调一次</strong>，放在 <code>while</code> 前面。</li><li><code>while (true)</code> — 无限循环。每次操作完回到菜单，直到用户选 6 才退出。</li><li><code>switch (choice)</code> — 用户输入 1~6，跳到对应方法。每个 <code>case</code> 一行代码——这就是把业务拆到 BookManager 的好处。</li><li><code>case &quot;6&quot;</code> — 先 <code>SaveBooks()</code> 把数据写回文件，再 <code>return</code> 退出程序。<strong>保存动作只在退出时执行一次</strong>。</li></ul></div><div class="ok-box"><span class="eico">💡</span> 记住这个模式：<strong>启动时 Load → 循环操作 → 退出时 Save</strong>。以后做任何带数据持久化的程序，都是这个结构。</div><div class="ok-box"><span class="eico">🏃</span> <strong>现在就 Run！</strong> 把<span class="term-q">「BookManager — 数据统筹类」</span>页面提到的 <code>books.txt</code> 范例数据复制到程序目录（和 .cs 同文件夹），然后运行——程序能编译，菜单能显示。但除了退出保存，其他功能还是空壳。下一页写完 <code>ShowBooks()</code> 和 <code>AddBook()</code> 后再 Run，就能看到三本书了。</div>
 </div></div>
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>查看与添加图书</h1>
-<div class="ok-box">先写简单的 <code>ShowBooks()</code> 查看图书，再一步步打磨 <code>AddBook()</code> 添加图书——从跑通到完善，你会发现写代码就是<span class="term">发现问题 → 改代码</span>的循环。</div><div class="card"><h3>ShowBooks() — 先把查看功能写出来</h3><p>跑起来就能看到结果，给自己一点正反馈：</p></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books                控制台输出
+<div class="ok-box"><span class="eico">📌</span> <strong>本页是分段讲解</strong>：下面这些方法要放进同一个项目里（配合页面5 的 <code>Book</code> 类和 <code>BookManager</code> 的字段）才能运行。想直接复制一个能跑的完整程序，看<strong>页面6<span class="term">程序结构</span></strong>里的整段骨架。</div><div class="ok-box">先写简单的 <code>ShowBooks()</code> 查看图书，再一步步打磨 <code>AddBook()</code> 添加图书——从跑通到完善，你会发现写代码就是<span class="term">发现问题 → 改代码</span>的循环。</div><div class="card"><h3>ShowBooks() — 先把查看功能写出来</h3><p>跑起来就能看到结果，给自己一点正反馈：</p></div><pre class="plain-box"><code>  📋 List&lt;Book&gt; books                控制台输出
   ┌──────────────────────┐     ┌─────────────────────────┐
   │ [0] Book(&quot;C#入门&quot;,…)  │ →   │ [1] C#入门 | 张老师 | ¥45│
   │ [1] Book(&quot;算法导论&quot;,…) │ →   │ [2] 算法导论 | 李教授 | ¥89│
@@ -773,8 +801,8 @@ namespace HelloWorld
   └──────────────────────┘     └─────────────────────────┘
   books.Count = 3               for (int i=0; i&lt;Count; i++)
                                 $&quot;[{i+1}] {books[i]}&quot;</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348437504',this)">复制</button></div>
-<pre id="c_4348437504"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349682240',this)">复制</button></div>
+<pre id="c_4349682240"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -804,8 +832,8 @@ namespace HelloWorld
                                           └─────────────────┘
                                                     ↓
                                               ✅ 添加成功</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348434112',this)">复制</button></div>
-<pre id="c_4348434112"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349681408',this)">复制</button></div>
+<pre id="c_4349681408"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -836,8 +864,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><strong>🧐 新东西：<code>TryParse</code> 和 <code>out</code> 参数</strong> —— 之前一直用 <code>int.Parse()</code>，但 <code>Parse</code> 有个致命缺点：用户输入 <code>&quot;abc&quot;</code>，程序直接崩（<code>FormatException</code>）。<code>TryParse</code> 是安全版：<strong>不崩，而是返回 <code>true</code>/<code>false</code> 告诉你成没成功</strong>。成功的话，结果通过 <code>out</code> 参数带出来：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348436352',this)">复制</button></div>
-<pre id="c_4348436352"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349681216',this)">复制</button></div>
+<pre id="c_4349681216"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -856,7 +884,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box"><code>out int price</code> —— &quot;这个方法会帮我把值放到 <code>price</code> 里&quot;，不用先声明变量。<br><code>!double.TryParse(...)</code> —— <code>!</code> 取反，失败就进 if。<br><code>|| price &lt; 0</code> —— 即使转成功了，负数也不合法。<br>这也是卫语句：<strong>输入不合法 → 提示 → return</strong>，主逻辑继续往下走。</div><div class="ok-box">🐛 <strong>试一下</strong>：加一本&quot;C#入门&quot;，再加一本&quot;C#入门&quot;——列表里出现了两条一模一样的书。这肯定不对。</div><div class="ok-box">🤔 <strong>自己先想 5 分钟</strong>：怎么防止同一本书被加两次？想不出来？打开 AI 工具，把上面的代码发过去，问：<br><em>&quot;帮我给 AddBook 加一个查重功能——如果 books 列表里已经有同名的书，就提示'已存在'并拒绝添加。&quot;</em></div><div class="card"><h3>第一次改进：加查重</h3><p>AI 给你的思路就是：输入书名后，先 <code>foreach</code> 遍历一遍，同名就 <code>return</code> 拦截：</p></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
+</div><div class="ok-box"><code>out int price</code> —— &quot;这个方法会帮我把值放到 <code>price</code> 里&quot;，不用先声明变量。<br><code>!double.TryParse(...)</code> —— <code>!</code> 取反，失败就进 if。<br><code>|| price &lt; 0</code> —— 即使转成功了，负数也不合法。<br>这也是卫语句：<strong>输入不合法 → 提示 → return</strong>，主逻辑继续往下走。</div><div class="ok-box"><span class="eico">🐛</span> <strong>试一下</strong>：加一本&quot;C#入门&quot;，再加一本&quot;C#入门&quot;——列表里出现了两条一模一样的书。这肯定不对。</div><div class="ok-box"><span class="eico">🤔</span> <strong>自己先想 5 分钟</strong>：怎么防止同一本书被加两次？想不出来？打开 AI 工具，把上面的代码发过去，问：<br><em>&quot;帮我给 AddBook 加一个查重功能——如果 books 列表里已经有同名的书，就提示'已存在'并拒绝添加。&quot;</em></div><div class="card"><h3>第一次改进：加查重</h3><p>AI 给你的思路就是：输入书名后，先 <code>foreach</code> 遍历一遍，同名就 <code>return</code> 拦截：</p></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
                 │ foreach 遍历 books │
                 │ 检查 Title 是否相同  │
                 └──────┬───────────┘
@@ -867,8 +895,8 @@ namespace HelloWorld
                         │        │ books.Add(new Book(...))
                         │        │     ↓
                         │        │ ✅ 添加成功</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4348430720',this)">复制</button></div>
-<pre id="c_4348430720"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349680640',this)">复制</button></div>
+<pre id="c_4349680640"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -895,7 +923,7 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">🐛 <strong>再试一个场景</strong>：图书管理员想补货——&quot;C#入门&quot;卖得好，库存从 5 本加到 10 本。结果上面这段代码直接弹<span class="term-q">「已存在，无法重复添加」</span>……补货也被拦住了。</div><div class="ok-box">🤔 <strong>这次的问题不一样了</strong>：不是&quot;同名→拒绝&quot;，而是&quot;同名→追加库存&quot;。把改好的代码发给 AI，问：<br><em>&quot;现在用查重拦住了重复添加，但我还想支持补货：如果书名已存在，询问'追加数量'，加到原来的 Stock 上。&quot;</em></div><div class="card"><h3>第二次改进：重名就追加库存</h3></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
+</div><div class="ok-box"><span class="eico">🐛</span> <strong>再试一个场景</strong>：图书管理员想补货——&quot;C#入门&quot;卖得好，库存从 5 本加到 10 本。结果上面这段代码直接弹<span class="term-q">「已存在，无法重复添加」</span>……补货也被拦住了。</div><div class="ok-box"><span class="eico">🤔</span> <strong>这次的问题不一样了</strong>：不是&quot;同名→拒绝&quot;，而是&quot;同名→追加库存&quot;。把改好的代码发给 AI，问：<br><em>&quot;现在用查重拦住了重复添加，但我还想支持补货：如果书名已存在，询问'追加数量'，加到原来的 Stock 上。&quot;</em></div><div class="card"><h3>第二次改进：重名就追加库存</h3></div><pre class="plain-box"><code>  输入&quot;书名&quot; ──→ ┌──────────────────┐
                 │ foreach 遍历 books │
                 │ 检查 Title 是否相同  │
                 └──────┬───────────┘
@@ -909,8 +937,8 @@ namespace HelloWorld
           b.Stock += 5   │        │
                ↓        │        │
           ✅ 库存已更新   │        │</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344445184',this)">复制</button></div>
-<pre id="c_4344445184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349679936',this)">复制</button></div>
+<pre id="c_4349679936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -956,11 +984,11 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 <strong>回头看看我们一起做了什么</strong>：一个 <code>AddBook()</code>，从跑通 → 发现重复问题 → 改进 → 发现补货问题 → 再改进，总共磨了三版。每一版都是<strong>先发现问题、再分析原因、最后动手改代码</strong>。老师只是带着你走，AI 只是你卡住时的帮手——<strong>真正想清楚<span class="term">要加什么功能</span>的人，是你自己</strong>。</div><div class="card"><ul><li><code>b.Stock += add</code> 直接修改现存对象的属性——List 存的是引用</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li></ul></div>
+</div><div class="ok-box"><span class="eico">💡</span> <strong>回头看看我们一起做了什么</strong>：一个 <code>AddBook()</code>，从跑通 → 发现重复问题 → 改进 → 发现补货问题 → 再改进，总共磨了三版。每一版都是<strong>先发现问题、再分析原因、最后动手改代码</strong>。老师只是带着你走，AI 只是你卡住时的帮手——<strong>真正想清楚<span class="term">要加什么功能</span>的人，是你自己</strong>。</div><div class="card"><ul><li><code>b.Stock += add</code> 直接修改现存对象的属性——List 存的是引用</li><li><code>books[i]</code> 自动调用 <code>ToString()</code></li></ul></div>
 </div></div>
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>查找与借还书</h1>
-<div class="ok-box">先写 <code>SearchBooks()</code> 查找图书——最简单，写完就能搜。再写借书还书——这两个套路一样，写完一个另一个秒懂。</div><div class="card"><h3>SearchBooks() 查找图书 — 输入关键词，模糊匹配</h3></div><pre class="plain-box"><code>  输入&quot;关键词&quot; ──→ ┌──────────────────┐
+<div class="ok-box"><span class="eico">📌</span> <strong>本页是分段讲解</strong>：下面这些方法要放进同一个项目里（配合页面5 的 <code>Book</code> 类和 <code>BookManager</code> 的字段）才能运行。想直接复制一个能跑的完整程序，看<strong>页面6<span class="term">程序结构</span></strong>里的整段骨架。</div><div class="ok-box">先写 <code>SearchBooks()</code> 查找图书——最简单，写完就能搜。再写借书还书——这两个套路一样，写完一个另一个秒懂。</div><div class="card"><h3>SearchBooks() 查找图书 — 输入关键词，模糊匹配</h3></div><pre class="plain-box"><code>  输入&quot;关键词&quot; ──→ ┌──────────────────┐
                    │ foreach 遍历 books │
                    │ Title 包含关键词？   │
                    └──────┬───────────┘
@@ -968,8 +996,8 @@ namespace HelloWorld
                      ↓    │        │   ↓
                输出 [i+1]  │        │ 跳过，继续
                books[i]    │        │</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4344262272',this)">复制</button></div>
-<pre id="c_4344262272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349678912',this)">复制</button></div>
+<pre id="c_4349678912"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -985,9 +1013,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box">🐛 <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box">🤔 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349335680',this)">复制</button></div>
-<pre id="c_4349335680"><code class="language-csharp">using System;
+</div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box"><span class="eico">🐛</span> <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box"><span class="eico">🤔</span> 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349678336',this)">复制</button></div>
+<pre id="c_4349678336"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1014,8 +1042,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>bool found = false</code> — 先假设没找到，循环里匹配到了就改成 <code>true</code></li><li><code>if (!found)</code> — 循环跑完了还是 <code>false</code>，说明一本都没匹配到，输出提示</li></ul></div><div class="card"><h3>BorrowBook() 借书 — 先跑通，再防崩</h3><p>借书的逻辑：先列出所有书 → 选编号 → 库存 -1。先写个能跑的：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349336064',this)">复制</button></div>
-<pre id="c_4349336064"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349677952',this)">复制</button></div>
+<pre id="c_4349677952"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1036,9 +1064,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box">🐛 <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box">🤔 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349336640',this)">复制</button></div>
-<pre id="c_4349336640"><code class="language-csharp">using System;
+</div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box"><span class="eico">🐛</span> <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box"><span class="eico">🤔</span> 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349677376',this)">复制</button></div>
+<pre id="c_4349677376"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1074,9 +1102,9 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有<span class="term">不对劲的情况</span>都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是<span class="term">列表里一条记录都没有</span>，<code>Stock == 0</code> 是<span class="term-q">「这本书的库存被借光了但记录还在」</span>。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349337024',this)">复制</button></div>
-<pre id="c_4349337024"><code class="language-csharp">using System;
+</div><div class="ok-box"><span class="eico">💡</span> <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有<span class="term">不对劲的情况</span>都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是<span class="term">列表里一条记录都没有</span>，<code>Stock == 0</code> 是<span class="term-q">「这本书的库存被借光了但记录还在」</span>。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box tall">
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349676992',this)">复制</button></div>
+<pre id="c_4349676992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1107,11 +1135,11 @@ namespace HelloWorld
         }
     }
 }</code></pre>
-</div><div class="ok-box">💡 借书和还书放到一起看——你会发现写代码经常是<strong><span class="term">抄自己</span></strong>：差不多的结构，改一两行就行。不是抄别人，是自己积累的套路。</div>
+</div><div class="ok-box"><span class="eico">💡</span> 借书和还书放到一起看——你会发现写代码经常是<strong><span class="term">抄自己</span></strong>：差不多的结构，改一两行就行。不是抄别人，是自己积累的套路。</div>
 </div></div>
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>课堂作业</h1>
-<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box">⚠️ <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="ok-box">⚠️ 本课件题目为 <strong>手动验收</strong>——运行程序演示效果，或提交运行截图 / 录屏即可。</div><div class="card"><h3>题1（3分）⚠️ 手动验收</h3><p>照着侧边栏 <strong>4~8</strong> 页（类的设计 → BookManager → 主程序框架 → 查看与添加图书 → 查找与借还书）的完整代码，自己敲一遍搭出可运行的完整系统；运行并验证<code>添加</code> / <code>查看</code> / <code>查找</code> / <code>借书</code> / <code>还书</code>全部正常，关闭重开数据仍在。</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="菜单六项对应 BookManager 的方法，数据靠 LoadBooks/SaveBooks 落盘到 books.txt">
+<div class="card"><p><em>作业提交方式：</em></p></div><div class="card"><ul><li>打开<strong>课件结束页</strong>上的提交二维码进入问卷，或直接访问 <a href="https://f.wps.cn/g/PWdtgBiE/" target="_blank" rel="noopener">https://f.wps.cn/g/PWdtgBiE/</a></li><li>填写<strong>姓名、学号、课件序号</strong></li><li>把本课件<strong>全部题目的答案</strong>写进<strong>同一个 <code>.cs</code> 文件</strong>（按题号顺序），上传即可</li><li>教师批改后，成绩同步到<strong>腾讯文档</strong>（结束页另一张二维码可查）</li></ul></div><div class="ok-box"><span class="eico">⚠️</span> <strong>提交要求</strong>：姓名、学号、课件序号务必填写准确；答案统一写在同一个 .cs 文件里。</div><div class="ok-box"><span class="eico">⚠️</span> 本课件题目为 <strong>手动验收</strong>——运行程序演示效果，或提交运行截图 / 录屏即可。</div><div class="card"><h3>题1（3分）⚠️ 手动验收</h3><p>照着侧边栏 <strong>4~8</strong> 页（类的设计 → BookManager → 主程序框架 → 查看与添加图书 → 查找与借还书）的完整代码，自己敲一遍搭出可运行的完整系统；运行并验证<code>添加</code> / <code>查看</code> / <code>查找</code> / <code>借书</code> / <code>还书</code>全部正常，关闭重开数据仍在。</p></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 292" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="菜单六项对应 BookManager 的方法，数据靠 LoadBooks/SaveBooks 落盘到 books.txt">
   <defs><marker id="k18q1" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#38bdf8"/></marker></defs>
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">五个功能 + 一个退出，背后都是同一个 List<Book></text>
   <rect x="24" y="40" width="268" height="186" rx="8" fill="#1b2536" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="1"/>
@@ -1137,7 +1165,7 @@ namespace HelloWorld
   <text x="311" y="142" text-anchor="middle" fill="#22c55e" font-size="8.5" font-family="sans-serif">存</text>
   <rect x="24" y="240" width="632" height="40" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="265" fill="#22c55e" font-size="10.5" font-family="monospace">关掉程序再打开，books.txt 还在 → 数据就还在（只写内存必丢）</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>启动程序，加载books.txt数据，显示菜单</li><li>选 2 查看，列出 books.txt 中的 所有书</li><li>选 1 添加《测试书》→ 再选 2 查看，列表数量加一</li><li>选 4 借书 1 本 → 选 6 退出 → 重新运行，数据仍在</li></ul></div><div class="card"><h3>题2（8分）⚠️ 手动验收</h3><p>给 <code>Book</code> 类加一个<span class="term">标准书号</span>字段 <code>BookNo</code>（<code>string</code> 类型）——添加图书时由用户输入，用来唯一标识一本书；它不参与排序、也不参与任何计算，只是个标签。</p><p><strong>书号标准规范</strong>：必须以 <code>ISBN-</code> 开头，后面是 5 段纯数字、用 <code>-</code> 分隔（去掉 <code>-</code> 共 13 位），例如 <code>ISBN-978-7-02-013948-5</code>。</p></div><div class="ok-box">📁 示例已提供<strong>新的</strong>数据文件 <code>books_isbn.txt</code>（5 列新格式，首列为书号：<code>BookNo|Title|Author|Price|Stock</code>，里面 3 本书都带了示例书号）。做 题2 时，把 <code>BookManager.FilePath</code> 指向这个文件（或把你的 <code>books.txt</code> 升级成同样的新格式）。</div><div class="card"><ul><li>提示：</li><li style="margin-left:24px;list-style-type:circle"><code>Book</code> 类加 <code>public string BookNo { get; set; }</code>；构造函数和 <code>ToString()</code> 也要带上书号</li><li style="margin-left:24px;list-style-type:circle"><code>LoadBooks()</code> / <code>SaveBooks()</code> <strong>都必须改</strong>：按新格式 <code>BookNo|Title|Author|Price|Stock</code> 读取 / 写出书号列（<code>Split('|')</code> 后书号是第 0 段）</li><li style="margin-left:24px;list-style-type:circle"><code>AddBook()</code> 用 <code>Console.ReadLine()</code> 读取书号——<strong>不要</strong>用 <code>int.Parse</code>/<code>long.Parse</code>，书号含字母、连字符或前导零</li><li style="margin-left:24px;list-style-type:circle"><strong>格式校验</strong>：判断是否符合上面的规范（例如用正则 <code>Regex.IsMatch(bookNo, @&quot;^ISBN-(?:\d+-){4}\d$&quot;)</code>，需 <code>using System.Text.RegularExpressions;</code>，也可以自己写循环逐个字符判断）；不合规就提示<span class="term">书号格式错误</span>并<strong>循环重新输入</strong>，直到正确</li><li style="margin-left:24px;list-style-type:circle"><strong>查重</strong>：格式合规后，遍历 <code>books</code> 看是否已有相同 <code>BookNo</code>；若重复也提示<span class="term">书号重复</span>并重新输入</li><li style="margin-left:24px;list-style-type:circle"><code>ShowBooks()</code> / <code>ToString()</code> 中把书号展示出来</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 276" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：abc 格式错误重输，合规书号通过，重复书号被拦下">
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>启动程序，加载books.txt数据，显示菜单</li><li>选 2 查看，列出 books.txt 中的 所有书</li><li>选 1 添加《测试书》→ 再选 2 查看，列表数量加一</li><li>选 4 借书 1 本 → 选 6 退出 → 重新运行，数据仍在</li></ul></div><div class="card"><h3>题2（8分）⚠️ 手动验收</h3><p>给 <code>Book</code> 类加一个<span class="term">标准书号</span>字段 <code>BookNo</code>（<code>string</code> 类型）——添加图书时由用户输入，用来唯一标识一本书；它不参与排序、也不参与任何计算，只是个标签。</p><p><strong>书号标准规范</strong>：必须以 <code>ISBN-</code> 开头，后面是 5 段纯数字、用 <code>-</code> 分隔（去掉 <code>-</code> 共 13 位），例如 <code>ISBN-978-7-02-013948-5</code>。</p></div><div class="ok-box"><span class="eico">📁</span> 示例已提供<strong>新的</strong>数据文件 <code>books_isbn.txt</code>（5 列新格式，首列为书号：<code>BookNo|Title|Author|Price|Stock</code>，里面 3 本书都带了示例书号）。做 题2 时，把 <code>BookManager.FilePath</code> 指向这个文件（或把你的 <code>books.txt</code> 升级成同样的新格式）。</div><div class="card"><ul><li>提示：</li><li style="margin-left:24px;list-style-type:circle"><code>Book</code> 类加 <code>public string BookNo { get; set; }</code>；构造函数和 <code>ToString()</code> 也要带上书号</li><li style="margin-left:24px;list-style-type:circle"><code>LoadBooks()</code> / <code>SaveBooks()</code> <strong>都必须改</strong>：按新格式 <code>BookNo|Title|Author|Price|Stock</code> 读取 / 写出书号列（<code>Split('|')</code> 后书号是第 0 段）</li><li style="margin-left:24px;list-style-type:circle"><code>AddBook()</code> 用 <code>Console.ReadLine()</code> 读取书号——<strong>不要</strong>用 <code>int.Parse</code>/<code>long.Parse</code>，书号含字母、连字符或前导零</li><li style="margin-left:24px;list-style-type:circle"><strong>格式校验</strong>：判断是否符合上面的规范（例如用正则 <code>Regex.IsMatch(bookNo, @&quot;^ISBN-(?:\d+-){4}\d$&quot;)</code>，需 <code>using System.Text.RegularExpressions;</code>，也可以自己写循环逐个字符判断）；不合规就提示<span class="term">书号格式错误</span>并<strong>循环重新输入</strong>，直到正确</li><li style="margin-left:24px;list-style-type:circle"><strong>查重</strong>：格式合规后，遍历 <code>books</code> 看是否已有相同 <code>BookNo</code>；若重复也提示<span class="term">书号重复</span>并重新输入</li><li style="margin-left:24px;list-style-type:circle"><code>ShowBooks()</code> / <code>ToString()</code> 中把书号展示出来</li></ul></div><div class="svg-fig"><svg class="auto" viewBox="0 0 680 276" width="100%" style="max-width:680px;margin:0 auto;display:block" role="img" aria-label="题2：abc 格式错误重输，合规书号通过，重复书号被拦下">
   <text x="24" y="26" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">两道关卡：先查格式、再查重，任何一关不过都回到输入</text>
   <rect x="24" y="38" width="632" height="44" rx="8" fill="#16202e" stroke="#f59e0b" stroke-opacity="0.4" stroke-width="1"/>
   <text x="38" y="66" fill="#f59e0b" font-size="9.5" font-family="monospace">① Regex.IsMatch(bookNo, @&quot;^ISBN-(?:\d+-){4}\d$&quot;)　② books.Any(b =&gt; b.BookNo == bookNo)</text>
@@ -1224,7 +1252,7 @@ namespace HelloWorld
   <text x="520" y="229" fill="#8b9bb4" font-size="9" font-family="monospace">2026-07-18 16:05</text>
   <rect x="24" y="248" width="632" height="32" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="270" fill="#22c55e" font-size="9.5" font-family="monospace">张三 借了《C#入门》 2026-07-15 14:30　（List<BorrowRecord> 一条条累加）</text>
-</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>借书时输入借阅人姓名<span class="term">张三</span>→ 选<span class="term">查看借阅记录</span>→ 显示 <code>张三 借了《C#入门》 2026-07-15 14:30</code></li></ul></div><div class="ok-box">🤖 <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
+</svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>借书时输入借阅人姓名<span class="term">张三</span>→ 选<span class="term">查看借阅记录</span>→ 显示 <code>张三 借了《C#入门》 2026-07-15 14:30</code></li></ul></div><div class="ok-box"><span class="eico">🤖</span> <strong>AI 助教</strong>：卡住了？别急着问同学——打开 AI 工具，按课件2四步法试试：先自己想5分钟 → 带分析问 AI → 追问到能讲清 → 关 AI 重写一遍。</div>
 </div></div>
 <div class="slide" data-page="12"><div class="slide-inner end-page">
 
@@ -1551,18 +1579,44 @@ function doSearch(){
 }
 
 // ========== 复制 ==========
+function copyFlash(btn,txt,ms){
+    btn.textContent=txt;btn.classList.add('copied');
+    clearTimeout(btn.__ft);
+    btn.__ft=setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},ms||2000);
+}
+function copyLegacy(text){
+    try{
+        let ta=document.createElement('textarea');
+        ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:-9999px;opacity:0';
+        document.body.appendChild(ta);
+        ta.select();ta.setSelectionRange(0,ta.value.length);
+        let ok=document.execCommand('copy');
+        document.body.removeChild(ta);
+        return ok;
+    }catch(e){return false;}
+}
+function copySelect(node){
+    try{
+        let r=document.createRange();r.selectNodeContents(node);
+        let s=window.getSelection();s.removeAllRanges();s.addRange(r);
+    }catch(e){}
+}
+// 复制分三层兜底：① 剪贴板 API（https / localhost）② execCommand（http / file / 内嵌预览）
+// ③ 都失败时选中代码并提示手动复制 —— 绝不谎报"已复制"
 function copyCode(cid,btn){
-    let code=document.getElementById(cid).textContent;
-    navigator.clipboard.writeText(code).then(()=>{
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    }).catch(()=>{
-        // fallback
-        let ta=document.createElement('textarea');ta.value=code;document.body.appendChild(ta);ta.select();
-        document.execCommand('copy');document.body.removeChild(ta);
-        btn.textContent='✅ 已复制';btn.classList.add('copied');
-        setTimeout(()=>{btn.textContent='复制';btn.classList.remove('copied');},2000);
-    });
+    let node=document.getElementById(cid);
+    if(!node){copyFlash(btn,'复制失败',1800);return;}
+    let code=node.textContent;
+    let fail=()=>{copySelect(node);copyFlash(btn,'已选中，按 Ctrl/⌘+C',3200);};
+    let legacy=()=>{copyLegacy(code)?copyFlash(btn,'✅ 已复制'):fail();};
+    try{
+        if(navigator.clipboard&&navigator.clipboard.writeText){
+            navigator.clipboard.writeText(code).then(()=>copyFlash(btn,'✅ 已复制'),legacy);
+            return;
+        }
+    }catch(e){}
+    legacy();
 }
 
 // ========== 初始化 ==========
