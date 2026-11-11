@@ -96,7 +96,7 @@ if command -v rsync >/dev/null 2>&1; then
     for f in 课件*.html index.html knowledge_graph.html; do
         case "$(basename "$f")" in _bak_*|_tmp_*) continue ;; esac
         [ -f "$f" ] || continue
-        if rsync -a --update "$f" "$DEST/$f" 2>/dev/null; then
+        if rsync -a --inplace --update "$f" "$DEST/$f" 2>/dev/null; then
             cnt=$((cnt+1))
         else
             cp -p "$f" "$DEST/" && cnt=$((cnt+1))
@@ -118,9 +118,11 @@ done
 echo "  站点图标 $ico 个"
 
 # ---------- 4) 图片与依赖 ----------
+# ⚠️ 必须 --inplace：exFAT 上 rsync 默认先写「.原名.XXXXXX」再改名，
+#    中断就留下残片，同一张图存两份，U 盘体积直接翻倍（2026-11-11 踩过）
 if command -v rsync >/dev/null 2>&1; then
-    rsync -a --exclude='.DS_Store' images/ "$DEST/images/"
-    rsync -a --exclude='.DS_Store' vendor/ "$DEST/vendor/"
+    rsync -a --inplace --exclude='.DS_Store' images/ "$DEST/images/"
+    rsync -a --inplace --exclude='.DS_Store' vendor/ "$DEST/vendor/"
 else
     cp -R images "$DEST/" 2>/dev/null
     cp -R vendor "$DEST/" 2>/dev/null
