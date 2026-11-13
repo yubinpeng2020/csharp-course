@@ -320,7 +320,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
 .cover h1{font-size:calc(var(--font-size) * 2)}
-.nav-buttons{right:12px;bottom:12px}
+/* 底部导航条：按钮固定在两端，页码点居中横向滚动，互不遮挡 */
+.nav-buttons{left:0;right:0;bottom:0;height:56px;padding:0 8px;align-items:center;justify-content:space-between;background:rgba(10,14,39,0.94);border-top:1px solid var(--border);backdrop-filter:blur(10px);z-index:120}
+.nav-btn{padding:9px 14px;font-size:12px;border-radius:9px}
+.progress-dots{left:94px;right:94px;bottom:0;height:56px;transform:none;gap:0;align-items:center;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:121}
+.progress-dots::-webkit-scrollbar{display:none}
+.progress-dot{flex:0 0 auto;width:8px;height:8px;margin:0 8px;position:relative}
+.progress-dot::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%)}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
@@ -328,10 +334,30 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
-.mi-page{display:none}
+.mi-page{font-variant-numeric:tabular-nums;font-size:12px;color:var(--accent2);flex:0 0 auto}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
 }
+
+/* ===== 页面跳转面板（手机上快速翻页） ===== */
+.page-sheet{display:none;position:fixed;inset:0;z-index:300}
+.page-sheet.open{display:block}
+.page-sheet-mask{position:absolute;inset:0;background:rgba(0,0,0,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.page-sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:72vh;display:flex;flex-direction:column;background:var(--bg-card);border-top:1px solid var(--border);border-radius:16px 16px 0 0;box-shadow:0 -12px 36px rgba(0,0,0,0.45);animation:sheetUp .22s ease-out}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.page-sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+.page-sheet-tip{font-size:12px;font-weight:400;color:var(--text-muted);margin-left:8px}
+.page-sheet-x{font-size:15px;line-height:1;color:var(--text-muted);padding:6px 8px;cursor:pointer;border-radius:6px}
+.page-sheet-x:hover{color:var(--accent);background:var(--accent-dim)}
+.page-sheet-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0 calc(12px + env(safe-area-inset-bottom))}
+.page-sheet-item{display:flex;gap:10px;align-items:baseline;padding:11px 18px;font-size:13px;color:var(--text);cursor:pointer;line-height:1.45;transition:background .15s}
+.page-sheet-item:hover{background:rgba(255,255,255,0.04)}
+.page-sheet-item:active{background:var(--accent-dim)}
+.page-sheet-item .ps-num{flex:0 0 26px;color:var(--text-muted);font-variant-numeric:tabular-nums;font-size:12px}
+.page-sheet-item .ps-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-sheet-item.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.page-sheet-item.active .ps-num{color:var(--accent)}
+.flat-mode .page-sheet{display:none!important}
 
 /* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
 @media(max-width:420px){
@@ -418,7 +444,7 @@ pre,pre code{page-break-inside:avoid}
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <span class="progress-text" id="progressText">0 / 12</span>
         </div>
-        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" title="点击选择页面" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
         <button class="header-btn" id="imgBtn" onclick="toggleImgBottom()" title="切换图片显示位置（右侧小图 / 下方大图）">🖼️ 图下</button>
         <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
@@ -438,6 +464,7 @@ pre,pre code{page-break-inside:avoid}
         <div class="mobile-more">
           <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
           <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('pages')">📑 页面跳转</div>
             <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
             <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
             <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
@@ -536,8 +563,8 @@ pre,pre code{page-break-inside:avoid}
 │  ToString() →                   │
 │  &quot;C#入门 | 张老师 | ¥45 | 库存5&quot; │
 └─────────────────────────────────┘</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349706944',this)">复制</button></div>
-<pre id="c_4349706944"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370730560',this)">复制</button></div>
+<pre id="c_4370730560"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -579,8 +606,8 @@ namespace HelloWorld
 ├── class Book                ← ① 数据：一本书长什么样
 ├── static class BookManager  ← ② 操作：增删查改全在这里
 └── class Program             ← ③ 入口：只显示菜单、分发任务</code></pre><div class="card"><ul><li><strong>Book</strong> — 只存数据 + 一个 <code>ToString()</code></li><li><strong>BookManager</strong> — 加 <code>static</code>，七个方法全是 <code>public static</code>，用 <code>BookManager.方法名()</code> 直接调，<strong>不用 <code>new</code></strong></li><li><strong>Program.Main</strong> — 不写业务逻辑，只做<span class="term-q">「加载 → 循环菜单 → 退出保存」</span></li></ul></div><div class="card"><h3>完整骨架（能编译、能运行）</h3><p>七个方法先留 <code>// TODO</code>，后面几页一个个填；填的时候<strong>只动方法体，不动外面的结构</strong>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349688640',this)">复制</button></div>
-<pre id="c_4349688640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370728704',this)">复制</button></div>
+<pre id="c_4370728704"><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -656,8 +683,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>BookManager — 数据统筹类</h1>
 <div class="ok-box"><span class="eico">📌</span> <strong>本页是分段讲解</strong>：下面这些方法要放进同一个项目里（配合页面5 的 <code>Book</code> 类和 <code>BookManager</code> 的字段）才能运行。想直接复制一个能跑的完整程序，看<strong>页面6<span class="term">程序结构</span></strong>里的整段骨架。</div><div class="ok-box">所有图书操作集中在一个 <code>BookManager</code> 静态类里——<strong>static = 全局只有一个，不用 new，直接用 <code>类名.方法()</code> 调用</strong>。</div><div class="card"><p>先把 AI 生成的空壳摆出来——七个方法，全是 <code>// TODO</code>。这一页填 <code>LoadBooks()</code> 加载图书 和 <code>SaveBooks()</code> 保存图书，其余五个后面几页一个个填。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349687296',this)">复制</button></div>
-<pre id="c_4349687296"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370727360',this)">复制</button></div>
+<pre id="c_4370727360"><code class="language-csharp">using System;
 using System.Collections.Generic;
 
 namespace HelloWorld
@@ -687,8 +714,8 @@ namespace HelloWorld
                              └──────────────────────┘
   ① ReadAllLines 读每行      ③ new Book(...) 创建对象
   ② Split('|') 拆成4段       ④ books.Add(book) 加入列表</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349686912',this)">复制</button></div>
-<pre id="c_4349686912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370726976',this)">复制</button></div>
+<pre id="c_4370726976"><code class="language-csharp">using System;
 using System.IO;
 
 namespace HelloWorld
@@ -721,8 +748,8 @@ namespace HelloWorld
   │       68,2)           │   ① foreach 遍历列表
   └──────────────────────┘   ② 拼接成 &quot;Title|Author|Price|Stock&quot;
                              ③ WriteAllLines 一次写完</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349686272',this)">复制</button></div>
-<pre id="c_4349686272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370709888',this)">复制</button></div>
+<pre id="c_4370709888"><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -757,8 +784,8 @@ namespace HelloWorld
 ╠══════════════════════╣
 ║ 选择：_              ║
 ╚══════════════════════╝</code></pre><div class="card"><p><code>Main</code> 只做三件事：<strong>启动时加载 → 循环显示菜单 → 退出时保存</strong>。所有业务逻辑全在 BookManager，<code>Main</code> 只管分发任务。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349687616',this)">复制</button></div>
-<pre id="c_4349687616"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370729984',this)">复制</button></div>
+<pre id="c_4370729984"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -801,8 +828,8 @@ namespace HelloWorld
   └──────────────────────┘     └─────────────────────────┘
   books.Count = 3               for (int i=0; i&lt;Count; i++)
                                 $&quot;[{i+1}] {books[i]}&quot;</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349682240',this)">复制</button></div>
-<pre id="c_4349682240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370705856',this)">复制</button></div>
+<pre id="c_4370705856"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -832,8 +859,8 @@ namespace HelloWorld
                                           └─────────────────┘
                                                     ↓
                                               ✅ 添加成功</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349681408',this)">复制</button></div>
-<pre id="c_4349681408"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370705024',this)">复制</button></div>
+<pre id="c_4370705024"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -864,8 +891,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><strong>🧐 新东西：<code>TryParse</code> 和 <code>out</code> 参数</strong> —— 之前一直用 <code>int.Parse()</code>，但 <code>Parse</code> 有个致命缺点：用户输入 <code>&quot;abc&quot;</code>，程序直接崩（<code>FormatException</code>）。<code>TryParse</code> 是安全版：<strong>不崩，而是返回 <code>true</code>/<code>false</code> 告诉你成没成功</strong>。成功的话，结果通过 <code>out</code> 参数带出来：</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349681216',this)">复制</button></div>
-<pre id="c_4349681216"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370704832',this)">复制</button></div>
+<pre id="c_4370704832"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -895,8 +922,8 @@ namespace HelloWorld
                         │        │ books.Add(new Book(...))
                         │        │     ↓
                         │        │ ✅ 添加成功</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349680640',this)">复制</button></div>
-<pre id="c_4349680640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370704256',this)">复制</button></div>
+<pre id="c_4370704256"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -937,8 +964,8 @@ namespace HelloWorld
           b.Stock += 5   │        │
                ↓        │        │
           ✅ 库存已更新   │        │</code></pre><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349679936',this)">复制</button></div>
-<pre id="c_4349679936"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370703552',this)">复制</button></div>
+<pre id="c_4370703552"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -996,8 +1023,8 @@ namespace HelloWorld
                      ↓    │        │   ↓
                输出 [i+1]  │        │ 跳过，继续
                books[i]    │        │</code></pre><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349678912',this)">复制</button></div>
-<pre id="c_4349678912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370702528',this)">复制</button></div>
+<pre id="c_4370702528"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1014,8 +1041,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>ToLower()</code> — 把字母全转小写。用户输入 <code>&quot;c#&quot;</code> 和 <code>&quot;C#&quot;</code> 效果一样，<strong>大小写不敏感</strong></li><li><code>Contains(keyword)</code> — 判断字符串里有没有这个关键词，<code>&quot;C#入门教程&quot;.Contains(&quot;入门&quot;)</code> → <code>true</code></li><li>这样就实现了模糊查找——不需要记住全名，搜个关键词就能找到</li></ul></div><div class="ok-box"><span class="eico">🐛</span> <strong>试一下</strong>：搜一个不存在的书名，比如&quot;Python&quot;。屏幕上什么都没显示……用户会以为程序卡死了。</div><div class="ok-box"><span class="eico">🤔</span> 怎么改进？搜完了如果什么也没输出，就补一句提示。用 <code>bool</code> 标记有没有找到：</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349678336',this)">复制</button></div>
-<pre id="c_4349678336"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370701952',this)">复制</button></div>
+<pre id="c_4370701952"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1042,8 +1069,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>bool found = false</code> — 先假设没找到，循环里匹配到了就改成 <code>true</code></li><li><code>if (!found)</code> — 循环跑完了还是 <code>false</code>，说明一本都没匹配到，输出提示</li></ul></div><div class="card"><h3>BorrowBook() 借书 — 先跑通，再防崩</h3><p>借书的逻辑：先列出所有书 → 选编号 → 库存 -1。先写个能跑的：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349677952',this)">复制</button></div>
-<pre id="c_4349677952"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370701568',this)">复制</button></div>
+<pre id="c_4370701568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1065,8 +1092,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>int.Parse(Console.ReadLine()) - 1</code> — 用户看到的编号从 1 开始，但 List 索引从 0 开始，所以要减 1</li><li><code>if (books[index].Stock == 0) return</code> — 又是卫语句：库存为 0 就拦掉，后面的借书逻辑不用包在 <code>else</code> 里</li><li><code>books[index].Stock--</code> — 库存减 1（<code>--</code> 是自减运算符，等价于 <code>Stock = Stock - 1</code>）</li></ul></div><div class="ok-box"><span class="eico">🐛</span> <strong>试两个边界情况</strong>：<br>- 输入编号 <code>99</code>（根本没有第 99 本书）→ 程序崩溃（<code>ArgumentOutOfRangeException</code>）<br>- 输入 <code>abc</code>（不是数字）→ 程序崩溃（<code>FormatException</code>）</div><div class="ok-box"><span class="eico">🤔</span> 这不就是 <code>AddBook</code> 里处理过的老问题吗？加卫语句——输入不合法就 <code>return</code>。编号检查用 <code>index &gt;= 0 &amp;&amp; index &lt; books.Count</code>，输入用 <code>TryParse</code>。</div><div class="card"><h3>第一次改进：加输入保护</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349677376',this)">复制</button></div>
-<pre id="c_4349677376"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370700992',this)">复制</button></div>
+<pre id="c_4370700992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1103,8 +1130,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><span class="eico">💡</span> <strong>发现了没？</strong> 这个方法前面一长串全是卫语句：列表为空 → 不是数字 → 编号越界 → 库存不足。所有<span class="term">不对劲的情况</span>都在前面拦掉，真正借书的逻辑在最后——干干净净。</div><div class="card"><h3>ReturnBook() 还书 — 套路和借书一样，但少一个卫语句</h3><p>注意区分两个概念：<code>books.Count == 0</code> 是<span class="term">列表里一条记录都没有</span>，<code>Stock == 0</code> 是<span class="term-q">「这本书的库存被借光了但记录还在」</span>。借书要拦 <code>Stock == 0</code>——没库存当然不能借。还书不用拦：库存即使是 0，有人来还一本，就变成 1 了。</p><p>所以还书的卫语句只保留前三个（列表为空、不是数字、编号越界），去掉库存检查。把借书的代码复制过来，删掉 <code>Stock == 0</code> 那个卫语句，<code>Stock--</code> 改成 <code>Stock++</code>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4349676992',this)">复制</button></div>
-<pre id="c_4349676992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4370700608',this)">复制</button></div>
+<pre id="c_4370700608"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1326,6 +1353,16 @@ namespace HelloWorld
     <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
 </div>
 <div class="progress-dots" id="progressDots"></div>
+<div class="page-sheet" id="pageSheet">
+    <div class="page-sheet-mask" onclick="closePageSheet()"></div>
+    <div class="page-sheet-panel">
+        <div class="page-sheet-head">
+            <span>页面跳转<span class="page-sheet-tip" id="pageSheetTip"></span></span>
+            <span class="page-sheet-x" onclick="closePageSheet()">✕</span>
+        </div>
+        <div class="page-sheet-list" id="pageSheetList"></div>
+    </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1341,7 +1378,8 @@ let LESSON_LABEL='';(function(){
 function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
 function mobileAction(act){
   document.getElementById('mobileMoreMenu').classList.remove('open');
-  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  if(act==='pages')openPageSheet();
+  else if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
   else if(act==='fontDown')changeFont(-1);
   else if(act==='fontUp')changeFont(1);
   else if(act==='search')openSearch();
@@ -1354,7 +1392,61 @@ document.addEventListener('click',function(e){
   if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
 });
 // 点击移动端信息条跳转下一页
-function mobileInfoTap(){goSlide(1)}
+function mobileInfoTap(){openPageSheet()}
+// ========== 页面跳转面板（手机上快速翻页） ==========
+function psEscape(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildPageSheet(){
+  const list=document.getElementById('pageSheetList');
+  if(!list||list.children.length)return;
+  let h='';
+  slides.forEach(function(s,i){
+    const t=s.querySelector('h1,h2,h3');
+    let title=t?t.textContent.trim():'第'+(i+1)+'页';
+    title=title.replace(/\s+/g,' ');
+    if(title.length>40)title=title.slice(0,40)+'…';
+    h+='<div class="page-sheet-item" data-idx="'+i+'" onclick="jumpSlide('+i+')">'+
+       '<span class="ps-num">'+(i+1)+'</span>'+
+       '<span class="ps-title">'+psEscape(title)+'</span></div>';
+  });
+  list.innerHTML=h;
+}
+function markPageSheet(){
+  document.querySelectorAll('.page-sheet-item').forEach(function(el){
+    el.classList.toggle('active',Number(el.dataset.idx)===curr);
+  });
+  const tip=document.getElementById('pageSheetTip');
+  if(tip)tip.textContent='· 第 '+(curr+1)+' / '+total+' 页';
+  const act=document.querySelector('.page-sheet-item.active');
+  if(act&&act.scrollIntoView&&document.getElementById('pageSheet').classList.contains('open')){
+    try{act.scrollIntoView({block:'center',behavior:'auto'});}catch(e){}
+  }
+}
+function openPageSheet(){buildPageSheet();markPageSheet();document.getElementById('pageSheet').classList.add('open');markPageSheet();}
+function closePageSheet(){document.getElementById('pageSheet').classList.remove('open');}
+function jumpSlide(i){closePageSheet();showSlide(i);}
+// ========== 手机上左右滑动翻页 ==========
+(function(){
+  const box=document.querySelector('.slides-container');
+  if(!box)return;
+  let sx=0,sy=0,st=0,lock=false;
+  box.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){lock=true;return;}
+    const t=e.target;
+    lock=!!(t&&t.closest&&t.closest('pre,.progress-dots,.table-wrap,table,input,textarea,.page-sheet-panel,.catalog-panel'));
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    st=Date.now();
+  },{passive:true});
+  box.addEventListener('touchend',function(e){
+    if(lock||!window.matchMedia('(max-width:768px)').matches)return;
+    const t=e.changedTouches[0];
+    if(!t)return;
+    const dx=t.clientX-sx,dy=t.clientY-sy,dt=Date.now()-st;
+    if(dt>800||Math.abs(dx)<60)return;
+    if(Math.abs(dx)<Math.abs(dy)*1.8)return;
+    showSlide(curr+(dx<0?1:-1));
+  },{passive:true});
+})();
 // ========== localStorage ==========
 const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
 const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
@@ -1413,7 +1505,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ 1/'+total;
     }
 });
 
@@ -1485,6 +1577,10 @@ function showSlide(idx){
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 页面跳转面板里同步高亮当前页
+    if(typeof markPageSheet==='function'&&document.getElementById('pageSheetList').children.length){curr=idx;markPageSheet();}
+    // 手机上页码点条是横向滚动的：把当前页滚到中间，别让它藏在边上点不到
+    if(dots[idx]&&dots[idx].scrollIntoView&&window.matchMedia('(max-width:768px)').matches){try{dots[idx].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}catch(e){}}
     // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
     const actSlide=slides[idx];
     if(actSlide&&actSlide.querySelectorAll){
@@ -1506,7 +1602,7 @@ function showSlide(idx){
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ '+(idx+1)+'/'+total;
     }
     document.getElementById('mainArea').scrollTop=0;
     document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
@@ -1524,7 +1620,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
-    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();closePageSheet();}
 });
 
 // ========== 搜索 ==========

@@ -320,7 +320,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
 .cover h1{font-size:calc(var(--font-size) * 2)}
-.nav-buttons{right:12px;bottom:12px}
+/* 底部导航条：按钮固定在两端，页码点居中横向滚动，互不遮挡 */
+.nav-buttons{left:0;right:0;bottom:0;height:56px;padding:0 8px;align-items:center;justify-content:space-between;background:rgba(10,14,39,0.94);border-top:1px solid var(--border);backdrop-filter:blur(10px);z-index:120}
+.nav-btn{padding:9px 14px;font-size:12px;border-radius:9px}
+.progress-dots{left:94px;right:94px;bottom:0;height:56px;transform:none;gap:0;align-items:center;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:121}
+.progress-dots::-webkit-scrollbar{display:none}
+.progress-dot{flex:0 0 auto;width:8px;height:8px;margin:0 8px;position:relative}
+.progress-dot::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%)}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
@@ -328,10 +334,30 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
-.mi-page{display:none}
+.mi-page{font-variant-numeric:tabular-nums;font-size:12px;color:var(--accent2);flex:0 0 auto}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
 }
+
+/* ===== 页面跳转面板（手机上快速翻页） ===== */
+.page-sheet{display:none;position:fixed;inset:0;z-index:300}
+.page-sheet.open{display:block}
+.page-sheet-mask{position:absolute;inset:0;background:rgba(0,0,0,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.page-sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:72vh;display:flex;flex-direction:column;background:var(--bg-card);border-top:1px solid var(--border);border-radius:16px 16px 0 0;box-shadow:0 -12px 36px rgba(0,0,0,0.45);animation:sheetUp .22s ease-out}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.page-sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+.page-sheet-tip{font-size:12px;font-weight:400;color:var(--text-muted);margin-left:8px}
+.page-sheet-x{font-size:15px;line-height:1;color:var(--text-muted);padding:6px 8px;cursor:pointer;border-radius:6px}
+.page-sheet-x:hover{color:var(--accent);background:var(--accent-dim)}
+.page-sheet-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0 calc(12px + env(safe-area-inset-bottom))}
+.page-sheet-item{display:flex;gap:10px;align-items:baseline;padding:11px 18px;font-size:13px;color:var(--text);cursor:pointer;line-height:1.45;transition:background .15s}
+.page-sheet-item:hover{background:rgba(255,255,255,0.04)}
+.page-sheet-item:active{background:var(--accent-dim)}
+.page-sheet-item .ps-num{flex:0 0 26px;color:var(--text-muted);font-variant-numeric:tabular-nums;font-size:12px}
+.page-sheet-item .ps-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-sheet-item.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.page-sheet-item.active .ps-num{color:var(--accent)}
+.flat-mode .page-sheet{display:none!important}
 
 /* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
 @media(max-width:420px){
@@ -419,7 +445,7 @@ pre,pre code{page-break-inside:avoid}
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <span class="progress-text" id="progressText">0 / 13</span>
         </div>
-        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" title="点击选择页面" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
         <button class="header-btn" id="imgBtn" onclick="toggleImgBottom()" title="切换图片显示位置（右侧小图 / 下方大图）">🖼️ 图下</button>
         <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
@@ -439,6 +465,7 @@ pre,pre code{page-break-inside:avoid}
         <div class="mobile-more">
           <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
           <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('pages')">📑 页面跳转</div>
             <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
             <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
             <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
@@ -466,8 +493,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>struct 结构体 — 轻量级的&quot;小类&quot;</h1>
 <div class="card"><p>回顾课件9：<strong>值类型</strong>是&quot;给你复印件，你改你的我不管&quot;（<code>int</code>、<code>double</code>）；<strong>引用类型</strong>是&quot;给你门牌号，你按地址改了我也变&quot;（<code>class</code>、数组）。那有没有值类型的&quot;小类&quot;？——<strong>结构体 struct</strong>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381498560',this)">复制</button></div>
-<pre id="c_4381498560"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310247616',this)">复制</button></div>
+<pre id="c_4310247616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -508,8 +535,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>结构体 vs 类</h1>
 <div class="card"><table><tr><th></th><th>类（class）</th><th>结构体（struct）</th></tr><tr><td>类型</td><td>引用类型</td><td>值类型</td></tr><tr><td>赋值</td><td>传门牌号，互相影响</td><td>传复印件，独立</td></tr><tr><td><strong>构造方法</strong></td><td>可有无参构造</td><td>不能自定义无参构造</td></tr><tr><td><strong>继承</strong></td><td>支持</td><td>不支持（不能继承）</td></tr><tr><td>适用场景</td><td>复杂对象（学生、账户）</td><td>简单数据（坐标、颜色）</td></tr></table></div><div class="card"><h3>构造方法的区别：</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381165696',this)">复制</button></div>
-<pre id="c_4381165696"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309947328',this)">复制</button></div>
+<pre id="c_4309947328"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -539,8 +566,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>继承的区别：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381498176',this)">复制</button></div>
-<pre id="c_4381498176"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310247232',this)">复制</button></div>
+<pre id="c_4310247232"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -563,8 +590,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><span class="eico">💡</span> 继承的概念和用法会在<strong>课件15</strong>重点讲解，这里先记住结论：class 能继承，struct 不能。</div><div class="card"><p>什么时候用结构体？</p></div><div class="card"><ul><li>数据量小（几个字段）</li><li>赋值后希望独立，不想互相影响——因为 struct 是值类型，赋值=复印：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381165056',this)">复制</button></div>
-<pre id="c_4381165056"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309946688',this)">复制</button></div>
+<pre id="c_4309946688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -593,8 +620,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>结构体完整示例</h1>
 <div class="ok-box"><span class="eico">💬</span> 来看一个完整的 struct——颜色 <code>Color</code>：有字段（RGB）、有构造方法（必须有参数）、有普通方法（<code>ToHex</code>），和 class 写法几乎一样。唯一不同的是赋值：<code>c2 = c1</code> 是复印而非共享，改一个不动另一个。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381167040',this)">复制</button></div>
-<pre id="c_4381167040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309948672',this)">复制</button></div>
+<pre id="c_4309948672"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -637,8 +664,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — struct 三维坐标</h1>
 <div class="ok-box">用 struct 定义三维坐标，体会值类型赋值后互不干扰的特点。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146816',this)">复制</button></div>
-<pre id="c_4381146816"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309944896',this)">复制</button></div>
+<pre id="c_4309944896"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -744,8 +771,8 @@ namespace HelloWorld
   <text x="560" y="238" fill="#6b7d97" font-size="9.5" font-family="sans-serif">占两块内存</text>
   <text x="40" y="268" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">struct 的 <tspan font-family="monospace">=</tspan> 是复印：v2 拿到一份独立数据。换成 class 就是两个变量指向同一个对象，改 v2.X 连 v1.X 一起变。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146240',this)">复制</button></div>
-<pre id="c_4381146240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309944320',this)">复制</button></div>
+<pre id="c_4309944320"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -782,8 +809,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381146048',this)">复制</button></div>
-<pre id="c_4381146048"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309944128',this)">复制</button></div>
+<pre id="c_4309944128"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -821,8 +848,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>enum 枚举 — 给常量取个名字</h1>
 <div class="card"><p>一周有七天，用 <code>int</code> 表示——0=周一，1=周二……但 <code>day = 8</code> 没人拦。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381166208',this)">复制</button></div>
-<pre id="c_4381166208"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309947904',this)">复制</button></div>
+<pre id="c_4309947904"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -835,8 +862,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>枚举</strong> = 限定取值范围的&quot;选择题&quot;：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381168192',this)">复制</button></div>
-<pre id="c_4381168192"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309947712',this)">复制</button></div>
+<pre id="c_4309947712"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -865,8 +892,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>枚举的底层是整数</h1>
 <div class="card"><p>枚举本质是整数，每个名字对应一个数字：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381166912',this)">复制</button></div>
-<pre id="c_4381166912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309948608',this)">复制</button></div>
+<pre id="c_4309948608"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -890,8 +917,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><span class="eico">💬</span> 枚举和 int 之间用强制转换互转：<br>- <strong>枚举 → int</strong>：<code>(int)GameState.Playing</code> → 得到 <code>1</code><br>- <strong>int → 枚举</strong>：<code>(GameState)2</code> → 得到 <code>Paused</code><br>- 注意：int 转枚举时数字超出范围不会报错，只是一个无名称的数值——所以尽量从已有枚举值转，别拿未知数字硬转</div><div class="card"><p>可以自定义数值：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381168128',this)">复制</button></div>
-<pre id="c_4381168128"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309948352',this)">复制</button></div>
+<pre id="c_4309948352"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -917,8 +944,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>课堂练习2 — 枚举应用</h1>
 <div class="ok-box">用枚举管理游戏状态，结合 switch 做状态切换。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381145472',this)">复制</button></div>
-<pre id="c_4381145472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309943552',this)">复制</button></div>
+<pre id="c_4309943552"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1026,8 +1053,8 @@ namespace HelloWorld
   <text x="499" y="206" text-anchor="middle" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">→ 未知方向</text>
   <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">枚举的底层就是 0、1、2、3——所以能强转，也能用 switch 比；写 <tspan font-family="monospace">Direction.North</tspan> 比写 0 好懂得多。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381144896',this)">复制</button></div>
-<pre id="c_4381144896"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942976',this)">复制</button></div>
+<pre id="c_4309942976"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1053,8 +1080,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381144704',this)">复制</button></div>
-<pre id="c_4381144704"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309942784',this)">复制</button></div>
+<pre id="c_4309942784"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1125,8 +1152,8 @@ Hearts A（原牌不变——struct 值类型行为）</code></pre><div class="s
   <text x="40" y="196" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b">c3 = c1</tspan> 只是复印：把 c3.Suit 改成 Clubs，c1 依然是 Hearts A——这就是 struct 的值类型行为。</text>
   <text x="40" y="212" fill="#6b7d97" font-size="9.5" font-family="sans-serif">另外注意：枚举直接打印出来就是名字（Hearts），不用自己写映射。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>枚举 <code>Suit</code> 定义四种花色，<code>Card</code> 结构体组合花色+点数</li><li>点数 1/11/12/13 要转换成 A/J/Q/K——用 switch 表达式最简洁</li><li>struct 赋值是复印，改 c3 不动 c1</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381142784',this)">复制</button></div>
-<pre id="c_4381142784"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309924416',this)">复制</button></div>
+<pre id="c_4309924416"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1171,8 +1198,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381142272',this)">复制</button></div>
-<pre id="c_4381142272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923904',this)">复制</button></div>
+<pre id="c_4309923904"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1216,8 +1243,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：定义枚举 <code>Light { Red, Green, Yellow }</code> 表示交通灯。用户输入当前灯（0/1/2），程序输出<strong>下一个灯</strong>（Red→Green→Yellow→Red 循环）。<br>要求：自己用枚举 + 取模运算实现切换，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381141952',this)">复制</button></div>
-<pre id="c_4381141952"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309923584',this)">复制</button></div>
+<pre id="c_4309923584"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1336,8 +1363,8 @@ namespace HelloWorld
   <rect x="24" y="248" width="632" height="36" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="272" fill="#22c55e" font-size="10.5" font-family="monospace">p1 到 p2 距离：5　　复制后改 p3 为 (6,8)，p2 仍是 (3,4)</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>p1 到 p2 距离：5</code></li></ul><ul><li>输出：<code>复制后改 p3 为 (6,8)，p2 仍是 (3,4)</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，结构体和枚举定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381143808',this)">复制</button></div>
-<pre id="c_4381143808"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4309925440',this)">复制</button></div>
+<pre id="c_4309925440"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1435,6 +1462,16 @@ namespace HelloWorld
     <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
 </div>
 <div class="progress-dots" id="progressDots"></div>
+<div class="page-sheet" id="pageSheet">
+    <div class="page-sheet-mask" onclick="closePageSheet()"></div>
+    <div class="page-sheet-panel">
+        <div class="page-sheet-head">
+            <span>页面跳转<span class="page-sheet-tip" id="pageSheetTip"></span></span>
+            <span class="page-sheet-x" onclick="closePageSheet()">✕</span>
+        </div>
+        <div class="page-sheet-list" id="pageSheetList"></div>
+    </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1450,7 +1487,8 @@ let LESSON_LABEL='';(function(){
 function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
 function mobileAction(act){
   document.getElementById('mobileMoreMenu').classList.remove('open');
-  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  if(act==='pages')openPageSheet();
+  else if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
   else if(act==='fontDown')changeFont(-1);
   else if(act==='fontUp')changeFont(1);
   else if(act==='search')openSearch();
@@ -1463,7 +1501,61 @@ document.addEventListener('click',function(e){
   if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
 });
 // 点击移动端信息条跳转下一页
-function mobileInfoTap(){goSlide(1)}
+function mobileInfoTap(){openPageSheet()}
+// ========== 页面跳转面板（手机上快速翻页） ==========
+function psEscape(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildPageSheet(){
+  const list=document.getElementById('pageSheetList');
+  if(!list||list.children.length)return;
+  let h='';
+  slides.forEach(function(s,i){
+    const t=s.querySelector('h1,h2,h3');
+    let title=t?t.textContent.trim():'第'+(i+1)+'页';
+    title=title.replace(/\s+/g,' ');
+    if(title.length>40)title=title.slice(0,40)+'…';
+    h+='<div class="page-sheet-item" data-idx="'+i+'" onclick="jumpSlide('+i+')">'+
+       '<span class="ps-num">'+(i+1)+'</span>'+
+       '<span class="ps-title">'+psEscape(title)+'</span></div>';
+  });
+  list.innerHTML=h;
+}
+function markPageSheet(){
+  document.querySelectorAll('.page-sheet-item').forEach(function(el){
+    el.classList.toggle('active',Number(el.dataset.idx)===curr);
+  });
+  const tip=document.getElementById('pageSheetTip');
+  if(tip)tip.textContent='· 第 '+(curr+1)+' / '+total+' 页';
+  const act=document.querySelector('.page-sheet-item.active');
+  if(act&&act.scrollIntoView&&document.getElementById('pageSheet').classList.contains('open')){
+    try{act.scrollIntoView({block:'center',behavior:'auto'});}catch(e){}
+  }
+}
+function openPageSheet(){buildPageSheet();markPageSheet();document.getElementById('pageSheet').classList.add('open');markPageSheet();}
+function closePageSheet(){document.getElementById('pageSheet').classList.remove('open');}
+function jumpSlide(i){closePageSheet();showSlide(i);}
+// ========== 手机上左右滑动翻页 ==========
+(function(){
+  const box=document.querySelector('.slides-container');
+  if(!box)return;
+  let sx=0,sy=0,st=0,lock=false;
+  box.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){lock=true;return;}
+    const t=e.target;
+    lock=!!(t&&t.closest&&t.closest('pre,.progress-dots,.table-wrap,table,input,textarea,.page-sheet-panel,.catalog-panel'));
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    st=Date.now();
+  },{passive:true});
+  box.addEventListener('touchend',function(e){
+    if(lock||!window.matchMedia('(max-width:768px)').matches)return;
+    const t=e.changedTouches[0];
+    if(!t)return;
+    const dx=t.clientX-sx,dy=t.clientY-sy,dt=Date.now()-st;
+    if(dt>800||Math.abs(dx)<60)return;
+    if(Math.abs(dx)<Math.abs(dy)*1.8)return;
+    showSlide(curr+(dx<0?1:-1));
+  },{passive:true});
+})();
 // ========== localStorage ==========
 const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
 const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
@@ -1522,7 +1614,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ 1/'+total;
     }
 });
 
@@ -1594,6 +1686,10 @@ function showSlide(idx){
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 页面跳转面板里同步高亮当前页
+    if(typeof markPageSheet==='function'&&document.getElementById('pageSheetList').children.length){curr=idx;markPageSheet();}
+    // 手机上页码点条是横向滚动的：把当前页滚到中间，别让它藏在边上点不到
+    if(dots[idx]&&dots[idx].scrollIntoView&&window.matchMedia('(max-width:768px)').matches){try{dots[idx].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}catch(e){}}
     // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
     const actSlide=slides[idx];
     if(actSlide&&actSlide.querySelectorAll){
@@ -1615,7 +1711,7 @@ function showSlide(idx){
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ '+(idx+1)+'/'+total;
     }
     document.getElementById('mainArea').scrollTop=0;
     document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
@@ -1633,7 +1729,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
-    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();closePageSheet();}
 });
 
 // ========== 搜索 ==========

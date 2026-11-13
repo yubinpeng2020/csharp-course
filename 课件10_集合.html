@@ -320,7 +320,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
 .cover h1{font-size:calc(var(--font-size) * 2)}
-.nav-buttons{right:12px;bottom:12px}
+/* 底部导航条：按钮固定在两端，页码点居中横向滚动，互不遮挡 */
+.nav-buttons{left:0;right:0;bottom:0;height:56px;padding:0 8px;align-items:center;justify-content:space-between;background:rgba(10,14,39,0.94);border-top:1px solid var(--border);backdrop-filter:blur(10px);z-index:120}
+.nav-btn{padding:9px 14px;font-size:12px;border-radius:9px}
+.progress-dots{left:94px;right:94px;bottom:0;height:56px;transform:none;gap:0;align-items:center;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:121}
+.progress-dots::-webkit-scrollbar{display:none}
+.progress-dot{flex:0 0 auto;width:8px;height:8px;margin:0 8px;position:relative}
+.progress-dot::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%)}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
@@ -328,10 +334,30 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
-.mi-page{display:none}
+.mi-page{font-variant-numeric:tabular-nums;font-size:12px;color:var(--accent2);flex:0 0 auto}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
 }
+
+/* ===== 页面跳转面板（手机上快速翻页） ===== */
+.page-sheet{display:none;position:fixed;inset:0;z-index:300}
+.page-sheet.open{display:block}
+.page-sheet-mask{position:absolute;inset:0;background:rgba(0,0,0,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.page-sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:72vh;display:flex;flex-direction:column;background:var(--bg-card);border-top:1px solid var(--border);border-radius:16px 16px 0 0;box-shadow:0 -12px 36px rgba(0,0,0,0.45);animation:sheetUp .22s ease-out}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.page-sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+.page-sheet-tip{font-size:12px;font-weight:400;color:var(--text-muted);margin-left:8px}
+.page-sheet-x{font-size:15px;line-height:1;color:var(--text-muted);padding:6px 8px;cursor:pointer;border-radius:6px}
+.page-sheet-x:hover{color:var(--accent);background:var(--accent-dim)}
+.page-sheet-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0 calc(12px + env(safe-area-inset-bottom))}
+.page-sheet-item{display:flex;gap:10px;align-items:baseline;padding:11px 18px;font-size:13px;color:var(--text);cursor:pointer;line-height:1.45;transition:background .15s}
+.page-sheet-item:hover{background:rgba(255,255,255,0.04)}
+.page-sheet-item:active{background:var(--accent-dim)}
+.page-sheet-item .ps-num{flex:0 0 26px;color:var(--text-muted);font-variant-numeric:tabular-nums;font-size:12px}
+.page-sheet-item .ps-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-sheet-item.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.page-sheet-item.active .ps-num{color:var(--accent)}
+.flat-mode .page-sheet{display:none!important}
 
 /* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
 @media(max-width:420px){
@@ -419,7 +445,7 @@ pre,pre code{page-break-inside:avoid}
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <span class="progress-text" id="progressText">0 / 13</span>
         </div>
-        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" title="点击选择页面" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
         <button class="header-btn" id="imgBtn" onclick="toggleImgBottom()" title="切换图片显示位置（右侧小图 / 下方大图）">🖼️ 图下</button>
         <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
@@ -439,6 +465,7 @@ pre,pre code{page-break-inside:avoid}
         <div class="mobile-more">
           <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
           <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('pages')">📑 页面跳转</div>
             <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
             <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
             <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
@@ -466,8 +493,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>数组的局限性</h1>
 <div class="card"><p>数组很好用，但有三个死穴：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595904',this)">复制</button></div>
-<pre id="c_4383595904"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340984128',this)">复制</button></div>
+<pre id="c_4340984128"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -515,8 +542,8 @@ namespace HelloWorld
 
   <text x="20" y="304" font-size="12" fill="#5F5E5A">C# 的 using 只导入当前这一层，不会自动包含子命名空间。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p><code>using System;</code> 只导入 System 这一层（<code>Console</code>、<code>Math</code>、<code>Array</code>…）；<code>List&lt;T&gt;</code>、<code>Dictionary&lt;K,V&gt;</code> 藏在更深的 <code>Collections → Generic</code> 里，<strong>不会</strong>被带进来。所以用 List 必须再补一行 <code>using System.Collections.Generic;</code>，两条 <code>using</code> 都写在<strong>文件最顶部</strong>（<code>namespace</code> 之前）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383595392',this)">复制</button></div>
-<pre id="c_4383595392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340983616',this)">复制</button></div>
+<pre id="c_4340983616"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -535,8 +562,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>List&lt;T&gt;</code> 的 <code>T</code> 就是个占位符，用的时候换成具体类型：<code>List&lt;int&gt;</code>、<code>List&lt;string&gt;</code></li><li>不需要指定大小，会自动扩容</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383262656',this)">复制</button></div>
-<pre id="c_4383262656"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340683648',this)">复制</button></div>
+<pre id="c_4340683648"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -558,8 +585,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>List 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>数组</th><th>List&lt;T&gt;</th></tr><tr><td>获取数量</td><td><code>arr.Length</code></td><td><code>list.Count</code></td></tr><tr><td>访问元素</td><td><code>arr[0]</code></td><td><code>list[0]</code></td></tr><tr><td>添加</td><td>❌（长度固定，不能增）</td><td><code>Add(x)</code> 末尾追加一个元素</td></tr><tr><td>插入</td><td>❌</td><td><code>Insert(i, x)</code> 在第 i 位插入</td></tr><tr><td>按位置删</td><td>❌</td><td><code>RemoveAt(i)</code> 删第 i 个（从 0 数）</td></tr><tr><td>按值删</td><td>❌</td><td><code>Remove(x)</code> 删第一个等于 x 的</td></tr><tr><td>清空</td><td>❌（需重新 new）</td><td><code>Clear()</code> 删除全部</td></tr><tr><td>排序</td><td><code>Array.Sort(arr)</code> 升序</td><td><code>Sort()</code> 升序</td></tr><tr><td>查位置</td><td><code>Array.IndexOf(arr, x)</code> 找不到返回 -1</td><td><code>IndexOf(x)</code> 找不到返回 -1</td></tr></table></div><div class="ok-box">数组也能排序、查位置，但要用<strong>静态方法</strong> <code>Array.Sort</code> / <code>Array.IndexOf</code>（数组长度固定，所以没有 <code>Add</code> / <code>Remove</code> / <code>Clear</code> 这类动态增删）。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383261376',this)">复制</button></div>
-<pre id="c_4383261376"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340682368',this)">复制</button></div>
+<pre id="c_4340682368"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -574,8 +601,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>数组能排序、能查找，但<strong>长度固定</strong>——要扩容得自己搬。需要频繁增删时改用 <code>List&lt;T&gt;</code>，下面是它的常用操作：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383261184',this)">复制</button></div>
-<pre id="c_4383261184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340682176',this)">复制</button></div>
+<pre id="c_4340682176"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -614,8 +641,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>List 创建与遍历</h1>
 <div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383260992',this)">复制</button></div>
-<pre id="c_4383260992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340681984',this)">复制</button></div>
+<pre id="c_4340681984"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -639,8 +666,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>遍历——for 和 foreach 都可以：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383260800',this)">复制</button></div>
-<pre id="c_4383260800"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340681792',this)">复制</button></div>
+<pre id="c_4340681792"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -664,8 +691,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — List 学生管理</h1>
 <div class="ok-box">用 List&lt;string&gt; 管理学生名单：新增、删除、查找，体会和数组的区别。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383243456',this)">复制</button></div>
-<pre id="c_4383243456"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340680896',this)">复制</button></div>
+<pre id="c_4340680896"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -770,8 +797,8 @@ namespace HelloWorld
   <text x="616" y="237" fill="#6b7d97" font-size="10" font-family="monospace">Count=3</text>
   <text x="24" y="278" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">数组长度写死改不了；List 随时增删，Count 自动跟着变——这就是集合比数组好用的地方。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242880',this)">复制</button></div>
-<pre id="c_4383242880"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340680320',this)">复制</button></div>
+<pre id="c_4340680320"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -796,8 +823,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242688',this)">复制</button></div>
-<pre id="c_4383242688"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340680128',this)">复制</button></div>
+<pre id="c_4340680128"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -828,8 +855,8 @@ namespace HelloWorld
 [0] → &quot;张三&quot;                &quot;张三&quot; → 85 分
 [1] → &quot;李四&quot;                &quot;李四&quot; → 90 分
 [2] → &quot;王五&quot;                &quot;王五&quot; → 78 分</code></pre><div class="card"><h3><code>&lt;K,V&gt;</code> 里为什么有两个类型？</h3></div><div class="card"><p><code>List&lt;T&gt;</code> 只有一个占位符（装什么类型），<code>Dictionary&lt;K,V&gt;</code> 有两个——K 管键的类型，V 管值的类型：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242496',this)">复制</button></div>
-<pre id="c_4383242496"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340679936',this)">复制</button></div>
+<pre id="c_4340679936"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -847,8 +874,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box">K 和 V 不限于 <code>string</code> → <code>int</code>，可以是任意类型的组合——<code>Dictionary&lt;int, string&gt;</code>（学号→姓名）、<code>Dictionary&lt;string, bool&gt;</code>（姓名→是否及格）都行。</div><div class="card"><h3>代码创建：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383242240',this)">复制</button></div>
-<pre id="c_4383242240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340679680',this)">复制</button></div>
+<pre id="c_4340679680"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -872,8 +899,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>Dictionary 常用操作</h1>
 <div class="card"><table><tr><th>操作</th><th>代码</th><th>说明</th></tr><tr><td>增/改</td><td><code>dict[&quot;键&quot;] = 值</code></td><td>键不存在→新增，键已存在→覆盖（同一个语法）</td></tr><tr><td>删</td><td><code>dict.Remove(&quot;键&quot;)</code></td><td>按键删除，键不存在也不会报错</td></tr><tr><td>查</td><td>先 <code>dict.ContainsKey(&quot;键&quot;)</code> 再 <code>dict[&quot;键&quot;]</code></td><td>先判断再取值，避免键不存在时报错</td></tr><tr><td>遍历</td><td><code>foreach (var kv in dict)</code></td><td><code>kv.Key</code> 取键，<code>kv.Value</code> 取值</td></tr></table></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383241600',this)">复制</button></div>
-<pre id="c_4383241600"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340679040',this)">复制</button></div>
+<pre id="c_4340679040"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -959,8 +986,8 @@ namespace HelloWorld
   <text x="32" y="222" fill="#8b9bb4" font-size="10.5" font-family="sans-serif"><tspan fill="#f59e0b" font-family="monospace">cart[商品名] = 数量</tspan> 一句同时管「新增」和「改数量」；键不存在就新建，存在就覆盖。</text>
   <text x="32" y="238" fill="#6b7d97" font-size="10" font-family="sans-serif">查看时 kv.Key 是商品名、kv.Value 是数量，别拿反了。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>cart[商品名] = 数量</code> — 增/改都用这个语法</li><li><code>cart.Remove(商品名)</code> 删除，<code>foreach (var kv in cart)</code> 查看</li><li>while 循环 + switch/if 实现菜单交互</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383239168',this)">复制</button></div>
-<pre id="c_4383239168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340660160',this)">复制</button></div>
+<pre id="c_4340660160"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -998,8 +1025,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238464',this)">复制</button></div>
-<pre id="c_4383238464"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340659456',this)">复制</button></div>
+<pre id="c_4340659456"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1037,8 +1064,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入若干个整数（逗号分隔），用 <code>List</code> 存储并<strong>去掉重复</strong>，输出去重后的列表。<br>要求：自己写——拆分、转换、遍历判断是否已存在再添加，不能用 <code>Distinct()</code>。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383238144',this)">复制</button></div>
-<pre id="c_4383238144"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340659136',this)">复制</button></div>
+<pre id="c_4340659136"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1181,8 +1208,8 @@ namespace HelloWorld
   <text x="500" y="176" fill="#6b7d97" font-size="9" font-family="sans-serif">顺序按第一次出现排</text>
   <text x="24" y="258" fill="#8b9bb4" font-size="10" font-family="sans-serif">写法：if (dict.ContainsKey(w)) dict[w]++; else dict[w] = 1;　—— 别忘先判存在。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>apple:3</code></li></ul><ul><li>输出：<code>banana:2</code></li></ul><ul><li>输出：<code>orange:1</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4383237760',this)">复制</button></div>
-<pre id="c_4383237760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4340658752',this)">复制</button></div>
+<pre id="c_4340658752"><code class="language-csharp">using System;
 using System.Collections.Generic;  // 引入集合库
 
 namespace HelloWorld
@@ -1279,6 +1306,16 @@ namespace HelloWorld
     <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
 </div>
 <div class="progress-dots" id="progressDots"></div>
+<div class="page-sheet" id="pageSheet">
+    <div class="page-sheet-mask" onclick="closePageSheet()"></div>
+    <div class="page-sheet-panel">
+        <div class="page-sheet-head">
+            <span>页面跳转<span class="page-sheet-tip" id="pageSheetTip"></span></span>
+            <span class="page-sheet-x" onclick="closePageSheet()">✕</span>
+        </div>
+        <div class="page-sheet-list" id="pageSheetList"></div>
+    </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -1294,7 +1331,8 @@ let LESSON_LABEL='';(function(){
 function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
 function mobileAction(act){
   document.getElementById('mobileMoreMenu').classList.remove('open');
-  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  if(act==='pages')openPageSheet();
+  else if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
   else if(act==='fontDown')changeFont(-1);
   else if(act==='fontUp')changeFont(1);
   else if(act==='search')openSearch();
@@ -1307,7 +1345,61 @@ document.addEventListener('click',function(e){
   if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
 });
 // 点击移动端信息条跳转下一页
-function mobileInfoTap(){goSlide(1)}
+function mobileInfoTap(){openPageSheet()}
+// ========== 页面跳转面板（手机上快速翻页） ==========
+function psEscape(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildPageSheet(){
+  const list=document.getElementById('pageSheetList');
+  if(!list||list.children.length)return;
+  let h='';
+  slides.forEach(function(s,i){
+    const t=s.querySelector('h1,h2,h3');
+    let title=t?t.textContent.trim():'第'+(i+1)+'页';
+    title=title.replace(/\s+/g,' ');
+    if(title.length>40)title=title.slice(0,40)+'…';
+    h+='<div class="page-sheet-item" data-idx="'+i+'" onclick="jumpSlide('+i+')">'+
+       '<span class="ps-num">'+(i+1)+'</span>'+
+       '<span class="ps-title">'+psEscape(title)+'</span></div>';
+  });
+  list.innerHTML=h;
+}
+function markPageSheet(){
+  document.querySelectorAll('.page-sheet-item').forEach(function(el){
+    el.classList.toggle('active',Number(el.dataset.idx)===curr);
+  });
+  const tip=document.getElementById('pageSheetTip');
+  if(tip)tip.textContent='· 第 '+(curr+1)+' / '+total+' 页';
+  const act=document.querySelector('.page-sheet-item.active');
+  if(act&&act.scrollIntoView&&document.getElementById('pageSheet').classList.contains('open')){
+    try{act.scrollIntoView({block:'center',behavior:'auto'});}catch(e){}
+  }
+}
+function openPageSheet(){buildPageSheet();markPageSheet();document.getElementById('pageSheet').classList.add('open');markPageSheet();}
+function closePageSheet(){document.getElementById('pageSheet').classList.remove('open');}
+function jumpSlide(i){closePageSheet();showSlide(i);}
+// ========== 手机上左右滑动翻页 ==========
+(function(){
+  const box=document.querySelector('.slides-container');
+  if(!box)return;
+  let sx=0,sy=0,st=0,lock=false;
+  box.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){lock=true;return;}
+    const t=e.target;
+    lock=!!(t&&t.closest&&t.closest('pre,.progress-dots,.table-wrap,table,input,textarea,.page-sheet-panel,.catalog-panel'));
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    st=Date.now();
+  },{passive:true});
+  box.addEventListener('touchend',function(e){
+    if(lock||!window.matchMedia('(max-width:768px)').matches)return;
+    const t=e.changedTouches[0];
+    if(!t)return;
+    const dx=t.clientX-sx,dy=t.clientY-sy,dt=Date.now()-st;
+    if(dt>800||Math.abs(dx)<60)return;
+    if(Math.abs(dx)<Math.abs(dy)*1.8)return;
+    showSlide(curr+(dx<0?1:-1));
+  },{passive:true});
+})();
 // ========== localStorage ==========
 const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
 const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
@@ -1366,7 +1458,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ 1/'+total;
     }
 });
 
@@ -1438,6 +1530,10 @@ function showSlide(idx){
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 页面跳转面板里同步高亮当前页
+    if(typeof markPageSheet==='function'&&document.getElementById('pageSheetList').children.length){curr=idx;markPageSheet();}
+    // 手机上页码点条是横向滚动的：把当前页滚到中间，别让它藏在边上点不到
+    if(dots[idx]&&dots[idx].scrollIntoView&&window.matchMedia('(max-width:768px)').matches){try{dots[idx].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}catch(e){}}
     // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
     const actSlide=slides[idx];
     if(actSlide&&actSlide.querySelectorAll){
@@ -1459,7 +1555,7 @@ function showSlide(idx){
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ '+(idx+1)+'/'+total;
     }
     document.getElementById('mainArea').scrollTop=0;
     document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
@@ -1477,7 +1573,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
-    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();closePageSheet();}
 });
 
 // ========== 搜索 ==========

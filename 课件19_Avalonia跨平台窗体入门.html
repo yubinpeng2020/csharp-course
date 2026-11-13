@@ -320,7 +320,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .slide-inner{padding:18px 18px 80px}
 .cover{padding-left:40px;padding-right:40px}
 .cover h1{font-size:calc(var(--font-size) * 2)}
-.nav-buttons{right:12px;bottom:12px}
+/* 底部导航条：按钮固定在两端，页码点居中横向滚动，互不遮挡 */
+.nav-buttons{left:0;right:0;bottom:0;height:56px;padding:0 8px;align-items:center;justify-content:space-between;background:rgba(10,14,39,0.94);border-top:1px solid var(--border);backdrop-filter:blur(10px);z-index:120}
+.nav-btn{padding:9px 14px;font-size:12px;border-radius:9px}
+.progress-dots{left:94px;right:94px;bottom:0;height:56px;transform:none;gap:0;align-items:center;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;padding:0 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none;z-index:121}
+.progress-dots::-webkit-scrollbar{display:none}
+.progress-dot{flex:0 0 auto;width:8px;height:8px;margin:0 8px;position:relative}
+.progress-dot::after{content:'';position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%)}
 .header-bar{padding:8px 12px;gap:6px;flex-wrap:nowrap}
 .header-btn[onclick="toggleTheme()"]{padding:6px 6px}
 .progress-wrap{display:none}
@@ -328,10 +334,30 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .header-btn[onclick="openSearch()"]{display:none}
 .header-btn[onclick="toggleHelp()"]{display:none}
 .mobile-info{display:flex;align-items:center;gap:2px}
-.mi-page{display:none}
+.mi-page{font-variant-numeric:tabular-nums;font-size:12px;color:var(--accent2);flex:0 0 auto}
 .mobile-more{display:inline-block}
 .slides-container{min-height:calc(100vh - 54px)}
 }
+
+/* ===== 页面跳转面板（手机上快速翻页） ===== */
+.page-sheet{display:none;position:fixed;inset:0;z-index:300}
+.page-sheet.open{display:block}
+.page-sheet-mask{position:absolute;inset:0;background:rgba(0,0,0,0.55);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+.page-sheet-panel{position:absolute;left:0;right:0;bottom:0;max-height:72vh;display:flex;flex-direction:column;background:var(--bg-card);border-top:1px solid var(--border);border-radius:16px 16px 0 0;box-shadow:0 -12px 36px rgba(0,0,0,0.45);animation:sheetUp .22s ease-out}
+@keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.page-sheet-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px 10px;font-size:14px;font-weight:600;color:var(--text);border-bottom:1px solid var(--border)}
+.page-sheet-tip{font-size:12px;font-weight:400;color:var(--text-muted);margin-left:8px}
+.page-sheet-x{font-size:15px;line-height:1;color:var(--text-muted);padding:6px 8px;cursor:pointer;border-radius:6px}
+.page-sheet-x:hover{color:var(--accent);background:var(--accent-dim)}
+.page-sheet-list{overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 0 calc(12px + env(safe-area-inset-bottom))}
+.page-sheet-item{display:flex;gap:10px;align-items:baseline;padding:11px 18px;font-size:13px;color:var(--text);cursor:pointer;line-height:1.45;transition:background .15s}
+.page-sheet-item:hover{background:rgba(255,255,255,0.04)}
+.page-sheet-item:active{background:var(--accent-dim)}
+.page-sheet-item .ps-num{flex:0 0 26px;color:var(--text-muted);font-variant-numeric:tabular-nums;font-size:12px}
+.page-sheet-item .ps-title{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page-sheet-item.active{background:var(--accent-dim);color:var(--accent);font-weight:600}
+.page-sheet-item.active .ps-num{color:var(--accent)}
+.flat-mode .page-sheet{display:none!important}
 
 /* 超窄屏：压缩标题栏，隐藏与 ☰ 菜单重复的「平铺/图下」按钮，保证 A+/A- 常驻不溢出 */
 @media(max-width:420px){
@@ -420,7 +446,7 @@ pre,pre code{page-break-inside:avoid}
             <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
             <span class="progress-text" id="progressText">0 / 14</span>
         </div>
-        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
+        <div class="mobile-info" id="mobileInfo" onclick="mobileInfoTap()" title="点击选择页面" style="cursor:pointer"><span class="mi-lesson"></span><span class="mi-sep">·</span><span class="mi-page"></span></div>
         <button class="header-btn" id="flatBtn" onclick="toggleFlat()" title="切换分页 / 平铺（平铺便于打印导出 PDF）">📄 平铺</button>
         <button class="header-btn" id="imgBtn" onclick="toggleImgBottom()" title="切换图片显示位置（右侧小图 / 下方大图）">🖼️ 图下</button>
         <button class="header-btn" id="themeBtn" onclick="toggleTheme()">🌙 深色</button>
@@ -440,6 +466,7 @@ pre,pre code{page-break-inside:avoid}
         <div class="mobile-more">
           <button class="header-btn" onclick="toggleMobileMore()" title="更多">☰</button>
           <div class="mobile-more-menu" id="mobileMoreMenu">
+            <div class="mm-item" onclick="mobileAction('pages')">📑 页面跳转</div>
             <div class="mm-item" onclick="mobileAction('ide')">💻 在线编辑器</div>
             <div class="mm-item" onclick="mobileAction('fontDown')">🔤 A- 缩小字号</div>
             <div class="mm-item" onclick="mobileAction('fontUp')">🔤 A+ 放大字号</div>
@@ -582,8 +609,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>常用控件 — TextBlock / TextBox / Button</h1>
 <div class="ok-box"><span class="eico">⚠️</span> <strong>和 WinForms 的三个大不同（务必先看）</strong><br>1. 显示文字用 <strong><code>TextBlock</code></strong>，不是 <code>Label</code>（<code>Label</code> 在 Avalonia 是给别的控件加快捷键的，不用来显示文字）<br>2. 修改属性名变了：<code>BackColor</code> → <code>Background</code>、<code>Enabled</code> → <code>IsEnabled</code>、<code>ReadOnly</code> → <code>IsReadOnly</code><br>3. <strong>没有 <code>MessageBox.Show</code></strong>！要提示用户，用窗口上的 <code>TextBlock</code> 显示文字。本课都用 <code>TextBlock</code> 显示提示</div><div class="card"><h3>XAML 快速看懂</h3><p>XAML 是用&quot;标签&quot;描述界面的语言。Avalonia 的文件后缀是 <strong><code>.axaml</code></strong>（不是 <code>.xaml</code>，特意和 WPF 区分开）：</p><ul><li><strong>标签名 = 控件类名</strong>：<code>&lt;Button&gt;</code> 就是按钮，<code>&lt;TextBox&gt;</code> 就是输入框</li><li><strong>标签里的属性 = 控件属性</strong>：<code>Background=&quot;Blue&quot;</code>、<code>Content=&quot;确定&quot;</code> 都是在设属性</li><li><strong>标签之间的内容 = 控件的&quot;内容&quot;</strong>：<code>&lt;Button&gt;确定&lt;/Button&gt;</code> 等价于 <code>Content=&quot;确定&quot;</code></li><li>文件开头通常有三个命名空间（<code>xmlns</code>、<code>xmlns:x</code>、<code>x:Class</code>），照模板写即可，不用背</li></ul></div><div class="ok-box"><span class="eico">💡</span> XAML 看着像网页 HTML，但它描述的是一棵&quot;对象树&quot;：每个标签对应一个 C# 对象，属性就是对象的字段。看懂这点，后面换控件只是换标签名。</div><div class="card"><p>界面写在 <code>MainWindow.axaml</code> 里，用 <strong><code>StackPanel</code></strong>（竖直排列容器）把控件一个个摞起来：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303324032',this)">复制</button></div>
-<pre id="c_4303324032"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338765440',this)">复制</button></div>
+<pre id="c_4338765440"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock x:Name=&quot;tip&quot; Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -594,20 +621,20 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>布局基础 — 控件摆在哪里</h1>
 <div class="ok-box">控件不能随便乱飘，得放进&quot;布局容器&quot;里，由容器决定它们怎么排列。Avalonia 常用 5 种布局容器：</div><div class="card"><h3>1. StackPanel —— 摞起来 / 排成行</h3><p>控件一个接一个竖直（默认）或水平排列，<code>Spacing</code> 控制间距：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303306688',this)">复制</button></div>
-<pre id="c_4303306688"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338764544',this)">复制</button></div>
+<pre id="c_4338764544"><code class="language-xml">&lt;StackPanel Orientation=&quot;Vertical&quot; Spacing=&quot;10&quot;&gt;
     &lt;Button Content=&quot;按钮1&quot; /&gt;
     &lt;Button Content=&quot;按钮2&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="card"><h3>2. Grid —— 表格（最灵活）</h3><p>用 <code>ColumnDefinitions</code> / <code>RowDefinitions</code> 划分行列，<code>*</code> 表示按比例、<code>Auto</code> 表示按内容；再用 <code>Grid.Row</code> / <code>Grid.Column</code> 把控件放进指定格：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303306368',this)">复制</button></div>
-<pre id="c_4303306368"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338764224',this)">复制</button></div>
+<pre id="c_4338764224"><code class="language-xml">&lt;Grid ColumnDefinitions=&quot;*,2*&quot; RowDefinitions=&quot;Auto,*,100&quot;&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;0&quot; Content=&quot;左上&quot; /&gt;
     &lt;Button Grid.Row=&quot;0&quot; Grid.Column=&quot;1&quot; Content=&quot;右上&quot; /&gt;
 &lt;/Grid&gt;</code></pre>
 </div><div class="ok-box"><span class="eico">💡</span> <code>*</code> 和 <code>Auto</code> 是 Grid 的灵魂：前者按比例分剩余空间，后者刚好包住内容。</div><div class="card"><h3>3. DockPanel —— 靠边停靠</h3><p>子控件用 <code>DockPanel.Dock=&quot;Top/Left/Right/Bottom&quot;</code> 贴边；<code>LastChildFill=&quot;True&quot;</code> 让最后一个填满剩余区：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303306048',this)">复制</button></div>
-<pre id="c_4303306048"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338763904',this)">复制</button></div>
+<pre id="c_4338763904"><code class="language-xml">&lt;DockPanel LastChildFill=&quot;True&quot;&gt;
     &lt;Button DockPanel.Dock=&quot;Top&quot; Content=&quot;顶栏&quot; /&gt;
     &lt;Button DockPanel.Dock=&quot;Left&quot; Content=&quot;侧栏&quot; /&gt;
     &lt;TextBlock Text=&quot;中间填充区&quot; /&gt;
@@ -617,8 +644,8 @@ App.axaml            ← 全局样式主题（不用改）</code></pre><div clas
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>事件 — 按钮点击做什么</h1>
 <div class="card"><p>在 XAML 里用 <code>Click=&quot;方法名&quot;</code> 把按钮和代码关联，再到 <code>MainWindow.axaml.cs</code> 里写这个方法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303305024',this)">复制</button></div>
-<pre id="c_4303305024"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338762880',this)">复制</button></div>
+<pre id="c_4338762880"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -633,8 +660,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>方法体填上真正的业务逻辑，就是最常见的写法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303304832',this)">复制</button></div>
-<pre id="c_4303304832"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338762688',this)">复制</button></div>
+<pre id="c_4338762688"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -653,8 +680,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>修改控件属性</h1>
 <div class="card"><p>可以在代码里动态修改属性（注意属性名和 WinForms 不同）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303305536',this)">复制</button></div>
-<pre id="c_4303305536"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338763392',this)">复制</button></div>
+<pre id="c_4338763392"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -681,8 +708,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 姓名问候器</h1>
 <div class="ok-box">用 TextBox 输入姓名，点击按钮后在 TextBlock 显示问候语——掌握 XAML 的 <code>x:Name</code> 和 C# 事件处理。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303303232',this)">复制</button></div>
-<pre id="c_4303303232"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338744640',this)">复制</button></div>
+<pre id="c_4338744640"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBlock Text=&quot;请输入姓名：&quot; /&gt;
     &lt;TextBox x:Name=&quot;nameBox&quot; Watermark=&quot;在这里输入&quot; /&gt;
     &lt;Button x:Name=&quot;okBtn&quot; Content=&quot;确定&quot; Click=&quot;OkBtn_Click&quot; /&gt;
@@ -690,8 +717,8 @@ namespace HelloWorld
     &lt;TextBlock x:Name=&quot;result&quot; Text=&quot;结果会显示在这里&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303303168',this)">复制</button></div>
-<pre id="c_4303303168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338744576',this)">复制</button></div>
+<pre id="c_4338744576"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -716,8 +743,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>动手：试试空输入直接点&quot;确定&quot;，再看输入&quot;张三&quot;后的结果</li></ul></div><div class="ok-box"><strong style="color:var(--green)"><span class="eico">💬</span> 解释说明</strong><br><ul><li><code>x:Name=&quot;nameBox&quot;</code> —— 给 XAML 里的控件起名，C# 代码就能用这个名字访问它</li><li>Avalonia <strong>没有 MessageBox</strong>！要用窗口上的 <code>TextBlock</code> 显示提示文字</li><li><code>string.IsNullOrWhiteSpace(name)</code> —— 检查是否为空或全空格，比 <code>name == &quot;&quot;</code> 更安全</li><li>事件方法签名固定为 <code>(object? sender, RoutedEventArgs e)</code>，<code>Click=&quot;方法名&quot;</code> 会自动关联</li></ul></div><div class="card"><h3 class="h-practice">练习（动手写）</h3><p>补全代码，加上&quot;清空&quot;按钮的功能（点击后清空 TextBox 和结果 TextBlock）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303302592',this)">复制</button></div>
-<pre id="c_4303302592"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338744000',this)">复制</button></div>
+<pre id="c_4338744000"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -731,8 +758,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303302528',this)">复制</button></div>
-<pre id="c_4303302528"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338743936',this)">复制</button></div>
+<pre id="c_4338743936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -757,16 +784,16 @@ namespace HelloWorld
 密码：123456
 （尝试错误的密码如 111111 —— 应提示错误并清空密码框）</code></pre><div class="card"><h3>期望输出：</h3></div><pre class="plain-box"><code>（正确时）✅ 登录成功！（文字变绿）
 （错误时）❌ 用户名或密码错误（文字变红，密码框自动清空）</code></pre><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li><code>PasswordChar=&quot;*&quot;</code> —— 让密码框显示为星号，但 <code>Text</code> 属性仍是真实密码</li><li>颜色用 <code>Foreground = Brushes.Green</code>，<strong>不是 ForeColor</strong></li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303300736',this)">复制</button></div>
-<pre id="c_4303300736"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338742144',this)">复制</button></div>
+<pre id="c_4338742144"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;<span class="code-blank">___</span>&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303301184',this)">复制</button></div>
-<pre id="c_4303301184"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338742592',this)">复制</button></div>
+<pre id="c_4338742592"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -793,16 +820,16 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4303300480',this)">复制</button></div>
-<pre id="c_4303300480"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4338741888',this)">复制</button></div>
+<pre id="c_4338741888"><code class="language-xml">&lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;userBox&quot; Watermark=&quot;用户名&quot; /&gt;
     &lt;TextBox x:Name=&quot;passBox&quot; Watermark=&quot;密码&quot; PasswordChar=&quot;*&quot; /&gt;
     &lt;Button x:Name=&quot;loginBtn&quot; Content=&quot;登录&quot; Click=&quot;LoginBtn_Click&quot; /&gt;
     &lt;TextBlock x:Name=&quot;result&quot; /&gt;
 &lt;/StackPanel&gt;</code></pre>
 </div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4303300416',this)">复制</button></div>
-<pre id="c_4303300416"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4338741824',this)">复制</button></div>
+<pre id="c_4338741824"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -906,6 +933,16 @@ namespace HelloWorld
     <button class="nav-btn" id="nextBtn" onclick="goSlide(1)">下一页 ▶</button>
 </div>
 <div class="progress-dots" id="progressDots"></div>
+<div class="page-sheet" id="pageSheet">
+    <div class="page-sheet-mask" onclick="closePageSheet()"></div>
+    <div class="page-sheet-panel">
+        <div class="page-sheet-head">
+            <span>页面跳转<span class="page-sheet-tip" id="pageSheetTip"></span></span>
+            <span class="page-sheet-x" onclick="closePageSheet()">✕</span>
+        </div>
+        <div class="page-sheet-list" id="pageSheetList"></div>
+    </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -921,7 +958,8 @@ let LESSON_LABEL='';(function(){
 function toggleMobileMore(){document.getElementById('mobileMoreMenu').classList.toggle('open')}
 function mobileAction(act){
   document.getElementById('mobileMoreMenu').classList.remove('open');
-  if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
+  if(act==='pages')openPageSheet();
+  else if(act==='ide'){let m=document.getElementById('ideMenu');if(m)m.classList.add('show')}
   else if(act==='fontDown')changeFont(-1);
   else if(act==='fontUp')changeFont(1);
   else if(act==='search')openSearch();
@@ -934,7 +972,61 @@ document.addEventListener('click',function(e){
   if(mm&&mm.classList.contains('open')&&!e.target.closest('.mobile-more'))mm.classList.remove('open');
 });
 // 点击移动端信息条跳转下一页
-function mobileInfoTap(){goSlide(1)}
+function mobileInfoTap(){openPageSheet()}
+// ========== 页面跳转面板（手机上快速翻页） ==========
+function psEscape(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function buildPageSheet(){
+  const list=document.getElementById('pageSheetList');
+  if(!list||list.children.length)return;
+  let h='';
+  slides.forEach(function(s,i){
+    const t=s.querySelector('h1,h2,h3');
+    let title=t?t.textContent.trim():'第'+(i+1)+'页';
+    title=title.replace(/\s+/g,' ');
+    if(title.length>40)title=title.slice(0,40)+'…';
+    h+='<div class="page-sheet-item" data-idx="'+i+'" onclick="jumpSlide('+i+')">'+
+       '<span class="ps-num">'+(i+1)+'</span>'+
+       '<span class="ps-title">'+psEscape(title)+'</span></div>';
+  });
+  list.innerHTML=h;
+}
+function markPageSheet(){
+  document.querySelectorAll('.page-sheet-item').forEach(function(el){
+    el.classList.toggle('active',Number(el.dataset.idx)===curr);
+  });
+  const tip=document.getElementById('pageSheetTip');
+  if(tip)tip.textContent='· 第 '+(curr+1)+' / '+total+' 页';
+  const act=document.querySelector('.page-sheet-item.active');
+  if(act&&act.scrollIntoView&&document.getElementById('pageSheet').classList.contains('open')){
+    try{act.scrollIntoView({block:'center',behavior:'auto'});}catch(e){}
+  }
+}
+function openPageSheet(){buildPageSheet();markPageSheet();document.getElementById('pageSheet').classList.add('open');markPageSheet();}
+function closePageSheet(){document.getElementById('pageSheet').classList.remove('open');}
+function jumpSlide(i){closePageSheet();showSlide(i);}
+// ========== 手机上左右滑动翻页 ==========
+(function(){
+  const box=document.querySelector('.slides-container');
+  if(!box)return;
+  let sx=0,sy=0,st=0,lock=false;
+  box.addEventListener('touchstart',function(e){
+    if(e.touches.length!==1){lock=true;return;}
+    const t=e.target;
+    lock=!!(t&&t.closest&&t.closest('pre,.progress-dots,.table-wrap,table,input,textarea,.page-sheet-panel,.catalog-panel'));
+    sx=e.touches[0].clientX;
+    sy=e.touches[0].clientY;
+    st=Date.now();
+  },{passive:true});
+  box.addEventListener('touchend',function(e){
+    if(lock||!window.matchMedia('(max-width:768px)').matches)return;
+    const t=e.changedTouches[0];
+    if(!t)return;
+    const dx=t.clientX-sx,dy=t.clientY-sy,dt=Date.now()-st;
+    if(dt>800||Math.abs(dx)<60)return;
+    if(Math.abs(dx)<Math.abs(dy)*1.8)return;
+    showSlide(curr+(dx<0?1:-1));
+  },{passive:true});
+})();
 // ========== localStorage ==========
 const LS=(k,d)=>{try{return localStorage.getItem(k)||d;}catch(e){return d;}};
 const LSset=(k,v)=>{try{localStorage.setItem(k,v);}catch(e){}};
@@ -993,7 +1085,7 @@ document.addEventListener('DOMContentLoaded',()=>{
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第1页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ 1/'+total;
     }
 });
 
@@ -1065,6 +1157,10 @@ function showSlide(idx){
     slides.forEach((s,i)=>s.classList.toggle('active',i===idx));
     navLinks.forEach((l,i)=>l.classList.toggle('active',i===idx));
     dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    // 页面跳转面板里同步高亮当前页
+    if(typeof markPageSheet==='function'&&document.getElementById('pageSheetList').children.length){curr=idx;markPageSheet();}
+    // 手机上页码点条是横向滚动的：把当前页滚到中间，别让它藏在边上点不到
+    if(dots[idx]&&dots[idx].scrollIntoView&&window.matchMedia('(max-width:768px)').matches){try{dots[idx].scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});}catch(e){}}
     // 切到本页时重播图形动画：.slide 是用 opacity 隐藏的，动画不会自动重来
     const actSlide=slides[idx];
     if(actSlide&&actSlide.querySelectorAll){
@@ -1086,7 +1182,7 @@ function showSlide(idx){
     let mi=document.getElementById('mobileInfo');
     if(mi){
         mi.querySelector('.mi-lesson').textContent=LESSON_LABEL;
-        mi.querySelector('.mi-page').textContent='第'+(idx+1)+'页 / 共'+total+'页';
+        mi.querySelector('.mi-page').textContent='▾ '+(idx+1)+'/'+total;
     }
     document.getElementById('mainArea').scrollTop=0;
     document.querySelectorAll('.nav-status')[idx]?.classList.add('seen');
@@ -1104,7 +1200,7 @@ document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown')goSlide(1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp')goSlide(-1);
     if((e.ctrlKey||e.metaKey)&&e.key==='k'){e.preventDefault();openSearch();}
-    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();}
+    if(e.key==='Escape'){closeSearch();closeHelp();closeZoom();closeCatalog();closePageSheet();}
 });
 
 // ========== 搜索 ==========
