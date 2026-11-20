@@ -120,6 +120,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
 .card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 缺图占位：不静默隐藏，标出应放的目录 + 文件名，可一键复制 */
+.img-missing{display:block;max-width:520px;margin:10px 0;padding:10px 12px;border:1px dashed rgba(245,158,11,0.6);border-radius:8px;background:rgba(245,158,11,0.08);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.img-missing .im-title{color:var(--orange);font-weight:600}
+.img-missing code{padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.07);color:var(--accent2);font-size:11.5px;word-break:break-all}
+.img-missing button{margin-left:6px;padding:1px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(245,158,11,0.55);background:transparent;color:var(--orange);cursor:pointer}
+.img-missing button:hover{background:rgba(245,158,11,0.16)}
+@media print{.img-missing{display:none!important}}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
 .contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
@@ -491,8 +498,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>什么是类型转换？</h1>
 <div class="card"><p>类型转换就是把一种数据类型变成另一种，让不同类型的数据可以互相配合。</p></div><div class="card"><h3>什么时候需要：</h3></div><div class="card"><ul><li>计算时类型不匹配：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376095040',this)">复制</button></div>
-<pre id="c_4376095040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381471936',this)">复制</button></div>
+<pre id="c_4381471936"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -507,8 +514,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>用户输入都是 string，必须转成数字才能计算：</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376094848',this)">复制</button></div>
-<pre id="c_4376094848"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381471744',this)">复制</button></div>
+<pre id="c_4381471744"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -526,8 +533,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>隐式转换 — 自动类型转换</h1>
 <div class="card"><ul><li>小范围 → 大范围，编译器自动完成，安全</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4376094272',this)">复制</button></div>
-<pre id="c_4376094272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381471168',this)">复制</button></div>
+<pre id="c_4381471168"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -547,8 +554,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>显式转换 — 强制类型转换</h1>
 <div class="card"><ul><li>大范围 → 小范围，需要手动指定，可能丢失精度</li></ul></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375794176',this)">复制</button></div>
-<pre id="c_4375794176"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381187328',this)">复制</button></div>
+<pre id="c_4381187328"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -565,8 +572,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>语法：<code>(目标类型)表达式</code></li><li>⚠️ 强制转换是<strong>截断</strong>，不是四舍五入</li></ul></div><div class="card"><h3>精度丢失示例</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375793792',this)">复制</button></div>
-<pre id="c_4375793792"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381186944',this)">复制</button></div>
+<pre id="c_4381186944"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -587,8 +594,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>课堂练习1 — 类型转换</h1>
 <div class="ok-box">练习自动转换和强制转换，理解 int↔double 互转的规则和精度问题。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375791936',this)">复制</button></div>
-<pre id="c_4375791936"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381185088',this)">复制</button></div>
+<pre id="c_4381185088"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -661,8 +668,8 @@ namespace HelloWorld
   <text x="60" y="308" fill="#22c55e" font-size="12" font-family="monospace">四舍五入后 = 8</text>
   <text x="60" y="364" fill="#6b7d97" font-size="11" font-family="sans-serif">9.99 → 9（截断）　7.8 → 8（四舍五入）　同一个数，两种处理结果不同</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p><strong>小题1</strong>：用 double 计算两个整数的平均值（注意先转成 double 再除）</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375791360',this)">复制</button></div>
-<pre id="c_4375791360"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381184512',this)">复制</button></div>
+<pre id="c_4381184512"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -678,8 +685,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题2</strong>：把 double 强制转成 int，观察截断效果</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375791104',this)">复制</button></div>
-<pre id="c_4375791104"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381184256',this)">复制</button></div>
+<pre id="c_4381184256"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -694,8 +701,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><strong>小题3</strong>：用四舍五入技巧保留整数</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375790912',this)">复制</button></div>
-<pre id="c_4375790912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381184064',this)">复制</button></div>
+<pre id="c_4381184064"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -710,8 +717,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375790720',this)">复制</button></div>
-<pre id="c_4375790720"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381183872',this)">复制</button></div>
+<pre id="c_4381183872"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -739,8 +746,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>string ↔ 数值互转</h1>
 <div class="card"><h3>string → 数值：Parse</h3><p>用户输入都是 string，计算前必须转换：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375793024',this)">复制</button></div>
-<pre id="c_4375793024"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381186176',this)">复制</button></div>
+<pre id="c_4381186176"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -755,8 +762,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><table><tr><th>目标类型</th><th>方法</th><th>示例</th></tr><tr><td><code>int</code></td><td><code>int.Parse()</code></td><td><code>int n = int.Parse(&quot;123&quot;);</code></td></tr><tr><td><code>double</code></td><td><code>double.Parse()</code></td><td><code>double d = double.Parse(&quot;3.14&quot;);</code></td></tr><tr><td><code>float</code></td><td><code>float.Parse()</code></td><td><code>float f = float.Parse(&quot;9.9&quot;);</code></td></tr><tr><td><code>bool</code></td><td><code>bool.Parse()</code></td><td><code>bool b = bool.Parse(&quot;true&quot;);</code></td></tr></table></div><div class="card"><h3>数值 → string：ToString</h3><p>反过来，把数字变成文字显示：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375790208',this)">复制</button></div>
-<pre id="c_4375790208"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381183360',this)">复制</button></div>
+<pre id="c_4381183360"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -773,8 +780,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>更常用的是 <code>$</code> 插值，自动调用 ToString：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375790016',this)">复制</button></div>
-<pre id="c_4375790016"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381183168',this)">复制</button></div>
+<pre id="c_4381183168"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -825,8 +832,8 @@ namespace HelloWorld
   <text x="40" y="146" fill="#8b9bb4" font-size="11" font-family="sans-serif">前两步把「文字」变成「能算的数」；第三步算出 77.0；第四步 (int) 把 .0 砍掉——所以要整数就靠这一步。</text>
   <text x="40" y="164" fill="#6b7d97" font-size="10.5" font-family="sans-serif">试一试：输入 24 → 75.2 → 75　输入 30 → 86.0 → 86</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>用 <code>double.Parse()</code> 把输入转成数字</li><li>华氏度公式：<code>celsius * 9 / 5 + 32</code></li><li>用强制转换 <code>(int)</code> 取出整数部分</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375772544',this)">复制</button></div>
-<pre id="c_4375772544"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381182144',this)">复制</button></div>
+<pre id="c_4381182144"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -851,8 +858,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375771968',this)">复制</button></div>
-<pre id="c_4375771968"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381181568',this)">复制</button></div>
+<pre id="c_4381181568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -873,8 +880,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：让用户输入一串用<strong>逗号分隔</strong>的数字（如 <code>3, 7, 2.5, 10</code>），程序输出它们的<strong>总和</strong>与<strong>个数</strong>。<br>要求：自己写——用 <code>Split</code> 拆串、<code>double.Parse</code> 逐个转换、用循环累加，不能用现成模板。<br>提示：<code>string[] parts = input.Split(',');</code> 然后遍历 <code>parts</code>，每个用 <code>double.Parse(p.Trim())</code> 转换。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375771648',this)">复制</button></div>
-<pre id="c_4375771648"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381181248',this)">复制</button></div>
+<pre id="c_4381181248"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1012,8 +1019,8 @@ namespace HelloWorld
   <text x="40" y="224" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">顺序很重要：先 +0.5 取整，再拿取整后的分数判断区间</text>
   <text x="40" y="246" fill="#6b7d97" font-size="10" font-family="sans-serif">58.4 → 58 → F　　59.6 → 60 → D　　边界上的 0.5 会改变等级</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输入：<code>请输入成绩：→ 87.6</code></li></ul><ul><li>输出：<code>原始成绩87.6 → 等级B</code></li></ul><ul><li>输入：<code>请输入成绩：→ 58.4</code></li></ul><ul><li>输出：<code>原始成绩58.4 → 等级F</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，用注释分隔每题<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4375770816',this)">复制</button></div>
-<pre id="c_4375770816"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4381180416',this)">复制</button></div>
+<pre id="c_4381180416"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1405,6 +1412,35 @@ function loadCatalog(){
     });
 }
 function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+// 缺图占位：图片加载失败时换成提示块，写明文件名 + 应放目录，可一键复制
+function imgMissing(img){
+    if(!img||img.dataset.missing)return;
+    img.dataset.missing='1';
+    const src=img.getAttribute('src')||'';
+    const box=document.createElement('div');
+    box.className='img-missing';
+    box.innerHTML='<span class="im-title">缺图</span> · '+img.getAttribute('alt')+
+        ' <code>'+src+'</code> <button type="button">复制文件名</button>';
+    box.querySelector('button').addEventListener('click',function(){copyImgName(this,src);});
+    img.replaceWith(box);
+}
+function copyImgName(btn,src){
+    const name=String(src).split('/').pop();
+    const ok=function(){btn.textContent='已复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    const manual=function(){btn.textContent='请手动复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(name).then(ok).catch(legacy);
+    }else{legacy();}
+    function legacy(){
+        try{
+            const t=document.createElement('textarea');
+            t.value=name;t.style.position='fixed';t.style.opacity='0';
+            document.body.appendChild(t);t.select();
+            const done=document.execCommand('copy');
+            t.remove();done?ok():manual();
+        }catch(e){manual();}
+    }
+}
 function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
 function doSearch(){
     let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');

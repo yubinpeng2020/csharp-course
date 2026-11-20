@@ -120,6 +120,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
 .card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 缺图占位：不静默隐藏，标出应放的目录 + 文件名，可一键复制 */
+.img-missing{display:block;max-width:520px;margin:10px 0;padding:10px 12px;border:1px dashed rgba(245,158,11,0.6);border-radius:8px;background:rgba(245,158,11,0.08);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.img-missing .im-title{color:var(--orange);font-weight:600}
+.img-missing code{padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.07);color:var(--accent2);font-size:11.5px;word-break:break-all}
+.img-missing button{margin-left:6px;padding:1px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(245,158,11,0.55);background:transparent;color:var(--orange);cursor:pointer}
+.img-missing button:hover{background:rgba(245,158,11,0.16)}
+@media print{.img-missing{display:none!important}}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
 .contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
@@ -516,8 +523,8 @@ pre,pre code{page-break-inside:avoid}
 │  ⚙️ SayHello()                 │
 └────────────────────────────────┘
       ↑ 外部只能走 SetAge()，里面可以检查&quot;年龄不能为负&quot;</code></pre><div class="card"><p>类比：<strong>遥控器</strong>——你按&quot;音量+&quot;就行，不需要知道里面的电路怎么走的。外壳把元件封装在内部，按钮是唯一可以碰的地方。</p></div><div class="card"><p><strong>不封装会出什么问题？</strong> 课件11-12我们写的类，字段全是 <code>public</code>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371671168',this)">复制</button></div>
-<pre id="c_4371671168"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307334144',this)">复制</button></div>
+<pre id="c_4307334144"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -543,8 +550,8 @@ namespace HelloWorld
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>public（公开）vs private（私有）</h1>
 <div class="card"><p>上页说&quot;贴权限标签&quot;，这个标签在 C# 里叫<strong>访问修饰符</strong>——它决定了谁能碰这个字段或方法。C# 有多个访问级别，本节课先掌握最核心的两个。后面课件还会讲 <code>protected</code>（子类可用），但 <code>public</code> 和 <code>private</code> 覆盖了 90% 的场景。</p></div><div class="card"><table><tr><th>修饰符</th><th>含义</th><th>比喻</th></tr><tr><td><code>public</code></td><td>公开的，谁都能用</td><td>门牌号</td></tr><tr><td><code>private</code></td><td>私有的，仅类内部可用</td><td>日记本</td></tr></table></div><div class="card"><p>来看代码——同一个类，名字公开、年龄和成绩私有：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371370752',this)">复制</button></div>
-<pre id="c_4371370752"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307050048',this)">复制</button></div>
+<pre id="c_4307050048"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -567,8 +574,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>private 了就不能碰了？——通过公开的方法安全访问</h3></div><div class="card"><p>把字段设为 private 之后，外部不能直接 <code>s.age = 18</code>，但可以通过类自己提供的 public 方法来操作——方法内部可以做检查，拒绝不合理的值。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371369984',this)">复制</button></div>
-<pre id="c_4371369984"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307049280',this)">复制</button></div>
+<pre id="c_4307049280"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -604,8 +611,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="ok-box"><span class="eico">💬</span> 只是挡一个负数？听起来有点小题大作。再看一个场景——<strong>改年龄时自动更新&quot;是否成年&quot;</strong>：</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371369792',this)">复制</button></div>
-<pre id="c_4371369792"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307049088',this)">复制</button></div>
+<pre id="c_4307049088"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -638,8 +645,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>属性（Property）— 更优雅的 Set/Get</h1>
 <div class="card"><p>Set/Get 方法好用，但每次写两个方法太啰嗦。C# 提供了<strong>属性</strong>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371371968',this)">复制</button></div>
-<pre id="c_4371371968"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307051264',this)">复制</button></div>
+<pre id="c_4307051264"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -673,8 +680,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li><code>value</code> 是关键字，代表 <code>=</code> 右边传进来的值</li><li>属性 = 带保安的字段——外表是字段，内部有逻辑</li></ul></div><div class="card"><h3>不需要检查时，还有更短写法——自动属性</h3></div><div class="card"><p>如果只是简单存取、不用校验，一行就能搞定：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371369664',this)">复制</button></div>
-<pre id="c_4371369664"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307048960',this)">复制</button></div>
+<pre id="c_4307048960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -701,8 +708,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>表达式体成员（=&gt;）— 一行搞定</h1>
 <div class="card"><p><code>{ return ...; }</code> 写多了手酸？C# 提供了 <code>=&gt;</code> 简写——方法、属性、甚至构造方法都能缩成一行。</p></div><div class="card"><p><code>=&gt;</code> 读作<strong>&quot;结果是&quot;</strong>，语法：<code>成员 =&gt; 表达式</code>。</p></div><div class="card"><h3>方法：</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371368576',this)">复制</button></div>
-<pre id="c_4371368576"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307047872',this)">复制</button></div>
+<pre id="c_4307047872"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -732,8 +739,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>只读属性：</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371368320',this)">复制</button></div>
-<pre id="c_4371368320"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307047616',this)">复制</button></div>
+<pre id="c_4307047616"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -761,8 +768,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3>属性简写 + 方法简写一起上：</h3></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371368128',this)">复制</button></div>
-<pre id="c_4371368128"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307047424',this)">复制</button></div>
+<pre id="c_4307047424"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -791,8 +798,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>课堂练习1 — 密码强度校验</h1>
 <div class="ok-box">用属性封装密码，要求长度 ≥ 6 位才接受，太短直接拒绝。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371366976',this)">复制</button></div>
-<pre id="c_4371366976"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307046272',this)">复制</button></div>
+<pre id="c_4307046272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -886,8 +893,8 @@ namespace HelloWorld
   <text x="488" y="164" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">不通过</text>
   <text x="40" y="234" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">字段前加 <tspan font-family="monospace">private</tspan>，外面就只能通过 <tspan font-family="monospace">Celsius</tspan> 属性进来——挡不住脏数据的属性，等于没封装。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371366336',this)">复制</button></div>
-<pre id="c_4371366336"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307045632',this)">复制</button></div>
+<pre id="c_4307045632"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -909,8 +916,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371366208',this)">复制</button></div>
-<pre id="c_4371366208"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307045504',this)">复制</button></div>
+<pre id="c_4307045504"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -980,8 +987,8 @@ namespace HelloWorld
   <text x="40" y="248" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">三个 <tspan font-family="monospace">=&gt;</tspan> 只读属性不存数据、每次访问现算——所以改了成绩，总分和等级自动跟着变，不用手动同步。</text>
   <text x="40" y="264" fill="#6b7d97" font-size="10" font-family="sans-serif">120 分会被 set 挡在门外，只打印「成绩120无效」，chinese 还是 85。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>每科成绩的 <code>set</code> 都要检查 <code>value &gt;= 0 &amp;&amp; value &lt;= 100</code></li><li><code>Total</code>、<code>Average</code>、<code>Grade</code> 都是只读，用 <code>=&gt;</code> 最简洁</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371347840',this)">复制</button></div>
-<pre id="c_4371347840"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307043584',this)">复制</button></div>
+<pre id="c_4307043584"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1011,8 +1018,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371347328',this)">复制</button></div>
-<pre id="c_4371347328"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307043072',this)">复制</button></div>
+<pre id="c_4307043072"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1075,8 +1082,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己写一个 <code>Thermometer</code>（温度计）类，用<strong>属性</strong>存温度，要求温度只能在 0~50℃ 之间，越界就提示&quot;温度异常&quot;并保持原值。<br>要求：完整定义类（属性 <code>set</code> 里做校验）+ <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371347008',this)">复制</button></div>
-<pre id="c_4371347008"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307042752',this)">复制</button></div>
+<pre id="c_4307042752"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1201,8 +1208,8 @@ namespace HelloWorld
   <text x="40" y="233" fill="#f59e0b" font-size="10" font-family="monospace">Width = -1 不在 0~10000 内 → set 拦下 → ❌ 被拦截，Width 还是 8</text>
   <text x="24" y="280" fill="#6b7d97" font-size="9.5" font-family="sans-serif">面积不用存字段，只写 => Width * Height：随时算、不会和宽高对不上。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>宽5 高3 → 面积：15 周长：16</code></li></ul><ul><li>输出：<code>宽 = -1 → ❌ 被拦截</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4371348864',this)">复制</button></div>
-<pre id="c_4371348864"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4307052480',this)">复制</button></div>
+<pre id="c_4307052480"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1595,6 +1602,35 @@ function loadCatalog(){
     });
 }
 function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+// 缺图占位：图片加载失败时换成提示块，写明文件名 + 应放目录，可一键复制
+function imgMissing(img){
+    if(!img||img.dataset.missing)return;
+    img.dataset.missing='1';
+    const src=img.getAttribute('src')||'';
+    const box=document.createElement('div');
+    box.className='img-missing';
+    box.innerHTML='<span class="im-title">缺图</span> · '+img.getAttribute('alt')+
+        ' <code>'+src+'</code> <button type="button">复制文件名</button>';
+    box.querySelector('button').addEventListener('click',function(){copyImgName(this,src);});
+    img.replaceWith(box);
+}
+function copyImgName(btn,src){
+    const name=String(src).split('/').pop();
+    const ok=function(){btn.textContent='已复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    const manual=function(){btn.textContent='请手动复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(name).then(ok).catch(legacy);
+    }else{legacy();}
+    function legacy(){
+        try{
+            const t=document.createElement('textarea');
+            t.value=name;t.style.position='fixed';t.style.opacity='0';
+            document.body.appendChild(t);t.select();
+            const done=document.execCommand('copy');
+            t.remove();done?ok():manual();
+        }catch(e){manual();}
+    }
+}
 function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
 function doSearch(){
     let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');

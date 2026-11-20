@@ -120,6 +120,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
 .card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 缺图占位：不静默隐藏，标出应放的目录 + 文件名，可一键复制 */
+.img-missing{display:block;max-width:520px;margin:10px 0;padding:10px 12px;border:1px dashed rgba(245,158,11,0.6);border-radius:8px;background:rgba(245,158,11,0.08);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.img-missing .im-title{color:var(--orange);font-weight:600}
+.img-missing code{padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.07);color:var(--accent2);font-size:11.5px;word-break:break-all}
+.img-missing button{margin-left:6px;padding:1px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(245,158,11,0.55);background:transparent;color:var(--orange);cursor:pointer}
+.img-missing button:hover{background:rgba(245,158,11,0.16)}
+@media print{.img-missing{display:none!important}}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
 .contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
@@ -890,8 +897,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>参考案例框架 ① 模型类 — 一条记录长什么样</h1>
 <div class="ok-box">这三页都用<strong>记账本</strong>演示（就是示例一的 <code>Record</code> / <code>RecordManager</code>），字段跟上一页那张卡一模一样。先看一条记录怎么表示。</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310602240',this)">复制</button></div>
-<pre id="c_4310602240"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4312849728',this)">复制</button></div>
+<pre id="c_4312849728"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -936,8 +943,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>参考案例框架 ② 管理器 — 一个集合 + 增删改查</h1>
 <div class="ok-box">还是<strong>记账本</strong>：多条记录装进一个集合，再给它几个方法。外面的菜单、按钮只调方法，不直接碰 <code>List</code>。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310600384',this)">复制</button></div>
-<pre id="c_4310600384"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4312847872',this)">复制</button></div>
+<pre id="c_4312847872"><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -1013,8 +1020,8 @@ namespace HelloWorld
 <div class="slide" data-page="11"><div class="slide-inner markable">
 <h1>参考案例框架 ③ 存盘与读盘 — 一行一条</h1>
 <div class="ok-box">还是<strong>记账本</strong>：集合只在内存里，一关程序就没了 —— <code>Save()</code> 写进 txt，<code>Load()</code> 时读回来。</div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4310600704',this)">复制</button></div>
-<pre id="c_4310600704"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4312848192',this)">复制</button></div>
+<pre id="c_4312848192"><code class="language-csharp">using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -1102,8 +1109,8 @@ namespace HelloWorld
   <text x="26" y="86" font-size="13.5" font-family="sans-serif" fill="#38bdf8">Record.cs（模型层）　+　RecordManager.cs（数据层）</text>
   <text x="26" y="104" font-size="12.5" font-family="sans-serif" fill="#94a3b8">两档共用同一份 —— 一个字都不用改，直接搬过去</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>多出来的只有 <code>MainWindow</code> 两个文件：<code>.axaml</code> 写界面长什么样，<code>.axaml.cs</code> 写按钮被点时干什么：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4310603136',this)">复制</button></div>
-<pre id="c_4310603136"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
+<div class="code-toolbar"><span class="code-lang">XML</span><button class="copy-btn" onclick="copyCode('c_4312850624',this)">复制</button></div>
+<pre id="c_4312850624"><code class="language-xml">&lt;!-- MainWindow.axaml：界面骨架（字段照抄记账本那五个） --&gt;
 &lt;StackPanel Margin=&quot;20&quot; Spacing=&quot;10&quot;&gt;
     &lt;TextBox x:Name=&quot;dateBox&quot; PlaceholderText=&quot;日期 2026-10-01&quot; /&gt;
     &lt;TextBox x:Name=&quot;categoryBox&quot; PlaceholderText=&quot;类别 餐饮 / 交通&quot; /&gt;
@@ -1630,6 +1637,35 @@ function loadCatalog(){
     });
 }
 function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+// 缺图占位：图片加载失败时换成提示块，写明文件名 + 应放目录，可一键复制
+function imgMissing(img){
+    if(!img||img.dataset.missing)return;
+    img.dataset.missing='1';
+    const src=img.getAttribute('src')||'';
+    const box=document.createElement('div');
+    box.className='img-missing';
+    box.innerHTML='<span class="im-title">缺图</span> · '+img.getAttribute('alt')+
+        ' <code>'+src+'</code> <button type="button">复制文件名</button>';
+    box.querySelector('button').addEventListener('click',function(){copyImgName(this,src);});
+    img.replaceWith(box);
+}
+function copyImgName(btn,src){
+    const name=String(src).split('/').pop();
+    const ok=function(){btn.textContent='已复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    const manual=function(){btn.textContent='请手动复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(name).then(ok).catch(legacy);
+    }else{legacy();}
+    function legacy(){
+        try{
+            const t=document.createElement('textarea');
+            t.value=name;t.style.position='fixed';t.style.opacity='0';
+            document.body.appendChild(t);t.select();
+            const done=document.execCommand('copy');
+            t.remove();done?ok():manual();
+        }catch(e){manual();}
+    }
+}
 function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
 function doSearch(){
     let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');

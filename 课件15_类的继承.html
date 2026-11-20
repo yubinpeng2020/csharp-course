@@ -120,6 +120,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
 .card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 缺图占位：不静默隐藏，标出应放的目录 + 文件名，可一键复制 */
+.img-missing{display:block;max-width:520px;margin:10px 0;padding:10px 12px;border:1px dashed rgba(245,158,11,0.6);border-radius:8px;background:rgba(245,158,11,0.08);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.img-missing .im-title{color:var(--orange);font-weight:600}
+.img-missing code{padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.07);color:var(--accent2);font-size:11.5px;word-break:break-all}
+.img-missing button{margin-left:6px;padding:1px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(245,158,11,0.55);background:transparent;color:var(--orange);cursor:pointer}
+.img-missing button:hover{background:rgba(245,158,11,0.16)}
+@media print{.img-missing{display:none!important}}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
 .contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
@@ -505,8 +512,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="4"><div class="slide-inner markable">
 <h1>这种关系能解决什么问题？</h1>
 <div class="card"><p>核心就四个字：<strong>代码复用</strong>。把共有的东西放在父类，子类只写自己独有的，不用抄一遍。</p></div><div class="card"><p>来看反面教材——不用继承有多痛苦：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341880256',this)">复制</button></div>
-<pre id="c_4341880256"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378746944',this)">复制</button></div>
+<pre id="c_4378746944"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -545,8 +552,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>既然大学生是一种学生，那直接复用学生的代码不就好了？来看继承的语法：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341880064',this)">复制</button></div>
-<pre id="c_4341880064"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378746752',this)">复制</button></div>
+<pre id="c_4378746752"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -585,8 +592,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>protected — 给子类开的&quot;后门&quot;</h1>
 <div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341881472',this)">复制</button></div>
-<pre id="c_4341881472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378748160',this)">复制</button></div>
+<pre id="c_4378748160"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -623,8 +630,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>base — 调用父类构造方法</h1>
 <div class="card"><p>课件12学过 <code>this</code>——它指代&quot;当前这个对象&quot;。在继承体系里，<code>base</code> 指代&quot;父类那一部分&quot;。逻辑很自然：<strong><code>this</code> 是自己，<code>base</code> 是爹</strong>。</p></div><div class="card"><p>来看代码——子类的构造方法怎么把 Name、Age 交给父类去初始化：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341879040',this)">复制</button></div>
-<pre id="c_4341879040"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378745728',this)">复制</button></div>
+<pre id="c_4378745728"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -666,8 +673,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>多态 — virtual 与 override</h1>
 <div class="card"><p>先搞懂概念：<strong>多态</strong>就是&quot;父类引用指向子类对象，同一个方法调用，结果取决于实际是什么子类&quot;。生活中的多态——遥控器上的&quot;播放&quot;键：按下去，电视播画面、音响播音乐、DVD播光盘。同一个按钮，不同设备，行为不同。</p></div><div class="card"><p>在 C# 里实现多态需要两个关键字：父类用 <code>virtual</code>，子类用 <code>override</code>。</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341878272',this)">复制</button></div>
-<pre id="c_4341878272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378744960',this)">复制</button></div>
+<pre id="c_4378744960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -704,8 +711,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>现在来看多态的实际效果——<strong>声明的是 Student 类型，但执行的是 CollegeStudent 的方法</strong>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341878080',this)">复制</button></div>
-<pre id="c_4341878080"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378744768',this)">复制</button></div>
+<pre id="c_4378744768"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -740,8 +747,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>抽象类 — 不能 new 的父类</h1>
 <div class="card"><p>先搞清楚&quot;抽象&quot;二字在编程里是什么意思——它不是你画的抽象画，而是<strong>不完整、不具体</strong>。</p></div><div class="card"><ul><li>你可以指着笼子里的一只狗说&quot;这是动物&quot;，但不能凭空指着空气说&quot;这是动物&quot;——<span class="term">动物</span>本身太模糊，没法具体到一只活物</li><li>代码同理：<code>new Animal()</code> 到底叫声是什么？没法回答。所以把它标成 <code>abstract</code>，告诉编译器：<strong>别让人 new 我，我只当模板</strong></li></ul></div><div class="card"><p>三个实际作用：</p></div><div class="card"><ol><li><strong>防止创建无意义的对象</strong>：世上没有一只叫&quot;动物&quot;的动物，<code>new Animal()</code> 没意义</li><li><strong>强迫子类统一行为</strong>：所有动物都要会叫，但狗叫和猫叫不一样——父类规定&quot;必须会叫&quot;，子类各自实现</li><li><strong>表明设计意图</strong>：告诉其他开发者&quot;这个类是模板，别直接用，去继承它&quot;</li></ol></div><div class="card"><p>用 <code>abstract</code> 标记后，这个类只能被继承，不能 <code>new</code>。</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341876992',this)">复制</button></div>
-<pre id="c_4341876992"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378743680',this)">复制</button></div>
+<pre id="c_4378743680"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -765,8 +772,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>父类抽象好了，接着写一个具体子类去继承它，并实现 <code>Speak()</code>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341876800',this)">复制</button></div>
-<pre id="c_4341876800"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378743488',this)">复制</button></div>
+<pre id="c_4378743488"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -803,8 +810,8 @@ namespace HelloWorld
 <div class="slide" data-page="9"><div class="slide-inner markable">
 <h1>is 和 as — 类型的判断与转换</h1>
 <div class="card"><p>学完继承和多态，你已经能写 <code>Animal[]</code> 统一管理猫狗鸟。但有个实际问题——遍历数组时，怎么知道当前这只到底是狗还是猫？&quot;我只想让狗叫，猫跳过&quot;、&quot;我想把狗转回 Dog 类型调用它独有的方法&quot;——这就需要 <code>is</code> 和 <code>as</code>。</p></div><div class="card"><h3><code>is</code> — 判断&quot;它是不是&quot;某个类型</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341875584',this)">复制</button></div>
-<pre id="c_4341875584"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378742272',this)">复制</button></div>
+<pre id="c_4378742272"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -841,8 +848,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p>判断单个对象的类型只是第一步，放进数组里批量处理才是实战用法：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341875392',this)">复制</button></div>
-<pre id="c_4341875392"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378742080',this)">复制</button></div>
+<pre id="c_4378742080"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -878,8 +885,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><h3><code>as</code> — 安全类型转换（不像强制转换那么容易崩）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341875136',this)">复制</button></div>
-<pre id="c_4341875136"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378741824',this)">复制</button></div>
+<pre id="c_4378741824"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -919,8 +926,8 @@ namespace HelloWorld
 <div class="slide" data-page="10"><div class="slide-inner markable">
 <h1>课堂练习1 — 动物继承</h1>
 <div class="ok-box">定义 Animal 父类（virtual Speak），派生 Dog 和 Cat 子类各自重写叫声。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341857856',this)">复制</button></div>
-<pre id="c_4341857856"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378740992',this)">复制</button></div>
+<pre id="c_4378740992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1007,8 +1014,8 @@ namespace HelloWorld
   <text x="340" y="272" text-anchor="middle" fill="#38bdf8" font-size="10" font-family="monospace">foreach (Vehicle v in vehicles) v.Run();　→　两行结果不一样</text>
   <text x="40" y="300" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">父类只管声明 <tspan font-family="monospace" fill="#f59e0b">virtual</tspan>，子类用 <tspan font-family="monospace" fill="#f59e0b">override</tspan> 换实现——等到真正调用那一刻才决定跑哪份代码。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341857216',this)">复制</button></div>
-<pre id="c_4341857216"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378740352',this)">复制</button></div>
+<pre id="c_4378740352"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1048,8 +1055,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341857024',this)">复制</button></div>
-<pre id="c_4341857024"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378740160',this)">复制</button></div>
+<pre id="c_4378740160"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1121,8 +1128,8 @@ namespace HelloWorld
   <text x="352" y="232" fill="#8b9bb4" font-size="9" font-family="sans-serif">王五 3000 取 4000 → -1000</text>
   <text x="30" y="266" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">取钱逻辑两处不一样：活期沿用父类（不能超额），信用卡重写后允许透支——同一个 <tspan font-family="monospace">Withdraw()</tspan>，各按各的规矩办。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>父类 <code>BankAccount</code>：存钱/取钱/Info，<code>virtual</code> 标记可重写的方法</li><li>子类 <code>SavingsAccount</code>：新增利息 + 重写 Info（显示利率）</li><li>子类 <code>CreditAccount</code>：重写取钱（加上透支额度）+ 重写 Info</li><li><code>Balance</code> 用 <code>protected set</code>，子类才能改</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341854272',this)">复制</button></div>
-<pre id="c_4341854272"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378720960',this)">复制</button></div>
+<pre id="c_4378720960"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1199,8 +1206,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341853760',this)">复制</button></div>
-<pre id="c_4341853760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378720448',this)">复制</button></div>
+<pre id="c_4378720448"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1288,8 +1295,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="ok-box"><span class="eico">💡</span> 多态进阶：把三种账户放 <code>BankAccount[]</code> 数组里，foreach 统一打 Info。然后加一行——用 <code>is SavingsAccount</code> 判断，只对活期账户调 <code>AddInterest()</code>。</div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：在银行账户体系里<strong>新增一个子类</strong> <code>LoanAccount</code>（贷款账户），继承 <code>BankAccount</code>，重写 <code>Info</code> 显示&quot;欠款金额&quot;（用负数余额表示）。<br>要求：自己写完整子类 + 一行 <code>Main</code> 演示，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341853376',this)">复制</button></div>
-<pre id="c_4341853376"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378720064',this)">复制</button></div>
+<pre id="c_4378720064"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1421,8 +1428,8 @@ namespace HelloWorld
   <rect x="24" y="250" width="632" height="36" rx="8" fill="#10261c" stroke="#22c55e" stroke-opacity="0.45" stroke-width="1"/>
   <text x="40" y="273" fill="#22c55e" font-size="11" font-family="monospace">张三 余额：500　　李四 余额：1000</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>张三 余额：500</code></li></ul><ul><li>输出：<code>李四 余额：1000</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4341856640',this)">复制</button></div>
-<pre id="c_4341856640"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4378739136',this)">复制</button></div>
+<pre id="c_4378739136"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1815,6 +1822,35 @@ function loadCatalog(){
     });
 }
 function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+// 缺图占位：图片加载失败时换成提示块，写明文件名 + 应放目录，可一键复制
+function imgMissing(img){
+    if(!img||img.dataset.missing)return;
+    img.dataset.missing='1';
+    const src=img.getAttribute('src')||'';
+    const box=document.createElement('div');
+    box.className='img-missing';
+    box.innerHTML='<span class="im-title">缺图</span> · '+img.getAttribute('alt')+
+        ' <code>'+src+'</code> <button type="button">复制文件名</button>';
+    box.querySelector('button').addEventListener('click',function(){copyImgName(this,src);});
+    img.replaceWith(box);
+}
+function copyImgName(btn,src){
+    const name=String(src).split('/').pop();
+    const ok=function(){btn.textContent='已复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    const manual=function(){btn.textContent='请手动复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(name).then(ok).catch(legacy);
+    }else{legacy();}
+    function legacy(){
+        try{
+            const t=document.createElement('textarea');
+            t.value=name;t.style.position='fixed';t.style.opacity='0';
+            document.body.appendChild(t);t.select();
+            const done=document.execCommand('copy');
+            t.remove();done?ok():manual();
+        }catch(e){manual();}
+    }
+}
 function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
 function doSearch(){
     let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');

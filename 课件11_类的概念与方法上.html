@@ -120,6 +120,13 @@ html,body{height:100%;overflow:hidden;font-family:'Inter','PingFang SC','Microso
 .card table .card-img{float:none;max-width:280px;max-height:none;margin:4px auto;display:block;border-radius:4px}
 .card table .card-img-sm{float:none;max-width:100px;max-height:none;margin:4px 0;display:inline-block;border-radius:4px}
 .card-img{display:block;max-width:100%;margin:16px auto;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+/* 缺图占位：不静默隐藏，标出应放的目录 + 文件名，可一键复制 */
+.img-missing{display:block;max-width:520px;margin:10px 0;padding:10px 12px;border:1px dashed rgba(245,158,11,0.6);border-radius:8px;background:rgba(245,158,11,0.08);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+.img-missing .im-title{color:var(--orange);font-weight:600}
+.img-missing code{padding:1px 5px;border-radius:4px;background:rgba(255,255,255,0.07);color:var(--accent2);font-size:11.5px;word-break:break-all}
+.img-missing button{margin-left:6px;padding:1px 8px;font-size:11px;border-radius:5px;border:1px solid rgba(245,158,11,0.55);background:transparent;color:var(--orange);cursor:pointer}
+.img-missing button:hover{background:rgba(245,158,11,0.16)}
+@media print{.img-missing{display:none!important}}
 /* 竞赛照片三图并排 */
 .contest-row{display:flex;gap:12px;justify-content:center;margin:16px 0;flex-wrap:wrap}
 .contest-row img{flex:1;min-width:0;max-width:280px;max-height:200px;object-fit:contain;background:var(--bg-input);border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,0.15);cursor:pointer}
@@ -494,8 +501,8 @@ pre,pre code{page-break-inside:avoid}
 <div class="slide" data-page="3"><div class="slide-inner markable">
 <h1>为什么需要类？</h1>
 <div class="ok-box">前面学了变量、数组、集合——数据越存越多，但它们散落在 <code>Main</code> 里互不关联。一个学生有姓名、年龄、成绩，这三块数据本该属于同一个整体——这节课学类，把数据和功能打包到一起。</div><div class="card"><p>到目前为止写的代码，变量和逻辑全塞在 <code>Main</code> 里——系统小还能撑，一旦系统变大，<code>Main</code> 就变成了几百行的&quot;垃圾堆&quot;：想改个东西得翻半天，想复制一段逻辑到处粘贴，多人合作更是灾难。</p></div><div class="card"><p>更致命的是，现实中的&quot;东西&quot;（比如学生）天然带着数据和功能——不说类的话，就得：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306429760',this)">复制</button></div>
-<pre id="c_4306429760"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4314133248',this)">复制</button></div>
+<pre id="c_4314133248"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -585,8 +592,8 @@ namespace HelloWorld
   <!-- ⑤ 一句话总结 -->
   <text x="390" y="556" text-anchor="middle" fill="#8b9bb4" font-size="13.5" font-family="sans-serif">▲ 同一个模板，不同的数据——方法共用一套，字段各填各的</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><ul><li>类就像一个<strong>大盒子框架</strong>，里面分成两格：一格装数据（字段），一格装功能（方法）</li><li>用 <code>new</code> 创建对象时，就从这个框架&quot;复印&quot;出一份——每个对象字段值自己填，方法共用同一套</li></ul></div><div class="card"><h3>生活中的类比：</h3></div><div class="card"><table><tr><th>比喻</th><th>类（Class）</th><th>对象（Object）</th></tr><tr><td>手机</td><td>设计图纸</td><td>生产出来的真手机（无数部）</td></tr><tr><td>饼干</td><td>模具</td><td>压出来的饼干（形状相同，馅料不同）</td></tr><tr><td>学生表</td><td>空白登记表模板</td><td>填好的张三的表、李四的表</td></tr><tr><td>盖房</td><td>户型图纸</td><td>盖好的房子</td></tr></table></div><div class="card"><ul><li><strong>类</strong> = 定义了&quot;有什么数据&quot;和&quot;能做什么事&quot;的<strong>模板</strong></li><li><strong>对象</strong> = 按模板创建的<strong>具体实例</strong>，每个对象的字段值可以不同</li></ul></div><div class="card"><p>用已学过的类型理解：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306429504',this)">复制</button></div>
-<pre id="c_4306429504"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4314132992',this)">复制</button></div>
+<pre id="c_4314132992"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -625,8 +632,8 @@ namespace HelloWorld
 <div class="slide" data-page="5"><div class="slide-inner markable">
 <h1>定义第一个类并创建对象</h1>
 <div class="card"><p>定义类和使用类的代码，<strong>写在同一个 <code>namespace</code> 里</strong>——先看完整的一段：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306129472',this)">复制</button></div>
-<pre id="c_4306129472"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313849216',this)">复制</button></div>
+<pre id="c_4313849216"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -687,8 +694,8 @@ namespace HelloWorld
 <div class="slide" data-page="6"><div class="slide-inner markable">
 <h1>为什么要有方法 — 改一处，处处生效</h1>
 <div class="card"><p>先别急着学方法怎么写，先看一个<strong>没有方法</strong>时的麻烦。</p></div><div class="card"><p>期末要给全班算总分和平均分，而且不止一处要用到：打印成绩单、排名、导出。不会方法的人，只能把同一段逻辑<strong>复制粘贴三遍</strong>：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306128128',this)">复制</button></div>
-<pre id="c_4306128128"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313847872',this)">复制</button></div>
+<pre id="c_4313847872"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -760,8 +767,8 @@ namespace HelloWorld
   <text x="40" y="272" fill="#8b9bb4" font-size="11" font-family="sans-serif">规则一变（比如英语按 1.2 倍计入总分）：左边三处都要改，漏一处就得出两个总分；</text>
   <text x="40" y="292" fill="#8b9bb4" font-size="11" font-family="sans-serif">右边只动 GetTotal 里的一行，三个调用点自动跟着变——这就是代码复用。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>把<span class="term">算总分</span>这件事<strong>封装成方法</strong>，规则就只写一份：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306128256',this)">复制</button></div>
-<pre id="c_4306128256"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313848000',this)">复制</button></div>
+<pre id="c_4313848000"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -796,8 +803,8 @@ namespace HelloWorld
 <div class="slide" data-page="7"><div class="slide-inner markable">
 <h1>方法的参数与返回值</h1>
 <div class="card"><p>上页我们调用了 <code>SayHello()</code>、<code>Grow()</code> 等方法。这些方法到底是怎么定义出来的？看一个<span class="term">两数相加</span>的完整例子：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306126912',this)">复制</button></div>
-<pre id="c_4306126912"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313846656',this)">复制</button></div>
+<pre id="c_4313846656"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -827,8 +834,8 @@ namespace HelloWorld
 </div><div class="card"><p>拿 <code>Add</code> 方法拆开看，由五部分组成：</p></div><pre class="plain-box"><code>public   int    Add    (int a, int b)   { return a + b; }
   ↑       ↑      ↑          ↑                  ↑
 访问修饰符 返回类型 方法名   参数列表（输入）    方法体（做什么）</code></pre><div class="card"><ul><li><code>public</code> = <strong>公开的</strong>——谁都能调。<code>private</code>/<code>protected</code> 后面课件细讲，目前统一用 <code>public</code></li><li><code>int</code> = <strong>返回类型</strong>——方法执行完把什么类型的数据还给调用者。<code>int</code> 还数字，<code>double</code> 还小数，<code>void</code> 表示<span class="term">不还东西</span></li><li><code>(int a, int b)</code> = <strong>参数列表</strong>——调用时要传的数据，<code>a</code> 和 <code>b</code> 在这方法里当局部变量用</li><li><code>{ return a + b; }</code> = <strong>方法体</strong>——真正干活的代码</li></ul></div><div class="ok-box">方法的公式：<code>public 返回类型 方法名(参数列表) { 方法体 }</code></div><div class="card"><p>调用它的时候（<code>Calculator</code> 也一起带着，这样这段能直接跑）：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306126080',this)">复制</button></div>
-<pre id="c_4306126080"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313845824',this)">复制</button></div>
+<pre id="c_4313845824"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -848,8 +855,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><p><code>void</code> vs 有返回值的区别：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306125824',this)">复制</button></div>
-<pre id="c_4306125824"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313845568',this)">复制</button></div>
+<pre id="c_4313845568"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -882,8 +889,8 @@ namespace HelloWorld
 <div class="slide" data-page="8"><div class="slide-inner markable">
 <h1>课堂练习1 — 学生成绩计算</h1>
 <div class="ok-box">定义 Student 类，包含语数英字段和计算总分/平均分的方法，创建对象并输出。</div><div class="card"><h3 class="h-example">代码示例（老师示范讲解）</h3></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306108032',this)">复制</button></div>
-<pre id="c_4306108032"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313844224',this)">复制</button></div>
+<pre id="c_4313844224"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -969,8 +976,8 @@ namespace HelloWorld
   <text x="410" y="216" text-anchor="middle" fill="#22c55e" font-size="11.5" font-family="monospace">宝马正在以120km/h行驶</text>
   <text x="40" y="246" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">类里写的是「有什么字段、能干哪些事」；对象才是真正拿着数据干活的那一个——一个类可以 new 出无数个对象。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306107456',this)">复制</button></div>
-<pre id="c_4306107456"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313843648',this)">复制</button></div>
+<pre id="c_4313843648"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -998,8 +1005,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306107264',this)">复制</button></div>
-<pre id="c_4306107264"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313843456',this)">复制</button></div>
+<pre id="c_4313843456"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1032,8 +1039,8 @@ namespace HelloWorld
 <div class="card"><p>前面写 <code>new Person()</code> 时，对象创建完还得一行行 <code>p.name =</code>、<code>p.age =</code> 赋值。能不能创建时就一步到位？<strong>构造方法</strong>就是干这个的。</p></div><div class="card"><p>一个构造方法长这样：</p></div><pre class="plain-box"><code>public   Person   (string n, int a)   { name = n;  age = a; }
   ↑        ↑             ↑                    ↑
 访问修饰符  类名         参数列表             方法体（初始化字段）</code></pre><div class="card"><p>构造方法就是<strong>特殊的方法</strong>，有三个特殊之处：</p></div><div class="card"><ul><li><strong>名字 = 类名</strong>：必须和类同名，不是随便起的方法名</li><li><strong>没有返回值类型</strong>：连 <code>void</code> 都不写（和普通方法的区别）</li><li><strong>自动调用</strong>：用 <code>new</code> 创建对象时自动执行，不用手动调</li></ul></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306106880',this)">复制</button></div>
-<pre id="c_4306106880"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313843072',this)">复制</button></div>
+<pre id="c_4313843072"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1069,8 +1076,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><div class="card"><ul><li>构造方法 = 出厂设置，创建对象时自动执行，<strong>只执行一次</strong></li></ul></div><div class="card"><p>上面示例用了 <code>string n, int a</code> 当参数名，虽然能跑，但 <code>n</code>、<code>a</code> 看不出含义。更好的写法是把参数名写得和字段名一样——清楚。但问题来了：<strong>名字一样，谁来区分？</strong></p></div><div class="card"><p>这时候就要用 <code>this</code>：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306106560',this)">复制</button></div>
-<pre id="c_4306106560"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313842752',this)">复制</button></div>
+<pre id="c_4313842752"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1160,8 +1167,8 @@ namespace HelloWorld
 
   <text x="40" y="292" fill="#8b9bb4" font-size="11" font-family="sans-serif">字段就那 3 个，但参数留几个、怎么变成字段，全由你决定：可以算、可以判断、可以给默认值。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="card"><p>一个类，四种完全不同的参数写法：</p></div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306106176',this)">复制</button></div>
-<pre id="c_4306106176"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313842368',this)">复制</button></div>
+<pre id="c_4313842368"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1264,8 +1271,8 @@ namespace HelloWorld
   <text x="478" y="243" fill="#ef4444" font-size="10" font-family="sans-serif">2000 &gt; 1300 → 拒绝</text>
   <text x="60" y="286" fill="#8b9bb4" font-size="10.5" font-family="sans-serif">取钱前先 <tspan fill="#f59e0b" font-family="monospace">if (amount &gt; balance)</tspan> 挡一下：不通过就打印提示并 <tspan font-family="monospace">return false</tspan>，余额一分不动。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><button class="fold-toggle hint" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看提示</button><div class="fold-content"><div class="ok-box"><ul><li>构造方法：<code>BankAccount(string owner, double balance)</code> 一步到位</li><li><code>this.owner = owner</code> —— 参数和字段同名时用 <code>this.</code> 区分</li><li>取钱时 <code>if (amount &gt; balance)</code> 检查余额，返回 <code>bool</code> 告诉调用者是否成功</li><li><code>___</code> 是需要你补全的地方</li></ul></div></div><div class="card"><h3 class="h-practice">练习</h3><p>请在下面的模板中补全空白（<code>___</code>）：</p></div><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306103296',this)">复制</button></div>
-<pre id="c_4306103296"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313823040',this)">复制</button></div>
+<pre id="c_4313823040"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1312,8 +1319,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 📝 查看参考代码</button><div class="fold-content"><div class="ok-box"><div class="prompt-box tall">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306102720',this)">复制</button></div>
-<pre id="c_4306102720"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313822464',this)">复制</button></div>
+<pre id="c_4313822464"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1359,8 +1366,8 @@ namespace HelloWorld
     }
 }</code></pre>
 </div></div></div><div class="card"><h3>拔高题（选做，自己写，不填空）</h3></div><div class="ok-box">需求：自己定义一个 <code>Rectangle</code>（长方形）类，含<strong>长、宽</strong>两个字段，以及计算<strong>面积</strong>和<strong>周长</strong>的方法；在 <code>Main</code> 里读入长、宽并调用方法输出。<br>要求：完整定义类 + <code>Main</code> 调用，不能用现成模板。</div><button class="fold-toggle solution" onclick="toggleFold(this)"><span class="arrow">▶</span> 💡 查看参考答案（写完再看）</button><div class="fold-content"><div class="ok-box"><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306102400',this)">复制</button></div>
-<pre id="c_4306102400"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313822144',this)">复制</button></div>
+<pre id="c_4313822144"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1464,8 +1471,8 @@ namespace HelloWorld
   <text x="40" y="248" fill="#22c55e" font-size="12" font-family="monospace">最高分学生：张三</text>
   <text x="24" y="280" fill="#6b7d97" font-size="9.5" font-family="sans-serif">构造方法只负责装数据；总分和平均分交给方法算，别在构造里就固定死。</text>
 </svg><div class="svg-replay-bar"><button class="svg-replay" type="button" onclick="replaySvg(this)" title="重播这张图的动画">↻ 重播</button></div></div><div class="ok-box">验收示范：<ul><li>输出：<code>总分：253</code></li></ul><ul><li>输出：<code>平均分：84.3</code></li></ul><ul><li>输出：<code>最高分学生：张三</code></li></ul></div><div class="ok-box"><span class="eico">💬</span> 代码组织提示<br>- 将以上 4 道题全部写在一个 <code>Main()</code> 里，每个类定义在 Program 类外面<br>- 验收时运行一次即可看到所有题目的输出</div><div class="prompt-box">
-<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4306104256',this)">复制</button></div>
-<pre id="c_4306104256"><code class="language-csharp">using System;
+<div class="code-toolbar"><span class="code-lang">CSHARP</span><button class="copy-btn" onclick="copyCode('c_4313824000',this)">复制</button></div>
+<pre id="c_4313824000"><code class="language-csharp">using System;
 
 namespace HelloWorld
 {
@@ -1858,6 +1865,35 @@ function loadCatalog(){
     });
 }
 function zoomQR(img){document.getElementById('qrZoomImg').src=img.src;document.getElementById('qrZoom').classList.add('show')}
+// 缺图占位：图片加载失败时换成提示块，写明文件名 + 应放目录，可一键复制
+function imgMissing(img){
+    if(!img||img.dataset.missing)return;
+    img.dataset.missing='1';
+    const src=img.getAttribute('src')||'';
+    const box=document.createElement('div');
+    box.className='img-missing';
+    box.innerHTML='<span class="im-title">缺图</span> · '+img.getAttribute('alt')+
+        ' <code>'+src+'</code> <button type="button">复制文件名</button>';
+    box.querySelector('button').addEventListener('click',function(){copyImgName(this,src);});
+    img.replaceWith(box);
+}
+function copyImgName(btn,src){
+    const name=String(src).split('/').pop();
+    const ok=function(){btn.textContent='已复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    const manual=function(){btn.textContent='请手动复制';setTimeout(function(){btn.textContent='复制文件名';},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(name).then(ok).catch(legacy);
+    }else{legacy();}
+    function legacy(){
+        try{
+            const t=document.createElement('textarea');
+            t.value=name;t.style.position='fixed';t.style.opacity='0';
+            document.body.appendChild(t);t.select();
+            const done=document.execCommand('copy');
+            t.remove();done?ok():manual();
+        }catch(e){manual();}
+    }
+}
 function closeZoom(){document.getElementById('qrZoom').classList.remove('show')}
 function doSearch(){
     let q=document.getElementById('searchInput').value,qLower=q.toLowerCase(),c=document.getElementById('searchResults');
