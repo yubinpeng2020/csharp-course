@@ -91,12 +91,16 @@ echo ""
 
 # ---------- 2) HTML ----------
 # rsync 增量：没改的秒过，改过的覆盖
+# ⚠️ 不能带 --update：rsync --inplace 中途被打断会留下「大小正确、尾部是旧数据」
+#    的文件（打开就是乱码），而这种文件的 mtime 比源新，--update 会永远跳过它，
+#    坏文件就永久留在 U 盘上（2026-11-25 踩到：18 个课件打开乱码）。
+#    所以改用 --checksum：按内容判断，内容不对就重传。
 cnt=0; skip=0
 if command -v rsync >/dev/null 2>&1; then
     for f in 课件*.html index.html knowledge_graph.html; do
         case "$(basename "$f")" in _bak_*|_tmp_*) continue ;; esac
         [ -f "$f" ] || continue
-        if rsync -a --inplace --update "$f" "$DEST/$f" 2>/dev/null; then
+        if rsync -a --inplace --checksum "$f" "$DEST/$f" 2>/dev/null; then
             cnt=$((cnt+1))
         else
             cp -p "$f" "$DEST/" && cnt=$((cnt+1))
@@ -108,7 +112,26 @@ else
         [ -f "$f" ] && cp -p "$f" "$DEST/" && cnt=$((cnt+1))
     done
 fi
-echo "  网页 $cnt 个"
+echo "  网页 ${cnt} 个"
+
+# ---------- 2.1) HTML 完整性校验：写坏了当场重拷 ----------
+fixed=0; broken=0
+for f in 课件*.html index.html knowledge_graph.html; do
+    case "$(basename "$f")" in _bak_*|_tmp_*) continue ;; esac
+    [ -f "$f" ] || continue
+    if ! cmp -s "$f" "$DEST/$f" 2>/dev/null; then
+        cp -f "$f" "$DEST/$f"
+        if cmp -s "$f" "$DEST/$f" 2>/dev/null; then
+            fixed=$((fixed+1))
+        else
+            broken=$((broken+1))
+            echo "  ⚠️ 重拷后仍不一致：$f"
+        fi
+    fi
+done
+sync
+if [ "$fixed" -gt 0 ]; then echo "  校验：发现并重拷修复 ${fixed} 个"; fi
+if [ "$broken" -gt 0 ]; then echo "  ❌ 有 ${broken} 个文件写不进去——U 盘可能快坏了或空间不足"; fi
 
 # ---------- 3) 站点图标 ----------
 ico=0
@@ -136,6 +159,9 @@ for f in server.ps1 start_server.bat 启动课件服务.bat; do
     if [ -f "$f" ]; then cp -p "$f" "$DEST/" && srv=$((srv+1)); fi
 done
 echo "  服务器脚本 $srv 个"
+
+# 强制落盘：U 盘写缓存没刷完就拔，文件尾部会变成半截（2026-11-25 乱码事件的另一半原因）
+sync
 
 echo ""
 echo "--------------------------------------------------"
